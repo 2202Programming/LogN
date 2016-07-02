@@ -1,5 +1,7 @@
 package robot;
 
+import comms.DebugMode;
+
 /**
  * 
  */

@@ -1,4 +1,6 @@
-package robot;
+package motors;
+
+import robot.IControl;
 
 /**
  * 

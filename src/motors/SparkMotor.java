@@ -1,4 +1,4 @@
-package robot;
+package motors;
 import edu.wpi.first.wpilibj.Spark;
 
 
