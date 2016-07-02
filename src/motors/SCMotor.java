@@ -34,9 +34,9 @@ public class SCMotor extends IControl {
     private double speed;
 
     /**
-     * @param x
+     * @param speed
      */
-    public void SetSpeed(double x) {
+    public void SetSpeed(double speed) {
         // TODO implement here
     }
 
