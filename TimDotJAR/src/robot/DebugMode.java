@@ -1,12 +1,8 @@
 package robot;
 
-
 /**
  * 
  */
 public enum DebugMode {
-    Nothing,
-    Competition,
-    Debug,
-    Full
+	NOTHING, COMPETITION, DEBUG, FULL
 }

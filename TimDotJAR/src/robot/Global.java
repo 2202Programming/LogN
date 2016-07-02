@@ -1,20 +1,19 @@
 package robot;
-import java.util.*;
 
 /**
  * 
  */
 public class Global {
 
-    /**
-     * Default constructor
-     */
-    public Global() {
-    }
+	/**
+	 * Default constructor
+	 */
+	public Global() {
+	}
 
-    /**
-     * 
-     */
-    public DebugMode debugMode;
+	/**
+	 * 
+	 */
+	public DebugMode debugMode;
 
 }

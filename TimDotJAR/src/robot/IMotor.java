@@ -1,5 +1,4 @@
 package robot;
-import java.util.*;
 
 /**
  * 
@@ -12,9 +11,9 @@ public abstract class IMotor extends IControl {
     public IMotor() {
     	switch(Mode)
     	{
-    	case Disabled:
+    	case ENABLED:
     		break;
-    	case Enabled:
+    	case DISABLED:
     		break;
     	}
     }
@@ -33,33 +32,33 @@ public abstract class IMotor extends IControl {
     /**
      * @param x
      */
-    protected abstract void SetMotor(double x);
+    protected abstract void setMotor(double x);
 
     /**
      * 
      */
-    public void TeleopInit() {
+    public void teleopInit() {
         // TODO implement here
     }
 
     /**
      * 
      */
-    public void TeleopPeriodic() {
+    public void teleopPeriodic() {
         // TODO implement here
     }
 
     /**
      * 
      */
-    public void AutoInit() {
+    public void autoInit() {
         // TODO implement here
     }
 
     /**
      * 
      */
-    public void AutoPeridic() {
+    public void autoPeridic() {
         // TODO implement here
     }
 

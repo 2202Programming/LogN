@@ -30,7 +30,7 @@ public class SCMotor extends IControl {
     /**
      * 
      */
-    public double Speed;
+    private double speed;
 
     /**
      * @param x

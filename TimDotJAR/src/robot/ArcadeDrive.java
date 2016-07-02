@@ -1,79 +1,84 @@
 package robot;
-import java.util.*;
 
 /**
  * 
  */
 public class ArcadeDrive extends IControl {
 
-    /**
-     * Default constructor
-     */
-    public ArcadeDrive() {
-    }
+	/**
+	 * Default constructor
+	 */
+	public ArcadeDrive() {
+	}
 
-    /**
-     * 
-     */
-    private boolean Enabled;
+	/**
+	 * 
+	 */
+	private boolean enabled;
 
-    /**
-     * 
-     */
-    private IMotor FrontRight;
+	/**
+	 * 
+	 */
+	private IMotor frontRight;
 
-    /**
-     * 
-     */
-    private IMotor FrontLeft;
+	/**
+	 * 
+	 */
+	private IMotor frontLeft;
 
-    /**
-     * 
-     */
-    private IMotor BackRight;
+	/**
+	 * 
+	 */
+	private IMotor backRight;
 
-    /**
-     * 
-     */
-    private IMotor BackLeft;
+	/**
+	 * 
+	 */
+	private IMotor backLeft;
 
-    /**
-     * @param FL 
-     * @param FR 
-     * @param RL 
-     * @param RR
-     */
-    public void ArcadeDrive(IMotor FL, IMotor FR, IMotor RL, IMotor RR) {
-        // TODO implement here
-    }
+	/**
+	 * @param fl
+	 * The front left motor
+	 * @param fr
+	 * The front right motor
+	 * @param bl
+	 * The back left motor
+	 * @param br
+	 * The back right motor
+	 */
+	public void ArcadeDrive(IMotor fl, IMotor fr, IMotor bl, IMotor br) {
+		this.frontLeft=fl;
+		this.frontRight=fr;
+		this.backLeft=bl;
+		this.backRight=br;
+	}
 
-    /**
-     * 
-     */
-    public void TeleopInit() {
-        // TODO implement here
-    }
+	/**
+	 * 
+	 */
+	public void teleopInit() {
+		// TODO implement here
+	}
 
-    /**
-     * 
-     */
-    public void TeleopPeriodic() {
-        // TODO implement here
-    }
+	/**
+	 * 
+	 */
+	public void teleopPeriodic() {
+		// TODO implement here
+	}
 
-    /**
-     * @param x
-     */
-    public void setEnabled(boolean x) {
-        // TODO implement here
-    }
+	/**
+	 * @param enabled
+	 */
+	public void setEnabled(boolean enabled) {
+		this.enabled=enabled;
+	}
 
-    /**
-     * @return
-     */
-    public boolean getEnabled() {
-        // TODO implement here
-        return false;
-    }
+	/**
+	 * @return
+	 */
+	public boolean getEnabled() {
+		return enabled;
+	}
 
 }

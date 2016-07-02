@@ -15,49 +15,49 @@ public abstract class IControl {
     /**
      * 
      */
-    public void TeleopPeriodic() {
+    public void teleopPeriodic() {
         // TODO implement here
     }
 
     /**
      * 
      */
-    public void TeleopInit() {
+    public void teleopInit() {
         // TODO implement here
     }
 
     /**
      * 
      */
-    public void AutonomousInit() {
+    public void autonomousInit() {
         // TODO implement here
     }
 
     /**
      * 
      */
-    public void AutonomousPerodic() {
+    public void autonomousPerodic() {
         // TODO implement here
     }
 
     /**
      * 
      */
-    public void RobotInit() {
+    public void robotInit() {
         // TODO implement here
     }
 
     /**
      * 
      */
-    public void DisabledInit() {
+    public void disabledInit() {
         // TODO implement here
     }
 
     /**
      * 
      */
-    public void DisabledPerodic() {
+    public void disabledPerodic() {
         // TODO implement here
     }
 
