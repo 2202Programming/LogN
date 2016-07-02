@@ -1,4 +1,4 @@
-
+package robot;
 import java.util.*;
 
 /**
@@ -17,7 +17,7 @@ public class SmartWriter {
      * @param value 
      * @param dm
      */
-    public static void PutS(string Name, string value, DebugMode dm) {
+    public static void PutS(String Name, String value, DebugMode dm) {
         // TODO implement here
     }
 
@@ -26,7 +26,7 @@ public class SmartWriter {
      * @param value 
      * @param dm
      */
-    public static void PutB(string Name, boolean value, DebugMode dm) {
+    public static void PutB(String Name, boolean value, DebugMode dm) {
         // TODO implement here
     }
 
@@ -35,7 +35,7 @@ public class SmartWriter {
      * @param value 
      * @param dm
      */
-    public static void PutD(string Name, double value, DebugMode dm) {
+    public static void PutD(String Name, double value, DebugMode dm) {
         // TODO implement here
     }
 
@@ -43,7 +43,7 @@ public class SmartWriter {
      * @param Name 
      * @return
      */
-    public static string GetS(string Name) {
+    public static String GetS(String Name) {
         // TODO implement here
         return null;
     }
@@ -52,7 +52,7 @@ public class SmartWriter {
      * @param Name 
      * @return
      */
-    public static boolean GetB(string Name) {
+    public static boolean GetB(String Name) {
         // TODO implement here
         return false;
     }
@@ -61,7 +61,7 @@ public class SmartWriter {
      * @param Name 
      * @return
      */
-    public static double GetD(string Name) {
+    public static double GetD(String Name) {
         // TODO implement here
         return 0.0d;
     }

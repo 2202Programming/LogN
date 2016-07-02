@@ -1,5 +1,5 @@
-
-import java.util.*;
+package robot;
+import edu.wpi.first.wpilibj.Encoder;
 
 /**
  * 
