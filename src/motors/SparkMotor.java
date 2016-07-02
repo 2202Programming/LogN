@@ -10,7 +10,8 @@ public class SparkMotor extends IMotor {
     /**
      * Default constructor
      */
-    public SparkMotor() {
+    public SparkMotor(int x) {
+    	part = new Spark(x);
     }
 
     /**
