@@ -1,4 +1,7 @@
-package robot;
+package drive;
+
+import motors.IMotor;
+import robot.IControl;
 
 /**
  * @author lazar
