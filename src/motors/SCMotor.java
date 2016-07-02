@@ -16,17 +16,17 @@ public class SCMotor extends IControl {
     /**
      * 
      */
-    public IMotor motor;
+    private IMotor motor;
 
     /**
      * 
      */
-    public Encoder encoder;
+    private Encoder encoder;
 
     /**
      * 
      */
-    public MotorControlMode controlMode;
+    private boolean enabled;
 
     /**
      * 
