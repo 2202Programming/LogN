@@ -1,4 +1,4 @@
-
+package robot;
 import java.util.*;
 
 /**
@@ -10,6 +10,13 @@ public abstract class IMotor extends IControl {
      * Default constructor
      */
     public IMotor() {
+    	switch(Mode)
+    	{
+    	case Disabled:
+    		break;
+    	case Enabled:
+    		break;
+    	}
     }
 
     /**
