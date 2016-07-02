@@ -1,6 +1,7 @@
 package robotDefinitions;
 
 import java.util.HashMap;
+import motors.*;
 import java.util.Map;
 
 import robot.*;
