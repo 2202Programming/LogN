@@ -1,5 +1,6 @@
-package robot;
+package motors;
 import edu.wpi.first.wpilibj.Encoder;
+import robot.IControl;
 
 /**
  * 
