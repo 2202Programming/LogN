@@ -1,7 +1,8 @@
 package robot;
 
 /**
- * 
+ * @author lazar
+ * @category Drive
  */
 public class ArcadeDrive extends IControl {
 
@@ -38,19 +39,19 @@ public class ArcadeDrive extends IControl {
 
 	/**
 	 * @param fl
-	 * The front left motor
+	 *            The front left motor
 	 * @param fr
-	 * The front right motor
+	 *            The front right motor
 	 * @param bl
-	 * The back left motor
+	 *            The back left motor
 	 * @param br
-	 * The back right motor
+	 *            The back right motor
 	 */
-	public void ArcadeDrive(IMotor fl, IMotor fr, IMotor bl, IMotor br) {
-		this.frontLeft=fl;
-		this.frontRight=fr;
-		this.backLeft=bl;
-		this.backRight=br;
+	public ArcadeDrive(IMotor fl, IMotor fr, IMotor bl, IMotor br) {
+		frontLeft=fl;
+		frontRight=fr;
+		backLeft=bl;
+		backRight=br;
 	}
 
 	/**
@@ -75,7 +76,7 @@ public class ArcadeDrive extends IControl {
 	}
 
 	/**
-	 * @return
+	 * @return bool
 	 */
 	public boolean getEnabled() {
 		return enabled;
