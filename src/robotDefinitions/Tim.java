@@ -25,7 +25,7 @@ public class Tim extends IDefinition {
 
 	}
 
-	protected Map<String, IControl> loadControlObjects() {
+	public Map<String, IControl> loadControlObjects() {
 		Map<String, IControl> temp = super.loadControlObjects();
 
 		IMotor FL=new SparkMotor(0);

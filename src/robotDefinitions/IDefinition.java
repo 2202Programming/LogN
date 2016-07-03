@@ -29,7 +29,7 @@ public abstract class IDefinition {
 
 	protected abstract void loadManualDefinitions();
 
-	protected Map<String, IControl> loadControlObjects() {
+	public Map<String, IControl> loadControlObjects() {
 		Map<String, IControl> temp=new HashMap<>();
 
 		return temp;

@@ -9,12 +9,6 @@ import robot.IControl;
 public class ArcadeDrive extends IControl {
 
 	/**
-	 * Default constructor
-	 */
-	public ArcadeDrive() {
-	}
-
-	/**
 	 * 
 	 */
 	private boolean enabled;
@@ -49,7 +43,7 @@ public class ArcadeDrive extends IControl {
 	 * @param br
 	 *            The back right motor
 	 */
-	public void ArcadeDrive(IMotor fl, IMotor fr, IMotor bl, IMotor br) {
+	public ArcadeDrive(IMotor fl, IMotor fr, IMotor bl, IMotor br) {
 		this.frontLeft=fl;
 		this.frontRight=fr;
 		this.backLeft=bl;
