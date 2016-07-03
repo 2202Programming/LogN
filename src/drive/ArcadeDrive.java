@@ -4,8 +4,7 @@ import motors.IMotor;
 import robot.IControl;
 
 /**
- * @author lazar
- * @category Drive
+ * you can do this Tommy...
  */
 public class ArcadeDrive extends IControl {
 
@@ -50,11 +49,11 @@ public class ArcadeDrive extends IControl {
 	 * @param br
 	 *            The back right motor
 	 */
-	public ArcadeDrive(IMotor fl, IMotor fr, IMotor bl, IMotor br) {
-		frontLeft=fl;
-		frontRight=fr;
-		backLeft=bl;
-		backRight=br;
+	public void ArcadeDrive(IMotor fl, IMotor fr, IMotor bl, IMotor br) {
+		this.frontLeft=fl;
+		this.frontRight=fr;
+		this.backLeft=bl;
+		this.backRight=br;
 	}
 
 	/**
@@ -79,7 +78,7 @@ public class ArcadeDrive extends IControl {
 	}
 
 	/**
-	 * @return bool
+	 * @return
 	 */
 	public boolean getEnabled() {
 		return enabled;
