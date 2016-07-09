@@ -29,7 +29,7 @@ public class SmartWriter {
 	 *            SmartDashboard.
 	 */
 	public static void setDebugMode(DebugMode debugMode) {
-		SmartWriter.debugMode=debugMode;
+		SmartWriter.debugMode = debugMode;
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class SmartWriter {
 	 *            displayed on.
 	 */
 	public static void putS(String name, String value, DebugMode debugMode) {
-		if(SmartWriter.debugMode.compareTo(debugMode) <= 0)
+		if (SmartWriter.debugMode.compareTo(debugMode) <= 0)
 			SmartDashboard.putString(name, value);
 	}
 
@@ -78,7 +78,7 @@ public class SmartWriter {
 	 *            displayed on
 	 */
 	public static void putB(String name, boolean value, DebugMode debugMode) {
-		if(SmartWriter.debugMode.compareTo(debugMode) <= 0)
+		if (SmartWriter.debugMode.compareTo(debugMode) <= 0)
 			SmartDashboard.putBoolean(name, value);
 	}
 
@@ -103,7 +103,7 @@ public class SmartWriter {
 	 *            displayed on.
 	 */
 	public static void putD(String name, double value, DebugMode debugMode) {
-		if(SmartWriter.debugMode.compareTo(debugMode) <= 0)
+		if (SmartWriter.debugMode.compareTo(debugMode) <= 0)
 			SmartDashboard.putNumber(name, value);
 	}
 

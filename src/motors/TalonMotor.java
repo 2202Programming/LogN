@@ -1,23 +1,23 @@
 package motors;
-import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.Talon;
 
 
 /**
  * 
  */
-public class SparkMotor extends IMotor {
+public class TalonMotor extends IMotor {
 
     /**
      * Default constructor
      */
-    public SparkMotor(int x) {
-    	part = new Spark(x);
+    public TalonMotor(int x) {
+    	part = new Talon(x);
     }
 
     /**
      * 
      */
-    private Spark part;
+    private Talon part;
 
     /**
      * Sets the motor pwm value
