@@ -8,9 +8,13 @@ import comms.SmartWriter;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import robotDefinitions.*;
 
+/**
+ * Needs comments
+ *
+ */
 public class Robot extends IterativeRobot {
 
-	private Map<String, IControl> ControlObjects;
+	private Map<String, IControl> controlObjects;
 	IDefinition robotDefinition;
 
 	public void robotInit() {
@@ -28,13 +32,13 @@ public class Robot extends IterativeRobot {
 		}
 
 		// Load all the propertys in the currently selected definition
-		ControlObjects=robotDefinition.loadControlObjects();
+		controlObjects=robotDefinition.loadControlObjects();
 	}
 
 	public void autonomousInit() {
 		SmartWriter.putS("Robot State", "Autonomous Init", DebugMode.COMPETITION);
 
-		for (Entry<String, IControl> entry : ControlObjects.entrySet()) {
+		for (Entry<String, IControl> entry : controlObjects.entrySet()) {
 			entry.getValue().autonomousInit();
 		}
 	}
@@ -42,7 +46,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		SmartWriter.putS("Robot State", "Autonomous Periodic", DebugMode.COMPETITION);
 
-		for (Entry<String, IControl> entry : ControlObjects.entrySet()) {
+		for (Entry<String, IControl> entry : controlObjects.entrySet()) {
 			entry.getValue().autonomousInit();
 		}
 	}
@@ -50,7 +54,7 @@ public class Robot extends IterativeRobot {
 	public void teleopInit() {
 		SmartWriter.putS("Robot State", "Teleop Init", DebugMode.COMPETITION);
 
-		for (Entry<String, IControl> entry : ControlObjects.entrySet()) {
+		for (Entry<String, IControl> entry : controlObjects.entrySet()) {
 			entry.getValue().autonomousInit();
 		}
 	}
@@ -58,7 +62,7 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		SmartWriter.putS("Robot State", "Teleop Periodic", DebugMode.COMPETITION);
 
-		for (Entry<String, IControl> entry : ControlObjects.entrySet()) {
+		for (Entry<String, IControl> entry : controlObjects.entrySet()) {
 			entry.getValue().autonomousInit();
 		}
 	}
@@ -66,7 +70,7 @@ public class Robot extends IterativeRobot {
 	public void disabledInit() {
 		SmartWriter.putS("Robot State", "Disabled Init", DebugMode.COMPETITION);
 
-		for (Entry<String, IControl> entry : ControlObjects.entrySet()) {
+		for (Entry<String, IControl> entry : controlObjects.entrySet()) {
 			entry.getValue().autonomousInit();
 		}
 	}
@@ -74,7 +78,7 @@ public class Robot extends IterativeRobot {
 	public void disabledPeriodic() {
 		SmartWriter.putS("Robot State", "Disabled Periodic", DebugMode.COMPETITION);
 
-		for (Entry<String, IControl> entry : ControlObjects.entrySet()) {
+		for (Entry<String, IControl> entry : controlObjects.entrySet()) {
 			entry.getValue().autonomousInit();
 		}
 	}

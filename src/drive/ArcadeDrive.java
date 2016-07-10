@@ -4,7 +4,8 @@ import motors.IMotor;
 import robot.IControl;
 
 /**
- * you can do this Tommy...
+ * I can do this actually
+ * --SecondThread
  */
 public class ArcadeDrive extends IControl {
 
