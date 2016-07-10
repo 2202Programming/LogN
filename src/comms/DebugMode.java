@@ -1,5 +1,7 @@
 package comms;
 
+//Done --SecondThread
+
 /**
  * A enumeration that holds the different debug levels that are used by
  * SmartWriter. Lower debug modes are farther left, higher are farthest right,
