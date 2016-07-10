@@ -1,6 +1,8 @@
 package comms;
 
-//Done --SecondThread
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+//done --SecondThread
 
 /**
  * A class that handles the reading from and writing to SmartDashboard. <br>
@@ -29,7 +31,7 @@ public class SmartWriter {
 	 *            SmartDashboard.
 	 */
 	public static void setDebugMode(DebugMode debugMode) {
-		SmartWriter.debugMode=debugMode;
+		SmartWriter.debugMode = debugMode;
 	}
 
 	/**
@@ -53,7 +55,8 @@ public class SmartWriter {
 	 *            displayed on.
 	 */
 	public static void putS(String name, String value, DebugMode debugMode) {
-		// TODO implement here
+		if (SmartWriter.debugMode.compareTo(debugMode) <= 0)
+			SmartDashboard.putString(name, value);
 	}
 
 	/**
@@ -77,7 +80,8 @@ public class SmartWriter {
 	 *            displayed on
 	 */
 	public static void putB(String name, boolean value, DebugMode debugMode) {
-		// TODO implement here
+		if (SmartWriter.debugMode.compareTo(debugMode) <= 0)
+			SmartDashboard.putBoolean(name, value);
 	}
 
 	/**
@@ -101,7 +105,8 @@ public class SmartWriter {
 	 *            displayed on.
 	 */
 	public static void putD(String name, double value, DebugMode debugMode) {
-		// TODO implement here
+		if (SmartWriter.debugMode.compareTo(debugMode) <= 0)
+			SmartDashboard.putNumber(name, value);
 	}
 
 	/**
@@ -119,8 +124,7 @@ public class SmartWriter {
 	 * @return The value in the text box with the name <i>name</i>
 	 */
 	public static String getS(String name) {
-		// TODO implement here
-		return null;
+		return SmartDashboard.getString(name);
 	}
 
 	/**
@@ -138,8 +142,7 @@ public class SmartWriter {
 	 * @return The value in the text box with the name <i>name</i>
 	 */
 	public static boolean getB(String name) {
-		// TODO implement here
-		return false;
+		return SmartDashboard.getBoolean(name);
 	}
 
 	/**
@@ -157,8 +160,7 @@ public class SmartWriter {
 	 * @return The value in the text box with the name <i>name</i>
 	 */
 	public static double getD(String name) {
-		// TODO implement here
-		return 0.0d;
+		return SmartDashboard.getNumber(name);
 	}
 
 }

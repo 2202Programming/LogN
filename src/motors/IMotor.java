@@ -10,9 +10,11 @@ import robot.IControl;
 public abstract class IMotor extends IControl {
 
 	/**
-	 * Default constructor
+	 * Default constructor disables the motor and sets setValue to 0.0;
 	 */
 	public IMotor() {
+		enabled = false;
+		setValue = 0.0;
 	}
 
 	/**
@@ -31,31 +33,37 @@ public abstract class IMotor extends IControl {
 	protected abstract void setMotor(double x);
 
 	/**
-	 * 
+	 * Set speed to zero in init
 	 */
 	public void teleopInit() {
-		// TODO implement here
+		this.setMotor(0.0);
 	}
 
 	/**
-	 * 
+	 * If enabled: Set the speed of the motor every cycle
 	 */
 	public void teleopPeriodic() {
-		// TODO implement here
+		if(this.enabled)
+			this.setMotor(setValue);
+		else
+			this.setMotor(0.0);
 	}
 
 	/**
-	 * 
+	 * Set speed to zero in init
 	 */
 	public void autoInit() {
-		// TODO implement here
+		this.setMotor(0.0);
 	}
 
 	/**
-	 * 
+	 * If enabled: Set the speed of the motor every cycle
 	 */
 	public void autoPeridic() {
-		// TODO implement here
+		if(this.enabled)
+			this.setMotor(setValue);
+		else
+			this.setMotor(0.0);
 	}
 
 	/**
@@ -68,5 +76,15 @@ public abstract class IMotor extends IControl {
 	 */
 	public void setEnabled(boolean enabled) {
 		this.enabled=enabled;
+	}
+	
+	/**
+	 * Sets the value that will be applied to the motor
+	 * Preconditions: The value inputed is between -1.0 and 1.0
+	 * Postconditions: setValue will be updated
+	 * @param xSpeed
+	 */
+	public void setSpeed(double xSpeed){
+		setValue = xSpeed;
 	}
 }

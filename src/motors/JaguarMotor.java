@@ -1,24 +1,23 @@
 package motors;
-import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.Jaguar;
 
-//more leinad's stuff
 
 /**
  * 
  */
-public class SparkMotor extends IMotor {
+public class JaguarMotor extends IMotor {
 
     /**
      * Default constructor
      */
-    public SparkMotor(int x) {
-    	part = new Spark(x);
+    public JaguarMotor(int x) {
+    	part = new Jaguar(x);
     }
 
     /**
      * 
      */
-    private Spark part;
+    private Jaguar part;
 
     /**
      * Sets the motor pwm value
