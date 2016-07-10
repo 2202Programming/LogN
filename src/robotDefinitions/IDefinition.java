@@ -9,7 +9,7 @@ import robot.IControl;
 
 /**
  * @author lazar
- *
+ * COMMENT THIS TOMMY
  */
 public abstract class IDefinition {
 
