@@ -68,7 +68,7 @@ public abstract class IControl {
 	/**
 	 * Called as soon as the robot is disabled.<br>
 	 * <br>
-	 * Preconditions: disabledInit is called before this<br>
+	 * Preconditions: none<br>
 	 * Postconditions: none
 	 */
 	public void disabledInit() {
