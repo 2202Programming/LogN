@@ -2,6 +2,8 @@ package motors;
 import edu.wpi.first.wpilibj.Encoder;
 import robot.IControl;
 
+//more leinad's stuff
+
 /**
  * 
  */
@@ -16,17 +18,17 @@ public class SCMotor extends IControl {
     /**
      * 
      */
-    public IMotor motor;
+    private IMotor motor;
 
     /**
      * 
      */
-    public Encoder encoder;
+    private Encoder encoder;
 
     /**
      * 
      */
-    public MotorControlMode controlMode;
+    private boolean enabled;
 
     /**
      * 
@@ -34,9 +36,9 @@ public class SCMotor extends IControl {
     private double speed;
 
     /**
-     * @param x
+     * @param speed
      */
-    public void SetSpeed(double x) {
+    public void SetSpeed(double speed) {
         // TODO implement here
     }
 

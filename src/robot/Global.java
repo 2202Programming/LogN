@@ -1,21 +1,10 @@
 package robot;
 
-import comms.DebugMode;
-
 /**
- * 
+ * A class for global variables that are not part of any specific class
  */
 public class Global {
 
-	/**
-	 * Default constructor
-	 */
-	public Global() {
-	}
-
-	/**
-	 * 
-	 */
-	public DebugMode debugMode;
+	//debugMode was moved to SmartWriter.
 
 }
