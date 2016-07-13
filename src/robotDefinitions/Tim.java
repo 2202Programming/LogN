@@ -8,8 +8,9 @@ import java.util.Map;
 import robot.*;
 
 /**
- * Comment this too please tommy
- *
+ * The Tim implementation of IDefinition.<br>
+ * <br>
+ * Comments are in IDefinition
  */
 public class Tim extends IDefinition {
 
@@ -30,7 +31,7 @@ public class Tim extends IDefinition {
 	}
 
 	public Map<String, IControl> loadControlObjects() {
-		Map<String, IControl> temp = super.loadControlObjects();
+		Map<String, IControl> temp=super.loadControlObjects();
 
 		IMotor FL=new SparkMotor(0);
 		IMotor FR=new SparkMotor(1);

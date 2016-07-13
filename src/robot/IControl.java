@@ -6,8 +6,8 @@ package robot;
  * An abstract class that is to be implemented by all control objects. It allows
  * the objects to be notified when init and periodic are called in teleop, auto,
  * and disabled, as well as robotInit. When extending this class, you do not
- * need to implement all of the methods, but if you want functionallity for any
- * of them, they should be overriden.
+ * need to implement all of the methods, but if you want functionality for any
+ * of them, they should be overridden.
  */
 public abstract class IControl {
 
@@ -45,7 +45,7 @@ public abstract class IControl {
 
 	/**
 	 * Called in the beginning of the autonomous period. Note that
-	 * teleopInit/Periodic is not nessisarily called after auto. Also, there is
+	 * teleopInit/Periodic is not necessarily called after auto. Also, there is
 	 * no time limit in auto when not in competitions<br>
 	 * <br>
 	 * Preconditions: none<br>
@@ -83,7 +83,6 @@ public abstract class IControl {
 	 * Postconditions: none
 	 */
 	public void disabledPerodic() {
-		// TODO implement here
 	}
 
 }
