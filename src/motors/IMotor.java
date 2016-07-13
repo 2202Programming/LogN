@@ -41,6 +41,7 @@ public abstract class IMotor extends IControl {
 
 	/**
 	 * If enabled: Set the speed of the motor every cycle
+	 * otherwise: Set speed to 0
 	 */
 	public void teleopPeriodic() {
 		if(this.enabled)

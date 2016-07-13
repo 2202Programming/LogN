@@ -2,7 +2,7 @@ package comms;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-//done --SecondThread
+//done, untested --SecondThread
 
 /**
  * A class that handles the reading from and writing to SmartDashboard. <br>

@@ -9,8 +9,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import robotDefinitions.*;
 
 /**
- * Needs comments please
- *
+ *The main robot class that calls the IControl methods of each IControl object associated with the robot
  */
 public class Robot extends IterativeRobot {
 
@@ -19,7 +18,7 @@ public class Robot extends IterativeRobot {
 
 	public void robotInit() {
 
-		// String to say which robot we are using could later be made into a xml propertie getter
+		// String to say which robot we are using could later be made into a XML property getter
 		String name="TIM";
 
 		// Switch to decide which robot definition to use
@@ -31,7 +30,7 @@ public class Robot extends IterativeRobot {
 			break;
 		}
 
-		// Load all the propertys in the currently selected definition
+		// Load all the properties in the currently selected definition
 		controlObjects=robotDefinition.loadControlObjects();
 	}
 
