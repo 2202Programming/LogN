@@ -42,8 +42,11 @@ public class Tim extends IDefinition {
 		ArcadeDrive AD=new ArcadeDrive(FL, FR, BL, BR);
 		
 		CommandList CL = new CommandList();
-		//create Command list here somehow
-		ICommand CR = new TimCommand(CL);
+		//create Command list here somehow (see example below)
+		CL.addCommand(new DriveCommand(0,0));
+		
+		CommandRunner CR = new CommandRunner(CL,"TIM");
+
 
 		temp.put("FL", FL);
 		temp.put("FR", FR);

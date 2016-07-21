@@ -3,60 +3,39 @@ package auto;
 import java.util.ArrayList;
 
 public class CommandList {
-	// These hold the command type, power, and distances of each command
-	private ArrayList<CommandName> commands;
-	private ArrayList<Double> powers;
-	private ArrayList<Double> distances;
+	// holds the list of commands to be run
+	private ArrayList<Command> commands;
 
-	// default constructor
+	// default constructor creates an empty command list
 	public CommandList() {
-		commands = new ArrayList<CommandName>();
-		powers = new ArrayList<Double>();
-		distances = new ArrayList<Double>();
+		commands=new ArrayList<Command>();
 	}
 
 	/**
-	 * Adds a command to the list Preconditions: The type must be a valid
-	 * commandName. Power is between -1.0 and 1.0 Postconditions: The command is
-	 * added to the list
+	 * Adds a command to the list <br>
+	 * Preconditions: The command must be a valid Command object <br>
+	 * Postconditions: The command is added to the list<br>
 	 * 
-	 * @param type
-	 *            the type of command to be inputed
-	 * @param power
-	 *            the power for the command
-	 * @param dist
-	 *            the distance or angle for command
+	 * @param CommandIn
+	 *            the command to be inputed
 	 */
-	public void addCommand(CommandName type, double power, double dist) {
-		commands.add(type);
-		powers.add(power);
-		distances.add(dist);
-	}
-
-	// For adding a command that does not require power or distance ex: shoot
-	public void addCommand(CommandName type) {
-		commands.add(type);
-		powers.add(0.0);
-		distances.add(0.0);
+	public void addCommand(Command CommandIn) {
+		commands.add(CommandIn);
 	}
 
 	/**
-	 * Gets the command at commandNum Preconditions: commandNum is less or equal
-	 * to the number of commands Postconditions: returns the command
+	 * Gets the command at commandNum <br>
+	 * Preconditions: commandNum is less or equal to the number of commands <br>
+	 * Postconditions: returns the command<br>
 	 * 
 	 * @param commandNum
 	 *            the number of the command
 	 * @return the type, power, and distance for the command
 	 */
-	public double[] getCommand(int commandNum) {
-		if (commandNum < commands.size()) {
-			double[] toReturn = new double[3];
-			toReturn[0] = commands.get(commandNum).getValue();
-			toReturn[1] = powers.get(commandNum);
-			toReturn[2] = distances.get(commandNum);
-			return toReturn;
+	public Command getCommand(int commandNum) {
+		if (commandNum<commands.size()) {
+			return commands.get(commandNum);
 		}
-		return new double[] { 0, 0, 0 };
+		return new EmptyCommand();
 	}
-
 }

@@ -9,7 +9,8 @@ import robot.IControl;
 public class ArcadeDrive extends IControl {
 
 	/**
-	 * True if the wheel motors are being controlled by ArcadeDrive, false otherwise.
+	 * True if the wheel motors are being controlled by ArcadeDrive, false
+	 * otherwise.
 	 */
 	private boolean enabled;
 
@@ -44,10 +45,10 @@ public class ArcadeDrive extends IControl {
 	 *            The back right motor
 	 */
 	public ArcadeDrive(IMotor fl, IMotor fr, IMotor bl, IMotor br) {
-		this.frontLeft=fl;
-		this.frontRight=fr;
-		this.backLeft=bl;
-		this.backRight=br;
+		this.frontLeft = fl;
+		this.frontRight = fr;
+		this.backLeft = bl;
+		this.backRight = br;
 	}
 
 	/**
@@ -64,6 +65,16 @@ public class ArcadeDrive extends IControl {
 		// TODO implement here
 	}
 
+	public void setLeftMotors(double speed) {
+		frontLeft.setSpeed(speed);
+		backLeft.setSpeed(speed);
+	}
+
+	public void setRightMotors(double speed) {
+		frontRight.setSpeed(speed);
+		backRight.setSpeed(speed);
+	}
+
 	/**
 	 * Sets whether or not arcade drive should control the motors (disable if
 	 * something else is taking control) <br>
@@ -77,7 +88,7 @@ public class ArcadeDrive extends IControl {
 	 *            enabled.
 	 */
 	public void setEnabled(boolean enabled) {
-		this.enabled=enabled;
+		this.enabled = enabled;
 	}
 
 	/**

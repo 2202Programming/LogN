@@ -36,6 +36,15 @@ public class SCMotor extends IControl {
     private double speed;
 
     /**
+     * Constructor for encoder controlled motor
+     * @param motorIn motor to be added
+     * @param encoderIn encoder to be added
+     */
+    public SCMotor(IMotor motorIn, Encoder encoderIn){
+    	motor = motorIn;
+    	encoder = encoderIn;
+    }
+    /**
      * @param speed
      */
     public void SetSpeed(double speed) {
