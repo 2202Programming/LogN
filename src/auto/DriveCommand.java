@@ -1,6 +1,6 @@
 package auto;
 
-import drive.ArcadeDrive;
+import drive.IDrive;
 
 public class DriveCommand implements Command {
 	private double power;
@@ -20,7 +20,7 @@ public class DriveCommand implements Command {
 	}
 
 	// Runs the Drive command in the way for this robot
-	public boolean run(String robotName, ArcadeDrive drive) {
+	public boolean run(String robotName, IDrive drive) {
 		// Use switch when the command must be run differently than the default
 		// way
 		switch (robotName) {

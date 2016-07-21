@@ -6,7 +6,7 @@ import robot.IControl;
 /**
  * 
  */
-public class ArcadeDrive extends IControl {
+public class ArcadeDrive extends IDrive {
 
 	/**
 	 * True if the wheel motors are being controlled by ArcadeDrive, false

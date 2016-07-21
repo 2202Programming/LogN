@@ -1,12 +1,12 @@
 package auto;
 
-import drive.ArcadeDrive;
+import drive.IDrive;
 
 public class EmptyCommand implements Command {
 	public EmptyCommand(){
 	}
 	
-	public boolean run(String robotName, ArcadeDrive drive){
+	public boolean run(String robotName, IDrive drive){
 		return false;
 	}
 

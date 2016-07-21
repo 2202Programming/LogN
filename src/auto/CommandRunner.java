@@ -1,13 +1,13 @@
 package auto;
 
-import drive.ArcadeDrive;
+import drive.IDrive;
 import robot.IControl;
 
 public class CommandRunner extends IControl {
 	private int commandNum;
 	private CommandList commands;
 	private String robotName;
-	private ArcadeDrive drive;
+	private IDrive drive;
 
 	/**
 	 * Constructor for CommandRunner<br>
