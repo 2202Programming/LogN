@@ -2,7 +2,7 @@ package comms;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-//done --SecondThread
+//done, untested --SecondThread
 
 /**
  * A class that handles the reading from and writing to SmartDashboard. <br>
@@ -16,23 +16,7 @@ public class SmartWriter {
 	/**
 	 * The maximum DebugMode for which messages are printed to SmartDashboard.
 	 */
-	private static DebugMode debugMode;
-
-	/**
-	 * Sets the DebugMode of the things to be printed to the SmartDashboard.
-	 * <br>
-	 * <br>
-	 * Preconditions: none <br>
-	 * Postconditions: Only messages with a DebugMode lower than
-	 * <i>debugMode</i> will be printed.
-	 * 
-	 * @param debugMode
-	 *            The maximum DebugMode for which messages are printed to
-	 *            SmartDashboard.
-	 */
-	public static void setDebugMode(DebugMode debugMode) {
-		SmartWriter.debugMode = debugMode;
-	}
+	public static DebugMode debugMode;
 
 	/**
 	 * Sets the field with name <i>name</i> on the SmartDashboard to
