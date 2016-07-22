@@ -21,15 +21,24 @@ public class DriveCommand implements Command {
 
 	// Runs the Drive command in the way for this robot
 	public boolean run(String robotName, IDrive drive) {
-		// Use switch when the command must be run differently than the default
-		// way
-		switch (robotName) {
-		default:
-			drive.setLeftMotors(power);
-			drive.setRightMotors(power);
-			currentDist++;
-			break;
-		}
+		drive.setLeftMotors(pwrCalc(false));
+		drive.setRightMotors(pwrCalc(false));
+		dist+=calcDist(drive);
+		
 		return currentDist>=dist;
+	}
+
+	private double pwrCalc(boolean gyro) {
+		if (gyro) {
+
+		}
+		return power;
+	}
+
+	private double calcDist(IDrive drive) {
+		if (drive.hasEncoders()) {
+			
+		}
+		return 1;
 	}
 }
