@@ -13,8 +13,8 @@ public abstract class IMotor extends IControl {
 	 * Default constructor disables the motor and sets setValue to 0.0;
 	 */
 	public IMotor() {
-		enabled = false;
-		setValue = 0.0;
+		enabled=false;
+		setValue=0.0;
 	}
 
 	/**
@@ -40,12 +40,11 @@ public abstract class IMotor extends IControl {
 	}
 
 	/**
-	 * If enabled: Set the speed of the motor every cycle
-	 * otherwise: Set speed to 0
+	 * If enabled: Set the speed of the motor every cycle otherwise: Set speed
+	 * to 0
 	 */
 	public void teleopPeriodic() {
-		if(this.enabled)
-			this.setMotor(setValue);
+		if (this.enabled) this.setMotor(setValue);
 		else
 			this.setMotor(0.0);
 	}
@@ -61,8 +60,7 @@ public abstract class IMotor extends IControl {
 	 * If enabled: Set the speed of the motor every cycle
 	 */
 	public void autoPeridic() {
-		if(this.enabled)
-			this.setMotor(setValue);
+		if (this.enabled) this.setMotor(setValue);
 		else
 			this.setMotor(0.0);
 	}
@@ -78,14 +76,24 @@ public abstract class IMotor extends IControl {
 	public void setEnabled(boolean enabled) {
 		this.enabled=enabled;
 	}
-	
+
 	/**
-	 * Sets the value that will be applied to the motor
-	 * Preconditions: The value inputed is between -1.0 and 1.0
+	 * Gets if this motor has an encoder<br>
+	 * 
+	 * @return
+	 */
+	public boolean hasEncoder() {
+		return this instanceof EncoderMotor;
+	}
+
+	/**
+	 * Sets the value that will be applied to the motor<br>
+	 * Preconditions: The value inputed is between -1.0 and 1.0<br>
 	 * Postconditions: setValue will be updated
+	 * 
 	 * @param xSpeed
 	 */
-	public void setSpeed(double xSpeed){
-		setValue = xSpeed;
+	public void setSpeed(double xSpeed) {
+		setValue=xSpeed;
 	}
 }

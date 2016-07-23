@@ -44,10 +44,11 @@ public class ArcadeDrive extends IDrive {
 	 *            The back right motor
 	 */
 	public ArcadeDrive(IMotor fl, IMotor fr, IMotor bl, IMotor br) {
-		this.frontLeft = fl;
-		this.frontRight = fr;
-		this.backLeft = bl;
-		this.backRight = br;
+		enabled =true;
+		this.frontLeft=fl;
+		this.frontRight=fr;
+		this.backLeft=bl;
+		this.backRight=br;
 	}
 
 	/**
@@ -64,14 +65,28 @@ public class ArcadeDrive extends IDrive {
 		// TODO implement here
 	}
 
+	/**
+	 * Sets the left side motor power<br>
+	 * Preconditions: speed is between -1.0 and 1.0<br>
+	 * Postconditions: sets the motors
+	 */
 	public void setLeftMotors(double speed) {
-		frontLeft.setSpeed(speed);
-		backLeft.setSpeed(speed);
+		if (enabled) {
+			frontLeft.setSpeed(speed);
+			backLeft.setSpeed(speed);
+		}
 	}
 
+	/**
+	 * Sets the right side motor power<br>
+	 * Preconditions: speed is between -1.0 and 1.0<br>
+	 * Postconditions: sets the motors
+	 */
 	public void setRightMotors(double speed) {
-		frontRight.setSpeed(speed);
-		backRight.setSpeed(speed);
+		if (enabled) {
+			frontRight.setSpeed(speed);
+			backRight.setSpeed(speed);
+		}
 	}
 
 	/**
@@ -87,7 +102,7 @@ public class ArcadeDrive extends IDrive {
 	 *            enabled.
 	 */
 	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
+		this.enabled=enabled;
 	}
 
 	/**
@@ -97,6 +112,17 @@ public class ArcadeDrive extends IDrive {
 	 */
 	public boolean getEnabled() {
 		return enabled;
+	}
+	
+	/**
+	 * Checks to see if any of the motors have encoders
+	 */
+	public boolean hasEncoders(){
+		boolean toReturn = false;
+		if(frontLeft.hasEncoder() || frontRight.hasEncoder() || backLeft.hasEncoder() || backRight.hasEncoder()){
+			toReturn = true;
+		}
+		return toReturn;
 	}
 
 }
