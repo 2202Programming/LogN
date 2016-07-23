@@ -8,8 +8,9 @@ import robot.IControl;
  * controller rumble. I will do this eventually --SecondThread
  */
 public class XboxController extends IControl {
-
+	
 	private Joystick leftJoystick, rightJoystick;
+	private boolean teehee=true;
 
 	/**
 	 * These are all magic number that the FRC toolchain uses. For some reason
@@ -103,6 +104,9 @@ public class XboxController extends IControl {
 		// version
 		leftJoystick.setAxisChannel(Joystick.AxisType.kX, 4);
 		rightJoystick.setAxisChannel(Joystick.AxisType.kY, 5);
+		if (teehee) {
+			setRumble(0.1);
+		}
 	}
 
 	// calls the update method
@@ -322,4 +326,16 @@ public class XboxController extends IControl {
 		return released[RIGHT_TRIGGER_CODE];
 	}
 
+	public void setRumble(boolean shouldRumble) {//of course it should!
+		setRumble(shouldRumble?1:0);
+	}
+	
+	public void setRumble(double rumblyness) {
+		float radness=(float)rumblyness;
+		rightJoystick.setRumble(Joystick.RumbleType.kLeftRumble, radness);
+		rightJoystick.setRumble(Joystick.RumbleType.kRightRumble, radness);
+		leftJoystick.setRumble(Joystick.RumbleType.kLeftRumble, radness);
+		leftJoystick.setRumble(Joystick.RumbleType.kRightRumble, radness);		
+	}
+	
 }
