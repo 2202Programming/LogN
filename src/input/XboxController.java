@@ -12,27 +12,34 @@ public class XboxController extends IControl {
 	private Joystick leftJoystick, rightJoystick;
 
 	/**
-	 * These are all magic number that the FRC toolchain uses. For some reason they appear to be indexed from 1, idk why.
+	 * These are all magic number that the FRC toolchain uses. For some reason
+	 * they appear to be indexed from 1, idk why.
 	 */
-	private final int BUTTON_A_WPICODE=1; 
+	private final int BUTTON_A_WPICODE=1;
 	private final int BUTTON_B_WPICODE=2;
 	private final int BUTTON_X_WPICODE=3;
 	private final int BUTTON_Y_WPICODE=4;
 	private final int BUTTON_LB_WPICODE=5;
 	private final int BUTTON_RB_WPICODE=6;
 	private final int BUTTON_BACK_WPICODE=7;
-	private final int BUTTON_START_WPICODE=8; 
-	private final int BUTTON_L3_WPICODE=9; // Press down the left joystick for L3. 
-	private final int BUTTON_R3_WPICODE=10; // Press down the right joystick for R3. 
+	private final int BUTTON_START_WPICODE=8;
+	private final int BUTTON_L3_WPICODE=9;
+	private final int BUTTON_R3_WPICODE=10;
 
-	
-	
+	private final int AXIS_TRIGGER_LEFT_WIPCODE=2;// for left trigger and
+	private final int AXIS_TRIGGER_RIGHT_WIPCODE=3;// right trigger respectively
+
+	private final int AXIS_RIGHT_X_WIPCODE=4;// for joysticks
+	private final int AXIS_RIGHT_Y_WIPCODE=5;
+	private final int AXIS_LEFT_X_WIPCODE=0;
+	private final int AXIS_LEFT_Y_WIPCODE=1;
+
 	/*
 	 * These are codes for all the button values so that they can be stored in
 	 * an array with these indexes and we don't have 100 different private
 	 * variables
 	 */
-	private final int X_CODE=0;// no one uses Xcode, Atom is where its at
+	private final int X_CODE=0;// no one uses Xcode, Atom is where it's at
 	private final int Y_CODE=1;
 	private final int A_CODE=2;
 	private final int B_CODE=3;
@@ -122,6 +129,8 @@ public class XboxController extends IControl {
 		updateButton(RIGHT_BUMPER_CODE, rightJoystick.getRawButton(BUTTON_RB_WPICODE));
 		updateButton(L3_CODE, rightJoystick.getRawButton(BUTTON_L3_WPICODE));
 		updateButton(R3_CODE, rightJoystick.getRawButton(BUTTON_R3_WPICODE));
+		updateButton(LEFT_TRIGGER_CODE, rightJoystick.getRawAxis(AXIS_TRIGGER_LEFT_WIPCODE)>0.8);
+		updateButton(RIGHT_TRIGGER_CODE, rightJoystick.getRawAxis(AXIS_TRIGGER_RIGHT_WIPCODE)>0.8);
 	}
 
 	/**
@@ -151,6 +160,22 @@ public class XboxController extends IControl {
 		pressed[buttonCode]=thisFrame[buttonCode]&&!lastFrame[buttonCode];
 		held[buttonCode]=thisFrame[buttonCode]&&lastFrame[buttonCode];
 		released[buttonCode]=!thisFrame[buttonCode]&&lastFrame[buttonCode];
+	}
+
+	public double getRightJoystickX() {
+		return (-1.0)*rightJoystick.getRawAxis(AXIS_RIGHT_X_WIPCODE);
+	}
+
+	public double getRightJoystickY() {
+		return (-1.0)*rightJoystick.getRawAxis(AXIS_RIGHT_Y_WIPCODE);
+	}
+
+	public double getLeftJoystickX() {
+		return (-1.0)*leftJoystick.getRawAxis(AXIS_LEFT_X_WIPCODE);
+	}
+
+	public double getLeftJoystickY() {
+		return (-1.0)*leftJoystick.getRawAxis(AXIS_LEFT_Y_WIPCODE);
 	}
 
 	public boolean getXPressed() {
