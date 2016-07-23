@@ -6,7 +6,8 @@ import java.util.Map.Entry;
 import comms.DebugMode;
 import comms.SmartWriter;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import robotDefinitions.*;
+import robotDefinitions.IDefinition;
+import robotDefinitions.Tim;
 
 /**
  *The main robot class that calls the IControl methods of each IControl object associated with the robot
