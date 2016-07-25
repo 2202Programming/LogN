@@ -3,7 +3,7 @@ package drive;
 import motors.IMotor;
 
 /**
- * 
+ *
  */
 public class ArcadeDrive extends IDrive {
 
@@ -45,21 +45,21 @@ public class ArcadeDrive extends IDrive {
 	 */
 	public ArcadeDrive(IMotor fl, IMotor fr, IMotor bl, IMotor br) {
 		enabled =true;
-		this.frontLeft=fl;
+		this.frontLeft=fl; //TODO this.* statements are redundent.
 		this.frontRight=fr;
 		this.backLeft=bl;
 		this.backRight=br;
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public void teleopInit() {
 		// TODO implement here
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public void teleopPeriodic() {
 		// TODO implement here
@@ -74,7 +74,7 @@ public class ArcadeDrive extends IDrive {
 		if (enabled) {
 			frontLeft.setSpeed(speed);
 			backLeft.setSpeed(speed);
-		}
+		} // TODO If they are not enabled you should set them to zero.
 	}
 
 	/**
@@ -96,7 +96,7 @@ public class ArcadeDrive extends IDrive {
 	 * Preconditions: none <br>
 	 * Postconditions: If ArcadeDrive has been set to enabled, it will continue
 	 * (or begin) to write to the motors. Otherwise, the motors will not be set.
-	 * 
+	 *
 	 * @param enabled
 	 *            Whether or not this <i>ArcadeDrive</i> object should be
 	 *            enabled.
@@ -107,13 +107,13 @@ public class ArcadeDrive extends IDrive {
 
 	/**
 	 * Checks to see if this <i>ArcadeDrive</i> is enabled or not
-	 * 
+	 *
 	 * @return True if enabled, false otherwise
 	 */
 	public boolean getEnabled() {
 		return enabled;
 	}
-	
+
 	/**
 	 * Checks to see if any of the motors have encoders
 	 */
