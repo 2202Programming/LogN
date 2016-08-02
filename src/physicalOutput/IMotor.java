@@ -1,4 +1,4 @@
-package motors;
+package physicalOutput;
 
 import robot.IControl;
 

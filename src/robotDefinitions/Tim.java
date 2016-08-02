@@ -8,8 +8,8 @@ import auto.CommandRunner;
 import auto.DriveCommand;
 import drive.ArcadeDrive;
 import drive.IDrive;
-import motors.IMotor;
-import motors.SparkMotor;
+import physicalOutput.IMotor;
+import physicalOutput.SparkMotor;
 import robot.IControl;
 
 /**

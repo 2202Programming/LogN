@@ -1,4 +1,4 @@
-package input;
+package comms;
 
 import edu.wpi.first.wpilibj.Joystick;
 import robot.IControl;

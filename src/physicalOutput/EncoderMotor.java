@@ -1,4 +1,4 @@
-package motors;
+package physicalOutput;
 
 import edu.wpi.first.wpilibj.Encoder;
 

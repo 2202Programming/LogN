@@ -1,6 +1,6 @@
 package drive;
 
-import motors.IMotor;
+import physicalOutput.IMotor;
 
 /**
  *

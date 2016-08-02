@@ -1,24 +1,24 @@
-package motors;
-import edu.wpi.first.wpilibj.Victor;
+package physicalOutput;
+import edu.wpi.first.wpilibj.Spark;
 
 //more leinad's stuff
 
 /**
  * 
  */
-public class VictorMotor extends IMotor {
+public class SparkMotor extends IMotor {
 
     /**
      * Default constructor
      */
-    public VictorMotor(int x) {
-    	part = new Victor(x);
+    public SparkMotor(int x) {
+    	part = new Spark(x);
     }
 
     /**
      * 
      */
-    private Victor part;
+    private Spark part;
 
     /**
      * Sets the motor pwm value
