@@ -3,9 +3,8 @@ package robotDefinitions;
 import java.util.HashMap;
 import java.util.Map;
 
-import auto.CommandList;
-import auto.CommandRunner;
-import auto.DriveCommand;
+import auto.*;
+import tim.*;
 import drive.ArcadeDrive;
 import drive.IDrive;
 import physicalOutput.IMotor;
@@ -45,11 +44,8 @@ public class Tim extends IDefinition {
 
 		IDrive AD=new ArcadeDrive(FL, FR, BL, BR);
 		
-		CommandList CL = new CommandList();
-		//create Command list here somehow (see example below)
-		CL.addCommand(new DriveCommand(0,0));
-		
-		CommandRunner CR = new CommandRunner(CL,"TIM");
+		CommandListMaker CLM = new CommandListMaker();
+		CommandRunner CR = new CommandRunner(CLM.makeList1(),"TIM");
 
 
 		temp.put("FL", FL);

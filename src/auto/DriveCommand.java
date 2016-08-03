@@ -6,6 +6,7 @@ public class DriveCommand implements Command {
 	private double power;
 	private double dist;
 	private int currentDist;
+	private IDrive drive;
 
 	/**
 	 * 
@@ -18,9 +19,13 @@ public class DriveCommand implements Command {
 		power=powIn;
 		dist=distIn;
 	}
+	
+	public void init(IDrive drive){
+		this.drive = drive;
+	}
 
 	// Runs the Drive command in the way for this robot
-	public boolean run(String robotName, IDrive drive) {
+	public boolean run(String robotName) {
 		drive.setLeftMotors(pwrCalc(false));
 		drive.setRightMotors(pwrCalc(false));
 		dist+=calcDist(drive);
@@ -36,7 +41,8 @@ public class DriveCommand implements Command {
 	}
 
 	private double calcDist(IDrive drive) {
-		if (drive.hasEncoders()) {
+		//TODO check for encoders
+		if (true) {
 			
 		}
 		return 1;
