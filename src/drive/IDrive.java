@@ -20,7 +20,5 @@ public abstract class IDrive extends IControl {
 	public abstract void setEnabled(boolean enabled);
 	
 	public abstract boolean getEnabled();
-	
-	public abstract boolean hasEncoders();
 
 }

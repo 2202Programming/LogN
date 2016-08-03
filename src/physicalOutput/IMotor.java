@@ -78,15 +78,6 @@ public abstract class IMotor extends IControl {
 	}
 
 	/**
-	 * Gets if this motor has an encoder<br>
-	 * 
-	 * @return
-	 */
-	public boolean hasEncoder() {
-		return this instanceof EncoderMotor;
-	}
-
-	/**
 	 * Sets the value that will be applied to the motor<br>
 	 * Preconditions: The value inputed is between -1.0 and 1.0<br>
 	 * Postconditions: setValue will be updated

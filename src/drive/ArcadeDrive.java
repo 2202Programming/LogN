@@ -114,15 +114,4 @@ public class ArcadeDrive extends IDrive {
 		return enabled;
 	}
 
-	/**
-	 * Checks to see if any of the motors have encoders
-	 */
-	public boolean hasEncoders(){
-		boolean toReturn = false;
-		if(frontLeft.hasEncoder() || frontRight.hasEncoder() || backLeft.hasEncoder() || backRight.hasEncoder()){
-			toReturn = true;
-		}
-		return toReturn;
-	}
-
 }
