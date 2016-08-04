@@ -5,10 +5,8 @@ import java.util.Map;
 
 import auto.*;
 import tim.*;
-import drive.ArcadeDrive;
-import drive.IDrive;
-import physicalOutput.IMotor;
-import physicalOutput.SparkMotor;
+import drive.*;
+import physicalOutput.*;
 import robot.IControl;
 
 /**
