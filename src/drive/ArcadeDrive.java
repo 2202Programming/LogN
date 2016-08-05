@@ -12,12 +12,6 @@ import motors.IMotor;
 public class ArcadeDrive extends IDrive {
 
 	/**
-	 * True if the wheel motors are being controlled by ArcadeDrive, false
-	 * otherwise.
-	 */
-	private boolean enabled;
-
-	/**
 	 * The motor corresponding to the front right wheel
 	 */
 	private IMotor frontRight;
@@ -59,7 +53,6 @@ public class ArcadeDrive extends IDrive {
 	 *            The back right motor
 	 */
 	public ArcadeDrive(IMotor fl, IMotor fr, IMotor bl, IMotor br) {
-		enabled=true;
 		this.frontLeft=fl;
 		this.frontRight=fr;
 		this.backLeft=bl;
@@ -75,23 +68,25 @@ public class ArcadeDrive extends IDrive {
 	 * Postconditions: none<br>
 	 */
 	protected void teleopUpdate() {
-		
 		double stickX=controller.getLeftJoystickX();
 		double stickY=controller.getLeftJoystickY();
 
-		// convert from Cartesian to polar so things work
+		// convert from Cartesian to polar so things work later
 		double radius=Math.sqrt(stickX*stickX+stickY+stickY);
 
-		// (0, 1) --> 1 : 1
-		// (1, 0) --> 1 : -1
-		// (-1, 0) --> -1 : 1
-		// (0, -1) --> -1 : -1
+		// example coordinates 			--> leftPower : right power
+		// 			(0, 1)				--> 	1 : 1
+		// 			(1, 0) 				--> 	1 : -1
+		// 			(-1, 0) 			--> 	-1 : 1
+		// 			(0, -1) 			--> 	-1 : -1
 
 		// the amount of turn is 2*stickX because the difference between the
 		// left and right at full turn is 2, and the max x is 1
 		double differenceBetweenMotors=2*stickX;
 		double maxMotor=1;
 		double minMotor=maxMotor-differenceBetweenMotors;
+		
+		//scale the motor values back depending on how far the joystick is pressed
 		maxMotor*=radius;
 		minMotor*=radius;
 
@@ -112,10 +107,8 @@ public class ArcadeDrive extends IDrive {
 	 * Postconditions: sets the motors
 	 */
 	private void setLeftMotorsRaw(double speed) {
-		if (enabled) {
-			frontLeft.setSpeed(speed);
-			backLeft.setSpeed(speed);
-		}
+		frontLeft.setSpeed(speed);
+		backLeft.setSpeed(speed);
 	}
 
 	/**
@@ -124,23 +117,13 @@ public class ArcadeDrive extends IDrive {
 	 * Postconditions: sets the motors
 	 */
 	private void setRightMotorsRaw(double speed) {
-		if (enabled) {
-			frontRight.setSpeed(speed);
-			backRight.setSpeed(speed);
-		}
+		frontRight.setSpeed(speed);
+		backRight.setSpeed(speed);
 	}
 
 	/**
-	 * Checks to see if this <i>ArcadeDrive</i> is enabled or not
-	 * 
-	 * @return True if enabled, false otherwise
-	 */
-	public boolean getEnabled() {
-		return enabled;
-	}
-
-	/**
-	 * Checks to see if any of the motors have encoders
+	 * Checks to see if any of the motors have encoders, returns true if any of
+	 * them do
 	 */
 	public boolean hasEncoders() {
 		boolean toReturn=false;
@@ -150,11 +133,13 @@ public class ArcadeDrive extends IDrive {
 		return toReturn;
 	}
 
+	// comments in IDrive, implementation is obvious
 	protected void setMotors() {
 		setLeftMotorsRaw(leftMotors);
 		setRightMotorsRaw(rightMotors);
 	}
 
+	// comments in IDrive
 	protected void disableMotors() {
 		setLeftMotorsRaw(0);
 		setRightMotorsRaw(0);

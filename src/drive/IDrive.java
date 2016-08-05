@@ -10,6 +10,10 @@ import robot.IControl;
  */
 public abstract class IDrive extends IControl {
 
+	/**
+	 * State that stores whether the motors are controlled by the drive,
+	 * externally, or are disabled.
+	 */
 	private DriveControl driveControl=DriveControl.DRIVE_CONTROLLED;
 
 	/**
