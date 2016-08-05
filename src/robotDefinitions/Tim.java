@@ -5,10 +5,9 @@ import java.util.Map;
 
 import auto.*;
 import tim.*;
-import drive.ArcadeDrive;
-import drive.IDrive;
-import physicalOutput.IMotor;
-import physicalOutput.SparkMotor;
+import drive.*;
+import physicalOutput.*;
+import robot.Global;
 import robot.IControl;
 
 /**
@@ -46,7 +45,8 @@ public class Tim extends IDefinition {
 		
 		CommandListMaker CLM = new CommandListMaker();
 		CommandRunner CR = new CommandRunner(CLM.makeList1(),"TIM");
-
+		
+		Global.sensors = TimSensorController.getInstance();
 
 		temp.put("FL", FL);
 		temp.put("FR", FR);
