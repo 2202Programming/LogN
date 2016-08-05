@@ -8,6 +8,7 @@ import motors.IMotor;
  * <br>
  * Y-Axis: forward/backwards speed <br>
  * X-Axis: turn left/right
+ * @author SecondThread
  */
 public class ArcadeDrive extends IDrive {
 
@@ -74,19 +75,20 @@ public class ArcadeDrive extends IDrive {
 		// convert from Cartesian to polar so things work later
 		double radius=Math.sqrt(stickX*stickX+stickY+stickY);
 
-		// example coordinates 			--> leftPower : right power
-		// 			(0, 1)				--> 	1 : 1
-		// 			(1, 0) 				--> 	1 : -1
-		// 			(-1, 0) 			--> 	-1 : 1
-		// 			(0, -1) 			--> 	-1 : -1
+		// example coordinates --> leftPower : right power
+		// (0, 1) --> 1 : 1
+		// (1, 0) --> 1 : -1
+		// (-1, 0) --> -1 : 1
+		// (0, -1) --> -1 : -1
 
 		// the amount of turn is 2*stickX because the difference between the
 		// left and right at full turn is 2, and the max x is 1
 		double differenceBetweenMotors=2*stickX;
 		double maxMotor=1;
 		double minMotor=maxMotor-differenceBetweenMotors;
-		
-		//scale the motor values back depending on how far the joystick is pressed
+
+		// scale the motor values back depending on how far the joystick is
+		// pressed
 		maxMotor*=radius;
 		minMotor*=radius;
 
@@ -99,6 +101,16 @@ public class ArcadeDrive extends IDrive {
 			rightMotors=maxMotor;
 		}
 
+		// If we are going backwards, the left and right motors need to be made
+		// negative. If we are also turning, then they have to be switched with
+		// each other as well.
+		if (stickY<0) {
+			leftMotors*=-1;
+			rightMotors*=-1;
+			double temp=leftMotors;
+			leftMotors=rightMotors;
+			rightMotors=temp;
+		}
 	}
 
 	/**
@@ -145,13 +157,13 @@ public class ArcadeDrive extends IDrive {
 		setRightMotorsRaw(0);
 	}
 
-	//comments in IDrive
+	// comments in IDrive
 	public void setLeftMotors(double power) {
 		setLeftMotorsRaw(power);
-		
+
 	}
 
-	//comments in IDrive
+	// comments in IDrive
 	public void setRightMotors(double power) {
 		setRightMotorsRaw(power);
 	}
