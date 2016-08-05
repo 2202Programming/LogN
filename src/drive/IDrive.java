@@ -17,6 +17,14 @@ public abstract class IDrive extends IControl {
 	private DriveControl driveControl=DriveControl.DRIVE_CONTROLLED;
 
 	/**
+	 * Sets the drive control so that it is controlled by this IDrive in case
+	 * someone changed it in auto and never set it back
+	 */
+	public void teleopInit() {
+		setDriveControl(DriveControl.DRIVE_CONTROLLED);
+	}
+
+	/**
 	 * This cannot be overridden by subclasses. Instead use teleopUpdate(). This
 	 * calls the setMotors, disableMotors, or onMotorsExternalControl method
 	 * depending on the driveControl state. <br>
@@ -112,27 +120,28 @@ public abstract class IDrive extends IControl {
 	 */
 	public abstract boolean hasEncoders();
 
-	
 	/**
-	 * This is used by Auto commands. That's about it. Nowhere else as far as I know.
-	 * <br><br>
+	 * This is used by Auto commands. That's about it. Nowhere else as far as I
+	 * know. <br>
+	 * <br>
 	 * Precondition: This IDrive state is in EXTERNAL_CONTROL<br>
 	 * Postcondition: The left motors will be set to the specified power.
 	 * 
 	 * @param power
-	 * The power of the left motors
+	 *            The power of the left motors
 	 */
 	public abstract void setLeftMotors(double power);
-	
+
 	/**
-	 * This is used by Auto commands. That's about it. Nowhere else as far as I know.
-	 * <br><br>
+	 * This is used by Auto commands. That's about it. Nowhere else as far as I
+	 * know. <br>
+	 * <br>
 	 * Precondition: This IDrive state is in EXTERNAL_CONTROL<br>
 	 * Postcondition: The right motors will be set to the specified power.
 	 * 
 	 * @param power
-	 * The power of the right motors
+	 *            The power of the right motors
 	 */
 	public abstract void setRightMotors(double power);
-	
+
 }
