@@ -6,7 +6,8 @@ import java.util.Map.Entry;
 import comms.DebugMode;
 import comms.SmartWriter;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import robotDefinitions.*;
+import robotDefinitions.IDefinition;
+import robotDefinitions.Tim;
 
 /**
  *The main robot class that calls the IControl methods of each IControl object associated with the robot
@@ -19,7 +20,7 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 
 		// String to say which robot we are using could later be made into a XML property getter
-		String name="TIM";
+		String name="TIM"; //TODO Mayby change names into an enum?
 
 		// Switch to decide which robot definition to use
 		switch (name) {

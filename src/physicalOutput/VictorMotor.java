@@ -1,23 +1,24 @@
-package motors;
-import edu.wpi.first.wpilibj.Jaguar;
+package physicalOutput;
+import edu.wpi.first.wpilibj.Victor;
 
+//more leinad's stuff
 
 /**
  * 
  */
-public class JaguarMotor extends IMotor {
+public class VictorMotor extends IMotor {
 
     /**
      * Default constructor
      */
-    public JaguarMotor(int x) {
-    	part = new Jaguar(x);
+    public VictorMotor(int x) {
+    	part = new Victor(x);
     }
 
     /**
      * 
      */
-    private Jaguar part;
+    private Victor part;
 
     /**
      * Sets the motor pwm value

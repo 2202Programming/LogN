@@ -8,6 +8,7 @@ public class CommandRunner extends IControl {
 	private CommandList commands;
 	private String robotName;
 	private IDrive drive;
+	private boolean init;
 
 	/**
 	 * Constructor for CommandRunner<br>
@@ -24,12 +25,18 @@ public class CommandRunner extends IControl {
 
 	// starts at the first commandNum
 	public void autonomousInit() {
+		init = false;
 		commandNum=0;
 	}
 
 	// runs the command every cycle
 	public void autonomousPerodic() {
-		if (commands.getCommand(commandNum).run(robotName, drive)) {
+		if(!init){
+			commands.getCommand(commandNum).init(drive);
+			init = true;
+		}
+		if (commands.getCommand(commandNum).run(robotName)) {
+			init = false;
 			commandNum++;
 		}
 	}
