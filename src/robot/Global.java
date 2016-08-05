@@ -7,6 +7,7 @@ import input.ISensorController;
  */
 public class Global {
 	//Never set this ever!!! Only the profile can set this field.
+	//Use this to get access to all robot sensors
 	public static ISensorController sensors;
 
 	//debugMode was moved to SmartWriter.
