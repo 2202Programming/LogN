@@ -145,4 +145,15 @@ public class ArcadeDrive extends IDrive {
 		setRightMotorsRaw(0);
 	}
 
+	//comments in IDrive
+	public void setLeftMotors(double power) {
+		setLeftMotorsRaw(power);
+		
+	}
+
+	//comments in IDrive
+	public void setRightMotors(double power) {
+		setRightMotorsRaw(power);
+	}
+
 }

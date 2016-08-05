@@ -112,4 +112,27 @@ public abstract class IDrive extends IControl {
 	 */
 	public abstract boolean hasEncoders();
 
+	
+	/**
+	 * This is used by Auto commands. That's about it. Nowhere else as far as I know.
+	 * <br><br>
+	 * Precondition: This IDrive state is in EXTERNAL_CONTROL<br>
+	 * Postcondition: The left motors will be set to the specified power.
+	 * 
+	 * @param power
+	 * The power of the left motors
+	 */
+	public abstract void setLeftMotors(double power);
+	
+	/**
+	 * This is used by Auto commands. That's about it. Nowhere else as far as I know.
+	 * <br><br>
+	 * Precondition: This IDrive state is in EXTERNAL_CONTROL<br>
+	 * Postcondition: The right motors will be set to the specified power.
+	 * 
+	 * @param power
+	 * The power of the right motors
+	 */
+	public abstract void setRightMotors(double power);
+	
 }
