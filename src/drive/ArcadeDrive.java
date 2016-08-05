@@ -1,9 +1,13 @@
 package drive;
 
+import input.XboxController;
 import motors.IMotor;
 
 /**
- * 
+ * An arcade drive that uses only the left JoyStick to move. <br>
+ * <br>
+ * Y-Axis: forward/backwards speed <br>
+ * X-Axis: turn left/right
  */
 public class ArcadeDrive extends IDrive {
 
@@ -34,6 +38,17 @@ public class ArcadeDrive extends IDrive {
 	private IMotor backLeft;
 
 	/**
+	 * Used for controller input
+	 */
+	private XboxController controller;
+
+	/**
+	 * holds the values to pass to the motors from when they are calculated in
+	 * TeleopPeriodic to when they are suppose to be passed to the motors
+	 */
+	private double leftMotors=0, rightMotors=0;
+
+	/**
 	 * @param fl
 	 *            The front left motor
 	 * @param fr
@@ -44,25 +59,51 @@ public class ArcadeDrive extends IDrive {
 	 *            The back right motor
 	 */
 	public ArcadeDrive(IMotor fl, IMotor fr, IMotor bl, IMotor br) {
-		enabled =true;
+		enabled=true;
 		this.frontLeft=fl;
 		this.frontRight=fr;
 		this.backLeft=bl;
 		this.backRight=br;
+		controller=XboxController.getXboxController();
 	}
 
 	/**
-	 * 
+	 * Calculates the values that should be passed to the left motors and right
+	 * motors and stores them in leftMotor and rightMotor<br>
+	 * <br>
+	 * Preconditions: none<br>
+	 * Postconditions: none<br>
 	 */
-	public void teleopInit() {
-		// TODO implement here
-	}
+	protected void teleopUpdate() {
+		
+		double stickX=controller.getLeftJoystickX();
+		double stickY=controller.getLeftJoystickY();
 
-	/**
-	 * 
-	 */
-	public void teleopPeriodic() {
-		// TODO implement here
+		// convert from Cartesian to polar so things work
+		double radius=Math.sqrt(stickX*stickX+stickY+stickY);
+
+		// (0, 1) --> 1 : 1
+		// (1, 0) --> 1 : -1
+		// (-1, 0) --> -1 : 1
+		// (0, -1) --> -1 : -1
+
+		// the amount of turn is 2*stickX because the difference between the
+		// left and right at full turn is 2, and the max x is 1
+		double differenceBetweenMotors=2*stickX;
+		double maxMotor=1;
+		double minMotor=maxMotor-differenceBetweenMotors;
+		maxMotor*=radius;
+		minMotor*=radius;
+
+		if (stickX>0) {// turning right
+			leftMotors=maxMotor;
+			rightMotors=minMotor;
+		}
+		else {// turning left
+			leftMotors=minMotor;
+			rightMotors=maxMotor;
+		}
+
 	}
 
 	/**
@@ -70,7 +111,7 @@ public class ArcadeDrive extends IDrive {
 	 * Preconditions: speed is between -1.0 and 1.0<br>
 	 * Postconditions: sets the motors
 	 */
-	public void setLeftMotors(double speed) {
+	private void setLeftMotorsRaw(double speed) {
 		if (enabled) {
 			frontLeft.setSpeed(speed);
 			backLeft.setSpeed(speed);
@@ -82,27 +123,11 @@ public class ArcadeDrive extends IDrive {
 	 * Preconditions: speed is between -1.0 and 1.0<br>
 	 * Postconditions: sets the motors
 	 */
-	public void setRightMotors(double speed) {
+	private void setRightMotorsRaw(double speed) {
 		if (enabled) {
 			frontRight.setSpeed(speed);
 			backRight.setSpeed(speed);
 		}
-	}
-
-	/**
-	 * Sets whether or not arcade drive should control the motors (disable if
-	 * something else is taking control) <br>
-	 * <br>
-	 * Preconditions: none <br>
-	 * Postconditions: If ArcadeDrive has been set to enabled, it will continue
-	 * (or begin) to write to the motors. Otherwise, the motors will not be set.
-	 * 
-	 * @param enabled
-	 *            Whether or not this <i>ArcadeDrive</i> object should be
-	 *            enabled.
-	 */
-	public void setEnabled(boolean enabled) {
-		this.enabled=enabled;
 	}
 
 	/**
@@ -113,16 +138,26 @@ public class ArcadeDrive extends IDrive {
 	public boolean getEnabled() {
 		return enabled;
 	}
-	
+
 	/**
 	 * Checks to see if any of the motors have encoders
 	 */
-	public boolean hasEncoders(){
-		boolean toReturn = false;
-		if(frontLeft.hasEncoder() || frontRight.hasEncoder() || backLeft.hasEncoder() || backRight.hasEncoder()){
-			toReturn = true;
+	public boolean hasEncoders() {
+		boolean toReturn=false;
+		if (frontLeft.hasEncoder()||frontRight.hasEncoder()||backLeft.hasEncoder()||backRight.hasEncoder()) {
+			toReturn=true;
 		}
 		return toReturn;
+	}
+
+	protected void setMotors() {
+		setLeftMotorsRaw(leftMotors);
+		setRightMotorsRaw(rightMotors);
+	}
+
+	protected void disableMotors() {
+		setLeftMotorsRaw(0);
+		setRightMotorsRaw(0);
 	}
 
 }
