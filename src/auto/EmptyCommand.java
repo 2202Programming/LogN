@@ -7,10 +7,6 @@ public class EmptyCommand implements Command {
 	public EmptyCommand(){
 	}
 	
-	public void init(IDrive drive){
-		this.drive = drive;
-	}
-	
 	public boolean run(String robotName){
 		return false;
 	}
