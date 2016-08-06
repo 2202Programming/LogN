@@ -16,10 +16,10 @@ import robot.IControl;
 public class ISensorController extends IControl{
 	
 	//All of the sensors for the current robot
-	private Map<String,SensorBase> sensors;
+	private Map<SensorName,SensorBase> sensors;
 	
 	//Called by the SensorController of each robot
-	protected ISensorController(HashMap<String,SensorBase> sensors){
+	protected ISensorController(HashMap<SensorName,SensorBase> sensors){
 		this.sensors = sensors;
 	}
 	
@@ -30,7 +30,7 @@ public class ISensorController extends IControl{
 	 * @param key the key tied to the desired sensor
 	 * @return the sensor that is tied to the inputed key
 	 */
-	public SensorBase getSensor(String key){
+	public SensorBase getSensor(SensorName key){
 		return sensors.get(key);
 	}
 }

@@ -1,9 +1,6 @@
 package auto;
 
-import drive.IDrive;
-
 public class EmptyCommand implements Command {
-	private IDrive drive;
 	public EmptyCommand(){
 	}
 	
