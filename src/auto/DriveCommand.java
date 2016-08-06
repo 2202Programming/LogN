@@ -1,7 +1,9 @@
 package auto;
 
 import drive.IDrive;
+import edu.wpi.first.wpilibj.Encoder;
 import input.ISensorController;
+import input.SensorName;
 import robot.Global;
 
 public class DriveCommand implements Command {
@@ -20,49 +22,25 @@ public class DriveCommand implements Command {
 	 */
 	public DriveCommand(double powIn, double distIn, IDrive driveIn) {
 		sensors = Global.sensors;
-		power=powIn;
-		dist=distIn;
+		power = powIn;
+		dist = distIn;
 		drive = driveIn;
 		currentDist = 0;
 	}
-	
+
 	// Runs the Drive command in the way for this robot
 	public boolean run(String robotName) {
-		switch(robotName){
+		switch (robotName) {
 		case "TIM":
+			currentDist = ((Encoder)sensors.getSensor(SensorName.FLENCODER)).get();
 			break;
 		default:
-			pwrCalc(false,false);
-			calcDist(false);
+			drive.setLeftMotors(power);
+			drive.setRightMotors(power);
+			currentDist += 1;
 			break;
 		}
-		return currentDist>=dist;
-	}
 
-	/**
-	 * sets the power of the motors with correction if sensors are available
-	 * @param gyro does the current robot have a gyro sensor
-	 * @param encoders does the current robot have encoders on both sides
-	 */
-	private void pwrCalc(boolean gyro, boolean encoders) {
-		if (gyro) {
-
-		}else if(encoders){
-			
-		}
-		drive.setLeftMotors(power);
-		drive.setRightMotors(power);
-	}
-
-	/**
-	 * Calculates the distance the robot has driven each cycle Defaults to amount of cycles
-	 * @param encoders does the current robot have encoders
-	 */
-	private void calcDist(boolean encoders) {
-		if (encoders) {
-			
-		}else{
-			currentDist+=1;
-		}
+		return currentDist >= dist;
 	}
 }
