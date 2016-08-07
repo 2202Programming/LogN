@@ -3,12 +3,11 @@ package robot;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.print.PrintException;
-
 import comms.DebugMode;
 import comms.SmartWriter;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import robotDefinitions.IDefinition;
+import robotDefinitions.RobotName;
 import robotDefinitions.Tim;
 
 /**
@@ -31,12 +30,16 @@ public class Robot extends IterativeRobot {
 
 		// String to say which robot we are using could later be made into a XML
 		// property getter
-		String name="TIM"; // TODO Maybe change names into an enum?
+		RobotName name=RobotName.TIM; // TODO Can we get this from the robot so
+										// it automatically knows what robot it
+										// is?
 
 		// Switch to decide which robot definition to use
 		switch (name) {
-		case "TIM":
+		case TIM:
 			robotDefinition=new Tim();
+			break;
+		case PIPER:
 			break;
 		default:
 			break;
@@ -133,7 +136,7 @@ public class Robot extends IterativeRobot {
 		// If this doesn't work, then we can try:
 		// -printing to System.out instead of System.err
 		// -printing to using SmartWriter (This would be more difficult because
-		// 				Excetion.StackTrace would have to be converted to Strings)
+		// Excetion.StackTrace would have to be converted to Strings)
 		if (!stopPrintingErrors) {
 			System.err.println("Exception occured in: "+timeOccured+".");
 			e.printStackTrace(System.err);
