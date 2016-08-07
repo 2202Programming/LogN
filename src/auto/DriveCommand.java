@@ -2,7 +2,6 @@ package auto;
 
 import drive.IDrive;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.SensorBase;
 import input.ISensorController;
 import input.SensorName;
