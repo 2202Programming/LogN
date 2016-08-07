@@ -63,7 +63,7 @@ public class Robot extends IterativeRobot {
 
 		for (Entry<String, IControl> entry : controlObjects.entrySet()) {
 			try {
-				entry.getValue().autonomousInit();
+				entry.getValue().autonomousPerodic();
 			} catch (Exception e) {
 				outputError(e, "Auto Periodic");
 			}
@@ -75,7 +75,7 @@ public class Robot extends IterativeRobot {
 
 		for (Entry<String, IControl> entry : controlObjects.entrySet()) {
 			try {
-				entry.getValue().autonomousInit();
+				entry.getValue().teleopInit();
 			} catch (Exception e) {
 				outputError(e, "Teleop Init");
 			}
@@ -87,7 +87,7 @@ public class Robot extends IterativeRobot {
 
 		for (Entry<String, IControl> entry : controlObjects.entrySet()) {
 			try {
-				entry.getValue().autonomousInit();
+				entry.getValue().teleopPeriodic();
 			} catch (Exception e) {
 				outputError(e, "Teleop Periodic");
 			}
@@ -99,7 +99,7 @@ public class Robot extends IterativeRobot {
 
 		for (Entry<String, IControl> entry : controlObjects.entrySet()) {
 			try {
-				entry.getValue().autonomousInit();
+				entry.getValue().disabledInit();
 			} catch (Exception e) {
 				outputError(e, "Disabled Init");
 			}
@@ -111,7 +111,7 @@ public class Robot extends IterativeRobot {
 
 		for (Entry<String, IControl> entry : controlObjects.entrySet()) {
 			try {
-				entry.getValue().autonomousInit();
+				entry.getValue().disabledPerodic();
 			} catch (Exception e) {
 				outputError(e, "Disabled Periodic");
 			}
