@@ -9,6 +9,18 @@ public class PIDController {
 	private boolean advanced;
 
 	/**
+	 * A default constructor for a PIDController<br>
+	 * Must set pid values before using calculate
+	 */
+	public PIDController(){
+		kp = 0;
+		ki = 0;
+		kd = 0;
+		totalError = 0;
+		lastError = 0;
+		advanced = false;
+	}
+	/**
 	 * A basic PIDController for random stuff(Can be improved greatly)
 	 * 
 	 * @param kp
@@ -28,6 +40,18 @@ public class PIDController {
 		totalError = 0;
 		lastError = 0;
 		this.advanced = advanced;
+	}
+	
+	/**
+	 * Sets new values for the pid variables
+	 * @param kpIn
+	 * @param kiIn
+	 * @param kdIn
+	 */
+	public void setPID(double kpIn, double kiIn, double kdIn){
+		kp = kpIn;
+		ki = kiIn;
+		kd = kdIn;
 	}
 
 	/**
