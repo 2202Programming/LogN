@@ -1,7 +1,10 @@
 package auto;
 
 import drive.IDrive;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SensorBase;
 import input.ISensorController;
+import other.PIDController;
 import robot.Global;
 
 public class TurnCommand implements Command {
@@ -9,6 +12,7 @@ public class TurnCommand implements Command {
 	private double power;
 	private double amount;
 	private ISensorController sensors;
+	private PIDController pidControl;
 
 	/**
 	 * Constructs a new TurnCommand
@@ -26,6 +30,7 @@ public class TurnCommand implements Command {
 		power = powIn;
 		amount = amountIn;
 		sensors = Global.sensors;
+		pidControl = new PIDController();
 	}
 
 	/**
@@ -35,15 +40,36 @@ public class TurnCommand implements Command {
 		switch (robotName) {
 		default:
 			if (amount > 0) {
+				amount--;
 				drive.setLeftMotors(power);
 				drive.setRightMotors( -power);
 			}
-			else {
+			else if (amount < 0) {
+				amount++;
 				drive.setLeftMotors( -power);
 				drive.setRightMotors(power);
 			}
 			break;
 		}
-		return false;
+		return amount == 0;
+	}
+	
+	/**
+	 * Turn the robot using a gyro sensor for amount
+	 * @param gyroSensor
+	 */
+	public void gyroTurn(SensorBase gyroSensor){
+		//TODO put an actual gyro value into input
+		double change = pidControl.calculate(amount, -1);
+		//TODO finish implementation
+	}
+	
+	/**
+	 * Turn the robot using Encoders to keep track of how far each side has gone
+	 * @param left Encoder for the left side of the robot
+	 * @param right Encoder for the Right side of the robot
+	 */
+	public void EncoderTurn(Encoder left, Encoder right){
+		//TODO implement here
 	}
 }
