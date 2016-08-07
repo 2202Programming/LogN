@@ -2,6 +2,8 @@ package auto;
 
 import drive.IDrive;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.SensorBase;
 import input.ISensorController;
 import input.SensorName;
 import robot.Global;
@@ -32,6 +34,7 @@ public class DriveCommand implements Command {
 	public boolean run(String robotName) {
 		switch (robotName) {
 		case "TIM":
+			encoderDrive((Encoder)sensors.getSensor(SensorName.FLENCODER), (Encoder)sensors.getSensor(SensorName.FRENCODER));
 			currentDist = ((Encoder)sensors.getSensor(SensorName.FLENCODER)).get();
 			break;
 		default:
@@ -42,5 +45,13 @@ public class DriveCommand implements Command {
 		}
 
 		return currentDist >= dist;
+	}
+	
+	private void encoderDrive(Encoder main, Encoder secondary){
+		//TODO put PID loop here
+	}
+	
+	private void gyroDrive(SensorBase gyroSensor){
+		//TODO put PID loop here
 	}
 }
