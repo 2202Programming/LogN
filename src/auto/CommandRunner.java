@@ -43,7 +43,7 @@ public class CommandRunner extends IControl {
 	}
 
 	// runs the command every cycle
-	public void autonomousPerodic() {
+	public void autonomousPeriodic() {
 		if (commands.getCommand(commandNum).run(robotName)) {
 			commandNum++;
 			resetSensors();

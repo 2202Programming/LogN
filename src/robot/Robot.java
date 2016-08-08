@@ -66,7 +66,7 @@ public class Robot extends IterativeRobot {
 
 		for (Entry<String, IControl> entry : controlObjects.entrySet()) {
 			try {
-				entry.getValue().autonomousPerodic();
+				entry.getValue().autonomousPeriodic();
 			} catch (Exception e) {
 				outputError(e, "Auto Periodic");
 			}
@@ -114,7 +114,7 @@ public class Robot extends IterativeRobot {
 
 		for (Entry<String, IControl> entry : controlObjects.entrySet()) {
 			try {
-				entry.getValue().disabledPerodic();
+				entry.getValue().disabledPeriodic();
 			} catch (Exception e) {
 				outputError(e, "Disabled Periodic");
 			}

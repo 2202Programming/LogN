@@ -4,5 +4,5 @@ package input;
 //about people's individual namings
 //More sensors can be added as they are needed
 public enum SensorName {
-	FLENCODER,FRENCODER,BLENCODER,BRENCODER,AHRS
+	FLENCODER, FRENCODER, BLENCODER, BRENCODER, AHRS
 }
