@@ -62,7 +62,7 @@ public abstract class IControl {
 	 * Preconditions: autonomousInit is called before this<br>
 	 * Postconditions: none
 	 */
-	public void autonomousPerodic() {
+	public void autonomousPeriodic() {
 	}
 
 	/**
@@ -82,7 +82,7 @@ public abstract class IControl {
 	 * Preconditions: disabledInit is called before this<br>
 	 * Postconditions: none
 	 */
-	public void disabledPerodic() {
+	public void disabledPeriodic() {
 	}
 
 }

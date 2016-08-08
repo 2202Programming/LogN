@@ -52,14 +52,14 @@ public abstract class IMotor extends IControl {
 	/**
 	 * Set speed to zero in init
 	 */
-	public void autoInit() {
+	public void autonomousInit() {
 		this.setMotor(0.0);
 	}
 
 	/**
 	 * If enabled: Set the speed of the motor every cycle
 	 */
-	public void autoPeridic() {
+	public void autonomousPeriodic() {
 		if (this.enabled) this.setMotor(setValue);
 		else
 			this.setMotor(0.0);
