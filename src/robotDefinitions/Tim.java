@@ -43,7 +43,7 @@ public class Tim extends IDefinition {
 
 		IDrive AD=new ArcadeDrive(FL, FR, BL, BR);
 		
-		CommandListMaker CLM = new CommandListMaker();
+		CommandListMaker CLM = new CommandListMaker(AD);
 		CommandRunner CR = new CommandRunner(CLM.makeList1(),"TIM");
 		
 		Global.sensors = TimSensorController.getInstance();

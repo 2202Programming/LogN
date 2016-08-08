@@ -1,14 +1,14 @@
 package auto;
 
-import drive.IDrive;
+import edu.wpi.first.wpilibj.Encoder;
+import input.SensorName;
+import robot.Global;
 import robot.IControl;
 
 public class CommandRunner extends IControl {
 	private int commandNum;
 	private CommandList commands;
 	private String robotName;
-	private IDrive drive;
-	private boolean init;
 
 	/**
 	 * Constructor for CommandRunner<br>
@@ -19,25 +19,34 @@ public class CommandRunner extends IControl {
 	 *            Name of the robot for unique commands
 	 */
 	public CommandRunner(CommandList xCommands, String robotName) {
-		commands=xCommands;
-		this.robotName=robotName;
+		commands = xCommands;
+		this.robotName = robotName;
+	}
+
+	/**
+	 * Resets all of the sensors using the robot name to know which sensors are
+	 * active<br>
+	 * If there are not sensors to reset, nothing will be done
+	 */
+	private void resetSensors() {
+		switch (robotName) {
+		case "TIM":
+			((Encoder)Global.sensors.getSensor(SensorName.FLENCODER)).reset();
+			break;
+		}
 	}
 
 	// starts at the first commandNum
 	public void autonomousInit() {
-		init = false;
-		commandNum=0;
+		commandNum = 0;
+		resetSensors();
 	}
 
 	// runs the command every cycle
-	public void autonomousPerodic() {
-		if(!init){
-			commands.getCommand(commandNum).init(drive);
-			init = true;
-		}
+	public void autonomousPeriodic() {
 		if (commands.getCommand(commandNum).run(robotName)) {
-			init = false;
 			commandNum++;
+			resetSensors();
 		}
 	}
 

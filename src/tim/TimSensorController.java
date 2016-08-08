@@ -5,6 +5,7 @@ import java.util.HashMap;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SensorBase;
 import input.ISensorController;
+import input.SensorName;
 
 public class TimSensorController extends ISensorController {
 	private static TimSensorController controller = null;
@@ -24,9 +25,9 @@ public class TimSensorController extends ISensorController {
 	
 	//All of the sensors will be put into the Map here
 	//TODO Put real sensors into this method
-	public static HashMap<String,SensorBase> registerSensors(){
-		HashMap<String,SensorBase> temp = new HashMap<String,SensorBase>();
-		temp.put("SensorExample", new Encoder(2,3));
+	private static HashMap<SensorName,SensorBase> registerSensors(){
+		HashMap<SensorName,SensorBase> temp = new HashMap<SensorName,SensorBase>();
+		temp.put(SensorName.FRENCODER, new Encoder(2,3));
 		return temp;
 	}
 }
