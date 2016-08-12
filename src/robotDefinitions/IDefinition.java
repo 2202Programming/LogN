@@ -2,10 +2,11 @@ package robotDefinitions;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import robot.IControl;
 
 /**
- * The class that should be overriden by robot definitions
+ * The class that should be overridden by robot definitions
  *
  */
 public abstract class IDefinition {
