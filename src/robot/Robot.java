@@ -51,73 +51,55 @@ public class Robot extends IterativeRobot {
 
 	public void autonomousInit() {
 		SmartWriter.putS("Robot State", "Autonomous Init", DebugMode.COMPETITION);
-
-		for (Entry<String, IControl> entry : controlObjects.entrySet()) {
-			try {
-				entry.getValue().autonomousInit();
-			} catch (Exception e) {
-				outputError(e, "Auto Init");
-			}
+		try {
+			IControl.callAutonomousInit();
+		} catch (Exception e) {
+			outputError(e, "Auto Init");
 		}
 	}
 
 	public void autonomousPeriodic() {
 		SmartWriter.putS("Robot State", "Autonomous Periodic", DebugMode.COMPETITION);
-
-		for (Entry<String, IControl> entry : controlObjects.entrySet()) {
-			try {
-				entry.getValue().autonomousPeriodic();
-			} catch (Exception e) {
-				outputError(e, "Auto Periodic");
-			}
+		try {
+			IControl.callAutonomousPeriodic();
+		} catch (Exception e) {
+			outputError(e, "Auto Periodic");
 		}
 	}
 
 	public void teleopInit() {
 		SmartWriter.putS("Robot State", "Teleop Init", DebugMode.COMPETITION);
-
-		for (Entry<String, IControl> entry : controlObjects.entrySet()) {
-			try {
-				entry.getValue().teleopInit();
-			} catch (Exception e) {
-				outputError(e, "Teleop Init");
-			}
+		try {
+			IControl.callTeleopInit();
+		} catch (Exception e) {
+			outputError(e, "Teleop Init");
 		}
 	}
 
 	public void teleopPeriodic() {
 		SmartWriter.putS("Robot State", "Teleop Periodic", DebugMode.COMPETITION);
-
-		for (Entry<String, IControl> entry : controlObjects.entrySet()) {
-			try {
-				entry.getValue().teleopPeriodic();
-			} catch (Exception e) {
-				outputError(e, "Teleop Periodic");
-			}
+		try {
+			IControl.callTeleopPeriodic();
+		} catch (Exception e) {
+			outputError(e, "Teleop Periodic");
 		}
 	}
 
 	public void disabledInit() {
 		SmartWriter.putS("Robot State", "Disabled Init", DebugMode.COMPETITION);
-
-		for (Entry<String, IControl> entry : controlObjects.entrySet()) {
-			try {
-				entry.getValue().disabledInit();
-			} catch (Exception e) {
-				outputError(e, "Disabled Init");
-			}
+		try {
+			IControl.callDisabledInit();
+		} catch (Exception e) {
+			outputError(e, "Disabled Init");
 		}
 	}
 
 	public void disabledPeriodic() {
 		SmartWriter.putS("Robot State", "Disabled Periodic", DebugMode.COMPETITION);
-
-		for (Entry<String, IControl> entry : controlObjects.entrySet()) {
-			try {
-				entry.getValue().disabledPeriodic();
-			} catch (Exception e) {
-				outputError(e, "Disabled Periodic");
-			}
+		try {
+			IControl.callDisabledPeriodic();
+		} catch (Exception e) {
+			outputError(e, "Disabled Periodic");
 		}
 	}
 
