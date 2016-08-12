@@ -16,7 +16,6 @@ import robotDefinitions.Tim;
  */
 public class Robot extends IterativeRobot {
 
-	private Map<String, IControl> controlObjects;
 	IDefinition robotDefinition;
 
 	/**
@@ -46,7 +45,7 @@ public class Robot extends IterativeRobot {
 		}
 
 		// Load all the properties in the currently selected definition
-		controlObjects=robotDefinition.loadControlObjects();
+		Global.controlObjects=robotDefinition.loadControlObjects();
 	}
 
 	public void autonomousInit() {
