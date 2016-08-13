@@ -6,7 +6,7 @@ import java.util.Map.Entry;
 import comms.DebugMode;
 import comms.SmartWriter;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import robotDefinitions.IDefinition;
+import robotDefinitions.IRobotDefinition;
 import robotDefinitions.RobotName;
 import robotDefinitions.Tim;
 
@@ -16,7 +16,7 @@ import robotDefinitions.Tim;
  */
 public class Robot extends IterativeRobot {
 
-	IDefinition robotDefinition;
+	IRobotDefinition robotDefinition;
 
 	/**
 	 * We usually only would want to print the first error that occurred, as
