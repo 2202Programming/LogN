@@ -9,7 +9,7 @@ import robot.IControl;
  * The class that should be overridden by robot definitions
  *
  */
-public abstract class IDefinition {
+public abstract class RobotDefinitionBase implements IRobotDefinition {
 
 	protected Map<String, String> _properties;
 	private boolean _useXMLBag;
@@ -18,7 +18,7 @@ public abstract class IDefinition {
 	/**
 	 * Default Constructor, uses abstract methods in order to define properties
 	 */
-	public IDefinition() {
+	public RobotDefinitionBase() {
 		_name=loadDefinitionName();
 		_useXMLBag=useXML();
 		loadPropertyBag();
@@ -49,13 +49,10 @@ public abstract class IDefinition {
 	 */
 	protected abstract void loadManualDefinitions();
 
-	/**
-	 * Loads the control objects defined from the values in the properties, this
-	 * should only need, to be called once in a lifetime, duplicate objects may
-	 * not function as intended.
-	 * 
-	 * @return Control Object List for robot class's main cycle
+	/* (non-Javadoc)
+	 * @see robotDefinitions.IRobotDefinition#loadControlObjects()
 	 */
+	@Override
 	public Map<String, IControl> loadControlObjects() {
 		Map<String, IControl> temp=new HashMap<>();
 

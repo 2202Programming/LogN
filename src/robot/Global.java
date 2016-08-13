@@ -1,5 +1,7 @@
 package robot;
 
+import java.util.Map;
+
 import input.ISensorController;
 
 /**
@@ -11,5 +13,7 @@ public class Global {
 	public static ISensorController sensors;
 
 	//debugMode was moved to SmartWriter.
+	//don't set!!!!
+	public static Map<String, IControl> controlObjects;
 
 }

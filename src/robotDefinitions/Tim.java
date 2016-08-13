@@ -15,7 +15,7 @@ import robot.IControl;
  * <br>
  * Comments are in IDefinition
  */
-public class Tim extends IDefinition {
+public class Tim extends RobotDefinitionBase {
 
 	@Override
 	protected boolean useXML() {
@@ -30,31 +30,39 @@ public class Tim extends IDefinition {
 	@Override
 	protected void loadManualDefinitions() {
 		_properties=new HashMap<String, String>();
-
+		
+		// Default Motor Pins
+		_properties.put("FLMOTORPIN", "0");
+		_properties.put("BLMOTORPIN", "2");
+		_properties.put("FRMOTORPIN", "1");
+		_properties.put("BRMOTORPIN", "3");
 	}
 
+	/***
+	 * 
+	 * @return  Control object map for Tim
+	 */
 	public Map<String, IControl> loadControlObjects() {
+		
+		// Create map to store public objects
 		Map<String, IControl> temp=super.loadControlObjects();
 
-		IMotor FL=new SparkMotor(0);
-		IMotor FR=new SparkMotor(1);
-		IMotor BL=new SparkMotor(2);
-		IMotor BR=new SparkMotor(3);
+		// Create IMotors for Arcade Drive
+		IMotor FL=new SparkMotor(getInt("FLMOTORPIN"));
+		IMotor FR=new SparkMotor(getInt("FRMOTORPIN"));
+		IMotor BL=new SparkMotor(getInt("BLMOTORPIN"));
+		IMotor BR=new SparkMotor(getInt("BRMOTORPIN"));
 
+		// Create IDrive arcade drive I dont know why we cast it as a IDrive though
 		IDrive AD=new ArcadeDrive(FL, FR, BL, BR);
 		
+		// Create the autonomous command list maker, and command runner
 		CommandListMaker CLM = new CommandListMaker(AD);
-		CommandRunner CR = new CommandRunner(CLM.makeList1(),"TIM");
+		CommandRunner CR = new CommandRunner(CLM.makeList1(),"TIM");  // makes list one for the TIM robot
 		
+		// Sets the Global sensor controller to 
 		Global.sensors = TimSensorController.getInstance();
-
-		temp.put("FL", FL);
-		temp.put("FR", FR);
-		temp.put("BL", BL);
-		temp.put("BR", BR);
-
-		temp.put("AD", AD);
-		
+		temp.put("AD", AD);		
 		temp.put("CR", CR);
 
 		return temp;
