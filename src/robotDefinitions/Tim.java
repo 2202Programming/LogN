@@ -36,6 +36,9 @@ public class Tim extends RobotDefinitionBase {
 		_properties.put("BLMOTORPIN", "2");
 		_properties.put("FRMOTORPIN", "1");
 		_properties.put("BRMOTORPIN", "3");
+		_properties.put("SLMOTORPIN", "4");//TODO put actual pins here
+		_properties.put("SRMOTORPIN", "5");
+		_properties.put("SHMOTORPIN", "6");
 	}
 
 	/***
@@ -62,8 +65,18 @@ public class Tim extends RobotDefinitionBase {
 		
 		// Sets the Global sensor controller to 
 		Global.sensors = TimSensorController.getInstance();
+		
+		//Create the IMotors for the Shooter class
+		IMotor SL = new SparkMotor(getInt("SLMOTORPIN"));
+		IMotor SR = new SparkMotor(getInt("SRMOTORPIN"));
+		IMotor SH = new SparkMotor(getInt("SHMOTORPIN"));
+		
+		// Create the class for Tim's shooter
+		Shooter S = new Shooter(SL, SR, SH);
+		
 		temp.put("AD", AD);		
 		temp.put("CR", CR);
+		temp.put("S", S);
 
 		return temp;
 	}
