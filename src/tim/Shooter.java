@@ -11,6 +11,7 @@ public class Shooter extends IControl {
 	private IMotor right;
 	private IMotor height;
 	private XboxController controller;
+	private double curSpeed;
 
 	public Shooter(IMotor left, IMotor right, IMotor height) {
 		state = 1;
@@ -18,27 +19,52 @@ public class Shooter extends IControl {
 		this.right = right;
 		this.height = height;
 		controller = XboxController.getXboxController();
+		curSpeed = 0;
 	}
-	
-	public void teleopInit(){
+
+	public void autonomousInit() {
+		curSpeed = 0;
 		setShootRaw(0);
 		setHeightRaw(0);
 	}
-	
-	public void teleopPeriodic(){
-		if(true){
-			setShootRaw(1);
+
+	public void teleopInit() {
+		curSpeed = 0;
+		setShootRaw(0);
+		setHeightRaw(0);
+	}
+
+	public void teleopPeriodic() {
+		//sets the speed for the shooter wheels Right bumper - faster, Left bumper - slower
+		if (controller.getBPressed()) {
+			curSpeed = 0;
+		}
+		else if (controller.getRightBumperPressed() && curSpeed < 1) {
+			curSpeed += .2;
+		}
+		else if (controller.getLeftBumperPressed() && curSpeed > 0) {
+			curSpeed -= .2;
+		}
+		setShootRaw(curSpeed);
+
+		//Sets the elevation of the shooter X - up, Y - down
+		if (controller.getXHeld()) {
+			setHeightRaw(-1.0);
+		}
+		else if (controller.getYHeld()) {
+			setHeightRaw(1.0);
 		}
 	}
-	
-	private void setShootRaw(double power){
+
+	private void setShootRaw(double power) {
 		left.setSpeed(power);
 		right.setSpeed(power);
 	}
 
-	private void setHeightRaw(double speed){
+	private void setHeightRaw(double speed) {
 		height.setSpeed(speed);
 	}
+
 	/**
 	 * sets both of the shoot motors to power <br>
 	 * Preconditions: power is between 1.0 and -1.0 <br>
@@ -51,15 +77,16 @@ public class Shooter extends IControl {
 			setShootRaw(power);
 		}
 	}
-	
+
 	/**
 	 * Sets the motor for elevation change positive goes up negative goes down
-	 * Preconditions: speed is between 1.0 and -1.0
-	 * Postconditions: sets the motor
+	 * Preconditions: speed is between 1.0 and -1.0 Postconditions: sets the
+	 * motor
+	 * 
 	 * @param speed
 	 */
-	public void setHeight(double speed){
-		if(state == 2){
+	public void setHeight(double speed) {
+		if (state == 2) {
 			setHeightRaw(speed);
 		}
 	}
