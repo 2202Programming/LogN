@@ -47,12 +47,12 @@ public class Shooter extends IControl {
 		}
 		setShootRaw(curSpeed);
 
-		//Sets the elevation of the shooter X - up, Y - down
+		//Sets the elevation of the shooter Y - up, X - down
 		if (controller.getXHeld()) {
 			setHeightRaw(-1.0);
 		}
 		else if (controller.getYHeld()) {
-			setHeightRaw(1.0);
+			setHeightRaw(0.75);
 		}
 	}
 
