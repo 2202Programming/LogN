@@ -1,8 +1,5 @@
 package robot;
 
-import java.util.Map;
-import java.util.Map.Entry;
-
 import comms.DebugMode;
 import comms.SmartWriter;
 import edu.wpi.first.wpilibj.IterativeRobot;
