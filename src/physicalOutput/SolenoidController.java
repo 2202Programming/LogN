@@ -14,7 +14,7 @@ public class SolenoidController {
 	 * registers a new solenoid in the controller<br>
 	 * Preconditions: toRegister is a valid solenoid and the key is a string<br>
 	 * Postconditions: registers the solenoid<br>
-	 * 
+	 *
 	 * @param key
 	 *            the string identifier of the solenoid
 	 * @param toRegister
@@ -28,7 +28,7 @@ public class SolenoidController {
 	 * get a DoubleSolenoid from the Map<br>
 	 * Preconditions: the name is a valid key and is tied to a DoubleSolenoid<br>
 	 * Postconditions: returns the solenoid<br>
-	 * 
+	 *
 	 * @param name
 	 *            the name of the solenoid
 	 * @return the requested solenoid
@@ -39,7 +39,7 @@ public class SolenoidController {
 
 		if (temp == null) throw new Exception("No such value in dictionary");
 
-		if ( !(temp instanceof DoubleSolenoid)) throw new Exception(name + " is not of type double solioid");
+		if ( !(temp instanceof DoubleSolenoid)) throw new Exception(name + " is not of type solioid");
 
 		return (DoubleSolenoid)temp;
 	}
@@ -48,7 +48,7 @@ public class SolenoidController {
 	 * get a DoubleSolenoid from the Map<br>
 	 * Preconditions: the name is a valid key and is tied to a Solenoid<br>
 	 * Postconditions: returns the solenoid<br>
-	 * 
+	 *
 	 * @param name
 	 *            the name of the solenoid
 	 * @return the requested solenoid
