@@ -7,8 +7,8 @@ import auto.*;
 import tim.*;
 import drive.*;
 import physicalOutput.*;
-import robot.Global;
-import robot.IControl;
+import robot.*;
+import input.*;
 
 /**
  * The Tim implementation of IDefinition.<br>
@@ -63,8 +63,9 @@ public class Tim extends RobotDefinitionBase {
 		CommandListMaker CLM = new CommandListMaker(AD);
 		CommandRunner CR = new CommandRunner(CLM.makeList1(),"TIM");  // makes list one for the TIM robot
 		
-		// Sets the Global sensor controller to 
-		Global.sensors = TimSensorController.getInstance();
+		// Creates the global sensor controller
+		Global.sensors = new SensorController();
+		//TODO add the sensors here
 		
 		//Create the IMotors for the Shooter class
 		IMotor SL = new SparkMotor(getInt("SLMOTORPIN"));

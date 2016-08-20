@@ -3,7 +3,7 @@ package auto;
 import drive.IDrive;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SensorBase;
-import input.ISensorController;
+import input.SensorController;
 import input.SensorName;
 import other.PIDController;
 import robot.Global;
@@ -13,7 +13,7 @@ public class DriveCommand implements Command {
 	private double dist;
 	private int currentDist;
 	private IDrive drive;
-	private ISensorController sensors;
+	private SensorController sensors;
 	private PIDController pidControl;
 
 	/**
