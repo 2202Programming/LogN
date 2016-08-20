@@ -1,7 +1,6 @@
 package auto;
 
 import edu.wpi.first.wpilibj.Encoder;
-import input.SensorName;
 import robot.Global;
 import robot.IControl;
 
@@ -31,7 +30,7 @@ public class CommandRunner extends IControl {
 	private void resetSensors() {
 		switch (robotName) {
 		case "TIM":
-			((Encoder)Global.sensors.getSensor(SensorName.FLENCODER)).reset();
+			((Encoder)Global.sensors.getSensor("FLENCODER")).reset();
 			break;
 		}
 	}

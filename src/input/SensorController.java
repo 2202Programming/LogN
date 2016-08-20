@@ -12,20 +12,20 @@ import robot.IControl;
 public class SensorController {
 
 	// All of the sensors for the current robot
-	private Map<SensorName, SensorBase> sensors = new HashMap<SensorName, SensorBase>();
+	private Map<String, SensorBase> sensors = new HashMap<String, SensorBase>();
 
 	/**
 	 * Puts a sensor into the map<br>
-	 * Preconditions: the key is a valid SensorName and sensor is valid
+	 * Preconditions: the key is a valid String and sensor is valid
 	 * SensorBase<br>
 	 * Postconditions: adds the sensor<br>
 	 * 
 	 * @param key
-	 *            the sensorName
+	 *            the Sensor's name
 	 * @param sensor
 	 *            the sensor to input
 	 */
-	public void registerSensor(SensorName key, SensorBase sensor) {
+	public void registerSensor(String key, SensorBase sensor) {
 		sensors.put(key, sensor);
 	}
 
@@ -38,7 +38,7 @@ public class SensorController {
 	 *            the key tied to the desired sensor
 	 * @return the sensor that is tied to the inputed key
 	 */
-	public SensorBase getSensor(SensorName key) {
+	public SensorBase getSensor(String key) {
 		return sensors.get(key);
 	}
 }

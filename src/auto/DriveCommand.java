@@ -4,7 +4,6 @@ import drive.IDrive;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SensorBase;
 import input.SensorController;
-import input.SensorName;
 import other.PIDController;
 import robot.Global;
 
@@ -37,8 +36,8 @@ public class DriveCommand implements Command {
 		switch (robotName) {
 		case "TIM":
 			pidControl.setPID(1, 1, 1);
-			encoderDrive((Encoder)sensors.getSensor(SensorName.FLENCODER), (Encoder)sensors.getSensor(SensorName.FRENCODER));
-			currentDist = ((Encoder)sensors.getSensor(SensorName.FLENCODER)).get();
+			encoderDrive((Encoder)sensors.getSensor("FLENCODER"), (Encoder)sensors.getSensor("FRENCODER"));
+			currentDist = ((Encoder)sensors.getSensor("FLENCODER")).get();
 			break;
 		default:
 			drive.setLeftMotors(power);
