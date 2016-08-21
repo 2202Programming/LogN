@@ -8,8 +8,20 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SolenoidBase;
 
 public class SolenoidController {
-	private Map<String, SolenoidBase> solenoids = new HashMap<String, SolenoidBase>();
+	private static SolenoidController controller;
+	private Map<String, SolenoidBase> solenoids;
 
+	private SolenoidController(){
+		solenoids  = new HashMap<String, SolenoidBase>();
+	}
+	
+	//Use this to get the instance of SolenoidController
+	public static SolenoidController getInstance(){
+		if(controller == null){
+			controller = new SolenoidController();
+		}
+		return controller;
+	}
 	/**
 	 * registers a new solenoid in the controller<br>
 	 * Preconditions: toRegister is a valid solenoid and the key is a string<br>

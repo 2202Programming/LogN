@@ -7,13 +7,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 import edu.wpi.first.wpilibj.SensorBase;
-import robot.IControl;
 
 public class SensorController {
-
+	private static SensorController controller;
 	// All of the sensors for the current robot
-	private Map<String, SensorBase> sensors = new HashMap<String, SensorBase>();
+	private Map<String, SensorBase> sensors;
 
+	private SensorController(){
+		sensors = new HashMap<String, SensorBase>();
+	}
+	
+	//Use this to get the instance of SensorController
+	public static SensorController getInstance(){
+		if(controller == null){
+			controller = new SensorController();
+		}
+		return controller;
+	}
 	/**
 	 * Puts a sensor into the map<br>
 	 * Preconditions: the key is a valid String and sensor is valid

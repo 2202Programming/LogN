@@ -53,13 +53,13 @@ public class Tim extends RobotDefinitionBase {
 		Map<String, IControl> temp=super.loadControlObjects();
 		
 		// Creates the global sensor controller
-		SensorController SC = new SensorController();
+		SensorController SC = SensorController.getInstance();
 		SC.registerSensor("example", new Encoder(1,1));
 		//TODO add the sensors here
 		Global.sensors = SC;
 		
 		// Creates the global solenoid controller
-		SolenoidController SO = new SolenoidController();
+		SolenoidController SO = SolenoidController.getInstance();
 		SO.registerSolenoid("TRIGGER", new DoubleSolenoid(1,1));
 		//TODO register the solenoids here
 		Global.solenoids = SO;
