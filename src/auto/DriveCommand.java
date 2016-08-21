@@ -23,7 +23,7 @@ public class DriveCommand implements Command {
 	 *            distance to drive TODO at this point is just number of cycles
 	 */
 	public DriveCommand(double powIn, double distIn, IDrive driveIn) {
-		sensors = Global.sensors;
+		sensors = SensorController.getInstance();
 		power = powIn;
 		dist = distIn;
 		drive = driveIn;

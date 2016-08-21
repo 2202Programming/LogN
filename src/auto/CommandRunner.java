@@ -1,13 +1,14 @@
 package auto;
 
 import edu.wpi.first.wpilibj.Encoder;
-import robot.Global;
+import input.SensorController;
 import robot.IControl;
 
 public class CommandRunner extends IControl {
 	private int commandNum;
 	private CommandList commands;
 	private String robotName;
+	private SensorController sensors;
 
 	/**
 	 * Constructor for CommandRunner<br>
@@ -20,6 +21,7 @@ public class CommandRunner extends IControl {
 	public CommandRunner(CommandList xCommands, String robotName) {
 		commands = xCommands;
 		this.robotName = robotName;
+		sensors = SensorController.getInstance();
 	}
 
 	/**
@@ -30,7 +32,7 @@ public class CommandRunner extends IControl {
 	private void resetSensors() {
 		switch (robotName) {
 		case "TIM":
-			((Encoder)Global.sensors.getSensor("FLENCODER")).reset();
+			((Encoder)sensors.getSensor("FLENCODER")).reset();
 			break;
 		}
 	}

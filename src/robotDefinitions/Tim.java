@@ -56,13 +56,11 @@ public class Tim extends RobotDefinitionBase {
 		SensorController SC = SensorController.getInstance();
 		SC.registerSensor("example", new Encoder(1,1));
 		//TODO add the sensors here
-		Global.sensors = SC;
 		
 		// Creates the global solenoid controller
 		SolenoidController SO = SolenoidController.getInstance();
 		SO.registerSolenoid("TRIGGER", new DoubleSolenoid(1,1));
 		//TODO register the solenoids here
-		Global.solenoids = SO;
 
 		// Create IMotors for Arcade Drive
 		IMotor FL=new SparkMotor(getInt("FLMOTORPIN"));

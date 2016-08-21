@@ -29,7 +29,7 @@ public class TurnCommand implements Command {
 		drive = driveIn;
 		power = powIn;
 		amount = amountIn;
-		sensors = Global.sensors;
+		sensors = SensorController.getInstance();
 		pidControl = new PIDController();
 	}
 
