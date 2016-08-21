@@ -39,7 +39,7 @@ public class SolenoidController {
 
 		if (temp == null) throw new Exception("No such value in dictionary");
 
-		if ( !(temp instanceof DoubleSolenoid)) throw new Exception(name + " is not of type solioid");
+		if ( !(temp instanceof DoubleSolenoid)) throw new Exception(name + " is not of type double solioid");
 
 		return (DoubleSolenoid)temp;
 	}
@@ -59,7 +59,7 @@ public class SolenoidController {
 
 		if (temp == null) throw new Exception("No such value in dictionary");
 
-		if ( !(temp instanceof Solenoid)) throw new Exception(name + " is not of type double solioid");
+		if ( !(temp instanceof Solenoid)) throw new Exception(name + " is not of type solioid");
 
 		return (Solenoid)temp;
 	}
