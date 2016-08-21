@@ -6,6 +6,8 @@ import java.util.Map;
 import auto.*;
 import tim.*;
 import drive.*;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Encoder;
 import physicalOutput.*;
 import robot.*;
 import input.*;
@@ -49,6 +51,18 @@ public class Tim extends RobotDefinitionBase {
 		
 		// Create map to store public objects
 		Map<String, IControl> temp=super.loadControlObjects();
+		
+		// Creates the global sensor controller
+		SensorController SC = new SensorController();
+		SC.registerSensor("example", new Encoder(1,1));
+		//TODO add the sensors here
+		Global.sensors = SC;
+		
+		// Creates the global solenoid controller
+		SolenoidController SO = new SolenoidController();
+		SO.registerSolenoid("TRIGGER", new DoubleSolenoid(1,1));
+		//TODO register the solenoids here
+		Global.solenoids = SO;
 
 		// Create IMotors for Arcade Drive
 		IMotor FL=new SparkMotor(getInt("FLMOTORPIN"));
@@ -62,10 +76,6 @@ public class Tim extends RobotDefinitionBase {
 		// Create the autonomous command list maker, and command runner
 		CommandListMaker CLM = new CommandListMaker(AD);
 		CommandRunner CR = new CommandRunner(CLM.makeList1(),"TIM");  // makes list one for the TIM robot
-		
-		// Creates the global sensor controller
-		Global.sensors = new SensorController();
-		//TODO add the sensors here
 		
 		//Create the IMotors for the Shooter class
 		IMotor SL = new SparkMotor(getInt("SLMOTORPIN"));

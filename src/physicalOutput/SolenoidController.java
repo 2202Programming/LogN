@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SolenoidBase;
 
 public class SolenoidController {
-	private static Map<String, SolenoidBase> solenoids = new HashMap<String, SolenoidBase>();
+	private Map<String, SolenoidBase> solenoids = new HashMap<String, SolenoidBase>();
 
 	/**
 	 * registers a new solenoid in the controller<br>
@@ -20,7 +20,7 @@ public class SolenoidController {
 	 * @param toRegister
 	 *            the solenoid to register
 	 */
-	public static void registerSolenoid(String key, SolenoidBase toRegister) {
+	public void registerSolenoid(String key, SolenoidBase toRegister) {
 		solenoids.put(key, toRegister);
 	}
 
@@ -34,7 +34,7 @@ public class SolenoidController {
 	 * @return the requested solenoid
 	 * @throws Exception
 	 */
-	public static DoubleSolenoid getDoubleSolenoid(String name) throws Exception {
+	public DoubleSolenoid getDoubleSolenoid(String name) throws Exception {
 		SolenoidBase temp = solenoids.get(name);
 
 		if (temp == null) throw new Exception("No such value in dictionary");
@@ -54,7 +54,7 @@ public class SolenoidController {
 	 * @return the requested solenoid
 	 * @throws Exception
 	 */
-	public static Solenoid getSolenoid(String name) throws Exception {
+	public Solenoid getSolenoid(String name) throws Exception {
 		SolenoidBase temp = solenoids.get(name);
 
 		if (temp == null) throw new Exception("No such value in dictionary");
