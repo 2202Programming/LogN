@@ -1,5 +1,12 @@
-package other;
+package PID;
 
+/**
+ * 
+ * A lightweight general purpose PID controller
+ * 
+ * @author David and Daniel
+ *
+ */
 public class PIDController {
 	private double kp;
 	private double ki;
@@ -13,13 +20,10 @@ public class PIDController {
 	 * Must set pid values before using calculate
 	 */
 	public PIDController() {
-		kp=0;
-		ki=0;
-		kd=0;
-		totalError=0;
-		lastError=0;
-		resetOnOvershoot=false;
+		this(0, 0, 0, true);
 	}
+	
+	
 
 	/**
 	 * A basic PIDController for random stuff(Can be improved greatly)
@@ -70,6 +74,7 @@ public class PIDController {
 	 * @return The output using the p, i, and d values set in the constructor
 	 */
 	public double calculate(double targetValue, double currentValue) {
+		
 
 		double error=currentValue-targetValue;
 
