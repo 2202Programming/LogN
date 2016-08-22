@@ -6,7 +6,7 @@ public class AutoPIDTuner {
 	private PIDValues bestPreviousPIDValues=new PIDValues(1, 0, 0);
 	private PIDController pidController=new PIDController(bestPreviousPIDValues);
 	private double minError=0.01;
-	private int errorSafeCounter=0, maxErrorSafeCounter=120;
+	private int errorSafeCounter=0, maxErrorSafeCounter=40;
 	
 	public AutoPIDTuner(AutoPIDTunable toTune) {
 		this.toTune=toTune;
@@ -36,8 +36,21 @@ public class AutoPIDTuner {
 		if (!toTune.getResetFinished()) {
 			return;
 		}
+		checkForFinished();
+		if (errorSafeCounter>=maxErrorSafeCounter) {
+			toTune.startReset();
+			return;
+		}
 		double output=pidController.calculate(0, toTune.getError());
 		toTune.setValue(output);
 	}
 	
+	private void checkForFinished() {
+		if (Math.abs(toTune.getError())<minError) {
+			errorSafeCounter++;
+		}
+		else {
+			errorSafeCounter=0;
+		}
+	}
 }

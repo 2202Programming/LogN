@@ -28,7 +28,7 @@ public class AutoPIDTesterWindow {
 		int renders=0, updates=0;
 		while (true) {
 			if (System.currentTimeMillis()>lastSecondTime+timeBetweenSeconds) {
-				System.out.println("Updates: "+updates+"    FPS: "+renders);
+				frame.setTitle("Updates: "+updates+"    FPS: "+renders);
 				renders=0;
 				updates=0;
 				lastSecondTime+=timeBetweenSeconds;
