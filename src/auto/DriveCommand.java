@@ -3,8 +3,7 @@ package auto;
 import drive.IDrive;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SensorBase;
-import input.ISensorController;
-import input.SensorName;
+import input.SensorController;
 import other.PIDController;
 import robot.Global;
 
@@ -13,7 +12,7 @@ public class DriveCommand implements Command {
 	private double dist;
 	private int currentDist;
 	private IDrive drive;
-	private ISensorController sensors;
+	private SensorController sensors;
 	private PIDController pidControl;
 
 	/**
@@ -24,7 +23,7 @@ public class DriveCommand implements Command {
 	 *            distance to drive TODO at this point is just number of cycles
 	 */
 	public DriveCommand(double powIn, double distIn, IDrive driveIn) {
-		sensors = Global.sensors;
+		sensors = SensorController.getInstance();
 		power = powIn;
 		dist = distIn;
 		drive = driveIn;
@@ -37,8 +36,8 @@ public class DriveCommand implements Command {
 		switch (robotName) {
 		case "TIM":
 			pidControl.setPID(1, 1, 1);
-			encoderDrive((Encoder)sensors.getSensor(SensorName.FLENCODER), (Encoder)sensors.getSensor(SensorName.FRENCODER));
-			currentDist = ((Encoder)sensors.getSensor(SensorName.FLENCODER)).get();
+			encoderDrive((Encoder)sensors.getSensor("FLENCODER"), (Encoder)sensors.getSensor("FRENCODER"));
+			currentDist = ((Encoder)sensors.getSensor("FLENCODER")).get();
 			break;
 		default:
 			drive.setLeftMotors(power);

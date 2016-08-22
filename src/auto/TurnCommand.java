@@ -3,7 +3,7 @@ package auto;
 import drive.IDrive;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SensorBase;
-import input.ISensorController;
+import input.SensorController;
 import other.PIDController;
 import robot.Global;
 
@@ -11,7 +11,7 @@ public class TurnCommand implements Command {
 	private IDrive drive;
 	private double power;
 	private double amount;
-	private ISensorController sensors;
+	private SensorController sensors;
 	private PIDController pidControl;
 
 	/**
@@ -29,7 +29,7 @@ public class TurnCommand implements Command {
 		drive = driveIn;
 		power = powIn;
 		amount = amountIn;
-		sensors = Global.sensors;
+		sensors = SensorController.getInstance();
 		pidControl = new PIDController();
 	}
 
