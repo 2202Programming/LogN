@@ -96,4 +96,8 @@ public class PIDController {
 		
 		return output;
 	}
+	
+	public void setValues(PIDValues values) {
+		setPID(values.kp, values.ki, values.kd);
+	}
 }
