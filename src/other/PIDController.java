@@ -46,14 +46,17 @@ public class PIDController {
 	/**
 	 * Sets new values for the pid variables
 	 * 
-	 * @param kpIn
-	 * @param kiIn
-	 * @param kdIn
+	 * @param kp
+	 * The new P constant
+	 * @param ki
+	 * The new I constant
+	 * @param kd
+	 * The new D constant
 	 */
-	public void setPID(double kpIn, double kiIn, double kdIn) {
-		kp=kpIn;
-		ki=kiIn;
-		kd=kdIn;
+	public void setPID(double kp, double ki, double kd) {
+		this.kp=kp;
+		this.ki=ki;
+		this.kd=kd;
 	}
 
 	/**
@@ -70,17 +73,18 @@ public class PIDController {
 
 		double error=currentValue-targetValue;
 
+		//reset if I should on overshoot, and I overshot
 		if (resetOnOvershoot&&Math.signum(error)!=Math.signum(lastError)) {
 			totalError=0;
 		}
+
 		totalError+=error;
-
-		double pChange=kp*error;
-		double iChange=ki*totalError;
-		double dChange=kd*(error-lastError);//this really seams wrong, idk though
-
+		double pChange=-kp*error;//If my error is negative, spin motors faster
+		double iChange=-ki*totalError;
+		double dChange=-kd*(error-lastError);//(y2-y1)/(x2-x1)*constant
+		double output=pChange+iChange+dChange;
 		lastError=error;
-
-		return pChange+iChange+dChange;
+		
+		return output;
 	}
 }
