@@ -4,10 +4,13 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 
+import PID.AutoPIDTuner;
+
 public class AutoPIDTesterEngine {
 	
 	private double angle=0;
 	private RobotTurnSim sim=new RobotTurnSim();
+	private AutoPIDTuner tuner=new AutoPIDTuner(sim);
 	
 	public AutoPIDTesterEngine() {
 		sim.startReset();

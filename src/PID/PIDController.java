@@ -23,6 +23,10 @@ public class PIDController {
 		this(0, 0, 0, true);
 	}
 	
+	public PIDController(PIDValues values) {
+		this(values.kp, values.ki, values.kd, false);
+	}
+	
 	
 
 	/**

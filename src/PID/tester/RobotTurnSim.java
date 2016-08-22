@@ -41,7 +41,6 @@ public class RobotTurnSim implements AutoPIDTunable{
 	
 	public void update() {
 		if (resetting) {
-			System.out.println("asdf");
 			if (Math.abs(angle-angleToTurnTo)>0.02) {
 				angle+=Math.signum(angleToTurnTo-angle)*0.01;
 			}
