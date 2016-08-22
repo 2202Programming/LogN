@@ -17,6 +17,7 @@ public class AutoPIDTesterEngine {
 	}
 	
 	public void update() {
+		tuner.update();
 		sim.update();
 		angle=sim.getAngle();
 	}

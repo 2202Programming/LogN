@@ -6,11 +6,11 @@ import PID.AutoPIDTunable;
 
 public class RobotTurnSim implements AutoPIDTunable{
 
-	private double angle=0, turnValue=0, targetAngle=0;
+	private double angle=0, turnValue=0;
 	//private final double minTurnAmount=0.0;
 	private boolean resetting=true;
 	private double angleToTurnTo=2;
-	private double turnVelocity=0.0, turnFriction=0.98, turnPower=0.0001;
+	private double turnVelocity=0.0, turnFriction=0.98, turnPower=0.01;
 	private Random random=new Random();
 	
 	public void startReset() {
@@ -32,7 +32,7 @@ public class RobotTurnSim implements AutoPIDTunable{
 	}
 
 	public double getError() {
-		return angle-targetAngle;
+		return angle;
 	}
 
 	public void setValue(double turnValue) {

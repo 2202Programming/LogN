@@ -3,8 +3,10 @@ package PID;
 public class AutoPIDTuner {
 
 	private AutoPIDTunable toTune;
-	private PIDValues bestPreviousPIDValues=new PIDValues(0.1, 0, 0);
-	private PIDController pidController=new PIDController();
+	private PIDValues bestPreviousPIDValues=new PIDValues(1, 0, 0);
+	private PIDController pidController=new PIDController(bestPreviousPIDValues);
+	private double minError=0.01;
+	private int errorSafeCounter=0, maxErrorSafeCounter=120;
 	
 	public AutoPIDTuner(AutoPIDTunable toTune) {
 		this.toTune=toTune;
