@@ -1,5 +1,11 @@
 package PID;
 
 public interface AutoPIDTunable {
-	//public 
+	
+	void startReset();
+	void setToRandomState();
+	boolean getResetFinished();
+		
+	boolean getError();
+	void setValue();
 }
