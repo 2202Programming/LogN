@@ -3,6 +3,7 @@ package PID.tester;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -11,9 +12,12 @@ public class AutoPIDTesterWindow {
 	private JFrame frame;
 	private JPanel mainPanel;
 	public static final int WIDTH=600, HEIGHT=400;
-
+	private static AutoPIDTesterWindow window;
+	private static AutoPIDTesterEngine engine;
+	
 	public static void main(String[] args) {
-		AutoPIDTesterWindow window=new AutoPIDTesterWindow();
+		window=new AutoPIDTesterWindow();
+		engine=new AutoPIDTesterEngine();
 		window.runLoop();
 	}
 	
@@ -33,6 +37,7 @@ public class AutoPIDTesterWindow {
 			}
 			renders++;
 			draw();
+			stop(0.005);
 		}
 	}
 	
@@ -51,8 +56,20 @@ public class AutoPIDTesterWindow {
 	public void draw() {
 		Graphics2D g=(Graphics2D)frame.getGraphics();
 		g.setColor(Color.black);
-		g.fillRect(0, 0, WIDTH-5, HEIGHT-5);
+		BufferedImage toDraw=new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+		Graphics2D g2=(Graphics2D)toDraw.getGraphics();
+		engine.render(g2);
+		g2.dispose();
+		g.drawImage(toDraw, 0, 0, WIDTH, HEIGHT, null);
 		g.dispose();
+	}
+	
+	public void stop(double seconds) {
+		try {
+			Thread.sleep((long)(seconds*1000));
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
