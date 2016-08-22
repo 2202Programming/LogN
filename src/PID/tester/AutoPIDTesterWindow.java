@@ -10,7 +10,8 @@ import javax.swing.JPanel;
 public class AutoPIDTesterWindow {
 	private JFrame frame;
 	private JPanel mainPanel;
-	private static final int WIDTH=600, HEIGHT=400;
+	public static final int WIDTH=600;
+	public static final int HEIGHT=400;
 
 	public static void main(String[] args) {
 		AutoPIDTesterWindow window=new AutoPIDTesterWindow();
