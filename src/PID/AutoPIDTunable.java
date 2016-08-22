@@ -6,6 +6,6 @@ public interface AutoPIDTunable {
 	void setToRandomState();
 	boolean getResetFinished();
 		
-	boolean getError();
-	void setValue();
+	double getError();
+	void setValue(double turnValue);
 }

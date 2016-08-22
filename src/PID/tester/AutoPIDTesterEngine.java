@@ -7,12 +7,15 @@ import java.awt.geom.AffineTransform;
 public class AutoPIDTesterEngine {
 	
 	private double angle=0;
+	private RobotTurnSim sim=new RobotTurnSim();
 	
 	public AutoPIDTesterEngine() {
+		sim.startReset();
 	}
 	
 	public void update() {
-		
+		sim.update();
+		angle=sim.getAngle();
 	}
 	
 	public void render(Graphics2D g) {
@@ -22,7 +25,7 @@ public class AutoPIDTesterEngine {
 		at.rotate(angle, AutoPIDTesterWindow.WIDTH/2, AutoPIDTesterWindow.HEIGHT/2);
 		g.setTransform(at);
 		g.setColor(Color.red);
-		g.fillRect(AutoPIDTesterWindow.WIDTH/4, AutoPIDTesterWindow.HEIGHT/3, AutoPIDTesterWindow.WIDTH/2, AutoPIDTesterWindow.HEIGHT/3);
+		g.fillRect(AutoPIDTesterWindow.WIDTH/3, AutoPIDTesterWindow.HEIGHT/3, AutoPIDTesterWindow.WIDTH/3, AutoPIDTesterWindow.HEIGHT/3);
 		at.rotate(-angle,AutoPIDTesterWindow.WIDTH/2, AutoPIDTesterWindow.HEIGHT/2);
 	}
 	
