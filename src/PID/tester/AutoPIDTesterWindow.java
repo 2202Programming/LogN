@@ -22,18 +22,22 @@ public class AutoPIDTesterWindow {
 	}
 	
 	public void runLoop() {
-		long lastUpdateTime=System.currentTimeMillis();
-		long lastSecondTime=lastUpdateTime;
+		double lastUpdateTime=System.currentTimeMillis();
+		double lastSecondTime=lastUpdateTime;
 		final long updatesPerSecond=60;
-		final long timeBetweenUpdates=1000/updatesPerSecond, timeBetweenSeconds=1000;
+		final double timeBetweenUpdates=1000.0/updatesPerSecond, timeBetweenSeconds=1000;
 		int renders=0, updates=0;
-		while (true) {
-			
+		while (true) {			
 			if (System.currentTimeMillis()>lastSecondTime+timeBetweenSeconds) {
 				System.out.println("Updates: "+updates+"    FPS: "+renders);
 				renders=0;
 				updates=0;
 				lastSecondTime+=timeBetweenSeconds;
+			}
+			if (System.currentTimeMillis()>lastUpdateTime+timeBetweenUpdates) {
+				engine.update();
+				updates++;
+				lastUpdateTime+=timeBetweenUpdates;
 			}
 			renders++;
 			draw();
