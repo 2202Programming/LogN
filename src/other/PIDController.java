@@ -59,18 +59,20 @@ public class PIDController {
 	/**
 	 * calculates the output using the PIDController
 	 * 
-	 * @param setValue
+	 * @param targetValue
 	 *            The desired number
-	 * @param input
+	 * @param currentValue
 	 *            the current value of whatever you're using (Gyro, Encoder,
 	 *            etc.)
 	 * @return The output using the p, i, and d values set in the constructor
 	 */
-	public double calculate(double setValue, double input) {
+	public double calculate(double targetValue, double currentValue) {
 
-		double error=input-setValue;
+		double error=currentValue-targetValue;
 
-		if (resetOnOvershoot) if (Math.signum(error)!=Math.signum(lastError)) totalError=0;
+		if (resetOnOvershoot&&Math.signum(error)!=Math.signum(lastError)) {
+			totalError=0;
+		}
 		totalError+=error;
 
 		double pChange=kp*error;
