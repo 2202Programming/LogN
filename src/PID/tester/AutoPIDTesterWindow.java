@@ -23,7 +23,7 @@ public class AutoPIDTesterWindow {
 	public void runLoop() {
 		double lastUpdateTime=System.currentTimeMillis();
 		double lastSecondTime=lastUpdateTime;
-		final long updatesPerSecond=400;
+		final long updatesPerSecond=900;
 		final double timeBetweenUpdates=1000.0/updatesPerSecond, timeBetweenSeconds=1000;
 		int renders=0, updates=0;
 		while (true) {
