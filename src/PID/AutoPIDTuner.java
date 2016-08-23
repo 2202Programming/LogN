@@ -95,7 +95,7 @@ public class AutoPIDTuner {
 
 	private PIDValues getVarient(PIDValues lastValues) {
 		Random r=new Random();
-		double divider=Math.log(timesTried+2);
+		double divider=2;//Math.log(timesTried+2);
 		dp=Math.pow(r.nextDouble()-0.5, 3)*4/divider;
 		di=Math.pow(r.nextDouble()-0.5, 3)/15/divider;
 		dd=Math.pow(r.nextDouble()-0.5, 3)/10/divider;
