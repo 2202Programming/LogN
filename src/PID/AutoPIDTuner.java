@@ -5,7 +5,7 @@ import java.util.Random;
 public class AutoPIDTuner {
 
 	private AutoPIDTunable toTune;
-	private PIDValues bestPIDValues=new PIDValues(1, .03, 0), testingPIDValues=new PIDValues(1, .03, 0);
+	private PIDValues bestPIDValues=new PIDValues(.4, .03, 0), testingPIDValues=new PIDValues(.4, .03, 0);
 	private PIDController pidController=new PIDController(testingPIDValues);
 	private double minError=0.01;
 	private int errorSafeCounter=0, maxErrorSafeCounter=40, currentTuneCounter=0, maxTuneCounter=1200;
