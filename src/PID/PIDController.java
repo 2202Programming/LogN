@@ -100,4 +100,8 @@ public class PIDController {
 	public void setValues(PIDValues values) {
 		setPID(values.kp, values.ki, values.kd);
 	}
+	
+	public void resetError() {
+		totalError=0;
+	}
 }
