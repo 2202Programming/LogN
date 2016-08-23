@@ -6,11 +6,11 @@ import PID.AutoPIDTunable;
 
 public class RobotTurnSim implements AutoPIDTunable{
 
-	private double angle=0, turnValue=0, targetAngle=0;
+	private double angle=0, turnValue=0;
 	//private final double minTurnAmount=0.0;
 	private boolean resetting=true;
 	private double angleToTurnTo=2;
-	private double turnVelocity=0.0, turnFriction=0.98, turnPower=0.0001;
+	private double turnVelocity=0.0, turnFriction=0.85, turnPower=0.01;
 	private Random random=new Random();
 	
 	public void startReset() {
@@ -24,7 +24,6 @@ public class RobotTurnSim implements AutoPIDTunable{
 		if (random.nextBoolean()) {
 			angleToTurnTo*=-1;
 		}
-		System.out.println("Turning to "+angleToTurnTo);
 	}
 
 	public boolean getResetFinished() {
@@ -32,16 +31,21 @@ public class RobotTurnSim implements AutoPIDTunable{
 	}
 
 	public double getError() {
-		return angle-targetAngle;
+		return angle;
 	}
 
 	public void setValue(double turnValue) {
+		if (Math.abs(turnValue)>1) {
+			turnValue=1*Math.signum(turnValue);
+		}
 		this.turnValue=turnValue;
 	}
 	
 	public void update() {
 		if (resetting) {
-			System.out.println("asdf");
+			if (angle>5||angle<-5) {
+				angle=0;
+			}
 			if (Math.abs(angle-angleToTurnTo)>0.02) {
 				angle+=Math.signum(angleToTurnTo-angle)*0.01;
 			}
@@ -50,7 +54,14 @@ public class RobotTurnSim implements AutoPIDTunable{
 			}
 		}
 		else {
-			turnVelocity+=turnPower*turnValue;
+			double minValue=0.009, usedValue=0;
+			if (Math.abs(turnValue)<minValue) {
+				usedValue=0;
+			}
+			else {
+				usedValue=(Math.abs(turnValue)-minValue)*Math.signum(turnValue);
+			}
+			turnVelocity+=usedValue*turnPower;
 			angle+=turnVelocity;
 			turnVelocity*=turnFriction;
 		}

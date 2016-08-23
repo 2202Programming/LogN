@@ -23,12 +23,12 @@ public class AutoPIDTesterWindow {
 	public void runLoop() {
 		double lastUpdateTime=System.currentTimeMillis();
 		double lastSecondTime=lastUpdateTime;
-		final long updatesPerSecond=60;
+		final long updatesPerSecond=400;
 		final double timeBetweenUpdates=1000.0/updatesPerSecond, timeBetweenSeconds=1000;
 		int renders=0, updates=0;
 		while (true) {
 			if (System.currentTimeMillis()>lastSecondTime+timeBetweenSeconds) {
-				System.out.println("Updates: "+updates+"    FPS: "+renders);
+				frame.setTitle("Updates: "+updates+"    FPS: "+renders);
 				renders=0;
 				updates=0;
 				lastSecondTime+=timeBetweenSeconds;
@@ -41,7 +41,7 @@ public class AutoPIDTesterWindow {
 
 			renders++;
 			draw();
-			stop(0.005);
+			stop(0.001);
 		}
 	}
 

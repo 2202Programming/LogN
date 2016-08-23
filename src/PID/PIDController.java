@@ -23,6 +23,10 @@ public class PIDController {
 		this(0, 0, 0, true);
 	}
 	
+	public PIDController(PIDValues values) {
+		this(values.kp, values.ki, values.kd, false);
+	}
+	
 	
 
 	/**
@@ -91,5 +95,13 @@ public class PIDController {
 		lastError=error;
 		
 		return output;
+	}
+	
+	public void setValues(PIDValues values) {
+		setPID(values.kp, values.ki, values.kd);
+	}
+	
+	public void resetError() {
+		totalError=0;
 	}
 }
