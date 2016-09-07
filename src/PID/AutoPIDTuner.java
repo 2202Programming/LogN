@@ -3,6 +3,7 @@ package PID;
 import java.util.ArrayList;
 import java.util.Random;
 
+import PID.tester.AutoPIDTesterWindow;
 import comms.FileLoader;
 
 public class AutoPIDTuner {
@@ -54,9 +55,6 @@ public class AutoPIDTuner {
 		}
 		checkForFinished();
 		if (errorSafeCounter>=maxErrorSafeCounter||currentTuneCounter>=maxTuneCounter) {
-
-			toWrite.add(timesTried+","+testingPIDValues.kp+","+testingPIDValues.ki+","+testingPIDValues.kp+","+currentTuneCounter
-					+",14,"+(currentTuneCounter<bestTuneTime?1:0));
 			if (currentTuneCounter<bestTuneTime) {
 				System.out.println("\nTested "+testingPIDValues+". "+currentTuneCounter);
 				System.out.println("NEW BEST!!!");
@@ -77,10 +75,19 @@ public class AutoPIDTuner {
 			if (timesTried%10==0) {
 				System.out.println("\n\nGeneration"+timesTried+"\n\n");
 			}
+			tryToSetValues();
 			return;
 		}
 		double output=pidController.calculate(0, toTune.getError());
 		toTune.setValue(output);
+	}
+	
+	private void tryToSetValues() {
+		toWrite.add(timesTried+","+testingPIDValues.kp+","+testingPIDValues.ki+","+testingPIDValues.kp+","+currentTuneCounter
+				+",14,"+(currentTuneCounter<bestTuneTime?1:0));
+		if (AutoPIDTesterWindow.shouldSetValues) {
+			AutoPIDTesterWindow.window.setInfo(testingPIDValues+"", bestPIDValues+"", timesTried);
+		}
 	}
 
 	private void checkForFinished() {

@@ -6,17 +6,26 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class AutoPIDTesterWindow {
 	private JFrame frame;
 	private JPanel mainPanel;
+	private JPanel outerPanel, sidePanel;
+	private JLabel currentlyTesting, bestCombo;
+	private JLabel combosTested;
+	
 	public static final int WIDTH=600, HEIGHT=400;
-	private static AutoPIDTesterWindow window;
+	
+	public static AutoPIDTesterWindow window;
 	private static AutoPIDTesterEngine engine;
+	public static boolean shouldSetValues=false;
+	
 	public static void main(String[] args) {
 		window=new AutoPIDTesterWindow();
 		engine=new AutoPIDTesterEngine();
+		shouldSetValues=true;
 		window.runLoop();
 	}
 	
@@ -48,8 +57,19 @@ public class AutoPIDTesterWindow {
 	public AutoPIDTesterWindow() {
 		frame=new JFrame("Auto PID tester");
 		mainPanel=new JPanel();
-		frame.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-		frame.add(mainPanel);
+		outerPanel=new JPanel();
+		sidePanel=new JPanel();
+		currentlyTesting=new JLabel("Currently Testing: ");
+		bestCombo=new JLabel("Best Combo: ");
+		combosTested=new JLabel("Combos Tested: ");
+		outerPanel.add(mainPanel);
+		outerPanel.add(sidePanel);
+		mainPanel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+		sidePanel.setPreferredSize(new Dimension(300, HEIGHT));
+		sidePanel.add(currentlyTesting);
+		sidePanel.add(combosTested);
+		sidePanel.add(bestCombo);
+		frame.add(outerPanel);
 		frame.pack();
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
@@ -58,7 +78,7 @@ public class AutoPIDTesterWindow {
 	}
 
 	public void draw() {
-		Graphics2D g=(Graphics2D)frame.getGraphics();
+		Graphics2D g=(Graphics2D)mainPanel.getGraphics();
 		g.setColor(Color.black);
 		BufferedImage toDraw=new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		Graphics2D g2=(Graphics2D)toDraw.getGraphics();
@@ -74,6 +94,12 @@ public class AutoPIDTesterWindow {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void setInfo(String currentlyTesting, String bestCombo, int combosTested) {
+		this.currentlyTesting.setText("Currently Testing: "+currentlyTesting);
+		this.bestCombo.setText("Best Combo: "+bestCombo);
+		this.combosTested.setText("Number of Combos Tested: "+combosTested);
 	}
 
 }
