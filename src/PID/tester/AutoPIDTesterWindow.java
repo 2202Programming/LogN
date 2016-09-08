@@ -34,7 +34,7 @@ public class AutoPIDTesterWindow {
 	public void runLoop() {
 		double lastUpdateTime=System.currentTimeMillis();
 		double lastSecondTime=lastUpdateTime;
-		final long updatesPerSecond=900;
+		final long updatesPerSecond=600;
 		final double timeBetweenUpdates=1000.0/updatesPerSecond, timeBetweenSeconds=1000;
 		int renders=0, updates=0;
 		while (true) {
@@ -52,7 +52,7 @@ public class AutoPIDTesterWindow {
 
 			renders++;
 			draw();
-			stop(0.001);
+			//stop(0.0001);
 		}
 	}
 
@@ -66,7 +66,7 @@ public class AutoPIDTesterWindow {
 		combosTested=new JLabel("");
 		bestTime=new JLabel("");
 		timeTakenLabel=new JLabel("                Time taken vs. Attempt Number                ");
-		timeTakenGraph=new PrettyGraph(100);
+		timeTakenGraph=new PrettyGraph(50);
 		outerPanel.add(mainPanel);
 		outerPanel.add(sidePanel);
 		mainPanel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
