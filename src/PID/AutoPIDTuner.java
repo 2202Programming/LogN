@@ -86,7 +86,7 @@ public class AutoPIDTuner {
 		toWrite.add(timesTried+","+testingPIDValues.kp+","+testingPIDValues.ki+","+testingPIDValues.kp+","+currentTuneCounter
 				+",14,"+(currentTuneCounter<bestTuneTime?1:0));
 		if (AutoPIDTesterWindow.shouldSetValues) {
-			AutoPIDTesterWindow.window.setInfo(testingPIDValues+"", bestPIDValues+"", timesTried);
+			AutoPIDTesterWindow.window.setInfo(testingPIDValues+"", bestPIDValues+"", timesTried, bestTuneTime+"");
 		}
 	}
 

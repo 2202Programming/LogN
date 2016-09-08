@@ -13,7 +13,7 @@ public class AutoPIDTesterWindow {
 	private JFrame frame;
 	private JPanel mainPanel;
 	private JPanel outerPanel, sidePanel;
-	private JLabel currentlyTesting, bestCombo;
+	private JLabel currentlyTesting, bestCombo, bestTime;
 	private JLabel combosTested;
 	
 	public static final int WIDTH=600, HEIGHT=400;
@@ -62,6 +62,7 @@ public class AutoPIDTesterWindow {
 		currentlyTesting=new JLabel("Currently Testing: ");
 		bestCombo=new JLabel("Best Combo: ");
 		combosTested=new JLabel("Combos Tested: ");
+		bestTime=new JLabel("Best Time: ");
 		outerPanel.add(mainPanel);
 		outerPanel.add(sidePanel);
 		mainPanel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -69,6 +70,7 @@ public class AutoPIDTesterWindow {
 		sidePanel.add(currentlyTesting);
 		sidePanel.add(combosTested);
 		sidePanel.add(bestCombo);
+		sidePanel.add(bestTime);
 		frame.add(outerPanel);
 		frame.pack();
 		frame.setResizable(false);
@@ -96,10 +98,11 @@ public class AutoPIDTesterWindow {
 		}
 	}
 	
-	public void setInfo(String currentlyTesting, String bestCombo, int combosTested) {
+	public void setInfo(String currentlyTesting, String bestCombo, int combosTested, String bestTime) {
 		this.currentlyTesting.setText("Currently Testing: "+currentlyTesting);
 		this.bestCombo.setText("Best Combo: "+bestCombo);
 		this.combosTested.setText("Number of Combos Tested: "+combosTested);
+		this.bestTime.setText("Best time: "+bestTime);
 	}
 
 }
