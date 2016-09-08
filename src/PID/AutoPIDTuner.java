@@ -14,7 +14,8 @@ public class AutoPIDTuner {
 	private double minError=0.01;
 	private int errorSafeCounter=0, maxErrorSafeCounter=40, currentTuneCounter=0, maxTuneCounter=1200;
 	private int bestTuneTime=maxTuneCounter;
-
+	private int lastTuneCounter=0;//used to display the graph correctly
+	
 	private double dp=0, di=0, dd=0;
 	private int timesTried=0;
 
@@ -69,6 +70,7 @@ public class AutoPIDTuner {
 
 			pidController.setValues(testingPIDValues);
 			pidController.resetError();
+			lastTuneCounter=currentTuneCounter;
 			currentTuneCounter=0;
 			toTune.startReset();
 			timesTried++;
@@ -86,7 +88,7 @@ public class AutoPIDTuner {
 		toWrite.add(timesTried+","+testingPIDValues.kp+","+testingPIDValues.ki+","+testingPIDValues.kp+","+currentTuneCounter
 				+",14,"+(currentTuneCounter<bestTuneTime?1:0));
 		if (AutoPIDTesterWindow.shouldSetValues) {
-			AutoPIDTesterWindow.window.setInfo(testingPIDValues+"", bestPIDValues+"", timesTried, bestTuneTime+"");
+			AutoPIDTesterWindow.window.setInfo(testingPIDValues+"", bestPIDValues+"", timesTried, bestTuneTime+"", lastTuneCounter);
 		}
 	}
 

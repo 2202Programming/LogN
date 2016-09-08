@@ -15,6 +15,8 @@ public class AutoPIDTesterWindow {
 	private JPanel outerPanel, sidePanel;
 	private JLabel currentlyTesting, bestCombo, bestTime;
 	private JLabel combosTested;
+	private JLabel timeTakenLabel;
+	private PrettyGraph timeTakenGraph;
 	
 	public static final int WIDTH=600, HEIGHT=400;
 	
@@ -59,10 +61,12 @@ public class AutoPIDTesterWindow {
 		mainPanel=new JPanel();
 		outerPanel=new JPanel();
 		sidePanel=new JPanel();
-		currentlyTesting=new JLabel("Currently Testing: ");
-		bestCombo=new JLabel("Best Combo: ");
-		combosTested=new JLabel("Combos Tested: ");
-		bestTime=new JLabel("Best Time: ");
+		currentlyTesting=new JLabel("");
+		bestCombo=new JLabel("");
+		combosTested=new JLabel("");
+		bestTime=new JLabel("");
+		timeTakenLabel=new JLabel("                Time taken vs. Attempt Number                ");
+		timeTakenGraph=new PrettyGraph(100);
 		outerPanel.add(mainPanel);
 		outerPanel.add(sidePanel);
 		mainPanel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -71,6 +75,9 @@ public class AutoPIDTesterWindow {
 		sidePanel.add(combosTested);
 		sidePanel.add(bestCombo);
 		sidePanel.add(bestTime);
+		sidePanel.add(new JLabel("                                                                                                  "));
+		sidePanel.add(timeTakenLabel);
+		sidePanel.add(timeTakenGraph);
 		frame.add(outerPanel);
 		frame.pack();
 		frame.setResizable(false);
@@ -88,6 +95,7 @@ public class AutoPIDTesterWindow {
 		g2.dispose();
 		g.drawImage(toDraw, 0, 0, WIDTH, HEIGHT, null);
 		g.dispose();
+		timeTakenGraph.draw();
 	}
 
 	public void stop(double seconds) {
@@ -98,11 +106,12 @@ public class AutoPIDTesterWindow {
 		}
 	}
 	
-	public void setInfo(String currentlyTesting, String bestCombo, int combosTested, String bestTime) {
+	public void setInfo(String currentlyTesting, String bestCombo, int combosTested, String bestTime, int lastTime) {
 		this.currentlyTesting.setText("Currently Testing: "+currentlyTesting);
 		this.bestCombo.setText("Best Combo: "+bestCombo);
 		this.combosTested.setText("Number of Combos Tested: "+combosTested);
 		this.bestTime.setText("Best time: "+bestTime);
+		timeTakenGraph.addDataPoint(lastTime);
 	}
 
 }
