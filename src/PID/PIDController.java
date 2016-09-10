@@ -24,7 +24,7 @@ public class PIDController {
 	}
 	
 	public PIDController(PIDValues values) {
-		this(values.kp, values.ki, values.kd, false);
+		this(values.kp, values.ki, values.kd, true);
 	}
 	
 	
