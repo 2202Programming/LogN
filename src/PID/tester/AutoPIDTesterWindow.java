@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,6 +18,8 @@ public class AutoPIDTesterWindow {
 	private JLabel combosTested;
 	private JLabel timeTakenLabel;
 	private PrettyGraph timeTakenGraph;
+	
+	private JCheckBox testOnRandom, superFastMode;
 	
 	public static final int WIDTH=600, HEIGHT=400;
 	
@@ -34,7 +37,7 @@ public class AutoPIDTesterWindow {
 	public void runLoop() {
 		double lastUpdateTime=System.currentTimeMillis();
 		double lastSecondTime=lastUpdateTime;
-		final long updatesPerSecond=600;
+		final long updatesPerSecond=90;
 		final double timeBetweenUpdates=1000.0/updatesPerSecond, timeBetweenSeconds=1000;
 		int renders=0, updates=0;
 		while (true) {
@@ -44,10 +47,11 @@ public class AutoPIDTesterWindow {
 				updates=0;
 				lastSecondTime+=timeBetweenSeconds;
 			}
-			if (System.currentTimeMillis()>lastUpdateTime+timeBetweenUpdates) {
+			double divisor=(superFastMode.isSelected()?10:1);
+			if (System.currentTimeMillis()>lastUpdateTime+timeBetweenUpdates/divisor) {
 				engine.update();
 				updates++;
-				lastUpdateTime+=timeBetweenUpdates;
+				lastUpdateTime+=timeBetweenUpdates/divisor;
 			}
 
 			renders++;
@@ -66,7 +70,9 @@ public class AutoPIDTesterWindow {
 		combosTested=new JLabel("");
 		bestTime=new JLabel("");
 		timeTakenLabel=new JLabel("                Time taken vs. Attempt Number                ");
-		timeTakenGraph=new PrettyGraph(50);
+		timeTakenGraph=new PrettyGraph(100);
+		testOnRandom=new JCheckBox("Random inputs?");
+		superFastMode=new JCheckBox("Super Fast mode?");
 		outerPanel.add(mainPanel);
 		outerPanel.add(sidePanel);
 		mainPanel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -78,6 +84,9 @@ public class AutoPIDTesterWindow {
 		sidePanel.add(new JLabel("                                                                                                  "));
 		sidePanel.add(timeTakenLabel);
 		sidePanel.add(timeTakenGraph);
+		sidePanel.add(new JLabel("                                                                                                  "));
+		sidePanel.add(testOnRandom);
+		sidePanel.add(superFastMode);
 		frame.add(outerPanel);
 		frame.pack();
 		frame.setResizable(false);
@@ -112,6 +121,10 @@ public class AutoPIDTesterWindow {
 		this.combosTested.setText("Number of Combos Tested: "+combosTested);
 		this.bestTime.setText("Best time: "+bestTime);
 		timeTakenGraph.addDataPoint(lastTime);
+	}
+	
+	public boolean setToRandomState() {
+		return testOnRandom.isSelected();
 	}
 
 }

@@ -7,7 +7,9 @@ import PID.tester.AutoPIDTesterWindow;
 import comms.FileLoader;
 
 /**
- * A class used for automatically tuning PID loops using an evolutionary strategy with semi-intelligent improvement, once some improvement has been made.
+ * A class used for automatically tuning PID loops using an evolutionary
+ * strategy with semi-intelligent improvement, once some improvement has been
+ * made.
  * 
  * @author SecondThread
  */
@@ -113,7 +115,13 @@ public class AutoPIDTuner {
 		currentTuneCounter++;
 		checkError();
 		if (errorSafeCounter>=maxErrorSafeCounter||currentTuneCounter>=maxTuneCounter) {
-			startNewTest();
+			if (shouldStartRandomTest()) {
+				startRandomTest();
+			}
+			else {				
+				accountForLastTest();
+				startNewTest();
+			}
 			return;
 		}
 
@@ -125,7 +133,7 @@ public class AutoPIDTuner {
 	 * and sends them to the AutoPIDTesterWindow, if its main is currently
 	 * running.
 	 */
-	private void recordValues() {
+	private void recordValuesToLog() {
 		toWrite.add(timesTried+","+testingPIDValues.kp+","+testingPIDValues.ki+","+testingPIDValues.kp+","
 				+currentTuneCounter+",14,"+(currentTuneCounter<bestTuneTime?1:0));
 		if (AutoPIDTesterWindow.shouldSetValues) {
@@ -202,11 +210,26 @@ public class AutoPIDTuner {
 	}
 
 	/**
-	 * Records the values of the last test, and starts a new one, either
-	 * extrapolating from the past successful PIDValues, or starting with new
-	 * ones from the previous best PID values.
+	 * Starts a new test, either extrapolating from the past successful
+	 * PIDValues, or starting with new ones from the previous best PID values.
 	 */
 	private void startNewTest() {
+		toTune.startReset();
+		timesTried++;
+		recordValuesToLog();
+	}
+	
+	private void startRandomTest() {
+		pidController.resetError();
+		currentTuneCounter=0;
+		pidController.setValues(bestPIDValues);
+		toTune.setToRandomState();
+	}
+
+	/**
+	 * Keeps track of the last test's information and resets values. It does not start a new test yet though.
+	 */
+	public void accountForLastTest() {
 		if (currentTuneCounter<bestTuneTime) {// NEW BEST!!!
 			bestTuneTime=currentTuneCounter;
 			bestPIDValues=testingPIDValues;
@@ -220,9 +243,6 @@ public class AutoPIDTuner {
 		pidController.resetError();
 		lastTuneCounter=currentTuneCounter;
 		currentTuneCounter=0;
-		toTune.startReset();
-		timesTried++;
-		recordValues();
 	}
 
 	/**
@@ -233,4 +253,8 @@ public class AutoPIDTuner {
 		toTune.setValue(output);
 	}
 
+	private boolean shouldStartRandomTest() {
+		return AutoPIDTesterWindow.shouldSetValues&&AutoPIDTesterWindow.window.setToRandomState();
+	}
+	
 }
