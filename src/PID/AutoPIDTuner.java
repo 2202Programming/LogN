@@ -8,16 +8,56 @@ import comms.FileLoader;
 
 public class AutoPIDTuner {
 
+	/**
+	 * The tunable thing that is suppose to be tuned
+	 */
 	private AutoPIDTunable toTune;
-	private PIDValues bestPIDValues=new PIDValues(.4, .03, 0), testingPIDValues=new PIDValues(.4, .03, 0);
-	private PIDController pidController=new PIDController(testingPIDValues);
-	private double minError=0.01;
-	private int errorSafeCounter=0, maxErrorSafeCounter=40, currentTuneCounter=0, maxTuneCounter=1200;
-	private int bestTuneTime=maxTuneCounter;
-	private int lastTuneCounter=0;//used to display the graph correctly
 	
+	/**
+	 * The previous best PID values and the PID values that will be tested
+	 */
+	private PIDValues bestPIDValues=new PIDValues(.4, .03, 0), testingPIDValues=new PIDValues(.4, .03, 0);
+	
+	/**
+	 * The PIDController that is used by the Tunable object. This is needed so that new PID values can be set when they are tested, and so that error can be reset after tests.
+	 */
+	private PIDController pidController=new PIDController(testingPIDValues);
+	
+	/**
+	 * The error tolerance. The loop will count as being complete when the error is less than this for maxErrorSafeCounter frames
+	 */
+	private double minError=0.01;
+	
+	/**
+	 * The counter and required frames counting how long the tunable has been less than <i>minError</i> from its target value.
+	 */
+	private int errorSafeCounter=0, maxErrorSafeCounter=40;
+	
+	/**
+	 * The number of frames that this loop has used, and the number of frames that can be used before these PID values are marked unsuccessful.
+	 */
+	private int currentTuneCounter=0, maxTuneCounter=1200;
+	
+	/**
+	 * The number of frames the best PID values took to run
+	 */
+	private int bestTuneTime=maxTuneCounter+1;
+	
+	/**
+	 * The number the last run (not necessarily the best) took to run, which is displayed in the graph, if it is being used.
+	 */
+	private int lastTuneCounter=0;
+	
+	
+	/**
+	 * The change in kp, ki, and kd to make the last random PID values, which will continue to be used if they make things better.
+	 */
 	private double dp=0, di=0, dd=0;
-	private int timesTried=0;
+	
+	/**
+	 * The number of PID values tried, and the max number to be tried, respectively.
+	 */
+	private int timesTried=0, maxTries=100;
 
 	private ArrayList<String> toWrite=new ArrayList<String>();
 
@@ -42,7 +82,7 @@ public class AutoPIDTuner {
 	 * otherwise, try another random mutation
 	 */
 	private void tunePID() {
-		if (timesTried>100) {
+		if (timesTried>maxTries) {
 			System.out.println("done.");
 			String total="";
 			for (String s:toWrite) {
