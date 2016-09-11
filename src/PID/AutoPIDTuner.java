@@ -170,9 +170,9 @@ public class AutoPIDTuner {
 		double divider=1;// Math.log(timesTried+2);
 		dp=Math.pow(r.nextDouble()-0.5, 3)*4/divider;
 		di=Math.pow(r.nextDouble()-0.5, 3)/15/divider;
-		dd=Math.pow(r.nextDouble()-0.5, 3)/10/divider;
+		dd=Math.pow(r.nextDouble()-0.5, 3)/3/divider;
 
-		return new PIDValues(lastValues.kp+dp, lastValues.ki+di, lastValues.kd+dd);
+		return new PIDValues(Math.max(lastValues.kp+dp, 0), Math.max(lastValues.ki+di, 0), Math.max(lastValues.kd+dd, 0));
 	}
 
 	/**
@@ -186,7 +186,7 @@ public class AutoPIDTuner {
 	 * @return The new PID values which are extrapolated from <i>lastValues</i>
 	 */
 	private PIDValues extrapolate(PIDValues lastValues) {
-		return new PIDValues(lastValues.kp+dp, lastValues.ki+di, lastValues.kd+dd);
+		return new PIDValues(Math.max(lastValues.kp+dp, 0), Math.max(lastValues.ki+di, 0), Math.max(lastValues.kd+dd, 0));
 	}
 
 	/**
