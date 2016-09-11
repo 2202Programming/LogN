@@ -188,22 +188,22 @@ public class AutoPIDTuner {
 		dp=di=dd=0;
 		switch (ceterusPluribusCounter) {
 		case 0:
-			dp=0.1;
+			dp=0.05;
 			break;
 		case 1:
-			di=0.1;
+			di=0.015;
 			break;
 		case 2:
-			dd=0.1;
+			dd=0.025;
 			break;
 		case 3:
-			dp=-0.1;
+			dp=-0.05;
 			break;
 		case 4:
-			di=-0.1;
+			di=-0.015;
 			break;
 		case 5:
-			dd=-0.1;
+			dd=-0.025;
 			break;
 		default:
 			ceterusPluribusCounter=-1;
