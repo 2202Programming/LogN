@@ -50,6 +50,12 @@ public class PrettyGraph extends JPanel {
 		int lineHeight=(int)(120/(float)maxHeight*HEIGHT*.8);
 		g.drawLine(0, HEIGHT-lineHeight, WIDTH, HEIGHT-lineHeight);
 		
+		g.setColor(Color.green);
+		int lines=3;
+		for (int i=1; i<lines; i++) {
+			g.drawLine(WIDTH*i/lines, 0, WIDTH*i/lines, HEIGHT);
+		}
+		
 		g.setColor(Color.blue);
 		float widthOfBar=WIDTH/(float)heights.length;
 		for (int i=0; i<heights.length; i++) {

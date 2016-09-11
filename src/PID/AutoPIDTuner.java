@@ -73,6 +73,8 @@ public class AutoPIDTuner {
 	 */
 	private int timesTried=0, maxTries=100;
 
+	private int ceterusPluribusCounter=0;
+
 	/**
 	 * An array list of strings that will be logged after <i>maxTries</i>
 	 * trials.
@@ -118,7 +120,7 @@ public class AutoPIDTuner {
 			if (shouldStartRandomTest()) {
 				startRandomTest();
 			}
-			else {				
+			else {
 				accountForLastTest();
 				startNewTest();
 			}
@@ -167,12 +169,49 @@ public class AutoPIDTuner {
 	 */
 	private PIDValues getVariant(PIDValues lastValues) {
 		Random r=new Random();
+
+		if (r.nextInt(3)==0) {
+			return getCeterusParibusVarient(lastValues);
+		}
+
 		double divider=1;// Math.log(timesTried+2);
 		dp=Math.pow(r.nextDouble()-0.5, 3)*4/divider;
 		di=Math.pow(r.nextDouble()-0.5, 3)/15/divider;
 		dd=Math.pow(r.nextDouble()-0.5, 3)/3/divider;
 
-		return new PIDValues(Math.max(lastValues.kp+dp, 0), Math.max(lastValues.ki+di, 0), Math.max(lastValues.kd+dd, 0));
+		return new PIDValues(Math.max(lastValues.kp+dp, 0), Math.max(lastValues.ki+di, 0),
+				Math.max(lastValues.kd+dd, 0));
+	}
+
+	private PIDValues getCeterusParibusVarient(PIDValues lastValues) {
+		ceterusPluribusCounter++;
+		dp=di=dd=0;
+		switch (ceterusPluribusCounter) {
+		case 0:
+			dp=0.1;
+			break;
+		case 1:
+			di=0.1;
+			break;
+		case 2:
+			dd=0.1;
+			break;
+		case 3:
+			dp=-0.1;
+			break;
+		case 4:
+			di=-0.1;
+			break;
+		case 5:
+			dd=-0.1;
+			break;
+		default:
+			ceterusPluribusCounter=-1;
+			return getCeterusParibusVarient(lastValues);
+		}
+
+		return new PIDValues(Math.max(lastValues.kp+dp, 0), Math.max(lastValues.ki+di, 0),
+				Math.max(lastValues.kd+dd, 0));
 	}
 
 	/**
@@ -186,7 +225,8 @@ public class AutoPIDTuner {
 	 * @return The new PID values which are extrapolated from <i>lastValues</i>
 	 */
 	private PIDValues extrapolate(PIDValues lastValues) {
-		return new PIDValues(Math.max(lastValues.kp+dp, 0), Math.max(lastValues.ki+di, 0), Math.max(lastValues.kd+dd, 0));
+		return new PIDValues(Math.max(lastValues.kp+dp, 0), Math.max(lastValues.ki+di, 0),
+				Math.max(lastValues.kd+dd, 0));
 	}
 
 	/**
@@ -218,7 +258,7 @@ public class AutoPIDTuner {
 		timesTried++;
 		recordValuesToLog();
 	}
-	
+
 	private void startRandomTest() {
 		pidController.resetError();
 		currentTuneCounter=0;
@@ -227,7 +267,8 @@ public class AutoPIDTuner {
 	}
 
 	/**
-	 * Keeps track of the last test's information and resets values. It does not start a new test yet though.
+	 * Keeps track of the last test's information and resets values. It does not
+	 * start a new test yet though.
 	 */
 	public void accountForLastTest() {
 		if (currentTuneCounter<bestTuneTime) {// NEW BEST!!!
@@ -256,5 +297,5 @@ public class AutoPIDTuner {
 	private boolean shouldStartRandomTest() {
 		return AutoPIDTesterWindow.shouldSetValues&&AutoPIDTesterWindow.window.setToRandomState();
 	}
-	
+
 }

@@ -47,7 +47,7 @@ public class AutoPIDTesterWindow {
 				updates=0;
 				lastSecondTime+=timeBetweenSeconds;
 			}
-			double divisor=(superFastMode.isSelected()?10:1);
+			double divisor=(superFastMode.isSelected()?20:1);
 			if (System.currentTimeMillis()>lastUpdateTime+timeBetweenUpdates/divisor) {
 				engine.update();
 				updates++;
