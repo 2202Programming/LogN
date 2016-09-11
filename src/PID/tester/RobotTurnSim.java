@@ -54,7 +54,7 @@ public class RobotTurnSim implements AutoPIDTunable{
 			}
 		}
 		else {
-			double minValue=0.009, usedValue=0;
+			double minValue=0.2, usedValue=0;
 			if (Math.abs(turnValue)<minValue) {
 				usedValue=0;
 			}
