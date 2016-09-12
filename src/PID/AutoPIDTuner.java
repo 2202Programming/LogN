@@ -73,7 +73,7 @@ public class AutoPIDTuner {
 	 */
 	private int timesTried=0, maxTries=100;
 
-	private int ceterusPluribusCounter=0;
+	private int ceterusPluribusCounter=-1;
 
 	/**
 	 * An array list of strings that will be logged after <i>maxTries</i>
@@ -170,7 +170,7 @@ public class AutoPIDTuner {
 	private PIDValues getVariant(PIDValues lastValues) {
 		Random r=new Random();
 
-		if (r.nextInt(3)==0) {
+		if (timesTried<30){//r.nextInt(2)==0) {
 			return getCeterusParibusVarient(lastValues);
 		}
 
@@ -180,7 +180,7 @@ public class AutoPIDTuner {
 		dd=Math.pow(r.nextDouble()-0.5, 3)/3/divider;
 
 		return new PIDValues(Math.max(lastValues.kp+dp, 0), Math.max(lastValues.ki+di, 0),
-				Math.max(lastValues.kd+dd, 0));
+				Math.max(Math.min(lastValues.kd+dd, Math.max(lastValues.kp+dp, 0)), 0));
 	}
 
 	private PIDValues getCeterusParibusVarient(PIDValues lastValues) {
@@ -188,22 +188,22 @@ public class AutoPIDTuner {
 		dp=di=dd=0;
 		switch (ceterusPluribusCounter) {
 		case 0:
-			dp=0.05;
+			dp=0.1;
 			break;
 		case 1:
 			di=0.015;
 			break;
 		case 2:
-			dd=0.025;
+			dd=0.05;
 			break;
 		case 3:
-			dp=-0.05;
+			dp=-0.1;
 			break;
 		case 4:
 			di=-0.015;
 			break;
 		case 5:
-			dd=-0.025;
+			dd=-0.05;
 			break;
 		default:
 			ceterusPluribusCounter=-1;
