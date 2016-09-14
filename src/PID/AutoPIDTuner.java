@@ -73,6 +73,9 @@ public class AutoPIDTuner {
 	 */
 	private int timesTried=0, maxTries=100;
 
+	/**
+	 * A counter that is used to see what stat is changed
+	 */
 	private int ceterusPluribusCounter=-1;
 
 	/**
@@ -85,9 +88,38 @@ public class AutoPIDTuner {
 	 * The constructor for AutoPIDTuner, which passes in what needs to be tuned.
 	 * 
 	 * @param toTune
+	 *            The tunable to tune
 	 */
 	public AutoPIDTuner(AutoPIDTunable toTune) {
 		this.toTune=toTune;
+	}
+
+	/**
+	 * The constructor for AutoPIDTuner, which passes in what needs to be tuned.
+	 * <br>
+	 * Also passes in the startingPIDValues
+	 * 
+	 * @param toTune
+	 *            The tunable to tune
+	 * @param kpStarting
+	 * @param kiStarting
+	 * @param kdStarting
+	 */
+	public AutoPIDTuner(AutoPIDTunable toTune, double kpStarting, double kiStarting, double kdStarting) {
+		this(toTune);
+		testingPIDValues=bestPIDValues=new PIDValues(kpStarting, kiStarting, kdStarting);
+	}
+
+	/**
+	 * The constructor for AutoPIDTuner, which passes in what needs to be tuned.
+	 * <br>
+	 * Also passes in the startingPIDValues
+	 * 
+	 * @param toTune
+	 * @param startingPIDValues
+	 */
+	public AutoPIDTuner(AutoPIDTunable toTune, PIDValues startingPIDValues) {
+		this(toTune, startingPIDValues.kp, startingPIDValues.ki, startingPIDValues.kd);
 	}
 
 	/**
@@ -170,7 +202,7 @@ public class AutoPIDTuner {
 	private PIDValues getVariant(PIDValues lastValues) {
 		Random r=new Random();
 
-		if (timesTried<30){//r.nextInt(2)==0) {
+		if (timesTried<30) {// r.nextInt(2)==0) {
 			return getCeterusParibusVarient(lastValues);
 		}
 
@@ -183,6 +215,15 @@ public class AutoPIDTuner {
 				Math.max(Math.min(lastValues.kd+dd, Math.max(lastValues.kp+dp, 0)), 0));
 	}
 
+	/**
+	 * Gets a variant of the last PID values which IS NOT randomized. It changes
+	 * only one variable, depending on how many times this method has been
+	 * called in the past
+	 * 
+	 * @param lastValues
+	 *            The PID values that a small adjustment should be made to
+	 * @return The adjusted PID values
+	 */
 	private PIDValues getCeterusParibusVarient(PIDValues lastValues) {
 		ceterusPluribusCounter++;
 		dp=di=dd=0;
@@ -290,6 +331,7 @@ public class AutoPIDTuner {
 	 * Sends the output from <i>pidController</i> to <i>toTune</i>
 	 */
 	private void sendOutputToTunable() {
+		// Always want 0 error
 		double output=pidController.calculate(0, toTune.getError());
 		toTune.setValue(output);
 	}
