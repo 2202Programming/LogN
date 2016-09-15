@@ -1,23 +1,23 @@
-package motors;
-import edu.wpi.first.wpilibj.Talon;
+package physicalOutput;
+import edu.wpi.first.wpilibj.Jaguar;
 
 
 /**
  * 
  */
-public class TalonMotor extends IMotor {
+public class JaguarMotor extends IMotor {
 
     /**
      * Default constructor
      */
-    public TalonMotor(int x) {
-    	part = new Talon(x);
+    public JaguarMotor(int x) {
+    	part = new Jaguar(x);
     }
 
     /**
      * 
      */
-    private Talon part;
+    private Jaguar part;
 
     /**
      * Sets the motor pwm value
