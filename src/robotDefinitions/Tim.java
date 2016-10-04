@@ -54,7 +54,8 @@ public class Tim extends RobotDefinitionBase {
 		
 		// Creates the global sensor controller
 		SensorController SC = SensorController.getInstance();
-		SC.registerSensor("example", new Encoder(1,1));
+		SC.registerSensor("FLENCODER", new Encoder(1,1));
+		SC.registerSensor("FRENCODER", new Encoder(1,2));
 		//TODO add the sensors here
 		
 		// Creates the global solenoid controller
