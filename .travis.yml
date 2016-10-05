@@ -6,6 +6,6 @@ install:
   - mkdir ~/navx-mxp
   - unzip navx-mxp-libs.zip -d ~/navx-mxp
   - mv ~/navx-mxp/roborio/java/ ~/navx-mxp/
-  - mv ~/navx-mxp/roborio/java/lib/navx_frc.jar ~/navx-mxp/roborio/java/lib/navx-frc.jar 
+  - mv ~/navx-mxp/java/lib/navx_frc.jar ~/navx-mxp/java/lib/navx-frc.jar 
 script: ant jar
 jdk: oraclejdk8
