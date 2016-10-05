@@ -1,5 +1,10 @@
 sudo: false
 language: java
-install: git clone https://github.com/chopshop-166/wpilib-mirror.git ~/wpilib
+install:
+  - git clone https://github.com/chopshop-166/wpilib-mirror.git ~/wpilib
+  - wget http://www.kauailabs.com/public_files/navx-mxp/navx-mxp-libs.zip
+  - mkdir ~/navx-mxp
+  - unzip navx-mxp-libs.zip -d ~/navx-mxp
+  - mv ~/navx-mxp/roborio/java/ ~/navx-mxp/
 script: ant jar
 jdk: oraclejdk8
