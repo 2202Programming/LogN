@@ -13,7 +13,7 @@ import robotDefinitions.Tim;
  */
 public class Robot extends IterativeRobot {
 
-	IRobotDefinition robotDefinition;
+	private IRobotDefinition robotDefinition;
 
 	/**
 	 * We usually only would want to print the first error that occurred, as
@@ -24,6 +24,7 @@ public class Robot extends IterativeRobot {
 
 	public void robotInit() {
 
+		/*
 		// String to say which robot we are using could later be made into a XML
 		// property getter
 		RobotName name=RobotName.TIM; // TODO Can we get this from the robot so
@@ -33,7 +34,7 @@ public class Robot extends IterativeRobot {
 		// Switch to decide which robot definition to use
 		switch (name) {
 		case TIM:
-			robotDefinition=new Tim();
+			//robotDefinition=new Tim();//probably broken
 			break;
 		case PIPER:
 			break;
@@ -42,7 +43,8 @@ public class Robot extends IterativeRobot {
 		}
 
 		// Load all the properties in the currently selected definition
-		Global.controlObjects=robotDefinition.loadControlObjects();
+		//Global.controlObjects=robotDefinition.loadControlObjects();
+		 */
 	}
 
 	public void autonomousInit() {
@@ -82,21 +84,23 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void disabledInit() {
-		SmartWriter.putS("Robot State", "Disabled Init", DebugMode.COMPETITION);
+		/*
+		//SmartWriter.putS("Robot State", "Disabled Init", DebugMode.COMPETITION);
 		try {
-			IControl.callDisabledInit();
+			//IControl.callDisabledInit();
 		} catch (Exception e) {
 			outputError(e, "Disabled Init");
-		}
+		}*/
 	}
 
 	public void disabledPeriodic() {
-		SmartWriter.putS("Robot State", "Disabled Periodic", DebugMode.COMPETITION);
+		/*
+		//SmartWriter.putS("Robot State", "Disabled Periodic", DebugMode.COMPETITION);
 		try {
-			IControl.callDisabledPeriodic();
+			//IControl.callDisabledPeriodic();
 		} catch (Exception e) {
 			outputError(e, "Disabled Periodic");
-		}
+		}*/
 	}
 
 	/**
