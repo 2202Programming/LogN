@@ -24,7 +24,7 @@ public class Robot extends IterativeRobot {
 
 	public void robotInit() {
 
-		/*
+		
 		// String to say which robot we are using could later be made into a XML
 		// property getter
 		RobotName name=RobotName.TIM; // TODO Can we get this from the robot so
@@ -44,7 +44,7 @@ public class Robot extends IterativeRobot {
 
 		// Load all the properties in the currently selected definition
 		//Global.controlObjects=robotDefinition.loadControlObjects();
-		 */
+		 
 	}
 
 	public void autonomousInit() {
@@ -84,23 +84,23 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void disabledInit() {
-		/*
+		
 		//SmartWriter.putS("Robot State", "Disabled Init", DebugMode.COMPETITION);
 		try {
 			//IControl.callDisabledInit();
 		} catch (Exception e) {
 			outputError(e, "Disabled Init");
-		}*/
+		}
 	}
 
 	public void disabledPeriodic() {
-		/*
+		
 		//SmartWriter.putS("Robot State", "Disabled Periodic", DebugMode.COMPETITION);
 		try {
 			//IControl.callDisabledPeriodic();
 		} catch (Exception e) {
 			outputError(e, "Disabled Periodic");
-		}*/
+		}
 	}
 
 	/**
