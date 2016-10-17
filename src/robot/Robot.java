@@ -23,8 +23,7 @@ public class Robot extends IterativeRobot {
 	private boolean stopPrintingErrors=false;
 
 	public void robotInit() {
-
-		
+		SmartWriter.putS("Robot State", "Initsing", DebugMode.DEBUG);
 		// String to say which robot we are using could later be made into a XML
 		// property getter
 		RobotName name=RobotName.TIM; // TODO Can we get this from the robot so

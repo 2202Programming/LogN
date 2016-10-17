@@ -34,13 +34,13 @@ public class Tim extends RobotDefinitionBase {
 		_properties=new HashMap<String, String>();
 		
 		// Default Motor Pins
-		_properties.put("FLMOTORPIN", "0");
-		_properties.put("BLMOTORPIN", "2");
-		_properties.put("FRMOTORPIN", "1");
-		_properties.put("BRMOTORPIN", "3");
-		_properties.put("SLMOTORPIN", "4");//TODO put actual pins here
-		_properties.put("SRMOTORPIN", "5");
-		_properties.put("SHMOTORPIN", "6");
+		_properties.put("FRMOTORPIN", "1");//r
+		_properties.put("BRMOTORPIN", "2");//r
+		_properties.put("FLMOTORPIN", "3");
+		_properties.put("BLMOTORPIN", "4");
+		//_properties.put("SLMOTORPIN", "4");//TODO put actual pins here
+		//_properties.put("SRMOTORPIN", "5");
+		//_properties.put("SHMOTORPIN", "6");
 	}
 
 	/***
@@ -54,12 +54,12 @@ public class Tim extends RobotDefinitionBase {
 		
 		// Creates the global sensor controller
 		SensorController SC = SensorController.getInstance();
-		SC.registerSensor("example", new Encoder(1,1));
 		//TODO add the sensors here
 		
 		// Creates the global solenoid controller
 		SolenoidController SO = SolenoidController.getInstance();
-		SO.registerSolenoid("TRIGGER", new DoubleSolenoid(1,1));
+		//Example to add solenoid:
+		//SO.registerSolenoid("TRIGGER", new DoubleSolenoid(1,1));
 		//TODO register the solenoids here
 
 		// Create IMotors for Arcade Drive
@@ -71,7 +71,7 @@ public class Tim extends RobotDefinitionBase {
 		// Create IDrive arcade drive I dont know why we cast it as a IDrive though
 		IDrive AD=new ArcadeDrive(FL, FR, BL, BR);
 		
-		// Create the autonomous command list maker, and command runner
+	/*	// Create the autonomous command list maker, and command runner
 		CommandListMaker CLM = new CommandListMaker(AD);
 		CommandRunner CR = new CommandRunner(CLM.makeList1(),"TIM");  // makes list one for the TIM robot
 		
@@ -86,7 +86,7 @@ public class Tim extends RobotDefinitionBase {
 		temp.put("AD", AD);		
 		temp.put("CR", CR);
 		temp.put("S", S);
-
+*/
 		return temp;
 	}
 

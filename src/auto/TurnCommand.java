@@ -1,10 +1,10 @@
 package auto;
 
+import PID.PIDController;
 import drive.IDrive;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SensorBase;
 import input.SensorController;
-import other.PIDController;
 import robot.Global;
 
 public class TurnCommand implements Command {
