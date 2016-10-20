@@ -74,7 +74,7 @@ public class ArcadeDrive extends IDrive {
 		double stickY=controller.getLeftJoystickY();
 
 		// convert from Cartesian to polar so things work later
-		double radius=Math.sqrt(stickX*stickX+stickY+stickY);
+		double radius=Math.sqrt(stickX*stickX+stickY*stickY);
 
 		// example coordinates --> leftPower : right power
 		// (0, 1) --> 1 : 1
