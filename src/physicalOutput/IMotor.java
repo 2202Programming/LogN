@@ -36,6 +36,7 @@ public abstract class IMotor extends IControl {
 	 * Set speed to zero in init
 	 */
 	public void teleopInit() {
+		enabled = true;
 		this.setMotor(0.0);
 	}
 

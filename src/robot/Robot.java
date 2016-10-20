@@ -33,7 +33,7 @@ public class Robot extends IterativeRobot {
 		// Switch to decide which robot definition to use
 		switch (name) {
 		case TIM:
-			//robotDefinition=new Tim();//probably broken
+			robotDefinition=new Tim();//probably broken
 			break;
 		case PIPER:
 			break;
@@ -42,7 +42,7 @@ public class Robot extends IterativeRobot {
 		}
 
 		// Load all the properties in the currently selected definition
-		//Global.controlObjects=robotDefinition.loadControlObjects();
+		Global.controlObjects=robotDefinition.loadControlObjects();
 		 
 	}
 
@@ -78,13 +78,14 @@ public class Robot extends IterativeRobot {
 		try {
 			IControl.callTeleopPeriodic();
 		} catch (Exception e) {
+			SmartWriter.putB("error", true, DebugMode.DEBUG);
 			outputError(e, "Teleop Periodic");
 		}
 	}
 
 	public void disabledInit() {
 		
-		//SmartWriter.putS("Robot State", "Disabled Init", DebugMode.COMPETITION);
+		SmartWriter.putS("Robot State", "Disabled Init", DebugMode.COMPETITION);
 		try {
 			//IControl.callDisabledInit();
 		} catch (Exception e) {
@@ -94,7 +95,7 @@ public class Robot extends IterativeRobot {
 
 	public void disabledPeriodic() {
 		
-		//SmartWriter.putS("Robot State", "Disabled Periodic", DebugMode.COMPETITION);
+		SmartWriter.putS("Robot State", "Disabled Periodic", DebugMode.COMPETITION);
 		try {
 			//IControl.callDisabledPeriodic();
 		} catch (Exception e) {

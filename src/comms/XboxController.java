@@ -97,8 +97,8 @@ public class XboxController extends IControl {
 	 * anything.
 	 */
 	private XboxController(int port) {
-		leftJoystick=new Joystick(4);
-		rightJoystick=new Joystick(4);
+		leftJoystick=new Joystick(0);
+		rightJoystick=new Joystick(0);
 
 		// I don't know what this means or does, but we needed it for the c++
 		// version
@@ -146,6 +146,7 @@ public class XboxController extends IControl {
 	 * @param currentlyDown
 	 */
 	private void updateButton(int buttonCode, boolean currentlyDown) {
+		SmartWriter.putB(buttonCode + "", currentlyDown, DebugMode.FULL);
 		lastFrame[buttonCode]=thisFrame[buttonCode];
 		if (!currentlyDown) {
 			debounceCounters[buttonCode]=0;

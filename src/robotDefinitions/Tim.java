@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import auto.*;
+import comms.XboxController;
 import tim.*;
 import drive.*;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -49,6 +50,8 @@ public class Tim extends RobotDefinitionBase {
 	 */
 	public Map<String, IControl> loadControlObjects() {
 		
+		XboxController.getXboxController();
+		
 		// Create map to store public objects
 		Map<String, IControl> temp=super.loadControlObjects();
 		
@@ -63,10 +66,10 @@ public class Tim extends RobotDefinitionBase {
 		//TODO register the solenoids here
 
 		// Create IMotors for Arcade Drive
-		IMotor FL=new SparkMotor(getInt("FLMOTORPIN"));
-		IMotor FR=new SparkMotor(getInt("FRMOTORPIN"));
-		IMotor BL=new SparkMotor(getInt("BLMOTORPIN"));
-		IMotor BR=new SparkMotor(getInt("BRMOTORPIN"));
+		IMotor FL=new JaguarMotor(getInt("FLMOTORPIN"));
+		IMotor FR=new JaguarMotor(getInt("FRMOTORPIN"));
+		IMotor BL=new JaguarMotor(getInt("BLMOTORPIN"));
+		IMotor BR=new JaguarMotor(getInt("BRMOTORPIN"));
 
 		// Create IDrive arcade drive I dont know why we cast it as a IDrive though
 		IDrive AD=new ArcadeDrive(FL, FR, BL, BR);

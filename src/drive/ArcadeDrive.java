@@ -1,5 +1,7 @@
 package drive;
 
+import comms.DebugMode;
+import comms.SmartWriter;
 import comms.XboxController;
 import physicalOutput.IMotor;
 
