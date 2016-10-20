@@ -114,6 +114,9 @@ public class ArcadeDrive extends IDrive {
 			leftMotors=rightMotors;
 			rightMotors=temp;
 		}
+		
+		setLeftMotorsRaw(leftMotors);
+		setRightMotorsRaw(rightMotors);
 	}
 
 	/**
