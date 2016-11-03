@@ -40,7 +40,7 @@ public abstract class IDrive extends IControl {
 			disableMotors();
 			break;
 		case DRIVE_CONTROLLED:
-			setMotors();
+			//setMotors();
 			break;
 		case EXTERNAL_CONTROL:
 			onMotorsExternalControl();

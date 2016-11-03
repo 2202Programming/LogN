@@ -112,6 +112,8 @@ public class XboxController extends IControl {
 	// calls the update method
 	public void teleopPeriodic() {
 		update();
+		SmartWriter.putD("StickY", getLeftJoystickY(), DebugMode.DEBUG);
+		SmartWriter.putD("StickX", getLeftJoystickX(), DebugMode.DEBUG);
 	}
 
 	/**
@@ -168,7 +170,7 @@ public class XboxController extends IControl {
 	}
 
 	public double getRightJoystickX() {
-		return (-1.0)*rightJoystick.getRawAxis(AXIS_RIGHT_X_WIPCODE);
+		return rightJoystick.getRawAxis(AXIS_RIGHT_X_WIPCODE);
 	}
 
 	public double getRightJoystickY() {
@@ -176,11 +178,11 @@ public class XboxController extends IControl {
 	}
 
 	public double getLeftJoystickX() {
-		return (-1.0)*leftJoystick.getRawAxis(AXIS_LEFT_X_WIPCODE);
+		return leftJoystick.getRawAxis(AXIS_LEFT_X_WIPCODE);
 	}
 
 	public double getLeftJoystickY() {
-		return (-1.0)*leftJoystick.getRawAxis(AXIS_LEFT_Y_WIPCODE);
+		return (-1)*leftJoystick.getRawAxis(AXIS_LEFT_Y_WIPCODE);
 	}
 
 	public boolean getXPressed() {

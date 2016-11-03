@@ -72,8 +72,23 @@ public class ArcadeDrive extends IDrive {
 	 * Postconditions: none<br>
 	 */
 	protected void teleopUpdate() {
-		double stickX=controller.getLeftJoystickX();
-		double stickY=controller.getLeftJoystickY();
+		double stickXSquare=Math.abs(controller.getLeftJoystickX());
+		double stickYSquare=Math.abs(controller.getLeftJoystickY());
+		
+		double stickY=0;		
+		double stickX=0;
+		
+		double thetaSquare=Math.atan2(stickYSquare, stickXSquare);
+		if (thetaSquare>Math.PI/4) {
+			double rSquare=stickXSquare/stickYSquare;//This is wrong
+			stickX=stickXSquare/rSquare;
+			stickY=stickYSquare/rSquare;
+		}
+		else {
+			double rSquare=stickYSquare/stickXSquare;//This is wrong
+			stickX=stickXSquare/rSquare;
+			stickY=stickYSquare/rSquare;
+		}
 
 		// convert from Cartesian to polar so things work later
 		double radius=Math.sqrt(stickX*stickX+stickY*stickY);
@@ -114,9 +129,8 @@ public class ArcadeDrive extends IDrive {
 			leftMotors=rightMotors;
 			rightMotors=temp;
 		}
-		
-		setLeftMotorsRaw(leftMotors);
-		setRightMotorsRaw(rightMotors);
+		SmartWriter.putD("LeftMotors", leftMotors, DebugMode.FULL);
+		SmartWriter.putD("RightMotors", rightMotors, DebugMode.FULL);
 	}
 
 	/**

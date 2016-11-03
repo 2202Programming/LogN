@@ -1,6 +1,4 @@
 package physicalOutput;
-import comms.DebugMode;
-import comms.SmartWriter;
 import edu.wpi.first.wpilibj.Jaguar;
 
 
@@ -28,7 +26,6 @@ public class JaguarMotor extends IMotor {
      * @param x
      */
 	protected void setMotor(double x) {
-		SmartWriter.putD("Motorstuff", x, DebugMode.FULL);
 		part.set(x);
 	}
 
