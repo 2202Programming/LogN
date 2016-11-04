@@ -3,8 +3,8 @@ package drive;
 public class ArcadeDriveExample {
 
 	// expected output left:-1 right 1;
-	private static double fakeInputX=1;
-	private static double fakeInputY=1;
+	private static double fakeInputX=-.9;
+	private static double fakeInputY=.9;
 
 	private static final double DEADZONEX=.05;
 	private static final double DEADZONEY=.05;
