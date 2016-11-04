@@ -5,12 +5,12 @@ import comms.SmartWriter;
 import comms.XboxController;
 import physicalOutput.IMotor;
 
-
 /**
  * An arcade drive that uses only the left JoyStick to move. <br>
  * <br>
  * Y-Axis: forward/backwards speed <br>
  * X-Axis: turn left/right
+ * 
  * @author SecondThread
  */
 public class ArcadeDrive extends IDrive {
@@ -74,22 +74,13 @@ public class ArcadeDrive extends IDrive {
 	protected void teleopUpdate() {
 		double stickXSquare=Math.abs(controller.getLeftJoystickX());
 		double stickYSquare=Math.abs(controller.getLeftJoystickY());
-		
-		double stickY=0;		
-		double stickX=0;
-		
-		double thetaSquare=Math.atan2(stickYSquare, stickXSquare);
-		if (thetaSquare>Math.PI/4) {
-			double rSquare=stickXSquare/stickYSquare;//This is wrong
-			stickX=stickXSquare/rSquare;
-			stickY=stickYSquare/rSquare;
-		}
-		else {
-			double rSquare=stickYSquare/stickXSquare;//This is wrong
-			stickX=stickXSquare/rSquare;
-			stickY=stickYSquare/rSquare;
-		}
+		double radiusSquare=getRadiusOfSquare(stickXSquare, stickYSquare);
 
+		// Normalize all stick inputs to have a maximum length of 1, because rawInput
+		// can be anywhere in the square with diagonals (-1, -1) and (1, 1)
+		double stickX=stickXSquare/radiusSquare;
+		double stickY=stickYSquare/radiusSquare;
+		
 		// convert from Cartesian to polar so things work later
 		double radius=Math.sqrt(stickX*stickX+stickY*stickY);
 
@@ -158,7 +149,7 @@ public class ArcadeDrive extends IDrive {
 	 * them do
 	 */
 	public boolean hasEncoders() {
-		//TODO implement in SensorController branch
+		// TODO implement in SensorController branch
 		return false;
 	}
 
@@ -185,4 +176,31 @@ public class ArcadeDrive extends IDrive {
 		setRightMotorsRaw(power);
 	}
 
+	/**
+	 * Gets the distance from the origin to the edge of the unit square along
+	 * the line that passes through both the origin and (<i>stickXSquare</i>,
+	 * <i>stickYSquare</i>)
+	 * 
+	 * @param stickXSquare
+	 *            The x position of the joystick
+	 * @param stickYSquare
+	 *            The y position of the joystick
+	 * @return A distance value between 1 and sqrt(2), both inclusive.
+	 */
+	private double getRadiusOfSquare(double stickXSquare, double stickYSquare) {
+		double theta=Math.abs(Math.atan2(stickYSquare, stickXSquare));
+		if (theta>Math.PI/2) {
+			double squareXIntercept=stickXSquare/stickYSquare;
+			double squareYIntercept=1;
+			double rSquare=Math.hypot(squareXIntercept, squareYIntercept);
+			return rSquare;
+
+		}
+		else {
+			double squareXIntercept=1;
+			double squareYIntercept=stickXSquare/stickYSquare;
+			double rSquare=Math.hypot(squareXIntercept, squareYIntercept);
+			return rSquare;
+		}
+	}
 }

@@ -5,12 +5,12 @@ import comms.SmartWriter;
 import comms.XboxController;
 import physicalOutput.IMotor;
 
-
 /**
  * An arcade drive that uses only the left JoyStick to move. <br>
  * <br>
  * Y-Axis: forward/backwards speed <br>
  * X-Axis: turn left/right
+ * 
  * @author SecondThread
  */
 public class BetaArcadeDrive extends IDrive {
@@ -46,11 +46,10 @@ public class BetaArcadeDrive extends IDrive {
 	 */
 	private double leftMotors=0, rightMotors=0;
 
-	
 	// size of the joy stick dead zone
-	private final double XDEADZONE = 0.05;
-	private final double YDEADZONE = 0.05;
-	
+	private final double XDEADZONE=0.05;
+	private final double YDEADZONE=0.05;
+
 	/**
 	 * @param fl
 	 *            The front left motor
@@ -78,84 +77,72 @@ public class BetaArcadeDrive extends IDrive {
 	 */
 	protected void teleopUpdate() {
 
-		//Position of joy stick
-		double joystickX = controller.getLeftJoystickX();
-		double joystickY = controller.getLeftJoystickY();
-		
+		// Position of joy stick
+		double joystickX=controller.getLeftJoystickX();
+		double joystickY=controller.getLeftJoystickY();
 
 		// variables to store the max sum and difference
 		double max;
 		double sum;
 		double difference;
-		
-		//check to see if within X dead zone
-		if (joystickX<XDEADZONE&& joystickX>-XDEADZONE)
-		{
+
+		// check to see if within X dead zone
+		if (joystickX<XDEADZONE&&joystickX>-XDEADZONE) {
 			joystickX=0;
 		}
-		
-		//check to see within Y dead zone
-		if (joystickY<YDEADZONE&& joystickY>-YDEADZONE)
-		{
+
+		// check to see within Y dead zone
+		if (joystickY<YDEADZONE&&joystickY>-YDEADZONE) {
 			joystickY=0;
 		}
-		
-		//here I set the max
-				max = Math.abs(joystickX);
-				
-				if (Math.abs(joystickY)>max)
-				{
-					max= Math.abs(joystickY);
+
+		// here I set the max
+		max=Math.abs(joystickX);
+
+		if (Math.abs(joystickY)>max) {
+			max=Math.abs(joystickY);
+		}
+
+		// here I set the sum
+		sum=joystickX+joystickY;
+
+		// here I set the difference
+		difference=joystickX-joystickY;
+
+		// what we do if we have input
+		if (joystickX>0||joystickY>0||joystickX<0||joystickY<0) {
+
+			if (joystickY>=0) {
+				// check if in first quadrant
+				if (joystickX>=0) {
+
+					leftMotors=max;
+					rightMotors=-difference;
 				}
-				
-				//here I set the sum
-				sum = joystickX + joystickY;
-				
-				//here I set the difference
-				difference = joystickX-joystickY;
-		
-					//what we do if  we have input
-					if (joystickX>0||joystickY>0||joystickX<0||joystickY<0)
-					{
-					
-						if(joystickY>=0)
-						{
-							//check if in first quadrant
-							if(joystickX>=0)
-							{
-								
-								leftMotors = max;
-								rightMotors =-difference;
-							}
-					
-					
-							//joystick is in quadrant 2
-							else
-							{
-								leftMotors = difference;
-							rightMotors = max;
-							}
-						}
-					
-						else
-						{
-							//check if in quadrant 4
-							if(joystickX>=0)
-							{
-							
-								leftMotors=sum;
-								rightMotors = -max;
-							}
-						
-							//joystick is in quadrant 3
-							else
-							{
-								leftMotors = -max;
-								rightMotors = -sum;
-							}
-						}
-					}
-		
+
+				// joystick is in quadrant 2
+				else {
+					leftMotors=difference;
+					rightMotors=max;
+				}
+			}
+
+			else {
+				// check if in quadrant 4
+				if (joystickX>=0) {
+
+					leftMotors=sum;
+					rightMotors=-max;
+				}
+
+				// joystick is in quadrant 3
+				else {
+					leftMotors=-max;
+					rightMotors=-sum;
+				}
+			}
+		}
+
 		SmartWriter.putD("LeftMotors", leftMotors, DebugMode.FULL);
 		SmartWriter.putD("RightMotors", rightMotors, DebugMode.FULL);
 	}
@@ -185,7 +172,7 @@ public class BetaArcadeDrive extends IDrive {
 	 * them do
 	 */
 	public boolean hasEncoders() {
-		//TODO implement in SensorController branch
+		// TODO implement in SensorController branch
 		return false;
 	}
 
