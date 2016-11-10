@@ -72,8 +72,8 @@ public class ArcadeDrive extends IDrive {
 	 * Postconditions: none<br>
 	 */
 	protected void teleopUpdate() {
-		double stickXSquare=Math.abs(controller.getLeftJoystickX());
-		double stickYSquare=Math.abs(controller.getLeftJoystickY());
+		double stickXSquare=controller.getLeftJoystickX();
+		double stickYSquare=controller.getLeftJoystickY();
 
 		Vector2 output=getMotorOutputs(stickXSquare, stickYSquare);
 
@@ -187,7 +187,7 @@ public class ArcadeDrive extends IDrive {
 	private static Vector2 getMotorOutputs(double leftJoystickXInput, double leftJoystickYInput) {
 		double stickXSquare=leftJoystickXInput;
 		double stickYSquare=leftJoystickYInput;
-		double radiusSquare=getRadiusOfSquare(stickXSquare, stickYSquare);
+		double radiusSquare=Math.abs(getRadiusOfSquare(stickXSquare, stickYSquare));
 
 		// Normalize all stick inputs to have a maximum length of 1, because
 		// rawInput can be anywhere in the square with diagonals (-1, -1) and
@@ -250,9 +250,12 @@ public class ArcadeDrive extends IDrive {
 		System.out.println(getMotorOutputs(.6, 1));
 		System.out.println(getMotorOutputs(.5, 1));
 	}
+	
+	
 }
 
 class Vector2 {
+	
 	private double x, y;
 
 	public Vector2() {

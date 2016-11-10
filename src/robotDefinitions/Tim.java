@@ -66,10 +66,10 @@ public class Tim extends RobotDefinitionBase {
 		//TODO register the solenoids here
 
 		// Create IMotors for Arcade Drive
-		IMotor FL=new JaguarMotor(getInt("FLMOTORPIN"));
-		IMotor FR=new JaguarMotor(getInt("FRMOTORPIN"));
-		IMotor BL=new JaguarMotor(getInt("BLMOTORPIN"));
-		IMotor BR=new JaguarMotor(getInt("BRMOTORPIN"));
+		IMotor FL=new JaguarMotor(getInt("FLMOTORPIN"),true);
+		IMotor FR=new JaguarMotor(getInt("FRMOTORPIN"),false);
+		IMotor BL=new JaguarMotor(getInt("BLMOTORPIN"),true);
+		IMotor BR=new JaguarMotor(getInt("BRMOTORPIN"),false);
 
 		// Create IDrive arcade drive I dont know why we cast it as a IDrive though
 		IDrive AD=new ArcadeDrive(FL, FR, BL, BR);
