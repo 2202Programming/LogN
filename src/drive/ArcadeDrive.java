@@ -185,7 +185,7 @@ public class ArcadeDrive extends IDrive {
 	 *         y coordinate being the rightMotorPower
 	 */
 	private static Vector2 getMotorOutputs(double leftJoystickXInput, double leftJoystickYInput) {
-		double stickXSquare=leftJoystickXInput;
+		double stickXSquare=leftJoystickXInput*Math.abs(leftJoystickXInput);
 		double stickYSquare=leftJoystickYInput;
 		double radiusSquare=Math.abs(getRadiusOfSquare(stickXSquare, stickYSquare));
 
