@@ -39,9 +39,9 @@ public class Tim extends RobotDefinitionBase {
 		_properties.put("BRMOTORPIN", "2");//r
 		_properties.put("FLMOTORPIN", "3");
 		_properties.put("BLMOTORPIN", "4");
-		//_properties.put("SLMOTORPIN", "4");//TODO put actual pins here
-		//_properties.put("SRMOTORPIN", "5");
-		//_properties.put("SHMOTORPIN", "6");
+		_properties.put("SLMOTORPIN", "5");//TODO put actual pins here
+		_properties.put("SRMOTORPIN", "6");
+		_properties.put("SHMOTORPIN", "7");
 	}
 
 	/***
@@ -74,22 +74,22 @@ public class Tim extends RobotDefinitionBase {
 		// Create IDrive arcade drive I dont know why we cast it as a IDrive though
 		IDrive AD=new ArcadeDrive(FL, FR, BL, BR);
 		
-	/*	// Create the autonomous command list maker, and command runner
-		CommandListMaker CLM = new CommandListMaker(AD);
-		CommandRunner CR = new CommandRunner(CLM.makeList1(),"TIM");  // makes list one for the TIM robot
+		// Create the autonomous command list maker, and command runner
+		//CommandListMaker CLM = new CommandListMaker(AD);
+		//CommandRunner CR = new CommandRunner(CLM.makeList1(),"TIM");  // makes list one for the TIM robot
 		
 		//Create the IMotors for the Shooter class
-		IMotor SL = new SparkMotor(getInt("SLMOTORPIN"));
-		IMotor SR = new SparkMotor(getInt("SRMOTORPIN"));
-		IMotor SH = new SparkMotor(getInt("SHMOTORPIN"));
+		IMotor SL = new JaguarMotor(getInt("SLMOTORPIN"),false);
+		IMotor SR = new JaguarMotor(getInt("SRMOTORPIN"),false);
+		IMotor SH = new JaguarMotor(getInt("SHMOTORPIN"),false);
 		
 		// Create the class for Tim's shooter
 		Shooter S = new Shooter(SL, SR, SH);
 		
-		temp.put("AD", AD);		
-		temp.put("CR", CR);
-		temp.put("S", S);
-*/
+//		temp.put("AD", AD);		
+//		temp.put("CR", CR);
+//		temp.put("S", S);
+
 		return temp;
 	}
 
