@@ -3,15 +3,15 @@ package robotDefinitions;
 import java.util.HashMap;
 import java.util.Map;
 
-import auto.*;
 import comms.XboxController;
-import tim.*;
-import drive.*;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Encoder;
-import physicalOutput.*;
-import robot.*;
-import input.*;
+import drive.ArcadeDrive;
+import drive.IDrive;
+import input.SensorController;
+import physicalOutput.IMotor;
+import physicalOutput.JaguarMotor;
+import physicalOutput.SolenoidController;
+import robot.IControl;
+import tim.Shooter;
 
 /**
  * The Tim implementation of IDefinition.<br>
@@ -20,17 +20,17 @@ import input.*;
  */
 public class Tim extends RobotDefinitionBase {
 
-	@Override
+	
 	protected boolean useXML() {
 		return false;
 	}
 
-	@Override
+	
 	protected String loadDefinitionName() {
 		return "TIM";
 	}
 
-	@Override
+	
 	protected void loadManualDefinitions() {
 		_properties=new HashMap<String, String>();
 		

@@ -4,6 +4,7 @@ import comms.DebugMode;
 import comms.SmartWriter;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import robotDefinitions.IRobotDefinition;
+import robotDefinitions.Piper;
 import robotDefinitions.RobotName;
 import robotDefinitions.Tim;
 
@@ -26,7 +27,7 @@ public class Robot extends IterativeRobot {
 		SmartWriter.putS("Robot State", "Initsing", DebugMode.DEBUG);
 		// String to say which robot we are using could later be made into a XML
 		// property getter
-		RobotName name=RobotName.TIM; // TODO Can we get this from the robot so
+		RobotName name=RobotName.PIPER; // TODO Can we get this from the robot so
 										// it automatically knows what robot it
 										// is?
 
@@ -36,6 +37,7 @@ public class Robot extends IterativeRobot {
 			robotDefinition=new Tim();//probably broken
 			break;
 		case PIPER:
+			robotDefinition=new Piper();
 			break;
 		default:
 			break;
