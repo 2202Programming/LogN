@@ -3,14 +3,21 @@ package robotDefinitions;
 import java.util.HashMap;
 import java.util.Map;
 
-import auto.*;
-import tim.*;
-import drive.*;
+import com.kauailabs.navx.frc.AHRS;
+
+import auto.CommandRunner;
+import drive.ArcadeDrive;
+import drive.IDrive;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
-import physicalOutput.*;
-import robot.*;
-import input.*;
+import edu.wpi.first.wpilibj.SerialPort;
+import input.SensorController;
+import physicalOutput.IMotor;
+import physicalOutput.SolenoidController;
+import physicalOutput.SparkMotor;
+import robot.IControl;
+import tim.CommandListMaker;
+import tim.Shooter;
 
 /**
  * The Tim implementation of IDefinition.<br>
@@ -56,6 +63,7 @@ public class Tim extends RobotDefinitionBase {
 		SensorController SC = SensorController.getInstance();
 		SC.registerSensor("FLENCODER", new Encoder(1,1));
 		SC.registerSensor("FRENCODER", new Encoder(1,2));
+		SC.registerSensor("NAVX", new AHRS(SerialPort.Port.kMXP));
 		//TODO add the sensors here
 		
 		// Creates the global solenoid controller
