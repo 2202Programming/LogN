@@ -3,14 +3,18 @@ package robotDefinitions;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.print.attribute.standard.Compression;
+
 import comms.XboxController;
 import drive.ArcadeDrive;
 import drive.IDrive;
+import edu.wpi.first.wpilibj.Compressor;
 import input.SensorController;
 import physicalOutput.IMotor;
 import physicalOutput.JaguarMotor;
 import physicalOutput.SolenoidController;
 import robot.IControl;
+import tim.CompressorTester;
 import tim.Shooter;
 
 /**
@@ -57,6 +61,7 @@ public class Tim extends RobotDefinitionBase {
 		
 		// Creates the global sensor controller
 		SensorController SC = SensorController.getInstance();
+		//SC.registerSensor("Name", new AHRS(port));
 		//TODO add the sensors here
 		
 		// Creates the global solenoid controller
@@ -71,6 +76,7 @@ public class Tim extends RobotDefinitionBase {
 		IMotor BL=new JaguarMotor(getInt("BLMOTORPIN"),true);
 		IMotor BR=new JaguarMotor(getInt("BRMOTORPIN"),false);
 
+		Compressor compressor = new Compressor();
 		// Create IDrive arcade drive I dont know why we cast it as a IDrive though
 		IDrive AD=new ArcadeDrive(FL, FR, BL, BR);
 		
@@ -85,11 +91,11 @@ public class Tim extends RobotDefinitionBase {
 		
 		// Create the class for Tim's shooter
 		Shooter S = new Shooter(SL, SR, SH);
-		
+		CompressorTester compressorTester = new CompressorTester(compressor);
 //		temp.put("AD", AD);		
 //		temp.put("CR", CR);
 //		temp.put("S", S);
-
+		
 		return temp;
 	}
 
