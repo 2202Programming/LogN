@@ -10,7 +10,8 @@ public class JaguarMotor extends IMotor {
     /**
      * Default constructor
      */
-    public JaguarMotor(int x) {
+    public JaguarMotor(int x,boolean reverse) {
+    	super(reverse);
     	part = new Jaguar(x);
     }
 

@@ -10,14 +10,6 @@ import robot.IControl;
 public abstract class IMotor extends IControl {
 
 	/**
-	 * Default constructor disables the motor and sets setValue to 0.0;
-	 */
-	public IMotor() {
-		enabled=false;
-		setValue=0.0;
-	}
-
-	/**
 	 * 
 	 */
 	protected boolean enabled;
@@ -26,6 +18,24 @@ public abstract class IMotor extends IControl {
 	 * 
 	 */
 	protected double setValue;
+	
+	/**
+	 * 
+	 */
+	protected boolean reverse;
+	
+	/**
+	 * Default constructor disables the motor and sets setValue to 0.0;
+	 */
+	public IMotor() {
+		this(false);
+	}
+	
+	public IMotor(boolean reverse){
+		enabled=false;
+		setValue=0.0;
+		this.reverse = reverse;
+	}
 
 	/**
 	 * @param x
@@ -36,6 +46,7 @@ public abstract class IMotor extends IControl {
 	 * Set speed to zero in init
 	 */
 	public void teleopInit() {
+		enabled = true;
 		this.setMotor(0.0);
 	}
 
@@ -78,13 +89,16 @@ public abstract class IMotor extends IControl {
 	}
 
 	/**
-	 * Sets the value that will be applied to the motor<br>
+	 * Sets the value that will be applied to the motor and reverses if necessary<br>
 	 * Preconditions: The value inputed is between -1.0 and 1.0<br>
 	 * Postconditions: setValue will be updated
 	 * 
 	 * @param xSpeed
 	 */
 	public void setSpeed(double xSpeed) {
+		if(reverse){
+			xSpeed*=-1;
+		}
 		setValue=xSpeed;
 	}
 }

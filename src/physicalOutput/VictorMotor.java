@@ -11,7 +11,8 @@ public class VictorMotor extends IMotor {
     /**
      * Default constructor
      */
-    public VictorMotor(int x) {
+	public VictorMotor(int x,boolean reverse) {
+    	super(reverse);
     	part = new Victor(x);
     }
 

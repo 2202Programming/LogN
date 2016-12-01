@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import PID.tester.AutoPIDTesterWindow;
+import comms.DebugMode;
 import comms.FileLoader;
+import comms.SmartWriter;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import robot.IControl;
 
 /**
  * A class used for automatically tuning PID loops using an evolutionary
@@ -13,7 +17,7 @@ import comms.FileLoader;
  * 
  * @author SecondThread
  */
-public class AutoPIDTuner {
+public class AutoPIDTuner extends IControl {
 
 	/**
 	 * The tunable thing that is suppose to be tuned
@@ -84,6 +88,7 @@ public class AutoPIDTuner {
 	 */
 	private ArrayList<String> toWrite=new ArrayList<String>();
 
+	
 	/**
 	 * The constructor for AutoPIDTuner, which passes in what needs to be tuned.
 	 * 
@@ -340,4 +345,15 @@ public class AutoPIDTuner {
 		return AutoPIDTesterWindow.shouldSetValues&&AutoPIDTesterWindow.window.setToRandomState();
 	}
 
+	
+	public void autonomousInit() {
+		SmartWriter.putB("AutoTuning", false, DebugMode.DEBUG);
+	}
+	
+	public void autonomousPeriodic() {
+		if (SmartWriter.getB("AutoTuning")) {
+			update();
+		}
+	}
+	
 }
