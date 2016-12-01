@@ -3,13 +3,16 @@ package robotDefinitions;
 import java.util.HashMap;
 import java.util.Map;
 
-import auto.CommandRunner;
+import com.kauailabs.navx.frc.AHRS;
+
 import drive.ArcadeDrive;
 import drive.IDrive;
+import edu.wpi.first.wpilibj.SerialPort;
+import input.NavXTester;
+import input.SensorController;
 import physicalOutput.IMotor;
 import physicalOutput.SparkMotor;
 import robot.IControl;
-import tim.CommandListMaker;
 
 /**
  * The Piper implementation of IDefinition.<br>
@@ -66,9 +69,14 @@ public class Piper extends RobotDefinitionBase {
 		IMotor FR=new SparkMotor(getInt("FRMOTORPIN"),true);
 		IMotor BL=new SparkMotor(getInt("BLMOTORPIN"),false);
 		IMotor BR=new SparkMotor(getInt("BRMOTORPIN"),true);
-
+		
 		// Create IDrive arcade drive I dont know why we cast it as a IDrive though
 		IDrive AD=new ArcadeDrive(FL, FR, BL, BR);
+		
+		SensorController SC = SensorController.getInstance();
+		SC.registerSensor("NAVX", new AHRS(SerialPort.Port.kMXP));
+		
+		new NavXTester();
 		
 		// Create the autonomous command list maker, and command runner
 //		CommandListMaker CLM = new CommandListMaker(AD);

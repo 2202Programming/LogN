@@ -5,18 +5,17 @@ import java.util.Map;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import auto.CommandRunner;
+import comms.XboxController;
 import drive.ArcadeDrive;
 import drive.IDrive;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SerialPort;
+import input.NavXTester;
 import input.SensorController;
 import physicalOutput.IMotor;
+import physicalOutput.JaguarMotor;
 import physicalOutput.SolenoidController;
-import physicalOutput.SparkMotor;
 import robot.IControl;
-import tim.CommandListMaker;
 import tim.Shooter;
 
 /**
