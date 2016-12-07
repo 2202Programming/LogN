@@ -15,6 +15,7 @@ import physicalOutput.JaguarMotor;
 import physicalOutput.SolenoidController;
 import robot.IControl;
 import tim.CompressorTester;
+import tim.EnableCompressor;
 import tim.Shooter;
 
 /**
@@ -91,7 +92,7 @@ public class Tim extends RobotDefinitionBase {
 		
 		// Create the class for Tim's shooter
 		Shooter S = new Shooter(SL, SR, SH);
-		CompressorTester compressorTester = new CompressorTester(compressor);
+		EnableCompressor compressorTester = new EnableCompressor(compressor);
 //		temp.put("AD", AD);		
 //		temp.put("CR", CR);
 //		temp.put("S", S);
