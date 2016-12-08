@@ -3,18 +3,16 @@ package robotDefinitions;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.print.attribute.standard.Compression;
-
 import comms.XboxController;
 import drive.ArcadeDrive;
 import drive.IDrive;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import input.SensorController;
 import physicalOutput.IMotor;
 import physicalOutput.JaguarMotor;
 import physicalOutput.SolenoidController;
 import robot.IControl;
-import tim.CompressorTester;
 import tim.EnableCompressor;
 import tim.Shooter;
 
@@ -68,7 +66,7 @@ public class Tim extends RobotDefinitionBase {
 		// Creates the global solenoid controller
 		SolenoidController SO = SolenoidController.getInstance();
 		//Example to add solenoid:
-		//SO.registerSolenoid("TRIGGER", new DoubleSolenoid(1,1));
+		SO.registerSolenoid("TRIGGER", new DoubleSolenoid(2,3));
 		//TODO register the solenoids here
 
 		// Create IMotors for Arcade Drive

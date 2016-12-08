@@ -1,7 +1,12 @@
 package tim;
 
+import comms.DebugMode;
+import comms.SmartWriter;
 import comms.XboxController;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import physicalOutput.IMotor;
+import physicalOutput.SolenoidController;
 import robot.IControl;
 
 public class Shooter extends IControl {
@@ -12,6 +17,8 @@ public class Shooter extends IControl {
 	private IMotor height;
 	private XboxController controller;
 	private double curSpeed;
+	private SolenoidController sc;
+	private DoubleSolenoid trigger;
 
 	public Shooter(IMotor left, IMotor right, IMotor height) {
 		state = 1;
@@ -19,7 +26,14 @@ public class Shooter extends IControl {
 		this.right = right;
 		this.height = height;
 		controller = XboxController.getXboxController();
+		sc=SolenoidController.getInstance();
 		curSpeed = 0;
+		try {
+			sc.getDoubleSolenoid("TRIGGER");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			SmartWriter.putS("SolNcrushed", "Something goes wrong", DebugMode.DEBUG);
+		}
 	}
 
 	public void autonomousInit() {
@@ -54,6 +68,18 @@ public class Shooter extends IControl {
 		else if (controller.getYHeld()) {
 			setHeightRaw(0.75);
 		}
+		
+		if(controller.getAHeld()) 
+		{
+			SmartWriter.putB("ABotten", true, DebugMode.DEBUG);
+			trigger.set(Value.kForward);
+		}
+		else{
+			SmartWriter.putB("ABotten", false, DebugMode.DEBUG);
+			trigger.set(Value.kReverse);
+		}
+		SmartWriter.putS("solState", trigger.get() + " ", DebugMode.DEBUG);
+	
 	}
 
 	private void setShootRaw(double power) {
