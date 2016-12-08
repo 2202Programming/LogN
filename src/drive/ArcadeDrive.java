@@ -14,7 +14,7 @@ import physicalOutput.IMotor;
  * @author SecondThread
  */
 public class ArcadeDrive extends IDrive {
-
+	
 	/**
 	 * The motor corresponding to the front right wheel
 	 */
