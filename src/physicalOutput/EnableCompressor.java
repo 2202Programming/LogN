@@ -1,4 +1,4 @@
-package tim;
+package physicalOutput;
 
 import edu.wpi.first.wpilibj.Compressor;
 import robot.IControl;

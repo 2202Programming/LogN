@@ -9,11 +9,11 @@ import drive.IDrive;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import input.SensorController;
+import physicalOutput.EnableCompressor;
 import physicalOutput.IMotor;
 import physicalOutput.JaguarMotor;
 import physicalOutput.SolenoidController;
 import robot.IControl;
-import tim.EnableCompressor;
 import tim.Shooter;
 
 /**
@@ -76,7 +76,7 @@ public class Tim extends RobotDefinitionBase {
 		IMotor BR=new JaguarMotor(getInt("BRMOTORPIN"),false);
 
 		Compressor compressor = new Compressor();
-		// Create IDrive arcade drive I dont know why we cast it as a IDrive though
+		// Create IDrive arcade drive 
 		IDrive AD=new ArcadeDrive(FL, FR, BL, BR);
 		
 		// Create the autonomous command list maker, and command runner

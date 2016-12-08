@@ -17,6 +17,7 @@ public class Shooter extends IControl {
 	private IMotor height;
 	private XboxController controller;
 	private double curSpeed;
+	private double heightSpeed;
 	private SolenoidController sc;
 	private DoubleSolenoid trigger;
 
@@ -28,6 +29,7 @@ public class Shooter extends IControl {
 		controller = XboxController.getXboxController();
 		sc=SolenoidController.getInstance();
 		curSpeed = 0;
+		heightSpeed = 0;
 		try {
 			sc.getDoubleSolenoid("TRIGGER");
 		} catch (Exception e) {
@@ -38,12 +40,14 @@ public class Shooter extends IControl {
 
 	public void autonomousInit() {
 		curSpeed = 0;
+		heightSpeed = 0;
 		setShootRaw(0);
 		setHeightRaw(0);
 	}
 
 	public void teleopInit() {
 		curSpeed = 0;
+		heightSpeed = 0;
 		setShootRaw(0);
 		setHeightRaw(0);
 	}
@@ -62,21 +66,23 @@ public class Shooter extends IControl {
 		setShootRaw(curSpeed);
 
 		//Sets the elevation of the shooter Y - up, X - down
-		if (controller.getXHeld()) {
-			setHeightRaw(-1.0);
+		if(controller.getXHeld()){
+			heightSpeed = -1.0;
+		}else if(controller.getYHeld()){
+			heightSpeed = 0.75;
+		}else{
+			heightSpeed = 0;
 		}
-		else if (controller.getYHeld()) {
-			setHeightRaw(0.75);
-		}
+		setHeightRaw(heightSpeed);
 		
 		if(controller.getAHeld()) 
 		{
 			SmartWriter.putB("ABotten", true, DebugMode.DEBUG);
-			trigger.set(Value.kForward);
+			trigger.set(DoubleSolenoid.Value.kForward);
 		}
 		else{
 			SmartWriter.putB("ABotten", false, DebugMode.DEBUG);
-			trigger.set(Value.kReverse);
+			trigger.set(DoubleSolenoid.Value.kReverse);
 		}
 		SmartWriter.putS("solState", trigger.get() + " ", DebugMode.DEBUG);
 	
