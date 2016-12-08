@@ -7,7 +7,6 @@ import PID.tester.AutoPIDTesterWindow;
 import comms.DebugMode;
 import comms.FileLoader;
 import comms.SmartWriter;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.IControl;
 
 /**
@@ -175,7 +174,7 @@ public class AutoPIDTuner extends IControl {
 	private void recordValuesToLog() {
 		toWrite.add(timesTried+","+testingPIDValues.kp+","+testingPIDValues.ki+","+testingPIDValues.kp+","
 				+currentTuneCounter+",14,"+(currentTuneCounter<bestTuneTime?1:0));
-		if (AutoPIDTesterWindow.shouldSetValues) {
+		if (AutoPIDTesterWindow.shouldSetValues&&AutoPIDTesterWindow.window!=null) {
 			AutoPIDTesterWindow.window.setInfo(testingPIDValues+"", bestPIDValues+"", timesTried, bestTuneTime+"",
 					lastTuneCounter);
 		}
@@ -253,7 +252,7 @@ public class AutoPIDTuner extends IControl {
 			break;
 		default:
 			ceterusPluribusCounter=-1;
-			return getCeterusParibusVarient(lastValues);
+			return getCeterusParibusVarient(lastValues);//YAY FOR RECURSION!
 		}
 
 		return new PIDValues(Math.max(lastValues.kp+dp, 0), Math.max(lastValues.ki+di, 0),
