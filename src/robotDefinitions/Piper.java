@@ -65,12 +65,6 @@ public class Piper extends RobotDefinitionBase {
 		IMotor BL=new SparkMotor(getInt("BLMOTORPIN"), false);
 		IMotor BR=new SparkMotor(getInt("BRMOTORPIN"), true);
 
-		//Add motors to the global hashmap
-		iControlMap.put("FRONT_LEFT_MOTOR", FL);
-		iControlMap.put("FRONT_RIGHT_MOTOR", FR);
-		iControlMap.put("BACK_LEFT_MOTOR", BL);
-		iControlMap.put("BACK_RIGHT_MOTOR", BR);
-
 		// Create IDrive arcade drive I dont know why we cast it as a IDrive
 		// though
 		IDrive AD=new ArcadeDrive(FL, FR, BL, BR);

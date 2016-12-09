@@ -8,8 +8,8 @@ import PID.AutoPIDTunable;
 import PID.AutoPIDTuner;
 import drive.ArcadeDrive;
 import drive.DriveControl;
+import drive.IDrive;
 import input.SensorController;
-import physicalOutput.IMotor;
 import robot.Global;
 import robot.IControl;
 
@@ -18,8 +18,9 @@ public class NavXPIDTunable extends IControl implements AutoPIDTunable {
 	private AHRS navx;
 
 	private AutoPIDTuner tuner;
+	
+	private IDrive drive;
 
-	private IMotor FL, FR, BL, BR;
 	private double turnPower=0;
 
 	private boolean resetting=false;
@@ -32,18 +33,14 @@ public class NavXPIDTunable extends IControl implements AutoPIDTunable {
 	public void autonomousInit() {
 		// store the motors we need to power and the navx board as local
 		// variables
-		FL=(IMotor)Global.controlObjects.get("FRONT_LEFT_MOTOR");
-		FR=(IMotor)Global.controlObjects.get("FRONT_RIGHT_MOTOR");
-		BL=(IMotor)Global.controlObjects.get("BACK_LEFT_MOTOR");
-		BR=(IMotor)Global.controlObjects.get("BACK_RIGHT_MOTOR");
 
 		navx=(AHRS)SensorController.getInstance().getSensor("NAVX");
 		navx.reset();// resets the angle
 
 		// Disable the drive from controlling the movement
-		IControl drive=Global.controlObjects.get("ARCADE_DRIVE");
-		ArcadeDrive arcadeDrive=(ArcadeDrive)drive;
-		arcadeDrive.setDriveControl(DriveControl.EXTERNAL_CONTROL);
+		
+		drive=(IDrive)Global.controlObjects.get("ARCADE_DRIVE");;
+		drive.setDriveControl(DriveControl.EXTERNAL_CONTROL);
 
 		tuner=new AutoPIDTuner(this);
 	}
@@ -91,10 +88,8 @@ public class NavXPIDTunable extends IControl implements AutoPIDTunable {
 
 	private void updateMotors() {
 		// Positive is right, according to NavX
-		FL.setSpeed(turnPower);
-		BL.setSpeed(turnPower);
-		FR.setSpeed(-turnPower);
-		BR.setSpeed(-turnPower);
+		drive.setLeftMotors(turnPower);
+		drive.setRightMotors(-turnPower);
 	}
 
 	/**

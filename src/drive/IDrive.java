@@ -14,7 +14,7 @@ public abstract class IDrive extends IControl {
 	 * State that stores whether the motors are controlled by the drive,
 	 * externally, or are disabled.
 	 */
-	private DriveControl driveControl=DriveControl.DRIVE_CONTROLLED;
+	protected DriveControl driveControl=DriveControl.DRIVE_CONTROLLED;
 
 	/**
 	 * Sets the drive control so that it is controlled by this IDrive in case

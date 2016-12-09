@@ -127,13 +127,14 @@ public class ArcadeDrive extends IDrive {
 
 	// comments in IDrive
 	public void setLeftMotors(double power) {
-		setLeftMotorsRaw(power);
-
+		if(super.driveControl == DriveControl.EXTERNAL_CONTROL)
+			setLeftMotorsRaw(power);
 	}
 
 	// comments in IDrive
 	public void setRightMotors(double power) {
-		setRightMotorsRaw(power);
+		if(super.driveControl == DriveControl.EXTERNAL_CONTROL)
+			setRightMotorsRaw(power);
 	}
 
 	/**
