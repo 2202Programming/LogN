@@ -1,5 +1,7 @@
 package piperAutoPID;
 
+import java.util.Random;
+
 import com.kauailabs.navx.frc.AHRS;
 
 import PID.AutoPIDTunable;
@@ -21,8 +23,12 @@ public class NavXPIDTunable extends IControl implements AutoPIDTunable {
 	private double turnPower=0;
 
 	private boolean resetting=false;
-	private final double TARGET_RESET_ANGLE=40, TARGET_RESET_ANGLE_MAX_ERROR=5;
+	private double TARGET_RESET_ANGLE=40, TARGET_RESET_ANGLE_MAX_ERROR=5;
 
+	/**
+	 * Resets the navx input, so that it is facing straight forward, sets the
+	 * local variables, and disables the ArcadeDrive from controlling motors
+	 */
 	public void autonomousInit() {
 		// store the motors we need to power and the navx board as local
 		// variables
@@ -52,14 +58,12 @@ public class NavXPIDTunable extends IControl implements AutoPIDTunable {
 
 	public void startReset() {
 		resetting=true;
+		TARGET_RESET_ANGLE=40;
 	}
 
-	/**
-	 * We only really need this for testing how well the PID worked, so we can
-	 * implement it once we know everything else works...
-	 */
 	public void setToRandomState() {
-		// TODO finish this
+		Random r=new Random();
+		TARGET_RESET_ANGLE=r.nextDouble()*360-180;
 	}
 
 	public boolean getResetFinished() {
@@ -72,8 +76,8 @@ public class NavXPIDTunable extends IControl implements AutoPIDTunable {
 		else {
 			turnPower=0.5;
 		}
-		
-		//The motors powered from autoPeriodic
+
+		// The motors powered from autoPeriodic
 		return !resetting;
 	}
 
