@@ -12,6 +12,7 @@ import input.NavXTester;
 import input.SensorController;
 import physicalOutput.IMotor;
 import physicalOutput.SparkMotor;
+import piperAutoPID.NavXPIDTunable;
 import robot.IControl;
 
 /**
@@ -74,6 +75,7 @@ public class Piper extends RobotDefinitionBase {
 		SC.registerSensor("NAVX", new AHRS(SerialPort.Port.kMXP));
 
 		new NavXTester();
+		new NavXPIDTunable();
 
 		// Create the autonomous command list maker, and command runner
 		// CommandListMaker CLM = new CommandListMaker(AD);

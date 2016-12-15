@@ -1,5 +1,7 @@
 package drive;
 
+import comms.DebugMode;
+import comms.SmartWriter;
 import robot.IControl;
 
 /**
@@ -22,6 +24,23 @@ public abstract class IDrive extends IControl {
 	 */
 	public void teleopInit() {
 		setDriveControl(DriveControl.DRIVE_CONTROLLED);
+	}
+
+	public final void autonomousPeriodic() {
+		SmartWriter.putS("Drive State", ""+driveControl, DebugMode.DEBUG);
+		switch (driveControl) {
+		case DISABLED:
+			disableMotors();
+			break;
+		case DRIVE_CONTROLLED:
+			setMotors();
+			break;
+		case EXTERNAL_CONTROL:
+			onMotorsExternalControl();
+			break;
+		default:
+			throw new Error("Illegal driveControl state in IDrive.teleopPeriodic!");
+		}
 	}
 
 	/**

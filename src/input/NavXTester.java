@@ -16,6 +16,10 @@ public class NavXTester extends IControl {
 		
 	}
 	
+	public void autonomousPeriodic() {
+		teleopPeriodic();
+	}
+	
 	public void teleopPeriodic() {
 		AHRS navx = (AHRS)SensorController.getInstance().getSensor("NAVX");
 		double navxAngle = navx.getAngle();

@@ -6,7 +6,8 @@ import com.kauailabs.navx.frc.AHRS;
 
 import PID.AutoPIDTunable;
 import PID.AutoPIDTuner;
-import drive.ArcadeDrive;
+import comms.DebugMode;
+import comms.SmartWriter;
 import drive.DriveControl;
 import drive.IDrive;
 import input.SensorController;
@@ -49,6 +50,7 @@ public class NavXPIDTunable extends IControl implements AutoPIDTunable {
 	 * Call the PIDTuner's update
 	 */
 	public void autonomousPeriodic() {
+		SmartWriter.putS("PID Tuning Status", "Starting", DebugMode.DEBUG);
 		tuner.update();
 		updateMotors();
 	}
@@ -64,6 +66,10 @@ public class NavXPIDTunable extends IControl implements AutoPIDTunable {
 	}
 
 	public boolean getResetFinished() {
+		if (!resetting) {
+			return true;
+		}
+		SmartWriter.putS("PID Tuning Status", "updating", DebugMode.DEBUG);
 		// If we are farther away from the target reset angle than the maxError,
 		// we are still resetting
 		resetting=Math.abs(getAngle()-TARGET_RESET_ANGLE)>TARGET_RESET_ANGLE_MAX_ERROR;
@@ -75,7 +81,7 @@ public class NavXPIDTunable extends IControl implements AutoPIDTunable {
 		}
 
 		// The motors powered from autoPeriodic
-		return !resetting;
+		return false;
 	}
 
 	public double getError() {
@@ -88,6 +94,11 @@ public class NavXPIDTunable extends IControl implements AutoPIDTunable {
 
 	private void updateMotors() {
 		// Positive is right, according to NavX
+		if (Math.abs(turnPower) > 1) {
+			SmartWriter.putS("Warning: Turn Power Over 1", "warning", DebugMode.DEBUG);
+			turnPower /= Math.abs(turnPower);
+		}
+		SmartWriter.putD("Turn Power", turnPower, DebugMode.DEBUG);
 		drive.setLeftMotors(turnPower);
 		drive.setRightMotors(-turnPower);
 	}

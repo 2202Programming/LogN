@@ -26,7 +26,7 @@ public class AutoPIDTuner extends IControl {
 	/**
 	 * The previous best PID values and the PID values that will be tested
 	 */
-	private PIDValues bestPIDValues=new PIDValues(.4, .03, 0), testingPIDValues=new PIDValues(.4, .03, 0);
+	private PIDValues bestPIDValues=new PIDValues(.01, .0005, 0), testingPIDValues=new PIDValues(.01, .0005, 0);
 
 	/**
 	 * The PIDController that is used by the Tunable object. This is needed so
@@ -39,7 +39,7 @@ public class AutoPIDTuner extends IControl {
 	 * The error tolerance. The loop will count as being complete when the error
 	 * is less than this for maxErrorSafeCounter frames
 	 */
-	private double minError=0.01;
+	private double minError=3;
 
 	/**
 	 * The counter and required frames counting how long the tunable has been
@@ -51,7 +51,7 @@ public class AutoPIDTuner extends IControl {
 	 * The number of frames that this loop has used, and the number of frames
 	 * that can be used before these PID values are marked unsuccessful.
 	 */
-	private int currentTuneCounter=0, maxTuneCounter=1200;
+	private int currentTuneCounter=0, maxTuneCounter=1000;
 
 	/**
 	 * The number of frames the best PID values took to run
@@ -132,6 +132,7 @@ public class AutoPIDTuner extends IControl {
 	 */
 	public void update() {
 		tunePID();
+		SmartWriter.putS("Best PID Values", bestPIDValues.toString(), DebugMode.DEBUG);
 	}
 
 	/**
@@ -153,13 +154,13 @@ public class AutoPIDTuner extends IControl {
 		currentTuneCounter++;
 		checkError();
 		if (errorSafeCounter>=maxErrorSafeCounter||currentTuneCounter>=maxTuneCounter) {
-			if (shouldStartRandomTest()) {
-				startRandomTest();
-			}
-			else {
+			//if (shouldStartRandomTest()) {
+			//	startRandomTest();
+			//}
+			//else {
 				accountForLastTest();
 				startNewTest();
-			}
+			//}
 			return;
 		}
 
@@ -174,10 +175,10 @@ public class AutoPIDTuner extends IControl {
 	private void recordValuesToLog() {
 		toWrite.add(timesTried+","+testingPIDValues.kp+","+testingPIDValues.ki+","+testingPIDValues.kp+","
 				+currentTuneCounter+",14,"+(currentTuneCounter<bestTuneTime?1:0));
-		if (AutoPIDTesterWindow.shouldSetValues&&AutoPIDTesterWindow.window!=null) {
+		/*if (AutoPIDTesterWindow.shouldSetValues&&AutoPIDTesterWindow.window!=null) {
 			AutoPIDTesterWindow.window.setInfo(testingPIDValues+"", bestPIDValues+"", timesTried, bestTuneTime+"",
 					lastTuneCounter);
-		}
+		}*///comment this in for demos
 	}
 
 	/**

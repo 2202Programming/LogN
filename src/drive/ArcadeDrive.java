@@ -90,6 +90,7 @@ public class ArcadeDrive extends IDrive {
 	 * Postconditions: sets the motors
 	 */
 	private void setLeftMotorsRaw(double speed) {
+		SmartWriter.putD("Motor Raw Value", speed, DebugMode.DEBUG);
 		frontLeft.setSpeed(speed);
 		backLeft.setSpeed(speed);
 	}
