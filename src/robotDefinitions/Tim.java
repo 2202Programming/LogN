@@ -40,13 +40,14 @@ public class Tim extends RobotDefinitionBase {
 		_properties=new HashMap<String, String>();
 		
 		// Default Motor Pins
+		//port 7 does not work
 		_properties.put("FRMOTORPIN", "1");//r
 		_properties.put("BRMOTORPIN", "2");//r
 		_properties.put("FLMOTORPIN", "3");
 		_properties.put("BLMOTORPIN", "4");
 		_properties.put("SLMOTORPIN", "5");//TODO put actual pins here
 		_properties.put("SRMOTORPIN", "6");
-		_properties.put("SHMOTORPIN", "7");
+		_properties.put("SHMOTORPIN", "8");
 	}
 
 	/***
