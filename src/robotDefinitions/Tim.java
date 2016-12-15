@@ -3,17 +3,19 @@ package robotDefinitions;
 import java.util.HashMap;
 import java.util.Map;
 
+import auto.CommandRunner;
 import comms.XboxController;
 import drive.ArcadeDrive;
 import drive.IDrive;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import input.SensorController;
-import physicalOutput.EnableCompressor;
 import physicalOutput.IMotor;
 import physicalOutput.JaguarMotor;
 import physicalOutput.SolenoidController;
+import physicalOutput.VictorMotor;
 import robot.IControl;
+import tim.CommandListMaker;
 import tim.Shooter;
 
 /**
@@ -80,18 +82,18 @@ public class Tim extends RobotDefinitionBase {
 		IDrive AD=new ArcadeDrive(FL, FR, BL, BR);
 		
 		// Create the autonomous command list maker, and command runner
-		//CommandListMaker CLM = new CommandListMaker(AD);
+		//CommandListMaker CLM = new CommandListMaker();
 		//CommandRunner CR = new CommandRunner(CLM.makeList1(),"TIM");  // makes list one for the TIM robot
 		
 		//Create the IMotors for the Shooter class
 		IMotor SL = new JaguarMotor(getInt("SLMOTORPIN"),false);
 		IMotor SR = new JaguarMotor(getInt("SRMOTORPIN"),false);
-		IMotor SH = new JaguarMotor(getInt("SHMOTORPIN"),false);
+		IMotor SH = new VictorMotor(getInt("SHMOTORPIN"),false);
 		
 		// Create the class for Tim's shooter
 		Shooter S = new Shooter(SL, SR, SH);
-		EnableCompressor compressorTester = new EnableCompressor(compressor);
-//		temp.put("AD", AD);		
+		//EnableCompressor compressorTester = new EnableCompressor(compressor);
+		temp.put("IDrive", AD);		
 //		temp.put("CR", CR);
 //		temp.put("S", S);
 		

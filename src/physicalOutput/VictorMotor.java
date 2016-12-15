@@ -1,4 +1,6 @@
 package physicalOutput;
+import comms.DebugMode;
+import comms.SmartWriter;
 import edu.wpi.first.wpilibj.Victor;
 
 //more leinad's stuff

@@ -31,7 +31,7 @@ public class Shooter extends IControl {
 		curSpeed = 0;
 		heightSpeed = 0;
 		try {
-			sc.getDoubleSolenoid("TRIGGER");
+			trigger = sc.getDoubleSolenoid("TRIGGER");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			SmartWriter.putS("SolNcrushed", "Something goes wrong", DebugMode.DEBUG);
@@ -73,16 +73,18 @@ public class Shooter extends IControl {
 		}else{
 			heightSpeed = 0;
 		}
+		SmartWriter.putD("heightspeed",heightSpeed, DebugMode.DEBUG);
+		SmartWriter.putS("motorStatus",height+"", DebugMode.DEBUG);
 		setHeightRaw(heightSpeed);
-		
+	
 		if(controller.getAHeld()) 
 		{
 			SmartWriter.putB("ABotten", true, DebugMode.DEBUG);
-			trigger.set(DoubleSolenoid.Value.kForward);
+			trigger.set(DoubleSolenoid.Value.kReverse);
 		}
 		else{
 			SmartWriter.putB("ABotten", false, DebugMode.DEBUG);
-			trigger.set(DoubleSolenoid.Value.kReverse);
+			trigger.set(DoubleSolenoid.Value.kForward);
 		}
 		SmartWriter.putS("solState", trigger.get() + " ", DebugMode.DEBUG);
 	
