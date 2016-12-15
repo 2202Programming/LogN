@@ -1,24 +1,24 @@
-package motors;
-import edu.wpi.first.wpilibj.Victor;
+package physicalOutput;
+import edu.wpi.first.wpilibj.Talon;
 
-//more leinad's stuff
 
 /**
  * 
  */
-public class VictorMotor extends IMotor {
+public class TalonMotor extends IMotor {
 
     /**
      * Default constructor
      */
-    public VictorMotor(int x) {
-    	part = new Victor(x);
+	public TalonMotor(int x,boolean reverse) {
+    	super(reverse);
+    	part = new Talon(x);
     }
 
     /**
      * 
      */
-    private Victor part;
+    private Talon part;
 
     /**
      * Sets the motor pwm value

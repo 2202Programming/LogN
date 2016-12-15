@@ -1,18 +1,19 @@
 package drive;
 
-import motors.IMotor;
-import robot.IControl;
+import comms.DebugMode;
+import comms.SmartWriter;
+import comms.XboxController;
+import physicalOutput.IMotor;
 
 /**
+ * An arcade drive that uses only the left JoyStick to move. <br>
+ * <br>
+ * Y-Axis: forward/backwards speed <br>
+ * X-Axis: turn left/right
  * 
+ * @author SecondThread
  */
 public class ArcadeDrive extends IDrive {
-
-	/**
-	 * True if the wheel motors are being controlled by ArcadeDrive, false
-	 * otherwise.
-	 */
-	private boolean enabled;
 
 	/**
 	 * The motor corresponding to the front right wheel
@@ -35,6 +36,17 @@ public class ArcadeDrive extends IDrive {
 	private IMotor backLeft;
 
 	/**
+	 * Used for controller input
+	 */
+	private XboxController controller;
+
+	/**
+	 * holds the values to pass to the motors from when they are calculated in
+	 * TeleopPeriodic to when they are suppose to be passed to the motors
+	 */
+	private double leftMotors=0, rightMotors=0;
+
+	/**
 	 * @param fl
 	 *            The front left motor
 	 * @param fr
@@ -45,59 +57,226 @@ public class ArcadeDrive extends IDrive {
 	 *            The back right motor
 	 */
 	public ArcadeDrive(IMotor fl, IMotor fr, IMotor bl, IMotor br) {
-		this.frontLeft = fl;
-		this.frontRight = fr;
-		this.backLeft = bl;
-		this.backRight = br;
+		this.frontLeft=fl;
+		this.frontRight=fr;
+		this.backLeft=bl;
+		this.backRight=br;
+		controller=XboxController.getXboxController();
 	}
 
 	/**
-	 * 
+	 * Sets <i>leftMotors</i> and <i>rightMotors</i> to what they are suppose to
+	 * be using the leftJoystick of the XboxController as input <br>
+	 * <br>
+	 * Preconditions: none<br>
+	 * Postconditions: none<br>
 	 */
-	public void teleopInit() {
-		// TODO implement here
+	protected void teleopUpdate() {
+		double stickXSquare=controller.getLeftJoystickX();
+		double stickYSquare=controller.getLeftJoystickY();
+
+		Vector2 output=getMotorOutputs(stickXSquare, stickYSquare);
+
+		leftMotors=output.getX();
+		rightMotors=output.getY();
+
+		SmartWriter.putD("LeftMotors", leftMotors, DebugMode.FULL);
+		SmartWriter.putD("RightMotors", rightMotors, DebugMode.FULL);
 	}
 
 	/**
-	 * 
+	 * Sets the left side motor power<br>
+	 * Preconditions: speed is between -1.0 and 1.0<br>
+	 * Postconditions: sets the motors
 	 */
-	public void teleopPeriodic() {
-		// TODO implement here
-	}
-
-	public void setLeftMotors(double speed) {
+	private void setLeftMotorsRaw(double speed) {
 		frontLeft.setSpeed(speed);
 		backLeft.setSpeed(speed);
 	}
 
-	public void setRightMotors(double speed) {
+	/**
+	 * Sets the right side motor power<br>
+	 * Preconditions: speed is between -1.0 and 1.0<br>
+	 * Postconditions: sets the motors
+	 */
+	private void setRightMotorsRaw(double speed) {
 		frontRight.setSpeed(speed);
 		backRight.setSpeed(speed);
 	}
 
 	/**
-	 * Sets whether or not arcade drive should control the motors (disable if
-	 * something else is taking control) <br>
-	 * <br>
-	 * Preconditions: none <br>
-	 * Postconditions: If ArcadeDrive has been set to enabled, it will continue
-	 * (or begin) to write to the motors. Otherwise, the motors will not be set.
-	 * 
-	 * @param enabled
-	 *            Whether or not this <i>ArcadeDrive</i> object should be
-	 *            enabled.
+	 * Checks to see if any of the motors have encoders, returns true if any of
+	 * them do
 	 */
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
+	public boolean hasEncoders() {
+		// TODO implement in SensorController branch
+		return false;
+	}
+
+	// comments in IDrive, implementation is obvious
+	protected void setMotors() {
+		setLeftMotorsRaw(leftMotors);
+		setRightMotorsRaw(rightMotors);
+	}
+
+	// comments in IDrive
+	protected void disableMotors() {
+		setLeftMotorsRaw(0);
+		setRightMotorsRaw(0);
+	}
+
+	// comments in IDrive
+	public void setLeftMotors(double power) {
+		setLeftMotorsRaw(power);
+
+	}
+
+	// comments in IDrive
+	public void setRightMotors(double power) {
+		setRightMotorsRaw(power);
 	}
 
 	/**
-	 * Checks to see if this <i>ArcadeDrive</i> is enabled or not
+	 * Gets the distance from the origin to the edge of the unit square along
+	 * the line that passes through both the origin and (<i>stickXSquare</i>,
+	 * <i>stickYSquare</i>)
 	 * 
-	 * @return True if enabled, false otherwise
+	 * @param stickXSquare
+	 *            The x position of the joystick
+	 * @param stickYSquare
+	 *            The y position of the joystick
+	 * @return A distance value between 1 and sqrt(2), both inclusive.
 	 */
-	public boolean getEnabled() {
-		return enabled;
+	private static double getRadiusOfSquare(double stickXSquare, double stickYSquare) {
+		//This is legal because all four quadrants of the unit square are symmetric about the origin 
+		stickXSquare=Math.abs(stickXSquare);
+		stickYSquare=Math.abs(stickYSquare);
+		
+		double theta=Math.atan2(stickYSquare, stickXSquare);
+		if (theta<Math.PI/4) {
+			double squareXIntercept=stickYSquare/stickXSquare;
+			double squareYIntercept=1;
+			double rSquare=Math.hypot(squareXIntercept, squareYIntercept);
+			return rSquare;
+
+		}
+		else {
+			double squareXIntercept=1;
+			double squareYIntercept=stickXSquare/stickYSquare;
+			double rSquare=Math.hypot(squareXIntercept, squareYIntercept);
+			return rSquare;
+		}
 	}
 
+	/**
+	 * Calculates the values that should be passed to the left motors and right
+	 * motors and returns them as a vector in the form (<i>leftMotorOutput</i>,
+	 * <i>rightMotorOutput</i>)<br>
+	 * <br>
+	 * 
+	 * @param leftJoystickXInput
+	 *            The x input for the joystick on the unit square input range
+	 *            (from -1 to 1)
+	 * @param leftJoystickYInput
+	 *            The y input for the joystick on the unit square input range
+	 *            (from -1 to 1)
+	 * 
+	 * @return a Vector2 with the x coordinate being the leftMotorPower, and the
+	 *         y coordinate being the rightMotorPower
+	 */
+	private static Vector2 getMotorOutputs(double leftJoystickXInput, double leftJoystickYInput) {
+		double stickXSquare=leftJoystickXInput*Math.abs(leftJoystickXInput);
+		double stickYSquare=leftJoystickYInput;
+		double radiusSquare=Math.abs(getRadiusOfSquare(stickXSquare, stickYSquare));
+
+		// Normalize all stick inputs to have a maximum length of 1, because
+		// rawInput can be anywhere in the square with diagonals (-1, -1) and
+		// (1, 1)
+		double stickX=stickXSquare/radiusSquare;
+		double stickY=stickYSquare/radiusSquare;
+		
+		
+
+		// convert from Cartesian to polar so things work later
+		double radius=Math.hypot(stickX, stickY);
+
+		// example coordinates --> leftPower : right power
+		// (0, 1) --> 1 : 1
+		// (1, 0) --> 1 : -1
+		// (-1, 0) --> -1 : 1
+		// (0, -1) --> -1 : -1
+
+		// the amount of turn is 2*stickX because the difference between the
+		// left and right at full turn is 2, and the max x is 1
+		double differenceBetweenMotors=2*Math.abs(stickX/radius);
+		double maxMotor=1;
+		double minMotor=maxMotor-differenceBetweenMotors;
+
+		// scale the motor values back depending on how far the joystick is
+		// pressed
+		maxMotor*=radius;
+		minMotor*=radius;
+
+		double leftMotorsTemp=0, rightMotorsTemp=0;
+
+		if (stickX>0) {// turning right
+			leftMotorsTemp=maxMotor;
+			rightMotorsTemp=minMotor;
+		}
+		else {// turning left
+			leftMotorsTemp=minMotor;
+			rightMotorsTemp=maxMotor;
+		}
+
+		// If we are going backwards, the left and right motors need to be made
+		// negative. If we are also turning, then they have to be switched with
+		// each other as well.
+		if (stickY<0) {
+			leftMotorsTemp*=-1;
+			rightMotorsTemp*=-1;
+			double temp=leftMotorsTemp;
+			leftMotorsTemp=rightMotorsTemp;
+			rightMotorsTemp=temp;
+		}
+
+		return new Vector2(leftMotorsTemp, rightMotorsTemp);
+	}
+	
+	public static void main(String[] a) {
+		System.out.println(getMotorOutputs(1, 1));
+		System.out.println(getMotorOutputs(.9, 1));
+		System.out.println(getMotorOutputs(.8, 1));
+		System.out.println(getMotorOutputs(.7, 1));
+		System.out.println(getMotorOutputs(.6, 1));
+		System.out.println(getMotorOutputs(.5, 1));
+	}
+	
+	
+}
+
+class Vector2 {
+	
+	private double x, y;
+
+	public Vector2() {
+		x=y=0;
+	}
+
+	public Vector2(double x, double y) {
+		this.x=x;
+		this.y=y;
+	}
+
+	public double getX() {
+		return x;
+	}
+
+	public double getY() {
+		return y;
+	}
+
+	public String toString() {
+		return "< x: "+String.format("%.2f", x)+", y: "+String.format("%.2f", y)+">";
+	}
+	
 }

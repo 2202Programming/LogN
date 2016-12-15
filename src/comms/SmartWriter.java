@@ -16,7 +16,7 @@ public class SmartWriter {
 	/**
 	 * The maximum DebugMode for which messages are printed to SmartDashboard.
 	 */
-	public static DebugMode debugMode;
+	private static DebugMode debugMode=DebugMode.DEBUG;
 
 	/**
 	 * Sets the field with name <i>name</i> on the SmartDashboard to
@@ -39,7 +39,7 @@ public class SmartWriter {
 	 *            displayed on.
 	 */
 	public static void putS(String name, String value, DebugMode debugMode) {
-		if (SmartWriter.debugMode.compareTo(debugMode) <= 0)
+		if (SmartWriter.debugMode.compareTo(debugMode) >= 0)
 			SmartDashboard.putString(name, value);
 	}
 
@@ -64,7 +64,7 @@ public class SmartWriter {
 	 *            displayed on
 	 */
 	public static void putB(String name, boolean value, DebugMode debugMode) {
-		if (SmartWriter.debugMode.compareTo(debugMode) <= 0)
+		if (SmartWriter.debugMode.compareTo(debugMode) >= 0)
 			SmartDashboard.putBoolean(name, value);
 	}
 
@@ -89,7 +89,7 @@ public class SmartWriter {
 	 *            displayed on.
 	 */
 	public static void putD(String name, double value, DebugMode debugMode) {
-		if (SmartWriter.debugMode.compareTo(debugMode) <= 0)
+		if (SmartWriter.debugMode.compareTo(debugMode) >= 0)
 			SmartDashboard.putNumber(name, value);
 	}
 
