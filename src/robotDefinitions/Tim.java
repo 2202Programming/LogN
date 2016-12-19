@@ -3,14 +3,20 @@ package robotDefinitions;
 import java.util.HashMap;
 import java.util.Map;
 
-import auto.*;
-import tim.*;
-import drive.*;
+import auto.CommandRunner;
+import comms.XboxController;
+import drive.ArcadeDrive;
+import drive.IDrive;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Encoder;
-import physicalOutput.*;
-import robot.*;
-import input.*;
+import input.SensorController;
+import physicalOutput.IMotor;
+import physicalOutput.JaguarMotor;
+import physicalOutput.SolenoidController;
+import physicalOutput.VictorMotor;
+import robot.IControl;
+import tim.CommandListMaker;
+import tim.Shooter;
 
 /**
  * The Tim implementation of IDefinition.<br>
@@ -19,28 +25,29 @@ import input.*;
  */
 public class Tim extends RobotDefinitionBase {
 
-	@Override
+	
 	protected boolean useXML() {
 		return false;
 	}
 
-	@Override
+	
 	protected String loadDefinitionName() {
 		return "TIM";
 	}
 
-	@Override
+	
 	protected void loadManualDefinitions() {
 		_properties=new HashMap<String, String>();
 		
 		// Default Motor Pins
+		//port 7 does not work
 		_properties.put("FRMOTORPIN", "1");//r
 		_properties.put("BRMOTORPIN", "2");//r
 		_properties.put("FLMOTORPIN", "3");
 		_properties.put("BLMOTORPIN", "4");
-		//_properties.put("SLMOTORPIN", "4");//TODO put actual pins here
-		//_properties.put("SRMOTORPIN", "5");
-		//_properties.put("SHMOTORPIN", "6");
+		_properties.put("SLMOTORPIN", "5");//TODO put actual pins here
+		_properties.put("SRMOTORPIN", "6");
+		_properties.put("SHMOTORPIN", "8");
 	}
 
 	/***
@@ -49,44 +56,48 @@ public class Tim extends RobotDefinitionBase {
 	 */
 	public Map<String, IControl> loadControlObjects() {
 		
+		XboxController.getXboxController();
+		
 		// Create map to store public objects
 		Map<String, IControl> temp=super.loadControlObjects();
 		
 		// Creates the global sensor controller
 		SensorController SC = SensorController.getInstance();
+		//SC.registerSensor("Name", new AHRS(port));
 		//TODO add the sensors here
 		
 		// Creates the global solenoid controller
 		SolenoidController SO = SolenoidController.getInstance();
 		//Example to add solenoid:
-		//SO.registerSolenoid("TRIGGER", new DoubleSolenoid(1,1));
+		SO.registerSolenoid("TRIGGER", new DoubleSolenoid(2,3));
 		//TODO register the solenoids here
 
 		// Create IMotors for Arcade Drive
-		IMotor FL=new SparkMotor(getInt("FLMOTORPIN"));
-		IMotor FR=new SparkMotor(getInt("FRMOTORPIN"));
-		IMotor BL=new SparkMotor(getInt("BLMOTORPIN"));
-		IMotor BR=new SparkMotor(getInt("BRMOTORPIN"));
+		IMotor FL=new JaguarMotor(getInt("FLMOTORPIN"),true);
+		IMotor FR=new JaguarMotor(getInt("FRMOTORPIN"),false);
+		IMotor BL=new JaguarMotor(getInt("BLMOTORPIN"),true);
+		IMotor BR=new JaguarMotor(getInt("BRMOTORPIN"),false);
 
-		// Create IDrive arcade drive I dont know why we cast it as a IDrive though
+		Compressor compressor = new Compressor();
+		// Create IDrive arcade drive 
 		IDrive AD=new ArcadeDrive(FL, FR, BL, BR);
 		
-	/*	// Create the autonomous command list maker, and command runner
-		CommandListMaker CLM = new CommandListMaker(AD);
-		CommandRunner CR = new CommandRunner(CLM.makeList1(),"TIM");  // makes list one for the TIM robot
+		// Create the autonomous command list maker, and command runner
+		//CommandListMaker CLM = new CommandListMaker();
+		//CommandRunner CR = new CommandRunner(CLM.makeList1(),"TIM");  // makes list one for the TIM robot
 		
 		//Create the IMotors for the Shooter class
-		IMotor SL = new SparkMotor(getInt("SLMOTORPIN"));
-		IMotor SR = new SparkMotor(getInt("SRMOTORPIN"));
-		IMotor SH = new SparkMotor(getInt("SHMOTORPIN"));
+		IMotor SL = new JaguarMotor(getInt("SLMOTORPIN"),false);
+		IMotor SR = new JaguarMotor(getInt("SRMOTORPIN"),false);
+		IMotor SH = new VictorMotor(getInt("SHMOTORPIN"),false);
 		
 		// Create the class for Tim's shooter
 		Shooter S = new Shooter(SL, SR, SH);
+		//EnableCompressor compressorTester = new EnableCompressor(compressor);
+		temp.put("IDrive", AD);		
+//		temp.put("CR", CR);
+//		temp.put("S", S);
 		
-		temp.put("AD", AD);		
-		temp.put("CR", CR);
-		temp.put("S", S);
-*/
 		return temp;
 	}
 

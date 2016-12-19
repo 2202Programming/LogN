@@ -11,7 +11,8 @@ public class SparkMotor extends IMotor {
     /**
      * Default constructor
      */
-    public SparkMotor(int x) {
+	public SparkMotor(int x,boolean reverse) {
+    	super(reverse);
     	part = new Spark(x);
     }
 

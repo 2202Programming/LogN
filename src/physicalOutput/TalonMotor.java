@@ -10,7 +10,8 @@ public class TalonMotor extends IMotor {
     /**
      * Default constructor
      */
-    public TalonMotor(int x) {
+	public TalonMotor(int x,boolean reverse) {
+    	super(reverse);
     	part = new Talon(x);
     }
 

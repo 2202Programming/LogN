@@ -1,7 +1,12 @@
 package tim;
 
+import comms.DebugMode;
+import comms.SmartWriter;
 import comms.XboxController;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import physicalOutput.IMotor;
+import physicalOutput.SolenoidController;
 import robot.IControl;
 
 public class Shooter extends IControl {
@@ -12,6 +17,9 @@ public class Shooter extends IControl {
 	private IMotor height;
 	private XboxController controller;
 	private double curSpeed;
+	private double heightSpeed;
+	private SolenoidController sc;
+	private DoubleSolenoid trigger;
 
 	public Shooter(IMotor left, IMotor right, IMotor height) {
 		state = 1;
@@ -19,17 +27,27 @@ public class Shooter extends IControl {
 		this.right = right;
 		this.height = height;
 		controller = XboxController.getXboxController();
+		sc=SolenoidController.getInstance();
 		curSpeed = 0;
+		heightSpeed = 0;
+		try {
+			trigger = sc.getDoubleSolenoid("TRIGGER");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			SmartWriter.putS("SolNcrushed", "Something goes wrong", DebugMode.DEBUG);
+		}
 	}
 
 	public void autonomousInit() {
 		curSpeed = 0;
+		heightSpeed = 0;
 		setShootRaw(0);
 		setHeightRaw(0);
 	}
 
 	public void teleopInit() {
 		curSpeed = 0;
+		heightSpeed = 0;
 		setShootRaw(0);
 		setHeightRaw(0);
 	}
@@ -48,12 +66,28 @@ public class Shooter extends IControl {
 		setShootRaw(curSpeed);
 
 		//Sets the elevation of the shooter Y - up, X - down
-		if (controller.getXHeld()) {
-			setHeightRaw(-1.0);
+		if(controller.getXHeld()){
+			heightSpeed = -1.0;
+		}else if(controller.getYHeld()){
+			heightSpeed = 0.75;
+		}else{
+			heightSpeed = 0;
 		}
-		else if (controller.getYHeld()) {
-			setHeightRaw(0.75);
+		SmartWriter.putD("heightspeed",heightSpeed, DebugMode.DEBUG);
+		SmartWriter.putS("motorStatus",height+"", DebugMode.DEBUG);
+		setHeightRaw(heightSpeed);
+	
+		if(controller.getAHeld()) 
+		{
+			SmartWriter.putB("ABotten", true, DebugMode.DEBUG);
+			trigger.set(DoubleSolenoid.Value.kReverse);
 		}
+		else{
+			SmartWriter.putB("ABotten", false, DebugMode.DEBUG);
+			trigger.set(DoubleSolenoid.Value.kForward);
+		}
+		SmartWriter.putS("solState", trigger.get() + " ", DebugMode.DEBUG);
+	
 	}
 
 	private void setShootRaw(double power) {

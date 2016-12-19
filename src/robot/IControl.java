@@ -17,7 +17,7 @@ public abstract class IControl {
 	/**
 	 * A list of all created IControl objects which is used in update and init methods. IControl objects automatically
 	 */
-	private static List<IControl> allObjects=new LinkedList<>();//YESSS!!! Java 8!
+	private static List<IControl> allObjects=new LinkedList<IControl>();
 	
 	/**
 	 * Default constructor for all IControls 

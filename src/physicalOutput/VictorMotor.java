@@ -1,4 +1,6 @@
 package physicalOutput;
+import comms.DebugMode;
+import comms.SmartWriter;
 import edu.wpi.first.wpilibj.Victor;
 
 //more leinad's stuff
@@ -11,7 +13,8 @@ public class VictorMotor extends IMotor {
     /**
      * Default constructor
      */
-    public VictorMotor(int x) {
+	public VictorMotor(int x,boolean reverse) {
+    	super(reverse);
     	part = new Victor(x);
     }
 

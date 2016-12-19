@@ -3,6 +3,7 @@ package tim;
 import auto.CommandList;
 import auto.DriveCommand;
 import drive.IDrive;
+import robot.Global;
 
 //Every robots package will have its own CommandListMaker with its unique command list options
 //Only one command list should be made
@@ -10,8 +11,8 @@ public class CommandListMaker {
 	private CommandList list;
 	private IDrive drive;
 	
-	public CommandListMaker(IDrive driveIn){
-		drive = driveIn;
+	public CommandListMaker(){
+		drive = (IDrive) Global.controlObjects.get("IDrive");
 		list = new CommandList();
 	}
 	
