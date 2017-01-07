@@ -2,6 +2,7 @@ package robotDefinitions;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.LongAdder;
 
 import comms.DebugMode;
 import comms.SmartWriter;
@@ -34,8 +35,8 @@ public abstract class RobotDefinitionBase implements IRobotDefinition {
 	 * 
 	 * @return String value, name
 	 */
-	protected void loadDefinitionName(){
-		_name = getValue("NAME");
+	protected static void loadDefinitionName(){
+		_name = _properties.get("NAME");
 		SmartWriter.putS("RobotName", _name, DebugMode.COMPETITION);
 	}
 
@@ -122,6 +123,7 @@ public abstract class RobotDefinitionBase implements IRobotDefinition {
 				String[] split = property.split(",");
 				_properties.put(split[0], split[1]);
 			}
+			loadDefinitionName();
 		}
 		else {
 			SmartWriter.putS("ErrorThisIsReallyBadGoRedeploy", "NoPropertiesFileFixThisNowThisIsSuperImportant", DebugMode.NOTHING);
