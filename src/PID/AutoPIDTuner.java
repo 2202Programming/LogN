@@ -154,13 +154,13 @@ public class AutoPIDTuner extends IControl {
 		currentTuneCounter++;
 		checkError();
 		if (errorSafeCounter>=maxErrorSafeCounter||currentTuneCounter>=maxTuneCounter) {
-			//if (shouldStartRandomTest()) {
-			//	startRandomTest();
-			//}
-			//else {
+			if (shouldStartRandomTest()) {
+				startRandomTest();
+			}
+			else {
 				accountForLastTest();
 				startNewTest();
-			//}
+			}
 			return;
 		}
 
@@ -175,6 +175,11 @@ public class AutoPIDTuner extends IControl {
 	private void recordValuesToLog() {
 		toWrite.add(timesTried+","+testingPIDValues.kp+","+testingPIDValues.ki+","+testingPIDValues.kp+","
 				+currentTuneCounter+",14,"+(currentTuneCounter<bestTuneTime?1:0));
+		String total="";
+		for (String s:toWrite) {
+			total+=s+"\n";
+		}
+		FileLoader.writeToFile("AutoPIDHistory", total);
 		/*if (AutoPIDTesterWindow.shouldSetValues&&AutoPIDTesterWindow.window!=null) {
 			AutoPIDTesterWindow.window.setInfo(testingPIDValues+"", bestPIDValues+"", timesTried, bestTuneTime+"",
 					lastTuneCounter);
@@ -342,7 +347,7 @@ public class AutoPIDTuner extends IControl {
 	}
 
 	private boolean shouldStartRandomTest() {
-		return AutoPIDTesterWindow.shouldSetValues&&AutoPIDTesterWindow.window.setToRandomState();
+		return  false;//AutoPIDTesterWindow.shouldSetValues&&AutoPIDTesterWindow.window.setToRandomState();
 	}
 
 	
