@@ -17,17 +17,6 @@ import tim.CommandListMaker;
  * Comments are in IDefinition
  */
 public class Piper extends RobotDefinitionBase {
-
-	
-	protected boolean useXML() {
-		return false;
-	}
-
-	
-	protected String loadDefinitionName() {
-		return "PIPER";
-	}
-
 	
 	protected void loadManualDefinitions() {
 		_properties=new HashMap<String, String>();
@@ -77,9 +66,6 @@ public class Piper extends RobotDefinitionBase {
 		//Create the IMotors for the Shooter class
 //		IMotor SL = new SparkMotor(getInt("SLMOTORPIN"),false);
 //		IMotor SR = new SparkMotor(getInt("SRMOTORPIN"),false);
-		
-		
-		
 		
 //		temp.put("AD", AD);		
 //		temp.put("CR", CR);

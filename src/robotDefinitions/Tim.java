@@ -24,17 +24,6 @@ import tim.Shooter;
  * Comments are in IDefinition
  */
 public class Tim extends RobotDefinitionBase {
-
-	
-	protected boolean useXML() {
-		return false;
-	}
-
-	
-	protected String loadDefinitionName() {
-		return "TIM";
-	}
-
 	
 	protected void loadManualDefinitions() {
 		_properties=new HashMap<String, String>();

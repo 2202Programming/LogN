@@ -5,6 +5,7 @@ import comms.SmartWriter;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import robotDefinitions.IRobotDefinition;
 import robotDefinitions.Piper;
+import robotDefinitions.RobotDefinitionBase;
 import robotDefinitions.RobotName;
 import robotDefinitions.Tim;
 
@@ -25,16 +26,26 @@ public class Robot extends IterativeRobot {
 
 	public void robotInit() {
 		SmartWriter.putS("Robot State", "Initsing", DebugMode.DEBUG);
+		RobotDefinitionBase.loadPropertyBag();
 		// String to say which robot we are using could later be made into a XML
 		// property getter
-		RobotName name=RobotName.TIM; // TODO Can we get this from the robot so
+		//RobotName name=RobotName.valueOf(RobotDefinitionBase.getName()); // TODO Can we get this from the robot so
 										// it automatically knows what robot it
 										// is?
-
+		RobotName name;
+		String nameAsString=RobotDefinitionBase.getName();
+		
+		switch(nameAsString){
+		case "GURTRUDE":
+			name = RobotName.TIM;
+			break;
+		default:
+			name = null;
+		}
 		// Switch to decide which robot definition to use
 		switch (name) {
 		case TIM:
-			robotDefinition=new Tim();//probably broken
+			robotDefinition=new Tim();
 			break;
 		case PIPER:
 			robotDefinition=new Piper();

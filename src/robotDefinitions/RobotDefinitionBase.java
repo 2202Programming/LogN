@@ -2,7 +2,10 @@ package robotDefinitions;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.LongAdder;
 
+import comms.DebugMode;
+import comms.SmartWriter;
 import robot.IControl;
 
 /**
@@ -11,26 +14,19 @@ import robot.IControl;
  */
 public abstract class RobotDefinitionBase implements IRobotDefinition {
 
-	protected Map<String, String> _properties;
-	private boolean _useXMLBag;
-	private String _name;
+	protected static Map<String, String> _properties;
+	private static String _name;
 
+	public static String getName(){
+		return _name;
+	}
+	
 	/**
 	 * Default Constructor, uses abstract methods in order to define properties
 	 */
 	public RobotDefinitionBase() {
-		_name=loadDefinitionName();
-		_useXMLBag=useXML();
-		loadPropertyBag();
+		loadManualDefinitions();
 	}
-
-	/**
-	 * Override this method to determine whether or not to use an XML file to
-	 * load properties()
-	 * 
-	 * @return Boolean Value
-	 */
-	protected abstract boolean useXML();
 
 	/**
 	 * Override this method to load the definition name<br>
@@ -39,7 +35,10 @@ public abstract class RobotDefinitionBase implements IRobotDefinition {
 	 * 
 	 * @return String value, name
 	 */
-	protected abstract String loadDefinitionName();
+	protected static void loadDefinitionName(){
+		_name = _properties.get("NAME");
+		SmartWriter.putS("RobotName", _name, DebugMode.COMPETITION);
+	}
 
 	/**
 	 * Override this method in order to load a manual set of properties into the
@@ -116,18 +115,19 @@ public abstract class RobotDefinitionBase implements IRobotDefinition {
 		return false;
 	}
 
-	private void loadPropertyBag() {
-		if (_useXMLBag) {
-			// TODO Implement IProfile property system
-			switch (_name) {
-				case "TIM":
-					break;
-				default:
-					break;
+	public static void loadPropertyBag() {
+		if (FileLoader.fileExists("\\properties.txt")) {
+			SmartWriter.putS("ErrorThisIsReallyBadGoRedeploy", "NoError", DebugMode.NOTHING);
+			String[] props = FileLoader.readFile("\\properties.txt");
+			for(String property: props){
+				String[] split = property.split(",");
+				_properties.put(split[0], split[1]);
 			}
+			loadDefinitionName();
 		}
 		else {
-			loadManualDefinitions();
+			SmartWriter.putS("ErrorThisIsReallyBadGoRedeploy", "NoPropertiesFileFixThisNowThisIsSuperImportant", DebugMode.NOTHING);
+			//throw new StackOverflowError();
 		}
 	}
 }
