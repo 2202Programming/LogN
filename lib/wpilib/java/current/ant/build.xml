@@ -9,6 +9,7 @@
     </classpath>
   </taskdef>
   <taskdef resource="net/jtools/classloadertask/antlib.xml" classpath="${classloadertask.jar}"/>
+  <classloader loader="system" classpath="${jsch.jar}"/>
 
   <target name="clean" description="Clean up all build and distribution artifacts.">
     <delete dir="${build.dir}"/>
