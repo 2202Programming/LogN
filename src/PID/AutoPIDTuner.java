@@ -331,6 +331,8 @@ public class AutoPIDTuner extends IControl {
 			testingPIDValues=getVariant(bestPIDValues);
 		}
 
+		toTune.giveInfo(bestPIDValues, bestTuneTime, testingValues, lastTestTime);
+		
 		pidController.setValues(testingPIDValues);
 		pidController.resetError();
 		lastTuneCounter=currentTuneCounter;

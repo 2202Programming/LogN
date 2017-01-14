@@ -6,6 +6,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import PID.AutoPIDTunable;
 import PID.AutoPIDTuner;
+import PID.PIDValues;
 import comms.DebugMode;
 import comms.SmartWriter;
 import drive.DriveControl;
@@ -116,5 +117,13 @@ public class NavXPIDTunable extends IControl implements AutoPIDTunable {
 		plus180=((plus180%360)+360)%360;// this will always convert plus180 from
 										// between 0 and 360 in-exclusive
 		return plus180-180;
+	}
+
+	@Override
+	public void giveInfo(PIDValues bestValues, int bestTuneTime, PIDValues testingValues, int lastTestTime) {
+		SmartWriter.putS("Best PID Values: ", bestValues.toString(), DebugMode.DEBUG);
+		SmartWriter.putD("Best PID time", bestTuneTime, DebugMode.DEBUG);
+		SmartWriter.putS("Last PID Values: ", testingValues.toString(), DebugMode.DEBUG);
+		SmartWriter.putD("Last PID time", lastTestTime, DebugMode.DEBUG);
 	}
 }

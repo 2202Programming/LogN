@@ -3,6 +3,7 @@ package PID.tester;
 import java.util.Random;
 
 import PID.AutoPIDTunable;
+import PID.PIDValues;
 
 public class RobotTurnSim implements AutoPIDTunable{
 
@@ -70,5 +71,13 @@ public class RobotTurnSim implements AutoPIDTunable{
 	public double getAngle() {
 		return angle;
 	}
+
+	//TODO fix this
+	public void giveInfo(PIDValues bestValues, int bestTuneTime, PIDValues testingValues, int lastTestTime) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 
 }
