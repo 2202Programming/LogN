@@ -99,6 +99,79 @@ public class SmartWriter {
 		if (SmartWriter.debugMode.compareTo(debugMode) >= 0)
 			SmartDashboard.putNumber(name, value);
 	}
+	
+
+	/**
+	 * Sets the field with name <i>name</i> on the SmartDashboard to
+	 * <i>value</i>. <br>
+	 * <br>
+	 * Preconditions: <i>debugMode</i> is at least as general as the debug mode
+	 * that has been set. If this is not the case, nothing will be printed. <br>
+	 * 
+	 * Postconditions: The value of the field with the name <i>name</i> on the
+	 * SmartDashboard will be set to <i>value</i>.
+	 * 
+	 * @param name
+	 *            The name of the field (the black bold text to the field's
+	 *            left)
+	 * @param value
+	 *            The value of the field (the text in the text box for that
+	 *            field)
+	 * @param debugMode
+	 *            The least general debug mode that this message should be
+	 *            displayed on.
+	 */
+	public static void putS(String name, String value) {
+		putS(name,value,DebugMode.DEBUG);
+	}
+
+	/**
+	 * Sets the field with name <i>name</i> on the SmartDashboard to
+	 * <i>value</i>. <br>
+	 * <br>
+	 * Preconditions: <i>debugMode</i> is at least as general as the debug mode
+	 * that has been set. If this is not the case, nothing will be printed. <br>
+	 * 
+	 * Postconditions: The value of the field with the name <i>name</i> on the
+	 * SmartDashboard will be set to <i>value</i>.
+	 * 
+	 * @param name
+	 *            The name of the field (the black bold text to the field's
+	 *            left)
+	 * @param value
+	 *            The value of the field (the text in the text box for that
+	 *            field)
+	 * @param debugMode
+	 *            The least general debug mode that this message should be
+	 *            displayed on
+	 */
+	public static void putB(String name, boolean value) {
+		putB(name,value,DebugMode.DEBUG);
+	}
+
+	/**
+	 * Sets the field with name <i>name</i> on the SmartDashboard to
+	 * <i>value</i>. <br>
+	 * <br>
+	 * Preconditions: <i>debugMode</i> is at least as general as the debug mode
+	 * that has been set. If this is not the case, nothing will be printed. <br>
+	 * 
+	 * Postconditions: The value of the field with the name <i>name</i> on the
+	 * SmartDashboard will be set to <i>value</i>.
+	 * 
+	 * @param name
+	 *            The name of the field (the black bold text to the field's
+	 *            left)
+	 * @param value
+	 *            The value of the field (the text in the text box for that
+	 *            field)
+	 * @param debugMode
+	 *            The least general debug mode that this message should be
+	 *            displayed on.
+	 */
+	public static void putD(String name, double value) {
+		putD(name,value,DebugMode.DEBUG);
+	}
 
 	/**
 	 * Gets and returns the value in the text box on SmartDashboard with the
