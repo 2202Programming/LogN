@@ -12,6 +12,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * --SecondThread
  */
 public class SmartWriter {
+	
+	/**
+	 * We usually only would want to print the first error that occurred, as
+	 * that tends to cause other ones. Once an error is printed, the rest won't
+	 * be so that the first one can be fixed.
+	 */
+	private static boolean stopPrintingErrors=false;
 
 	/**
 	 * The maximum DebugMode for which messages are printed to SmartDashboard.
@@ -145,6 +152,29 @@ public class SmartWriter {
 	 */
 	public static double getD(String name) {
 		return SmartDashboard.getNumber(name);
+	}
+	
+	/**
+	 * Prints the error to standard output so it can be identified and debugged
+	 * 
+	 * @param The
+	 *            exception that occurred
+	 * @param The
+	 *            name of the time period that the exception occurred (i. e.
+	 *            Auto init) as a string to be printed
+	 */
+	public static void outputError(Exception e, String timeOccured) {
+		// We are going to try to print to Stdout, but I think this isn't going
+		// to work.
+		// If this doesn't work, then we can try:
+		// -printing to System.out instead of System.err
+		// -printing to using SmartWriter (This would be more difficult because
+		// Excetion.StackTrace would have to be converted to Strings)
+		if (!stopPrintingErrors) {
+			System.err.println("Exception occured in: "+timeOccured+".");
+			e.printStackTrace(System.err);
+			stopPrintingErrors=true;
+		}
 	}
 
 }
