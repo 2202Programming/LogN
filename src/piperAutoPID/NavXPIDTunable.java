@@ -26,7 +26,8 @@ public class NavXPIDTunable extends IControl implements AutoPIDTunable {
 	private double turnPower=0;
 
 	private boolean resetting=false;
-	private double TARGET_RESET_ANGLE=40, TARGET_RESET_ANGLE_MAX_ERROR=5;
+	private double TARGET_RESET_ANGLE=40, TARGET_RESET_ANGLE_MAX_ERROR=2;
+	private long resetFinishedTime;
 
 	/**
 	 * Resets the navx input, so that it is facing straight forward, sets the
@@ -58,7 +59,9 @@ public class NavXPIDTunable extends IControl implements AutoPIDTunable {
 
 	public void startReset() {
 		resetting=true;
-		TARGET_RESET_ANGLE=40;
+		resetFinishedTime=System.currentTimeMillis()+1500;
+		TARGET_RESET_ANGLE=0;
+		navx.reset();
 	}
 
 	public void setToRandomState() {
@@ -70,15 +73,19 @@ public class NavXPIDTunable extends IControl implements AutoPIDTunable {
 		if (!resetting) {
 			return true;
 		}
+		if (System.currentTimeMillis()>resetFinishedTime) {
+			resetting=true;
+			return false;
+		}
 		SmartWriter.putS("PID Tuning Status", "updating", DebugMode.DEBUG);
 		// If we are farther away from the target reset angle than the maxError,
 		// we are still resetting
 		resetting=Math.abs(getAngle()-TARGET_RESET_ANGLE)>TARGET_RESET_ANGLE_MAX_ERROR;
 		if (getAngle()>TARGET_RESET_ANGLE) {
-			turnPower=-0.5;
+			turnPower=-0.65;
 		}
 		else {
-			turnPower=0.5;
+			turnPower=0.65;
 		}
 
 		// The motors powered from autoPeriodic
@@ -86,7 +93,7 @@ public class NavXPIDTunable extends IControl implements AutoPIDTunable {
 	}
 
 	public double getError() {
-		return getAngle();
+		return getAngle()-40;
 	}
 
 	public void setValue(double turnValue) {
