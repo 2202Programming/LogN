@@ -99,7 +99,6 @@ public class AutoPIDTuner extends IControl {
 	 */
 	public AutoPIDTuner(AutoPIDTunable toTune) {
 		this.toTune=toTune;
-		toTune.startReset();
 		SmartWriter.putB("AutoPIDRandomTest", false, DebugMode.DEBUG);
 	}
 
@@ -319,6 +318,7 @@ public class AutoPIDTuner extends IControl {
 	private void startRandomTest() {
 		pidController.resetError();
 		currentTuneCounter=0;
+		errorSafeCounter=0;
 		pidController.setValues(bestPIDValues);
 		toTune.setToRandomState();
 	}
@@ -337,12 +337,13 @@ public class AutoPIDTuner extends IControl {
 			testingPIDValues=getVariant(bestPIDValues);
 		}
 
-		toTune.giveInfo(bestPIDValues, bestTuneTime, testingPIDValues, lastTuneCounter);
+		toTune.giveInfo(bestPIDValues, bestTuneTime, testingPIDValues, currentTuneCounter);
 		
 		pidController.setValues(testingPIDValues);
 		pidController.resetError();
 		lastTuneCounter=currentTuneCounter;
 		currentTuneCounter=0;
+		errorSafeCounter=0;
 	}
 
 	/**
@@ -360,6 +361,7 @@ public class AutoPIDTuner extends IControl {
 
 	
 	public void autonomousInit() {
+		toTune.startReset();
 		startTime=new Date(System.currentTimeMillis());
 		bestPIDValues=testingPIDValues=new PIDValues(.01, .0005, 0);
 		pidController=new PIDController(testingPIDValues);

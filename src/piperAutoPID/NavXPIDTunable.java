@@ -26,7 +26,7 @@ public class NavXPIDTunable extends IControl implements AutoPIDTunable {
 	private double turnPower=0;
 
 	private boolean resetting=false;
-	private double TARGET_RESET_ANGLE=40, TARGET_RESET_ANGLE_MAX_ERROR=2;
+	private double TARGET_RESET_ANGLE=40, TARGET_RESET_ANGLE_MAX_ERROR=.5;
 	private long resetFinishedTime;
 
 	/**
@@ -36,7 +36,6 @@ public class NavXPIDTunable extends IControl implements AutoPIDTunable {
 	public void autonomousInit() {
 		// store the motors we need to power and the navx board as local
 		// variables
-
 		navx=(AHRS)SensorController.getInstance().getSensor("NAVX");
 		navx.reset();// resets the angle
 
@@ -46,6 +45,7 @@ public class NavXPIDTunable extends IControl implements AutoPIDTunable {
 		drive.setDriveControl(DriveControl.EXTERNAL_CONTROL);
 
 		tuner=new AutoPIDTuner(this);
+		tuner.autonomousInit();
 	}
 
 	/**
@@ -59,23 +59,26 @@ public class NavXPIDTunable extends IControl implements AutoPIDTunable {
 
 	public void startReset() {
 		resetting=true;
-		resetFinishedTime=System.currentTimeMillis()+1500;
-		TARGET_RESET_ANGLE=0;
+		resetFinishedTime=System.currentTimeMillis()+500;
+		TARGET_RESET_ANGLE=90;
 		navx.reset();
 	}
 
 	public void setToRandomState() {
+		resetting=true;
 		Random r=new Random();
 		TARGET_RESET_ANGLE=r.nextDouble()*360-180;
+		navx.reset();
 	}
 
 	public boolean getResetFinished() {
+		SmartWriter.putB("AutoPIDResetting", resetting, DebugMode.DEBUG);
 		if (!resetting) {
 			return true;
 		}
 		if (System.currentTimeMillis()>resetFinishedTime) {
-			resetting=true;
-			return false;
+			resetting=false;
+			return true;
 		}
 		SmartWriter.putS("PID Tuning Status", "updating", DebugMode.DEBUG);
 		// If we are farther away from the target reset angle than the maxError,
@@ -93,7 +96,7 @@ public class NavXPIDTunable extends IControl implements AutoPIDTunable {
 	}
 
 	public double getError() {
-		return getAngle()-40;
+		return getAngle()-TARGET_RESET_ANGLE;
 	}
 
 	public void setValue(double turnValue) {
@@ -130,7 +133,7 @@ public class NavXPIDTunable extends IControl implements AutoPIDTunable {
 	public void giveInfo(PIDValues bestValues, int bestTuneTime, PIDValues testingValues, int lastTestTime) {
 		SmartWriter.putS("Best PID Values: ", bestValues.toString(), DebugMode.DEBUG);
 		SmartWriter.putD("Best PID time", bestTuneTime, DebugMode.DEBUG);
-		SmartWriter.putS("Last PID Values: ", testingValues.toString(), DebugMode.DEBUG);
+		SmartWriter.putS("PID Values: ", testingValues.toString(), DebugMode.DEBUG);
 		SmartWriter.putD("Last PID time", lastTestTime, DebugMode.DEBUG);
 	}
 }
