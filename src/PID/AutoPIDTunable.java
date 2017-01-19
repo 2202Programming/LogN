@@ -6,7 +6,7 @@ public interface AutoPIDTunable {
 	 * A command sent to this tunable object that tells it to start resetting it
 	 * to a constant state a fixed amount from the desired angle
 	 */
-	void startReset();
+	void startReset(int setting);
 
 	/**
 	 * A command sent to this tunable object that set its to some random state.

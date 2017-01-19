@@ -20,7 +20,7 @@ public class NavXPIDTunable extends IControl implements AutoPIDTunable {
 	private AHRS navx;
 
 	private AutoPIDTuner tuner;
-	
+
 	private IDrive drive;
 
 	private double turnPower=0;
@@ -40,8 +40,9 @@ public class NavXPIDTunable extends IControl implements AutoPIDTunable {
 		navx.reset();// resets the angle
 
 		// Disable the drive from controlling the movement
-		
-		drive=(IDrive)Global.controlObjects.get("ARCADE_DRIVE");;
+
+		drive=(IDrive)Global.controlObjects.get("ARCADE_DRIVE");
+		;
 		drive.setDriveControl(DriveControl.EXTERNAL_CONTROL);
 
 		tuner=new AutoPIDTuner(this);
@@ -57,10 +58,10 @@ public class NavXPIDTunable extends IControl implements AutoPIDTunable {
 		updateMotors();
 	}
 
-	public void startReset() {
+	public void startReset(int setting) {
 		resetting=true;
 		resetFinishedTime=System.currentTimeMillis()+500;
-		TARGET_RESET_ANGLE=90;
+		TARGET_RESET_ANGLE=30*(setting+1);
 		navx.reset();
 	}
 
@@ -105,9 +106,9 @@ public class NavXPIDTunable extends IControl implements AutoPIDTunable {
 
 	private void updateMotors() {
 		// Positive is right, according to NavX
-		if (Math.abs(turnPower) > 1) {
+		if (Math.abs(turnPower)>1) {
 			SmartWriter.putS("Warning: Turn Power Over 1", "warning", DebugMode.DEBUG);
-			turnPower /= Math.abs(turnPower);
+			turnPower/=Math.abs(turnPower);
 		}
 		SmartWriter.putD("Turn Power", turnPower, DebugMode.DEBUG);
 		drive.setLeftMotors(turnPower);

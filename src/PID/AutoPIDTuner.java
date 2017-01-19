@@ -88,9 +88,10 @@ public class AutoPIDTuner extends IControl {
 	private ArrayList<String> toWrite;
 
 	private Date startTime;
-	
-	
-	
+
+	private int firstTry=-1, secondTry=-1;
+	private int testOf3=0;
+
 	/**
 	 * The constructor for AutoPIDTuner, which passes in what needs to be tuned.
 	 * 
@@ -180,15 +181,16 @@ public class AutoPIDTuner extends IControl {
 		toWrite.add(timesTried+","+testingPIDValues.kp+","+testingPIDValues.ki+","+testingPIDValues.kp+","
 				+currentTuneCounter+",14,"+(currentTuneCounter<bestTuneTime?1:0));
 		String total="";
-		for (String s:toWrite) {
+		for (String s : toWrite) {
 			total+=s+"\n";
 		}
 		FileLoader.writeToFile("/home/lvuser/AutoPIDHistory"+startTime.toString()+".txt", total);
 		SmartWriter.putS("Sent file", "fdjkdf", DebugMode.DEBUG);
-		/*if (AutoPIDTesterWindow.shouldSetValues&&AutoPIDTesterWindow.window!=null) {
-			AutoPIDTesterWindow.window.setInfo(testingPIDValues+"", bestPIDValues+"", timesTried, bestTuneTime+"",
-					lastTuneCounter);
-		}*///comment this in for demos
+		/*
+		 * if (AutoPIDTesterWindow.shouldSetValues&&AutoPIDTesterWindow.window!=
+		 * null) { AutoPIDTesterWindow.window.setInfo(testingPIDValues+"",
+		 * bestPIDValues+"", timesTried, bestTuneTime+"", lastTuneCounter); }
+		 */// comment this in for demos
 	}
 
 	/**
@@ -221,7 +223,7 @@ public class AutoPIDTuner extends IControl {
 			return getCeterusParibusVarient(lastValues);
 		}
 
-		double divider=bestTuneTime/300.0*.05;//3;// Math.log(timesTried+2);
+		double divider=bestTuneTime/300.0*.05;// 3;// Math.log(timesTried+2);
 		dp=Math.pow(r.nextDouble()-0.5, 3)*4*divider;
 		di=Math.pow(r.nextDouble()-0.5, 3)/4*divider;
 		dd=Math.pow(r.nextDouble()-0.5, 3)*40*divider;
@@ -263,7 +265,7 @@ public class AutoPIDTuner extends IControl {
 			break;
 		default:
 			ceterusPluribusCounter=-1;
-			return getCeterusParibusVarient(lastValues);//YAY FOR RECURSION!
+			return getCeterusParibusVarient(lastValues);// YAY FOR RECURSION!
 		}
 
 		return new PIDValues(Math.max(lastValues.kp+dp, 0), Math.max(lastValues.ki+di, 0),
@@ -310,7 +312,7 @@ public class AutoPIDTuner extends IControl {
 	 * PIDValues, or starting with new ones from the previous best PID values.
 	 */
 	private void startNewTest() {
-		toTune.startReset();
+		toTune.startReset(testOf3);
 		timesTried++;
 		recordValuesToLog();
 	}
@@ -328,6 +330,34 @@ public class AutoPIDTuner extends IControl {
 	 * start a new test yet though.
 	 */
 	public void accountForLastTest() {
+		if (testOf3==0) {
+			testOf3=1;
+			if (currentTuneCounter<bestTuneTime) {
+				firstTry=currentTuneCounter;
+				return;
+			}
+			else {
+				//let control flow through, we failed
+			}
+		}
+		else if (testOf3==1) {
+			testOf3=2;
+			toTune.giveInfo(bestPIDValues, bestTuneTime, testingPIDValues, currentTuneCounter);			
+			
+			secondTry=currentTuneCounter;
+			pidController.resetError();
+			lastTuneCounter=currentTuneCounter;
+			currentTuneCounter=0;
+			errorSafeCounter=0;
+			return;
+		}
+		else {
+			testOf3=0;
+			int average=(firstTry+secondTry+currentTuneCounter)/3;
+			currentTuneCounter=average;// let control flow through
+		}
+		testOf3=0;
+
 		if (currentTuneCounter<bestTuneTime) {// NEW BEST!!!
 			bestTuneTime=currentTuneCounter;
 			bestPIDValues=testingPIDValues;
@@ -338,7 +368,7 @@ public class AutoPIDTuner extends IControl {
 		}
 
 		toTune.giveInfo(bestPIDValues, bestTuneTime, testingPIDValues, currentTuneCounter);
-		
+
 		pidController.setValues(testingPIDValues);
 		pidController.resetError();
 		lastTuneCounter=currentTuneCounter;
@@ -356,12 +386,11 @@ public class AutoPIDTuner extends IControl {
 	}
 
 	private boolean shouldStartRandomTest() {
-		return SmartWriter.getB("AutoPIDRandomTest");//AutoPIDTesterWindow.shouldSetValues&&AutoPIDTesterWindow.window.setToRandomState();
+		return SmartWriter.getB("AutoPIDRandomTest");// AutoPIDTesterWindow.shouldSetValues&&AutoPIDTesterWindow.window.setToRandomState();
 	}
 
-	
 	public void autonomousInit() {
-		toTune.startReset();
+		toTune.startReset(testOf3);
 		startTime=new Date(System.currentTimeMillis());
 		bestPIDValues=testingPIDValues=new PIDValues(.01, .0005, 0);
 		pidController=new PIDController(testingPIDValues);
@@ -377,11 +406,11 @@ public class AutoPIDTuner extends IControl {
 		toWrite=new ArrayList<String>();
 		SmartWriter.putB("AutoTuning", false, DebugMode.DEBUG);
 	}
-	
+
 	public void autonomousPeriodic() {
 		if (SmartWriter.getB("AutoTuning")) {
 			update();
 		}
 	}
-	
+
 }

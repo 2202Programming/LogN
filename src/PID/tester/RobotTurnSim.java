@@ -14,7 +14,8 @@ public class RobotTurnSim implements AutoPIDTunable{
 	private double turnVelocity=0.0, turnFriction=0.85, turnPower=0.01;
 	private Random random=new Random();
 	
-	public void startReset() {
+	public void startReset(int setting) {
+		//just ignore the setting
 		resetting=true;
 		angleToTurnTo=1;
 	}
