@@ -59,12 +59,13 @@
     <mkdir dir="${build.dir}"/>
 	<property name="userLibs" value=""/>
     <echo>[athena-compile] Compiling ${src.dir} with classpath=${classpath}:${userLibs} to ${build.dir}</echo>
-
+    <echo></echo>
+    <echo>${classpath}</echo>
     <javac srcdir="${src.dir}"
      destdir="${build.dir}"
      includeAntRuntime="no"
      includeJavaRuntime="no"
-     classpath="${classpath}:${userLibs}"
+     classpath="${classpath}:lib/navx-mxp/java/lib/navx_frc.jar:${userLibs}"
      target="${ant.java.version}"
      source="${ant.java.version}"
      compiler="javac${ant.java.version}"
