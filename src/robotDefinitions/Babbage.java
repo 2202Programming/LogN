@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import auto.CommandRunner;
+import comms.NetworkTables;
 import drive.ArcadeDrive;
 import drive.IDrive;
 import physicalOutput.IMotor;
@@ -48,6 +49,8 @@ public class Babbage extends RobotDefinitionBase {
 		// Create map to store public objects
 		Map<String, IControl> temp=super.loadControlObjects();
 		
+		NetworkTables visionTable = new NetworkTables("VisionTable");
+		temp.put("NT", visionTable);
 		
 		//TODO add the sensors here
 		/*

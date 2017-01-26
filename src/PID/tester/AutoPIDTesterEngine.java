@@ -13,7 +13,7 @@ public class AutoPIDTesterEngine {
 	private AutoPIDTuner tuner=new AutoPIDTuner(sim);
 	
 	public AutoPIDTesterEngine() {
-		sim.startReset();
+		sim.startReset(79399);
 	}
 	
 	public void update() {
