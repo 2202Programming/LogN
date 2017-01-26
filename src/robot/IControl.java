@@ -36,6 +36,7 @@ public abstract class IControl {
 	 * Postconditions: none
 	 */
 	public void robotInit() {
+		
 	}
 
 	/**

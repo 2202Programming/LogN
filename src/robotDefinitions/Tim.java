@@ -3,10 +3,15 @@ package robotDefinitions;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.kauailabs.navx.frc.AHRS;
+
 import auto.CommandRunner;
 import comms.XboxController;
 import drive.ArcadeDrive;
 import drive.IDrive;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SerialPort;
+import input.NavXTester;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import input.SensorController;
@@ -63,7 +68,9 @@ public class Tim extends RobotDefinitionBase {
 		
 		// Creates the global sensor controller
 		SensorController SC = SensorController.getInstance();
-		//SC.registerSensor("Name", new AHRS(port));
+		SC.registerSensor("FLENCODER", new Encoder(1,1));
+		SC.registerSensor("FRENCODER", new Encoder(1,2));
+		SC.registerSensor("NAVX", new AHRS(SerialPort.Port.kMXP));
 		//TODO add the sensors here
 		
 		// Creates the global solenoid controller

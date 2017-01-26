@@ -6,7 +6,7 @@ public interface AutoPIDTunable {
 	 * A command sent to this tunable object that tells it to start resetting it
 	 * to a constant state a fixed amount from the desired angle
 	 */
-	void startReset();
+	void startReset(int setting);
 
 	/**
 	 * A command sent to this tunable object that set its to some random state.
@@ -42,4 +42,12 @@ public interface AutoPIDTunable {
 	 *            The thing being sent directly to the motors.
 	 */
 	void setValue(double turnValue);
+	
+	/**
+	 * This is given to the tuner so it can display it on SmartDashboard or whatever else
+	 * @param bestValues
+	 * @param lastTestTime
+	 * @param bestTestTime
+	 */
+	void giveInfo(PIDValues bestValues, int bestTuneTime, PIDValues testingValues, int lastTestTime);
 }
