@@ -7,5 +7,5 @@ package robotDefinitions;
  * @author SecondThread
  */
 public enum RobotName {
-	UNKNOWN, TIM, PIPER
+	UNKNOWN, TIM, PIPER, BABBAGE 
 }
