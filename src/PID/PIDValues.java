@@ -1,5 +1,8 @@
 package PID;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 public class PIDValues {
 	public double kp=0;
 	public double ki=0;
@@ -12,10 +15,8 @@ public class PIDValues {
 	}
 	
 	public String toString() {
-		double multiplier=1000;
-		long newKP=Math.round(kp*multiplier);
-		long newKI=Math.round(ki*multiplier);
-		long newKD=Math.round(kd*multiplier);
-		return "<kp: "+newKP/multiplier+", ki: "+newKI/multiplier+", kd: "+newKD/multiplier+">";
+		NumberFormat formatter=new DecimalFormat("#0.00000");
+		return "<kp: "+formatter.format(kp)+", ki: "+formatter.format(ki)+", kd: "+formatter.format(kd)+">";
 	}
 }
+
