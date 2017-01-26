@@ -17,12 +17,7 @@ public class Robot extends IterativeRobot {
 
 	private IRobotDefinition robotDefinition;
 
-	/**
-	 * We usually only would want to print the first error that occurred, as
-	 * that tends to cause other ones. Once an error is printed, the rest won't
-	 * be so that the first one can be fixed.
-	 */
-	private boolean stopPrintingErrors=false;
+	
 
 	public void robotInit() {
 		SmartWriter.putS("Robot State", "Initsing", DebugMode.DEBUG);
@@ -56,7 +51,7 @@ public class Robot extends IterativeRobot {
 		try {
 			IControl.callAutonomousInit();
 		} catch (Exception e) {
-			outputError(e, "Auto Init");
+			SmartWriter.outputError(e, "Auto Init");
 		}
 	}
 
@@ -65,7 +60,7 @@ public class Robot extends IterativeRobot {
 		try {
 			IControl.callAutonomousPeriodic();
 		} catch (Exception e) {
-			outputError(e, "Auto Periodic");
+			SmartWriter.outputError(e, "Auto Periodic");
 		}
 	}
 
@@ -74,7 +69,7 @@ public class Robot extends IterativeRobot {
 		try {
 			IControl.callTeleopInit();
 		} catch (Exception e) {
-			outputError(e, "Teleop Init");
+			SmartWriter.outputError(e, "Teleop Init");
 		}
 	}
 
@@ -84,7 +79,7 @@ public class Robot extends IterativeRobot {
 			IControl.callTeleopPeriodic();
 		} catch (Exception e) {
 			SmartWriter.putB("error", true, DebugMode.DEBUG);
-			outputError(e, "Teleop Periodic");
+			SmartWriter.outputError(e, "Teleop Periodic");
 		}
 	}
 
@@ -94,7 +89,7 @@ public class Robot extends IterativeRobot {
 		try {
 			//IControl.callDisabledInit();
 		} catch (Exception e) {
-			outputError(e, "Disabled Init");
+			SmartWriter.outputError(e, "Disabled Init");
 		}
 	}
 
@@ -104,30 +99,7 @@ public class Robot extends IterativeRobot {
 		try {
 			//IControl.callDisabledPeriodic();
 		} catch (Exception e) {
-			outputError(e, "Disabled Periodic");
-		}
-	}
-
-	/**
-	 * Prints the error to standard output so it can be identified and debugged
-	 * 
-	 * @param The
-	 *            exception that occurred
-	 * @param The
-	 *            name of the time period that the exception occurred (i. e.
-	 *            Auto init) as a string to be printed
-	 */
-	private void outputError(Exception e, String timeOccured) {
-		// We are going to try to print to Stdout, but I think this isn't going
-		// to work.
-		// If this doesn't work, then we can try:
-		// -printing to System.out instead of System.err
-		// -printing to using SmartWriter (This would be more difficult because
-		// Excetion.StackTrace would have to be converted to Strings)
-		if (!stopPrintingErrors) {
-			System.err.println("Exception occured in: "+timeOccured+".");
-			e.printStackTrace(System.err);
-			stopPrintingErrors=true;
+			SmartWriter.outputError(e, "Disabled Periodic");
 		}
 	}
 }

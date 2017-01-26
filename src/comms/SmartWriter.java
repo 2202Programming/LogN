@@ -12,6 +12,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * --SecondThread
  */
 public class SmartWriter {
+	
+	/**
+	 * We usually only would want to print the first error that occurred, as
+	 * that tends to cause other ones. Once an error is printed, the rest won't
+	 * be so that the first one can be fixed.
+	 */
+	private static boolean stopPrintingErrors=false;
 
 	/**
 	 * The maximum DebugMode for which messages are printed to SmartDashboard.
@@ -92,6 +99,79 @@ public class SmartWriter {
 		if (SmartWriter.debugMode.compareTo(debugMode) >= 0)
 			SmartDashboard.putNumber(name, value);
 	}
+	
+
+	/**
+	 * Sets the field with name <i>name</i> on the SmartDashboard to
+	 * <i>value</i>. <br>
+	 * <br>
+	 * Preconditions: <i>debugMode</i> is at least as general as the debug mode
+	 * that has been set. If this is not the case, nothing will be printed. <br>
+	 * 
+	 * Postconditions: The value of the field with the name <i>name</i> on the
+	 * SmartDashboard will be set to <i>value</i>.
+	 * 
+	 * @param name
+	 *            The name of the field (the black bold text to the field's
+	 *            left)
+	 * @param value
+	 *            The value of the field (the text in the text box for that
+	 *            field)
+	 * @param debugMode
+	 *            The least general debug mode that this message should be
+	 *            displayed on.
+	 */
+	public static void putS(String name, String value) {
+		putS(name,value,DebugMode.DEBUG);
+	}
+
+	/**
+	 * Sets the field with name <i>name</i> on the SmartDashboard to
+	 * <i>value</i>. <br>
+	 * <br>
+	 * Preconditions: <i>debugMode</i> is at least as general as the debug mode
+	 * that has been set. If this is not the case, nothing will be printed. <br>
+	 * 
+	 * Postconditions: The value of the field with the name <i>name</i> on the
+	 * SmartDashboard will be set to <i>value</i>.
+	 * 
+	 * @param name
+	 *            The name of the field (the black bold text to the field's
+	 *            left)
+	 * @param value
+	 *            The value of the field (the text in the text box for that
+	 *            field)
+	 * @param debugMode
+	 *            The least general debug mode that this message should be
+	 *            displayed on
+	 */
+	public static void putB(String name, boolean value) {
+		putB(name,value,DebugMode.DEBUG);
+	}
+
+	/**
+	 * Sets the field with name <i>name</i> on the SmartDashboard to
+	 * <i>value</i>. <br>
+	 * <br>
+	 * Preconditions: <i>debugMode</i> is at least as general as the debug mode
+	 * that has been set. If this is not the case, nothing will be printed. <br>
+	 * 
+	 * Postconditions: The value of the field with the name <i>name</i> on the
+	 * SmartDashboard will be set to <i>value</i>.
+	 * 
+	 * @param name
+	 *            The name of the field (the black bold text to the field's
+	 *            left)
+	 * @param value
+	 *            The value of the field (the text in the text box for that
+	 *            field)
+	 * @param debugMode
+	 *            The least general debug mode that this message should be
+	 *            displayed on.
+	 */
+	public static void putD(String name, double value) {
+		putD(name,value,DebugMode.DEBUG);
+	}
 
 	/**
 	 * Gets and returns the value in the text box on SmartDashboard with the
@@ -145,6 +225,29 @@ public class SmartWriter {
 	 */
 	public static double getD(String name) {
 		return SmartDashboard.getNumber(name);
+	}
+	
+	/**
+	 * Prints the error to standard output so it can be identified and debugged
+	 * 
+	 * @param The
+	 *            exception that occurred
+	 * @param The
+	 *            name of the time period that the exception occurred (i. e.
+	 *            Auto init) as a string to be printed
+	 */
+	public static void outputError(Exception e, String timeOccured) {
+		// We are going to try to print to Stdout, but I think this isn't going
+		// to work.
+		// If this doesn't work, then we can try:
+		// -printing to System.out instead of System.err
+		// -printing to using SmartWriter (This would be more difficult because
+		// Excetion.StackTrace would have to be converted to Strings)
+		if (!stopPrintingErrors) {
+			System.err.println("Exception occured in: "+timeOccured+".");
+			e.printStackTrace(System.err);
+			stopPrintingErrors=true;
+		}
 	}
 
 }
