@@ -14,7 +14,7 @@ import physicalOutput.IMotor;
  * @author SecondThread
  */
 public class ArcadeDrive extends IDrive {
-
+	
 	/**
 	 * The motor corresponding to the front right wheel
 	 */
@@ -90,6 +90,7 @@ public class ArcadeDrive extends IDrive {
 	 * Postconditions: sets the motors
 	 */
 	private void setLeftMotorsRaw(double speed) {
+		SmartWriter.putD("Motor Raw Value", speed, DebugMode.DEBUG);
 		frontLeft.setSpeed(speed);
 		backLeft.setSpeed(speed);
 	}
@@ -127,13 +128,14 @@ public class ArcadeDrive extends IDrive {
 
 	// comments in IDrive
 	public void setLeftMotors(double power) {
-		setLeftMotorsRaw(power);
-
+		if(super.driveControl == DriveControl.EXTERNAL_CONTROL)
+			setLeftMotorsRaw(power);
 	}
 
 	// comments in IDrive
 	public void setRightMotors(double power) {
-		setRightMotorsRaw(power);
+		if(super.driveControl == DriveControl.EXTERNAL_CONTROL)
+			setRightMotorsRaw(power);
 	}
 
 	/**
