@@ -246,7 +246,7 @@ public class SmartWriter {
 		if (!stopPrintingErrors) {
 			System.err.println("Exception occured in: "+timeOccured+".");
 			e.printStackTrace(System.err);
-			stopPrintingErrors=true;
+			stopPrintingErrors=false;
 		}
 	}
 

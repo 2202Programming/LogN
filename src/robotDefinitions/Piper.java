@@ -5,6 +5,8 @@ import java.util.Map;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import comms.PegPiCommunications;
+import comms.SmartWriter;
 import drive.ArcadeDrive;
 import drive.IDrive;
 import edu.wpi.first.wpilibj.SerialPort;
@@ -50,6 +52,7 @@ public class Piper extends RobotDefinitionBase {
 	 */
 	public Map<String, IControl> loadControlObjects() {
 
+		SmartWriter.putS("Robot is piper...", "asdf");
 		// Create map to store public objects
 		Map<String, IControl> iControlMap=super.loadControlObjects();
 
@@ -77,6 +80,7 @@ public class Piper extends RobotDefinitionBase {
 		new NavXTester();
 		new NavXPIDTunable();
 
+		new PegPiCommunications();
 		// Create the autonomous command list maker, and command runner
 		// CommandListMaker CLM = new CommandListMaker(AD);
 		// CommandRunner CR = new CommandRunner(CLM.makeList1(),"PIPER"); //

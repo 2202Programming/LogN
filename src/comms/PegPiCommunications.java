@@ -4,15 +4,19 @@ import robot.IControl;
 
 public class PegPiCommunications extends IControl  {
 	
-	private VisionStates state;
+	private VisionStates state=VisionStates.WAITING_TO_TAKE_PICTURE;
 	private XboxController controller;
+	private NetworkTables table;
+	
+	public PegPiCommunications() {		
+		table=new NetworkTables(TableNamesEnum.VisionTable);
+	}
 	
 	public void robotInit() {
-		
 	}
-
+	
 	public void autonomousInit() {
-		controller=XboxController.getXboxController();
+		init();
 	}
 
 	public void autonomousPeriodic() {
@@ -20,23 +24,39 @@ public class PegPiCommunications extends IControl  {
 	}
 	
 	public void teleopInit() {
-		controller=XboxController.getXboxController();
+		init();
 	}
 
 	public void teleopPeriodic() {
 		update();
 	}
+
+	private void init() {
+		controller=XboxController.getXboxController();
+		state=VisionStates.WAITING_TO_TAKE_PICTURE;
+	}
 	
 	private void update() {
+		SmartWriter.putS("Peg Vision State", state.toString(), DebugMode.DEBUG);
 		switch (state) {
 		case WAITING_TO_TAKE_PICTURE:
-			/*if (controller.get) {
-				
-			}*/
+			if (controller.getXPressed()) {
+				table.setBoolean("processVision", true);
+				state=VisionStates.PROCESSING;
+			}
 			break;
-		case PROCESSING:			
+		case PROCESSING:
+			if (table.getBoolean("processVision")) {
+				//wait for the processing to finish
+			}
+			else {
+				state=VisionStates.TURNING;
+				SmartWriter.putD("Degrees to turn from vision", table.getDouble("degreesToTurn"), DebugMode.DEBUG);
+			}
 			break;
 		case TURNING:
+			//TODO actually turn
+			state=VisionStates.WAITING_TO_TAKE_PICTURE;
 			break;
 		}
 	}
