@@ -51,8 +51,6 @@ public class Babbage extends RobotDefinitionBase {
 		Map<String, IControl> temp=super.loadControlObjects();
 		
 		//Makes the network table for vision
-		NetworkTables visionTable = new NetworkTables("VisionTable");
-		temp.put("NT", visionTable);
 		
 		//TODO add the sensors here
 		/*
