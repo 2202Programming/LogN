@@ -19,11 +19,9 @@ public class Intake extends IControl {
 	}
 	
 	public void robotInit() {
-		speed=0;
 	}
 
 	public void autonomousInit() {
-		speed=0;
 		controller=XboxController.getXboxController();
 	}
 
@@ -32,7 +30,6 @@ public class Intake extends IControl {
 	}
 	
 	public void teleopInit() {
-		speed=0;
 		controller=XboxController.getXboxController();
 	}
 
@@ -41,13 +38,14 @@ public class Intake extends IControl {
 	}
 	
 	private void update() {
-		if (controller.getAPressed()) {
-			speed+=0.25;
-			speed%=1.25;
+		if (controller.getAHeld()) {
+			speed=1;
 		}
-		//for (IMotor motor:intakeMotors) {
-			intakeMotors[1].setSpeed(speed);
-			intakeMotors[0].setSpeed(speed);
-		//}
+		else {
+			speed=.5;
+		}
+		for (IMotor motor:intakeMotors) {
+			motor.setSpeed(speed);
+		}
 	}
 }
