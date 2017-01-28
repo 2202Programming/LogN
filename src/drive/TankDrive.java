@@ -66,8 +66,8 @@ public class TankDrive extends IDrive  {
 	 * Postconditions: none<br>
 	 */
 	protected void teleopUpdate() {
-		double leftStick=controller.getLeftJoystickX();
-		double rightStick=controller.getLeftJoystickY();
+		double leftStick=controller.getLeftJoystickY();
+		double rightStick=controller.getRightJoystickY();
 		leftMotors=leftStick;
 		rightMotors=rightStick;
 
