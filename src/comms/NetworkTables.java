@@ -6,7 +6,8 @@ import robot.IControl;
 public class NetworkTables extends IControl{
 
 	NetworkTable table;
-	public NetworkTables(TableNames tableKey) {
+	
+	public NetworkTables(TableNamesEnum tableKey) {
 		table = NetworkTable.getTable(tableKey.toString());
 	}
 	
