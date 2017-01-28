@@ -4,9 +4,10 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import robot.IControl;
 
 public class NetworkTables extends IControl{
+
 	NetworkTable table;
-	public NetworkTables(String tableKey) {
-		table = NetworkTable.getTable(tableKey);
+	public NetworkTables(TableNames tableKey) {
+		table = NetworkTable.getTable(tableKey.toString());
 	}
 	
 	public double getDouble(String key){

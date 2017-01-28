@@ -5,6 +5,7 @@ import java.util.Map;
 
 import auto.CommandListRunner;
 import comms.NetworkTables;
+import comms.TableNames;
 import drive.ArcadeDrive;
 import drive.IDrive;
 import physicalOutput.IMotor;
