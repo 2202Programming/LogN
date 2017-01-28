@@ -83,7 +83,7 @@ public class Piper extends RobotDefinitionBase {
 		new PegPiCommunications();
 		// Create the autonomous command list maker, and command runner
 		// CommandListMaker CLM = new CommandListMaker(AD);
-		// CommandRunner CR = new CommandRunner(CLM.makeList1(),"PIPER"); //
+		// CommandListRunner CR = new CommandListRunner(CLM.makeList1(),"PIPER"); //
 		// makes list one for the TIM robot
 
 		// Create the IMotors for the Shooter class

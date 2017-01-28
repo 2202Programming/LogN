@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import auto.CommandRunner;
+import auto.CommandListRunner;
 import comms.XboxController;
 import drive.ArcadeDrive;
 import drive.IDrive;
@@ -91,7 +91,7 @@ public class Tim extends RobotDefinitionBase {
 		
 		// Create the autonomous command list maker, and command runner
 		//CommandListMaker CLM = new CommandListMaker();
-		//CommandRunner CR = new CommandRunner(CLM.makeList1(),"TIM");  // makes list one for the TIM robot
+		//CommandListRunner CR = new CommandListRunner(CLM.makeList1(),"TIM");  // makes list one for the TIM robot
 		
 		//Create the IMotors for the Shooter class
 		IMotor SL = new JaguarMotor(getInt("SLMOTORPIN"),false);
@@ -101,7 +101,7 @@ public class Tim extends RobotDefinitionBase {
 		// Create the class for Tim's shooter
 		Shooter S = new Shooter(SL, SR, SH);
 		//EnableCompressor compressorTester = new EnableCompressor(compressor);
-		temp.put("IDrive", AD);		
+		temp.put("DRIVE", AD);		
 //		temp.put("CR", CR);
 //		temp.put("S", S);
 		

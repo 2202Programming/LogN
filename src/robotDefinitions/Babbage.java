@@ -3,6 +3,7 @@ package robotDefinitions;
 import java.util.HashMap;
 import java.util.Map;
 
+import auto.CommandListRunner;
 import babbage.Intake;
 import comms.NetworkTables;
 import comms.TableNamesEnum;
@@ -72,7 +73,7 @@ public class Babbage extends RobotDefinitionBase {
 		
 		// Create the autonomous command list maker, and command runner
 //		CommandListMaker CLM = new CommandListMaker(AD);
-//		CommandRunner CR = new CommandRunner(CLM.makeList1(),"PIPER");  // makes list one for the TIM robot
+//		CommandListRunner CR = new CommandListRunner(CLM.makeList1(),"PIPER");  // makes list one for the TIM robot
 		
 		//Create the IMotors for the Shooter class
 //		IMotor SL = new SparkMotor(getInt("SLMOTORPIN"),false);
@@ -81,7 +82,7 @@ public class Babbage extends RobotDefinitionBase {
 		
 		
 		
-//		temp.put("AD", AD);		
+		temp.put("DRIVE", AD);		
 //		temp.put("CR", CR);
 		
 
