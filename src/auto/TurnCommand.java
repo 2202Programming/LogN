@@ -1,5 +1,7 @@
 package auto;
 
+import com.kauailabs.navx.frc.AHRS;
+
 import PID.PIDController;
 import drive.IDrive;
 import edu.wpi.first.wpilibj.Encoder;
@@ -25,12 +27,13 @@ public class TurnCommand implements Command {
 	 * @param driveIn
 	 *            the IDrive object of the robot
 	 */
-	public TurnCommand(double powIn, double amountIn, IDrive driveIn) {
-		drive = driveIn;
+	public TurnCommand(double powIn, double amountIn) {
+		drive = (IDrive) Global.controlObjects.get("DRIVE");
 		power = powIn;
 		amount = amountIn;
 		sensors = SensorController.getInstance();
 		pidControl = new PIDController();
+		AHRS gyro = (AHRS) sensors.getSensor("AHRS");
 	}
 
 	/**

@@ -101,7 +101,7 @@ public class Tim extends RobotDefinitionBase {
 		// Create the class for Tim's shooter
 		Shooter S = new Shooter(SL, SR, SH);
 		//EnableCompressor compressorTester = new EnableCompressor(compressor);
-		temp.put("IDrive", AD);		
+		temp.put("DRIVE", AD);		
 //		temp.put("CR", CR);
 //		temp.put("S", S);
 		

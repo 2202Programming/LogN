@@ -49,6 +49,7 @@ public class Babbage extends RobotDefinitionBase {
 		// Create map to store public objects
 		Map<String, IControl> temp=super.loadControlObjects();
 		
+		//Makes the network table for vision
 		NetworkTables visionTable = new NetworkTables("VisionTable");
 		temp.put("NT", visionTable);
 		
@@ -80,7 +81,7 @@ public class Babbage extends RobotDefinitionBase {
 		
 		
 		
-//		temp.put("AD", AD);		
+		temp.put("DRIVE", AD);		
 //		temp.put("CR", CR);
 		
 

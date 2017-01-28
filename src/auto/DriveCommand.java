@@ -22,11 +22,11 @@ public class DriveCommand implements Command {
 	 * @param distIn
 	 *            distance to drive TODO at this point is just number of cycles
 	 */
-	public DriveCommand(double powIn, double distIn, IDrive driveIn) {
+	public DriveCommand(double powIn, double distIn) {
 		sensors = SensorController.getInstance();
 		power = powIn;
 		dist = distIn;
-		drive = driveIn;
+		drive =	(IDrive)Global.controlObjects.get("DRIVE");
 		currentDist = 0;
 		pidControl = new PIDController();
 	}

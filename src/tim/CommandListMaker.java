@@ -17,7 +17,7 @@ public class CommandListMaker {
 	}
 	
 	public CommandList makeList1(){
-		list.addCommand(new DriveCommand(1, 100, drive));
+		list.addCommand(new DriveCommand(1, 100));
 		return list;
 	}
 	
