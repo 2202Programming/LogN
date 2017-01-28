@@ -23,7 +23,7 @@ public class Robot extends IterativeRobot {
 		SmartWriter.putS("Robot State", "Initsing", DebugMode.DEBUG);
 		// String to say which robot we are using could later be made into a XML
 		// property getter
-		RobotName name=RobotName.BABBAGE; // TODO Can we get this from the robot so
+		RobotName name=RobotName.PIPER; // TODO Can we get this from the robot so
 										// it automatically knows what robot it
 										// is?
 
