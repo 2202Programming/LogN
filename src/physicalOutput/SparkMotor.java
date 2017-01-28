@@ -17,12 +17,11 @@ public class SparkMotor extends IMotor {
 		part=new Spark(port);
 	}
 
-	/**
-	 * 
-	 */
 	private Spark part;
 
 	/**
+	 * This is only used by IMotor
+	 * 
 	 * Sets the motor pwm value Preconditions: x must be between -1.0 and 1.0
 	 * Postconditions: sets the motor pwm value to x
 	 * 
