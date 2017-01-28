@@ -1,6 +1,6 @@
 package robot;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 //done --SecondThread
@@ -17,7 +17,7 @@ public abstract class IControl {
 	/**
 	 * A list of all created IControl objects which is used in update and init methods. IControl objects automatically
 	 */
-	private static List<IControl> allObjects=new LinkedList<IControl>();
+	private static List<IControl> allObjects=new ArrayList<IControl>();
 	
 	/**
 	 * Default constructor for all IControls 
@@ -102,12 +102,16 @@ public abstract class IControl {
 	}
 	
 	public static void callRobotInit() {
-		for (IControl i:allObjects) {
-			i.robotInit();
+		for (int i=0; i<allObjects.size(); i++) {			
+			allObjects.get(i).robotInit();
 		}
 	}
 	
 	public static void callAutonomousInit() {
+		for (int i=0; i<allObjects.size(); i++) {			
+			allObjects.get(i).autonomousInit();
+		}
+		
 		for (IControl i:allObjects) {
 			i.autonomousInit();
 		}
