@@ -60,7 +60,7 @@ public class TankDrive extends IDrive  {
 	
 	/**
 	 * Sets <i>leftMotors</i> and <i>rightMotors</i> to what they are suppose to
-	 * be using the leftJoystick of the XboxController as input <br>
+	 * be using the leftJoystick of the XboxController for the leftMotor and the rightJoystick for the rightMotor as input <br>
 	 * <br>
 	 * Preconditions: none<br>
 	 * Postconditions: none<br>
