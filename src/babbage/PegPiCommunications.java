@@ -1,5 +1,10 @@
-package comms;
+package babbage;
 
+import comms.DebugMode;
+import comms.NetworkTables;
+import comms.SmartWriter;
+import comms.TableNamesEnum;
+import comms.XboxController;
 import robot.IControl;
 
 public class PegPiCommunications extends IControl  {

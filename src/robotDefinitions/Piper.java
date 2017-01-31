@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import comms.PegPiCommunications;
+import babbage.PegPiCommunications;
 import comms.SmartWriter;
 import drive.ArcadeDrive;
 import drive.IDrive;
@@ -72,7 +72,7 @@ public class Piper extends RobotDefinitionBase {
 		// Create IDrive arcade drive I dont know why we cast it as a IDrive
 		// though
 		IDrive AD=new ArcadeDrive(FL, FR, BL, BR);
-		iControlMap.put("ARCADE_DRIVE", AD);
+		iControlMap.put("DRIVE", AD);
 
 		SensorController SC=SensorController.getInstance();
 		SC.registerSensor("NAVX", new AHRS(SerialPort.Port.kMXP));

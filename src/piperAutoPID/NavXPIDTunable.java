@@ -41,7 +41,7 @@ public class NavXPIDTunable extends IControl implements AutoPIDTunable {
 
 		// Disable the drive from controlling the movement
 
-		drive=(IDrive)Global.controlObjects.get("ARCADE_DRIVE");
+		drive=(IDrive)Global.controlObjects.get("DRIVE");
 		;
 		drive.setDriveControl(DriveControl.EXTERNAL_CONTROL);
 
