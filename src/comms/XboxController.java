@@ -182,7 +182,7 @@ public class XboxController extends IControl {
 	}
 
 	public double getLeftJoystickY() {
-		return (-1)*leftJoystick.getRawAxis(AXIS_LEFT_Y_WIPCODE);
+		return (-1.0)*leftJoystick.getRawAxis(AXIS_LEFT_Y_WIPCODE);
 	}
 
 	public boolean getXPressed() {
