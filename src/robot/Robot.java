@@ -5,6 +5,7 @@ import comms.SmartWriter;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import robotDefinitions.Babbage;
 import robotDefinitions.IRobotDefinition;
+import robotDefinitions.MechanumRobot;
 import robotDefinitions.Piper;
 import robotDefinitions.RobotName;
 import robotDefinitions.Tim;
@@ -34,6 +35,9 @@ public class Robot extends IterativeRobot {
 			break;
 		case PIPER:
 			robotDefinition=new Piper();
+			break;
+		case MECHANUMDRIVE:
+			robotDefinition=new MechanumRobot();
 			break;
 		case BABBAGE:
 			robotDefinition=new Babbage();
