@@ -3,15 +3,15 @@ package robotDefinitions;
 import java.util.HashMap;
 import java.util.Map;
 
+import babbage.Intake;
 import auto.CommandListRunner;
 import comms.NetworkTables;
-import comms.TableNames;
+import comms.TableNamesEnum;
 import drive.ArcadeDrive;
 import drive.IDrive;
 import physicalOutput.IMotor;
 import physicalOutput.SparkMotor;
 import robot.IControl;
-import tim.CommandListMaker;
 
 /**
  * The Piper implementation of IDefinition.<br>
@@ -50,8 +50,7 @@ public class Babbage extends RobotDefinitionBase {
 		// Create map to store public objects
 		Map<String, IControl> temp=super.loadControlObjects();
 		
-		//Makes the network table for vision
-		NetworkTables visionTable = new NetworkTables("VisionTable");
+		NetworkTables visionTable = new NetworkTables(TableNamesEnum.VISION_TABLE);
 		temp.put("NT", visionTable);
 		
 		//TODO add the sensors here
@@ -70,6 +69,7 @@ public class Babbage extends RobotDefinitionBase {
 
 		// Create IDrive arcade drive I dont know why we cast it as a IDrive though
 		IDrive AD=new ArcadeDrive(FL, FR, BL, BR);
+		Intake intake=new Intake();
 		
 		// Create the autonomous command list maker, and command runner
 //		CommandListMaker CLM = new CommandListMaker(AD);
