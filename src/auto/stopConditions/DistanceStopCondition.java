@@ -3,6 +3,7 @@ package auto.stopConditions;
 import java.util.List;
 
 import auto.IStopCondition;
+import comms.SmartWriter;
 import edu.wpi.first.wpilibj.Encoder;
 
 public class DistanceStopCondition implements IStopCondition {
@@ -26,8 +27,10 @@ public class DistanceStopCondition implements IStopCondition {
 		for(Encoder x: enc){
 			//x.get() returns encoder counts
 			//encoder count -> inches will need to be put here
+			Encoder encoder = new Encoder(0, 1);
 			sum += x.get();
 		}
+		SmartWriter.putD("Encoder Count", sum);
 		return (sum/enc.size()) > duration;
 	}
 
