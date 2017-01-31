@@ -12,8 +12,8 @@ public class Intake extends IControl {
 
 	// 775 motors
 	// 2 motors ports 4 and 5
-	public Intake() {
-		intakeMotors=new SparkMotor[2];
+	public Intake(IMotor[] motors) {
+		intakeMotors=motors;
 		intakeMotors[0]=new SparkMotor(4, true);
 		intakeMotors[1]=new SparkMotor(5, true);
 	}
