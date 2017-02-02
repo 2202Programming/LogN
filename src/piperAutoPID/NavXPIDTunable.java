@@ -130,7 +130,6 @@ public class NavXPIDTunable extends IControl implements AutoPIDTunable {
 		return plus180-180;
 	}
 
-	@Override
 	public void giveInfo(PIDValues bestValues, int bestTuneTime, PIDValues testingValues, int lastTestTime) {
 		SmartWriter.putS("Best PID Values: ", bestValues.toString(), DebugMode.DEBUG);
 		SmartWriter.putD("Best PID time", bestTuneTime, DebugMode.DEBUG);
