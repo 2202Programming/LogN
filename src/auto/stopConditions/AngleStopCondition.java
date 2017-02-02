@@ -54,4 +54,6 @@ public class AngleStopCondition implements IStopCondition{
 		return navX.getAngle()-degreesToTurn;
 	}
 	
+	
+	
 }
