@@ -20,20 +20,26 @@ public class DriveCommand implements ICommand {
 	 * @param speed
 	 * The speed to drive at, between 0 and 1
 	 */
-	public DriveCommand(double secondsToDrive, double speed) {
-		stopCondition=new TimerStopCondition((long)(1000*secondsToDrive));
+	public DriveCommand(IStopCondition stop, double speed) {
+		stopCondition=stop;
 		this.speed=speed;
 	}
 	
 	public void init() {
-		drive=(IDrive)Global.controlObjects.get("Drive");
+		stopCondition.init();
+		drive=(IDrive)Global.controlObjects.get("DRIVE");
 		drive.setDriveControl(DriveControl.EXTERNAL_CONTROL);
 	}
 
 	public boolean run() {
 		drive.setLeftMotors(speed);
 		drive.setRightMotors(speed);
-		return stopCondition.stopNow();
+		if (stopCondition.stopNow()) {
+			drive.setLeftMotors(0);
+			drive.setRightMotors(0);
+			return true;
+		}
+		return false;
 	}
 
 }

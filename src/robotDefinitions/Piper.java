@@ -14,6 +14,7 @@ import input.NavXTester;
 import input.SensorController;
 import physicalOutput.IMotor;
 import physicalOutput.SparkMotor;
+import piper.CommandListRunnerDoNotKeepItSucks;
 import piperAutoPID.NavXPIDTunable;
 import robot.IControl;
 
@@ -56,6 +57,7 @@ public class Piper extends RobotDefinitionBase {
 		// Create map to store public objects
 		Map<String, IControl> iControlMap=super.loadControlObjects();
 
+		CommandListRunnerDoNotKeepItSucks sucks = new CommandListRunnerDoNotKeepItSucks();
 		// TODO add the sensors here
 		/*
 		 * // Creates the global solenoid controller SolenoidController SO =
@@ -78,7 +80,7 @@ public class Piper extends RobotDefinitionBase {
 		SC.registerSensor("NAVX", new AHRS(SerialPort.Port.kMXP));
 
 		new NavXTester();
-		new NavXPIDTunable();
+		//new NavXPIDTunable();
 
 		new PegPiCommunications();
 		// Create the autonomous command list maker, and command runner

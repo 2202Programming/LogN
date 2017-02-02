@@ -3,6 +3,9 @@ package auto.stopConditions;
 import com.kauailabs.navx.frc.AHRS;
 
 import auto.IStopCondition;
+import comms.SmartWriter;
+import input.SensorController;
+import robot.Global;
 
 public class AngleStopCondition implements IStopCondition{
 	
@@ -27,6 +30,7 @@ public class AngleStopCondition implements IStopCondition{
 		this.degreesToTurn=degreesToTurn;
 		this.marginOfError=marginOfError;
 		this.secondsInRange=secondsInRange;
+		navX=(AHRS)(SensorController.getInstance().getSensor("NAVX"));
 	}
 
 

@@ -34,7 +34,12 @@ public class TurnCommand implements ICommand {
 		double motorValue=controller.calculate(0, stopCondition.getError());
 		drive.setLeftMotors(motorValue);
 		drive.setRightMotors(-motorValue);
-		return stopCondition.stopNow();
+		if (stopCondition.stopNow()) {
+			drive.setLeftMotors(0);
+			drive.setRightMotors(0);
+			return true;
+		}
+		return false;
 	}
 	
 	private void loadPIDValues() {
@@ -43,7 +48,7 @@ public class TurnCommand implements ICommand {
 			//TODO setPIDVALUES
 			break;
 		case PIPER:
-			//TODO setPIDVALUES
+			pidValues=new PIDValues(0.01, 0.0005, 0.4);
 			break;
 		case TIM:
 			//TODO setPIDVALUES
