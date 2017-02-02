@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import babbage.Intake;
+import babbage.Shooter;
 import auto.CommandListRunner;
 import comms.NetworkTables;
 import comms.TableNamesEnum;
@@ -11,6 +12,7 @@ import drive.ArcadeDrive;
 import drive.IDrive;
 import physicalOutput.IMotor;
 import physicalOutput.SparkMotor;
+import physicalOutput.TalonSRX;
 import robot.IControl;
 
 /**
@@ -79,7 +81,9 @@ public class Babbage extends RobotDefinitionBase {
 //		IMotor SL = new SparkMotor(getInt("SLMOTORPIN"),false);
 //		IMotor SR = new SparkMotor(getInt("SRMOTORPIN"),false);
 		
-		
+		IMotor S = new TalonSRX(0, false);
+		IMotor[] motors = {S};
+		Shooter p = new Shooter(motors);
 		
 		
 		temp.put("DRIVE", AD);		
