@@ -81,9 +81,10 @@ public class Babbage extends RobotDefinitionBase {
 //		IMotor SL = new SparkMotor(getInt("SLMOTORPIN"),false);
 //		IMotor SR = new SparkMotor(getInt("SRMOTORPIN"),false);
 		
+		//TODO put real motors
 		IMotor S = new TalonSRX(0, false);
 		IMotor[] motors = {S};
-		Shooter p = new Shooter(motors);
+		Shooter p = new Shooter(motors, S, S);
 		
 		
 		temp.put("DRIVE", AD);		
