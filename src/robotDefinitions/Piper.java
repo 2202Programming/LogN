@@ -79,7 +79,8 @@ public class Piper extends RobotDefinitionBase {
 		SC.registerSensor("NAVX", new AHRS(SerialPort.Port.kMXP));
 
 		new NavXTester();
-		new NavXPIDTunable();
+		//new NavXPIDTunable();
+		new CommandListRunnerDoNotKeepItSucks();
 
 		//new PegPiCommunications();
 		// v  YOU HAVE TO CREATE THIS AFTER CREATING NAVX!!! v

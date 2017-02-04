@@ -21,7 +21,7 @@ public class TurnCommand implements ICommand {
 	private IDrive drive;
 	
 	public TurnCommand(double degreesToTurn) {
-		this(degreesToTurn, 2, 0.3);
+		this(degreesToTurn, 1, 0.3);
 	}
 	
 	public TurnCommand(double degreesToTurn, double marginOfErrorDegrees, double secondsInRange) {
@@ -58,7 +58,7 @@ public class TurnCommand implements ICommand {
 			//TODO setPIDVALUES
 			break;
 		case PIPER:
-			pidValues=new PIDValues(0.01, 0.0001, 0.1);
+			pidValues=new PIDValues(0.003, 0.00015, 0.27);
 			break;
 		case TIM:
 			//TODO setPIDVALUES
