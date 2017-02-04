@@ -25,9 +25,7 @@ public class RunPegVisionCommand implements ICommand {
 
 	public boolean run() {
 		if (doneWithVision) {
-			if (runner.runList()) {
-				return true;
-			}
+			return runner.runList();
 		}
 		if (table.getBoolean("processVision")) {
 			//vision is still running
