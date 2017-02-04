@@ -7,6 +7,7 @@ public class CommandListRunner extends IControl {
 	private int commandNum;
 	private int prevCommandNum;
 	private CommandList commands;
+	private boolean callAutomatically=true;
 
 	/**
 	 * Constructor for CommandListRunner<br>
@@ -19,6 +20,10 @@ public class CommandListRunner extends IControl {
 	public CommandListRunner(CommandList xCommands) {
 		commands = xCommands;
 		init();
+	}
+	
+	public void setCallAutomatically(boolean shouldCallAutomatically) {
+		this.callAutomatically=shouldCallAutomatically;
 	}
 	
 	/**
@@ -50,12 +55,16 @@ public class CommandListRunner extends IControl {
 
 	// starts at the first commandNum
 	public void autonomousInit() {
-		init();
+		if (callAutomatically) {
+			init();
+		}
 	}
 
 	// runs the command every cycle
 	public void autonomousPeriodic() {
-		runList();
+		if (callAutomatically) {
+			runList();
+		}
 	}
 
 }
