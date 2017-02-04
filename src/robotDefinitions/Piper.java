@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import babbage.PegPiCommunications;
 import comms.SmartWriter;
 import drive.ArcadeDrive;
 import drive.IDrive;
@@ -14,7 +13,7 @@ import input.NavXTester;
 import input.SensorController;
 import physicalOutput.IMotor;
 import physicalOutput.SparkMotor;
-import piper.CommandListRunnerDoNotKeepItSucks;
+import piper.CommandListGear;
 import piperAutoPID.NavXPIDTunable;
 import robot.IControl;
 
@@ -82,6 +81,7 @@ public class Piper extends RobotDefinitionBase {
 		new NavXPIDTunable();
 
 		//new PegPiCommunications();
+		new CommandListGear();
 		// v  YOU HAVE TO CREATE THIS AFTER CREATING NAVX!!! v
 		//CommandListRunnerDoNotKeepItSucks sucks = new CommandListRunnerDoNotKeepItSucks();
 		

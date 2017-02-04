@@ -15,7 +15,7 @@ public class RunPegVisionCommand implements ICommand {
 	private CommandList moveAndTurnList;
 	private CommandListRunner runner;
 	
-	public RunPegVisionCommand(CommandList commandList) {
+	public RunPegVisionCommand() {
 		table=new NetworkTables(TableNamesEnum.VisionTable);
 	}
 

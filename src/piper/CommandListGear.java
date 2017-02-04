@@ -2,7 +2,7 @@ package piper;
 
 import auto.CommandList;
 import auto.CommandListRunner;
-import auto.commands.TurnCommand;
+import auto.commands.RunPegVisionCommand;
 
 public class CommandListGear {
 	private CommandList commands;
@@ -10,7 +10,8 @@ public class CommandListGear {
 	
 	public CommandListGear() {
 		commands = new CommandList();
-		
+		commands.addCommand(new RunPegVisionCommand());
+		run();
 	}
 	
 	/**
