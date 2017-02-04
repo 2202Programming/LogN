@@ -81,7 +81,7 @@ public class Piper extends RobotDefinitionBase {
 		new NavXTester();
 		new NavXPIDTunable();
 
-		new PegPiCommunications();
+		//new PegPiCommunications();
 		// v  YOU HAVE TO CREATE THIS AFTER CREATING NAVX!!! v
 		//CommandListRunnerDoNotKeepItSucks sucks = new CommandListRunnerDoNotKeepItSucks();
 		

@@ -334,6 +334,7 @@ public class AutoPIDTuner extends IControl {
 			currentTuneCounter=0;
 			errorSafeCounter=0;
 			testOf3=0;
+			return;
 		}
 		
 		if (testOf3==0) {
@@ -392,6 +393,7 @@ public class AutoPIDTuner extends IControl {
 	private void sendOutputToTunable() {
 		// Always want 0 error
 		double output=pidController.calculate(0, toTune.getError());
+		SmartWriter.putD("TuningPIDError", toTune.getError(), DebugMode.DEBUG);
 		toTune.setValue(output);
 	}
 

@@ -111,8 +111,8 @@ public class NavXPIDTunable extends IControl implements AutoPIDTunable {
 			turnPower/=Math.abs(turnPower);
 		}
 		SmartWriter.putD("Turn Power", turnPower, DebugMode.DEBUG);
-		drive.setLeftMotors(turnPower);
-		drive.setRightMotors(-turnPower);
+		drive.setLeftMotors(-turnPower);
+		drive.setRightMotors(turnPower);
 	}
 
 	/**
