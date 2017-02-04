@@ -11,7 +11,7 @@ public class CommandListRunnerDoNotKeepItSucks{
 	private CommandListRunner runner;
 	public CommandListRunnerDoNotKeepItSucks(){
 		commands = new CommandList();
-		commands.addCommand(new DriveCommand(new TimerStopCondition(2000),0.5));
+		//commands.addCommand(new DriveCommand(new TimerStopCondition(2000),0.5));
 		commands.addCommand(new TurnCommand(90));
 		runner = new CommandListRunner(commands);
 	}

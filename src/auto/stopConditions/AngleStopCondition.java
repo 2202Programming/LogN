@@ -55,7 +55,12 @@ public class AngleStopCondition implements IStopCondition{
 	
 	//negative if we need to turn right
 	public double getError() {
-		return navX.getAngle()-degreesToTurn;
+		SmartWriter.putS("NAVXFirmware", navX.getFirmwareVersion());
+		double angle=navX.getAngle();
+		if (angle>180) {
+			angle=angle-360;
+		}
+		return angle-degreesToTurn;
 	}
 	
 	

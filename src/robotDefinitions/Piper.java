@@ -57,7 +57,6 @@ public class Piper extends RobotDefinitionBase {
 		// Create map to store public objects
 		Map<String, IControl> iControlMap=super.loadControlObjects();
 
-		CommandListRunnerDoNotKeepItSucks sucks = new CommandListRunnerDoNotKeepItSucks();
 		// TODO add the sensors here
 		/*
 		 * // Creates the global solenoid controller SolenoidController SO =
@@ -83,6 +82,10 @@ public class Piper extends RobotDefinitionBase {
 		//new NavXPIDTunable();
 
 		new PegPiCommunications();
+		// v  YOU HAVE TO CREATE THIS AFTER CREATING NAVX!!! v
+		CommandListRunnerDoNotKeepItSucks sucks = new CommandListRunnerDoNotKeepItSucks();
+		
+		
 		// Create the autonomous command list maker, and command runner
 		// CommandListMaker CLM = new CommandListMaker(AD);
 		// CommandListRunner CR = new CommandListRunner(CLM.makeList1(),"PIPER"); //
