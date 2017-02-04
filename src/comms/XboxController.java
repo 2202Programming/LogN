@@ -8,66 +8,70 @@ import robot.IControl;
  * controller rumble. I will do this eventually --SecondThread
  */
 public class XboxController extends IControl {
-	
+
 	private Joystick leftJoystick, rightJoystick;
-	private boolean teehee=true;
+	private boolean teehee = true;
 
 	/**
 	 * These are all magic number that the FRC toolchain uses. For some reason
 	 * they appear to be indexed from 1, idk why.
 	 */
-	private final int BUTTON_A_WPICODE=1;
-	private final int BUTTON_B_WPICODE=2;
-	private final int BUTTON_X_WPICODE=3;
-	private final int BUTTON_Y_WPICODE=4;
-	private final int BUTTON_LB_WPICODE=5;
-	private final int BUTTON_RB_WPICODE=6;
-	private final int BUTTON_BACK_WPICODE=7;
-	private final int BUTTON_START_WPICODE=8;
-	private final int BUTTON_L3_WPICODE=9;
-	private final int BUTTON_R3_WPICODE=10;
+	private final int BUTTON_A_WPICODE = 1;
+	private final int BUTTON_B_WPICODE = 2;
+	private final int BUTTON_X_WPICODE = 3;
+	private final int BUTTON_Y_WPICODE = 4;
+	private final int BUTTON_LB_WPICODE = 5;
+	private final int BUTTON_RB_WPICODE = 6;
+	private final int BUTTON_BACK_WPICODE = 7;
+	private final int BUTTON_START_WPICODE = 8;
+	private final int BUTTON_L3_WPICODE = 9;
+	private final int BUTTON_R3_WPICODE = 10;
 
-	private final int AXIS_TRIGGER_LEFT_WIPCODE=2;// for left trigger and
-	private final int AXIS_TRIGGER_RIGHT_WIPCODE=3;// right trigger respectively
+	private final int AXIS_TRIGGER_LEFT_WIPCODE = 2;// for left trigger and
+	private final int AXIS_TRIGGER_RIGHT_WIPCODE = 3;// right trigger
+														// respectively
 
-	private final int AXIS_RIGHT_X_WIPCODE=4;// for joysticks
-	private final int AXIS_RIGHT_Y_WIPCODE=5;
-	private final int AXIS_LEFT_X_WIPCODE=0;
-	private final int AXIS_LEFT_Y_WIPCODE=1;
+	private final int AXIS_RIGHT_X_WIPCODE = 4;// for joysticks
+	private final int AXIS_RIGHT_Y_WIPCODE = 5;
+	private final int AXIS_LEFT_X_WIPCODE = 0;
+	private final int AXIS_LEFT_Y_WIPCODE = 1;
 
 	/*
 	 * These are codes for all the button values so that they can be stored in
 	 * an array with these indexes and we don't have 100 different private
 	 * variables
 	 */
-	private final int X_CODE=0;// no one uses Xcode, Atom is where it's at
-	private final int Y_CODE=1;
-	private final int A_CODE=2;
-	private final int B_CODE=3;
-	private final int START_CODE=4;
-	private final int BACK_CODE=5;
-	private final int LEFT_BUMPER_CODE=6;
-	private final int RIGHT_BUMPER_CODE=7;
-	private final int L3_CODE=8;
-	private final int R3_CODE=9;
-	private final int LEFT_TRIGGER_CODE=10;
-	private final int RIGHT_TRIGGER_CODE=11;
+	private final int X_CODE = 0;// no one uses Xcode, Atom is where it's at
+	private final int Y_CODE = 1;
+	private final int A_CODE = 2;
+	private final int B_CODE = 3;
+	private final int START_CODE = 4;
+	private final int BACK_CODE = 5;
+	private final int LEFT_BUMPER_CODE = 6;
+	private final int RIGHT_BUMPER_CODE = 7;
+	private final int L3_CODE = 8;
+	private final int R3_CODE = 9;
+	private final int LEFT_TRIGGER_CODE = 10;
+	private final int RIGHT_TRIGGER_CODE = 11;
 
-	private final int NUMBER_OF_BUTTONS=12;
-	private final int maxDebounceCounter=10;
-	private int[] debounceCounters=new int[NUMBER_OF_BUTTONS];
-	private boolean[] thisFrame=new boolean[NUMBER_OF_BUTTONS];
-	private boolean[] lastFrame=new boolean[NUMBER_OF_BUTTONS];
-	private boolean[] pressed=new boolean[NUMBER_OF_BUTTONS];
-	private boolean[] held=new boolean[NUMBER_OF_BUTTONS];
-	private boolean[] released=new boolean[NUMBER_OF_BUTTONS];
+	private final int NUMBER_OF_BUTTONS = 12;
+	private final int maxDebounceCounter = 10;
+	private int[] debounceCounters = new int[NUMBER_OF_BUTTONS];
+	private boolean[] thisFrame = new boolean[NUMBER_OF_BUTTONS];
+	private boolean[] lastFrame = new boolean[NUMBER_OF_BUTTONS];
+	private boolean[] pressed = new boolean[NUMBER_OF_BUTTONS];
+	private boolean[] held = new boolean[NUMBER_OF_BUTTONS];
+	private boolean[] released = new boolean[NUMBER_OF_BUTTONS];
 
 	/**
 	 * The singleton instance of this class. <i>xboxController</i> is null if
 	 * the singleton has not been instantiated yet.
 	 */
-	private static XboxController xboxController;
+	private static XboxController[] xboxController = new XboxController[4];
 
+	public static XboxController getXboxController(){
+		return getXboxController(0);
+	}
 	/**
 	 * Gets the singleton xboxController instance. Only one xboxController is
 	 * ever created so that different systems get consistent readings. <br>
@@ -77,11 +81,14 @@ public class XboxController extends IControl {
 	 * 
 	 * @return The singleton of this class
 	 */
-	public static XboxController getXboxController() {
-		if (xboxController==null) {
-			xboxController=new XboxController();
+	public static XboxController getXboxController(int port) {
+		if (port > 3) {
+			if (xboxController[port] == null) {
+				xboxController[port] = new XboxController(port);
+			}
+			return xboxController[port];
 		}
-		return xboxController;
+		return null;
 	}
 
 	/**
@@ -97,8 +104,8 @@ public class XboxController extends IControl {
 	 * anything.
 	 */
 	private XboxController(int port) {
-		leftJoystick=new Joystick(0);
-		rightJoystick=new Joystick(0);
+		leftJoystick = new Joystick(port);
+		rightJoystick = new Joystick(port);
 
 		// I don't know what this means or does, but we needed it for the c++
 		// version
@@ -135,8 +142,8 @@ public class XboxController extends IControl {
 		updateButton(RIGHT_BUMPER_CODE, rightJoystick.getRawButton(BUTTON_RB_WPICODE));
 		updateButton(L3_CODE, rightJoystick.getRawButton(BUTTON_L3_WPICODE));
 		updateButton(R3_CODE, rightJoystick.getRawButton(BUTTON_R3_WPICODE));
-		updateButton(LEFT_TRIGGER_CODE, rightJoystick.getRawAxis(AXIS_TRIGGER_LEFT_WIPCODE)>0.8);
-		updateButton(RIGHT_TRIGGER_CODE, rightJoystick.getRawAxis(AXIS_TRIGGER_RIGHT_WIPCODE)>0.8);
+		updateButton(LEFT_TRIGGER_CODE, rightJoystick.getRawAxis(AXIS_TRIGGER_LEFT_WIPCODE) > 0.8);
+		updateButton(RIGHT_TRIGGER_CODE, rightJoystick.getRawAxis(AXIS_TRIGGER_RIGHT_WIPCODE) > 0.8);
 	}
 
 	/**
@@ -149,24 +156,24 @@ public class XboxController extends IControl {
 	 */
 	private void updateButton(int buttonCode, boolean currentlyDown) {
 		SmartWriter.putB(buttonCode + "", currentlyDown, DebugMode.FULL);
-		lastFrame[buttonCode]=thisFrame[buttonCode];
-		if (!currentlyDown) {
-			debounceCounters[buttonCode]=0;
-			thisFrame[buttonCode]=false;
+		lastFrame[buttonCode] = thisFrame[buttonCode];
+		if ( !currentlyDown) {
+			debounceCounters[buttonCode] = 0;
+			thisFrame[buttonCode] = false;
 		}
 		else {
 			debounceCounters[buttonCode]++;
-			if (debounceCounters[buttonCode]>=maxDebounceCounter) {
-				debounceCounters[buttonCode]=maxDebounceCounter;
-				thisFrame[buttonCode]=true;
+			if (debounceCounters[buttonCode] >= maxDebounceCounter) {
+				debounceCounters[buttonCode] = maxDebounceCounter;
+				thisFrame[buttonCode] = true;
 			}
 			else {
-				thisFrame[buttonCode]=false;
+				thisFrame[buttonCode] = false;
 			}
 		}
-		pressed[buttonCode]=thisFrame[buttonCode]&&!lastFrame[buttonCode];
-		held[buttonCode]=thisFrame[buttonCode]&&lastFrame[buttonCode];
-		released[buttonCode]=!thisFrame[buttonCode]&&lastFrame[buttonCode];
+		pressed[buttonCode] = thisFrame[buttonCode] && !lastFrame[buttonCode];
+		held[buttonCode] = thisFrame[buttonCode] && lastFrame[buttonCode];
+		released[buttonCode] = !thisFrame[buttonCode] && lastFrame[buttonCode];
 	}
 
 	public double getRightJoystickX() {
@@ -174,7 +181,7 @@ public class XboxController extends IControl {
 	}
 
 	public double getRightJoystickY() {
-		return (-1.0)*rightJoystick.getRawAxis(AXIS_RIGHT_Y_WIPCODE);
+		return ( -1.0) * rightJoystick.getRawAxis(AXIS_RIGHT_Y_WIPCODE);
 	}
 
 	public double getLeftJoystickX() {
@@ -182,7 +189,7 @@ public class XboxController extends IControl {
 	}
 
 	public double getLeftJoystickY() {
-		return (-1.0)*leftJoystick.getRawAxis(AXIS_LEFT_Y_WIPCODE);
+		return ( -1.0) * leftJoystick.getRawAxis(AXIS_LEFT_Y_WIPCODE);
 	}
 
 	public boolean getXPressed() {
@@ -329,16 +336,16 @@ public class XboxController extends IControl {
 		return released[RIGHT_TRIGGER_CODE];
 	}
 
-	public void setRumble(boolean shouldRumble) {//of course it should!
+	public void setRumble(boolean shouldRumble) {// of course it should!
 		setRumble(shouldRumble?1:0);
 	}
-	
+
 	public void setRumble(double rumblyness) {
-		float radness=(float)rumblyness;
+		float radness = (float)rumblyness;
 		rightJoystick.setRumble(Joystick.RumbleType.kLeftRumble, radness);
 		rightJoystick.setRumble(Joystick.RumbleType.kRightRumble, radness);
 		leftJoystick.setRumble(Joystick.RumbleType.kLeftRumble, radness);
-		leftJoystick.setRumble(Joystick.RumbleType.kRightRumble, radness);		
+		leftJoystick.setRumble(Joystick.RumbleType.kRightRumble, radness);
 	}
-	
+
 }
