@@ -37,6 +37,7 @@ public class DriveCommand implements ICommand {
 		if (stopCondition.stopNow()) {
 			drive.setLeftMotors(0);
 			drive.setRightMotors(0);
+			drive.setDriveControl(DriveControl.DRIVE_CONTROLLED);
 			return true;
 		}
 		return false;

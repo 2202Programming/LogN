@@ -26,7 +26,7 @@ public class AutoPIDTuner extends IControl {
 	/**
 	 * The previous best PID values and the PID values that will be tested
 	 */
-	private PIDValues bestPIDValues, testingPIDValues;
+	private PIDValues bestPIDValues, testingPIDValues, smartDashboardPIDValues=null;
 
 	/**
 	 * The PIDController that is used by the Tunable object. This is needed so
@@ -177,13 +177,10 @@ public class AutoPIDTuner extends IControl {
 	 * and sends them to the AutoPIDTesterWindow, if its main is currently
 	 * running.
 	 */
-	private void recordValuesToLog() {
-		toWrite.add(timesTried+","+testingPIDValues.kp+","+testingPIDValues.ki+","+testingPIDValues.kp+","
-				+currentTuneCounter+",14,"+(currentTuneCounter<bestTuneTime?1:0));
+	public void disabledInit() {
 		String total="";
-		for (String s : toWrite) {
-			total+=s+"\n";
-		}
+		total+="Best PID Values: "+bestPIDValues.toString()+"\n";
+		total+="Best Tune Time: "+bestTuneTime+"\n";
 		FileLoader.writeToFile("/home/lvuser/AutoPIDHistory"+startTime.toString()+".txt", total);
 		SmartWriter.putS("Sent file", "fdjkdf", DebugMode.DEBUG);
 		/*
@@ -314,7 +311,6 @@ public class AutoPIDTuner extends IControl {
 	private void startNewTest() {
 		toTune.startReset(testOf3);
 		timesTried++;
-		recordValuesToLog();
 	}
 
 	private void startRandomTest() {
@@ -330,6 +326,16 @@ public class AutoPIDTuner extends IControl {
 	 * start a new test yet though.
 	 */
 	public void accountForLastTest() {
+		if (smartDashboardPIDValues!=null) {
+			pidController.setValues(smartDashboardPIDValues);
+			smartDashboardPIDValues=null;
+			pidController.resetError();
+			lastTuneCounter=currentTuneCounter;
+			currentTuneCounter=0;
+			errorSafeCounter=0;
+			testOf3=0;
+		}
+		
 		if (testOf3==0) {
 			testOf3=1;
 			if (currentTuneCounter<bestTuneTime) {
@@ -356,6 +362,10 @@ public class AutoPIDTuner extends IControl {
 			int average=(firstTry+secondTry+currentTuneCounter)/3;
 			currentTuneCounter=average;// let control flow through
 		}
+		
+		
+		
+		
 		testOf3=0;
 
 		if (currentTuneCounter<bestTuneTime) {// NEW BEST!!!
@@ -404,12 +414,28 @@ public class AutoPIDTuner extends IControl {
 		timesTried=0;
 		ceterusPluribusCounter=-1;
 		toWrite=new ArrayList<String>();
-		SmartWriter.putB("AutoTuning", false, DebugMode.DEBUG);
+		SmartWriter.putB("AutoTuning", true, DebugMode.DEBUG);
+		SmartWriter.putS("SuggestedPIDValues", "", DebugMode.DEBUG);
 	}
 
 	public void autonomousPeriodic() {
 		if (SmartWriter.getB("AutoTuning")) {
 			update();
+			
+			
+			String input=SmartWriter.getS("SuggestedPIDValues").replaceAll(" ", "");
+			String[] sections=input.split(",");
+			if (sections.length==3&&!sections[0].isEmpty()&&!sections[1].isEmpty()&&!sections[2].isEmpty()) {
+				try {
+					double p=Double.parseDouble(sections[0]);
+					double i=Double.parseDouble(sections[1]);
+					double d=Double.parseDouble(sections[2]);
+					smartDashboardPIDValues=new PIDValues(p, i, d);
+					SmartWriter.putS("SuggestedPIDValues", "");
+				} catch(Exception e) {
+					SmartWriter.putS("SuggestedPIDValues", "Invalid Values");
+				}
+			}
 		}
 	}
 

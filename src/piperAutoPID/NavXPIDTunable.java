@@ -54,7 +54,6 @@ public class NavXPIDTunable extends IControl implements AutoPIDTunable {
 	 */
 	public void autonomousPeriodic() {
 		SmartWriter.putS("PID Tuning Status", "Starting", DebugMode.DEBUG);
-		tuner.update();
 		updateMotors();
 	}
 
@@ -103,6 +102,7 @@ public class NavXPIDTunable extends IControl implements AutoPIDTunable {
 	public void setValue(double turnValue) {
 		turnPower=turnValue;
 	}
+	
 
 	private void updateMotors() {
 		// Positive is right, according to NavX

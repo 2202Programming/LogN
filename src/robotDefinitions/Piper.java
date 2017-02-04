@@ -79,11 +79,11 @@ public class Piper extends RobotDefinitionBase {
 		SC.registerSensor("NAVX", new AHRS(SerialPort.Port.kMXP));
 
 		new NavXTester();
-		//new NavXPIDTunable();
+		new NavXPIDTunable();
 
 		new PegPiCommunications();
 		// v  YOU HAVE TO CREATE THIS AFTER CREATING NAVX!!! v
-		CommandListRunnerDoNotKeepItSucks sucks = new CommandListRunnerDoNotKeepItSucks();
+		//CommandListRunnerDoNotKeepItSucks sucks = new CommandListRunnerDoNotKeepItSucks();
 		
 		
 		// Create the autonomous command list maker, and command runner

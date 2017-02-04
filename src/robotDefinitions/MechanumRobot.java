@@ -3,20 +3,14 @@ package robotDefinitions;
 import java.util.HashMap;
 import java.util.Map;
 
-import auto.CommandRunner;
 import comms.XboxController;
 import drive.ArcadeDrive;
 import drive.IDrive;
-import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import input.SensorController;
 import physicalOutput.IMotor;
 import physicalOutput.JaguarMotor;
 import physicalOutput.SolenoidController;
-import physicalOutput.VictorMotor;
 import robot.IControl;
-import tim.CommandListMaker;
-import tim.Shooter;
 
 /**
  * The Tim implementation of IDefinition.<br>
