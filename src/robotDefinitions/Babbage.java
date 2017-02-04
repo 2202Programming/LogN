@@ -3,8 +3,8 @@ package robotDefinitions;
 import java.util.HashMap;
 import java.util.Map;
 
-import auto.CommandListRunner;
 import babbage.Intake;
+import auto.CommandListRunner;
 import comms.NetworkTables;
 import comms.TableNamesEnum;
 import drive.ArcadeDrive;
