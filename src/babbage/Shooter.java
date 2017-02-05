@@ -19,7 +19,6 @@ public class Shooter extends IControl {
 	private boolean _fire;
 	private boolean _reverse;
 
-	// 1 motor port ??
 	public Shooter(IMotor motors, IMotor newChamber, ServoMotor turret) {
 		shooterMotors = motors;
 		controller = XboxController.getXboxController();
@@ -27,14 +26,23 @@ public class Shooter extends IControl {
 		shoosterTurret = new Turret(turret);
 	}
 
+	/**
+	 * gets all user input for the shooter and sets the respective instance fields
+	 */
 	public void updateUserInput() {
+		//if the user wants to start shooting
 		_startShoosting = controller.getRightTriggerPressed();
-		_abort = state == ShooterState.PRIMED || state == ShooterState.WINDUP || state == ShooterState.REVERSE
-				?controller.getBPressed():false;
+		//Can be pressed at any time to stop shooting 
+		_abort = controller.getBPressed();
+		//If we are primed, shoot the ball
 		_fire = state == ShooterState.PRIMED?controller.getRightTriggerPressed():false;
+		//If we are primed, reverse the shooter motors to unclog balls
 		_reverse = state == ShooterState.PRIMED?controller.getRightBumperPressed():false;
 	}
 
+	/**
+	 * displays user input for debug purpose
+	 */
 	public void displayUserInput() {
 		SmartWriter.putB("_startShoosting", _startShoosting);
 		SmartWriter.putB("_abort", _abort);
@@ -42,35 +50,43 @@ public class Shooter extends IControl {
 		SmartWriter.putB("_reverse", _reverse);
 	}
 
+	/**
+	 * sets motor speed to 0 and state to IDLE
+	 */
 	public void teleopInit() {
 		shooterMotors.setSpeed(0);
 		state = ShooterState.IDLE;
 	}
 
 	public void teleopPeriodic() {
+		//get all user input
 		updateUserInput();
+		//reset everything if abort
 		if (_abort) {
 			teleopInit();
 		}
+		//If the user wants to start firing, begin to wind the motors
 		if (_startShoosting && state == ShooterState.IDLE) {
 			state = ShooterState.WINDUP;
 		}
-
+		//Once the motors are wound up, we go the primed state
 		if (state == ShooterState.WINDUP) {
 			if (windUp()) {
 				state = ShooterState.PRIMED;
 			}
 		}
-
-		if (_startShoosting && state == ShooterState.PRIMED) {
-			primed();
+		//Shoot the ball
+		if (_fire) {
+			//TODO check if balls are in the shooter and make some decision about that
+			shoot();
 		}
-
+		//Reverse the shooter motor if Primed
 		if (state == ShooterState.PRIMED && _reverse) {
 			reverse();
 		}
 		else {
 			if (state == ShooterState.REVERSE) {
+				//If we just reversed, we need to wind up the motors again
 				state = ShooterState.WINDUP;
 			}
 		}
@@ -78,45 +94,97 @@ public class Shooter extends IControl {
 
 	}
 
+	/**
+	 * Winds up the shooter motors
+	 * @return true if the motors are at speed
+	 */
 	public boolean windUp() {
 		shooterMotors.setSpeed(0.5);
 		// TODO checks motor speed
 		return true;
 	}
-
-	public boolean primed() {
+	
+	/**
+	 * Tell the chamber to shoot the ball
+	 * @return true if there are balls to shoot
+	 */
+	public boolean shoot() {
 		return shoosterChamber.shoot();
 	}
 
+	/**
+	 * Sets the motors backwards
+	 * @return true always(may change)
+	 */
 	public boolean reverse() {
-		shooterMotors.setSpeed(-0.5);
+		shooterMotors.setSpeed( -0.5);
 		return true;
 	}
 
 }
 
+/**
+ * This is the class for the chamber that feeds balls into the shooter
+ * 
+ * @author Daniel
+ *
+ */
 class Chamber {
 	private IMotor chamber;
 
+	/**
+	 * Create a new chamber
+	 * 
+	 * @param newChamber
+	 *            the motor assigned to the chamber
+	 */
 	public Chamber(IMotor newChamber) {
 		chamber = newChamber;
 
 	}
 
+	/**
+	 * Tell the chamber to start shooting<br>
+	 * should only be called when shooter is at speed
+	 * 
+	 * @return true if there are balls in the shooter currently
+	 */
 	public boolean shoot() {
 		chamber.setSpeed(0.5);
+		// TODO check if there are balls in the shooter
 		return true;
 	}
 }
 
+/**
+ * This class controls the angle rotation of the shooter's turn table
+ * 
+ * @author Daniel
+ *
+ */
 class Turret {
 	private ServoMotor turretMotor;
 
+	/**
+	 * Create a new turret
+	 * 
+	 * @param tMotor
+	 *            the motor that controls the turret; must be a servo
+	 */
 	public Turret(ServoMotor tMotor) {
 		turretMotor = tMotor;
 	}
 
+	/**
+	 * sets the angle of the turret
+	 * 
+	 * @param angle
+	 *            the angle of the turret Preconditions: the angle must be
+	 *            between -1 and 1 Postconditions: the angle is set to the ratio
+	 *            between the max and min angles
+	 */
 	public void setAngle(double angle) {
-		// TODO set angle here
+		// for a servo this actually sets the angle not the speed
+		turretMotor.setSpeed(angle);
 	}
 }
