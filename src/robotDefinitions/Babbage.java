@@ -3,6 +3,7 @@ package robotDefinitions;
 import java.util.HashMap;
 import java.util.Map;
 
+import babbage.GearHolder;
 import babbage.Intake;
 import babbage.Shooter;
 import auto.CommandListRunner;
@@ -10,7 +11,10 @@ import comms.NetworkTables;
 import comms.TableNamesEnum;
 import drive.ArcadeDrive;
 import drive.IDrive;
+import edu.wpi.first.wpilibj.DigitalInput;
+import input.SensorController;
 import physicalOutput.IMotor;
+import physicalOutput.ServoMotor;
 import physicalOutput.SparkMotor;
 import physicalOutput.TalonSRX;
 import robot.IControl;
@@ -41,6 +45,12 @@ public class Babbage extends RobotDefinitionBase {
 		_properties.put("BLMOTORPIN", "3");//PWM4
 		_properties.put("FRMOTORPIN", "1");//PWM1
 		_properties.put("BRMOTORPIN", "0");//PWM2
+		//Shooter pins
+		_properties.put("SHOOTWHEEL", "11");//MainShooterWheel
+		_properties.put("CHAMBERMOTOR","8");//Motor to load balls
+		_properties.put("TURRETMOTOR", "9");//Motor to rotate shooter
+		//Gear holder
+		_properties.put("GEARMOTOR", "6");
 	}
 
 	/***
@@ -56,6 +66,8 @@ public class Babbage extends RobotDefinitionBase {
 		temp.put("NT", visionTable);
 		
 		//TODO add the sensors here
+		SensorController SC =  SensorController.getInstance();
+		
 		/*
 		// Creates the global solenoid controller
 		SolenoidController SO = SolenoidController.getInstance();
@@ -71,7 +83,7 @@ public class Babbage extends RobotDefinitionBase {
 
 		// Create IDrive arcade drive I dont know why we cast it as a IDrive though
 		IDrive AD=new ArcadeDrive(FL, FR, BL, BR);
-		Intake intake=new Intake();
+		//Intake intake=new Intake();
 		
 		// Create the autonomous command list maker, and command runner
 //		CommandListMaker CLM = new CommandListMaker(AD);
@@ -82,12 +94,15 @@ public class Babbage extends RobotDefinitionBase {
 //		IMotor SR = new SparkMotor(getInt("SRMOTORPIN"),false);
 		
 		//TODO put real motors
-		IMotor S = new TalonSRX(0, false);
-		IMotor[] motors = {S};
-		Shooter p = new Shooter(motors, S, S);
+//		IMotor S = new TalonSRX(getInt("SHOOTWHEEL"), false, false);
+//		IMotor T = new ServoMotor(getInt("TURRETMOTOR"));
+//		IMotor C = new SparkMotor(getInt("CHAMBERMOTOR"), false);
+//		Shooter p = new Shooter(S, T, C);
 		
+		IMotor G = new SparkMotor(getInt("GEARMOTOR"), false);
+		GearHolder GH = new GearHolder(G);
 		
-		temp.put("DRIVE", AD);		
+		//temp.put("DRIVE", AD);		
 //		temp.put("CR", CR);
 		
 

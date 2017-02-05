@@ -105,4 +105,8 @@ public abstract class IMotor extends IControl {
 		}
 		setValue=xSpeed;
 	}
+	
+	public double getSpeed(){
+		return setValue;
+	}
 }

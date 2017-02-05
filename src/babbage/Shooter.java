@@ -6,7 +6,7 @@ import physicalOutput.IMotor;
 import robot.IControl;
 
 public class Shooter extends IControl {
-	private IMotor[] shooterMotors;
+	private IMotor shooterMotors;
 	private XboxController controller;
 	private double speed = 0;
 	private ShooterState state;
@@ -19,7 +19,7 @@ public class Shooter extends IControl {
 	private boolean _reverse;
 
 	// 1 motor port ??
-	public Shooter(IMotor[] motors, IMotor newChamber, IMotor turret) {
+	public Shooter(IMotor motors, IMotor newChamber, IMotor turret) {
 		shooterMotors = motors;
 		controller = XboxController.getXboxController();
 		shoosterChamber = new Chamber(newChamber);
@@ -28,7 +28,8 @@ public class Shooter extends IControl {
 
 	public void updateUserInput() {
 		_startShoosting = controller.getRightTriggerPressed();
-		_abort = state == ShooterState.PRIMED || state == ShooterState.WINDUP || state == ShooterState.REVERSE?controller.getBPressed():false;
+		_abort = state == ShooterState.PRIMED || state == ShooterState.WINDUP || state == ShooterState.REVERSE
+				?controller.getBPressed():false;
 		_fire = state == ShooterState.PRIMED?controller.getRightTriggerPressed():false;
 		_reverse = state == ShooterState.PRIMED?controller.getRightBumperPressed():false;
 	}
@@ -41,46 +42,43 @@ public class Shooter extends IControl {
 	}
 
 	public void teleopInit() {
-		for (IMotor i : shooterMotors)
-			i.setSpeed(0);
+		shooterMotors.setSpeed(0);
 		state = ShooterState.IDLE;
 	}
 
 	public void teleopPeriodic() {
 		updateUserInput();
-		if(_abort){
+		if (_abort) {
 			teleopInit();
 		}
 		if (_startShoosting && state == ShooterState.IDLE) {
 			state = ShooterState.WINDUP;
 		}
-		
+
 		if (state == ShooterState.WINDUP) {
 			if (windUp()) {
 				state = ShooterState.PRIMED;
 			}
 		}
-		
+
 		if (_startShoosting && state == ShooterState.PRIMED) {
 			primed();
 		}
-		
+
 		if (state == ShooterState.PRIMED && _reverse) {
 			reverse();
 		}
-		else{
-			if(state == ShooterState.REVERSE){
+		else {
+			if (state == ShooterState.REVERSE) {
 				state = ShooterState.WINDUP;
 			}
 		}
-		//Turret code starts
-		
+		// Turret code starts
+
 	}
 
 	public boolean windUp() {
-		for (IMotor moter : shooterMotors) {
-			moter.setSpeed(0.5);
-		}
+		shooterMotors.setSpeed(0.5);
 		// TODO checks motor speed
 		return true;
 	}
@@ -90,9 +88,7 @@ public class Shooter extends IControl {
 	}
 
 	public boolean reverse() {
-		for (IMotor moter : shooterMotors) {
-			moter.setSpeed( -0.5);
-		}
+		shooterMotors.setSpeed(-0.5);
 		return true;
 	}
 
@@ -114,12 +110,12 @@ class Chamber {
 
 class Turret {
 	private IMotor turretMotor;
-	
-	public Turret(IMotor tMotor){
+
+	public Turret(IMotor tMotor) {
 		turretMotor = tMotor;
 	}
-	
-	public void setAngle(double angle){
-		//TODO set angle here
+
+	public void setAngle(double angle) {
+		// TODO set angle here
 	}
 }

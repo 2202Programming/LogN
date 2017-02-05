@@ -82,7 +82,7 @@ public class XboxController extends IControl {
 	 * @return The singleton of this class
 	 */
 	public static XboxController getXboxController(int port) {
-		if (port > 3) {
+		if (port <= 3) {
 			if (xboxController[port] == null) {
 				xboxController[port] = new XboxController(port);
 			}
