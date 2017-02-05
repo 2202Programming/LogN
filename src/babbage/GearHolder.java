@@ -9,10 +9,12 @@ public class GearHolder extends IControl {
 	private IMotor activator;
 	private XboxController controller;
 	private final double SPEED = 0.4;
+	private boolean isDown;
 	
 	public GearHolder(IMotor motor){
 		activator = motor;
 		controller = XboxController.getXboxController(1);
+		isDown = false;
 	}
 	
 	public void teleopInit(){
@@ -20,13 +22,14 @@ public class GearHolder extends IControl {
 	}
 	
 	public void teleopPeriodic(){
-		if(controller.getLeftBumperHeld()){
-			activator.setSpeed(SPEED);
-		}else if(controller.getLeftTriggerHeld()){
-			activator.setSpeed(-SPEED);
-		}else{
-			activator.setSpeed(0);
+		if(controller.getLeftBumperPressed()){
+			isDown = !isDown;
 		}
-		SmartWriter.putD("motor7", activator.getSpeed());
+		if(isDown){
+			activator.setSpeed(SPEED);
+		}else{
+			activator.setSpeed(-SPEED);
+		}
+		SmartWriter.putD("gearMotor", activator.getSpeed());
 	}
 }
