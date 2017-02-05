@@ -3,6 +3,7 @@ package babbage;
 import comms.SmartWriter;
 import comms.XboxController;
 import physicalOutput.IMotor;
+import physicalOutput.ServoMotor;
 import robot.IControl;
 
 public class Shooter extends IControl {
@@ -19,7 +20,7 @@ public class Shooter extends IControl {
 	private boolean _reverse;
 
 	// 1 motor port ??
-	public Shooter(IMotor motors, IMotor newChamber, IMotor turret) {
+	public Shooter(IMotor motors, IMotor newChamber, ServoMotor turret) {
 		shooterMotors = motors;
 		controller = XboxController.getXboxController();
 		shoosterChamber = new Chamber(newChamber);
@@ -109,9 +110,9 @@ class Chamber {
 }
 
 class Turret {
-	private IMotor turretMotor;
+	private ServoMotor turretMotor;
 
-	public Turret(IMotor tMotor) {
+	public Turret(ServoMotor tMotor) {
 		turretMotor = tMotor;
 	}
 
