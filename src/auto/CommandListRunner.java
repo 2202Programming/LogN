@@ -55,9 +55,7 @@ public class CommandListRunner extends IControl {
 
 	// starts at the first commandNum
 	public void autonomousInit() {
-		if (callAutomatically) {
-			init();
-		}
+		init();
 	}
 
 	// runs the command every cycle

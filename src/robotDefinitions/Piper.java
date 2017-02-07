@@ -79,7 +79,7 @@ public class Piper extends RobotDefinitionBase {
 
 		new NavXTester();
 		//new NavXPIDTunable();
-		new CommandListRunnerDoNotKeepItSucks();
+		//new CommandListRunnerDoNotKeepItSucks();
 
 		//new PegPiCommunications();
 		new CommandListGear();

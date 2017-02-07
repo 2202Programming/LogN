@@ -11,15 +11,7 @@ public class CommandListGear {
 	public CommandListGear() {
 		commands = new CommandList();
 		commands.addCommand(new RunPegVisionCommand());
-		run();
-	}
-	
-	/**
-	 * Only call this once when it is suppose to be run
-	 */
-	public void run() {
 		runner=new CommandListRunner(commands);
-	}
-	
+	}	
 	
 }

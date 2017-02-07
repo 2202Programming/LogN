@@ -58,7 +58,7 @@ public class TurnCommand implements ICommand {
 			//TODO setPIDVALUES
 			break;
 		case PIPER:
-			pidValues=new PIDValues(0.003, 0.00015, 0.27);
+			pidValues=new PIDValues(0.005, 0.0002, 0.15);
 			break;
 		case TIM:
 			//TODO setPIDVALUES
