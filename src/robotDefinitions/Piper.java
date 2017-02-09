@@ -8,13 +8,13 @@ import com.kauailabs.navx.frc.AHRS;
 import comms.SmartWriter;
 import drive.ArcadeDrive;
 import drive.IDrive;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SerialPort;
 import input.NavXTester;
 import input.SensorController;
 import physicalOutput.IMotor;
 import physicalOutput.SparkMotor;
 import piper.CommandListGear;
-import piperAutoPID.NavXPIDTunable;
 import robot.IControl;
 
 /**
@@ -75,6 +75,8 @@ public class Piper extends RobotDefinitionBase {
 		iControlMap.put("DRIVE", AD);
 
 		SensorController SC=SensorController.getInstance();
+		SC.registerSensor("ENCODER0", new Encoder(0, 1));
+		SC.registerSensor("ENCODER1", new Encoder(2, 3));
 		SC.registerSensor("NAVX", new AHRS(SerialPort.Port.kMXP));
 
 		new NavXTester();

@@ -2,14 +2,14 @@ package auto.commands;
 
 import java.util.ArrayList;
 
-import auto.CommandList;
-import auto.CommandListRunner;
 import auto.ICommand;
-import auto.stopConditions.TimerStopCondition;
+import auto.stopConditions.DistanceStopCondition;
 import comms.NetworkTables;
 import comms.SmartWriter;
 import comms.TableNamesEnum;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Encoder;
+import input.SensorController;
+import robot.Global;
 
 public class RunPegVisionCommand implements ICommand {
 	private NetworkTables table;
@@ -17,7 +17,6 @@ public class RunPegVisionCommand implements ICommand {
 	private double distanceToMove;
 	private boolean doneWithVision=false;
 	private ArrayList<ICommand> subcommands=new ArrayList<>();
-	
 	
 	public RunPegVisionCommand() {
 		table=new NetworkTables(TableNamesEnum.VisionTable);
@@ -65,7 +64,18 @@ public class RunPegVisionCommand implements ICommand {
 			doneWithVision=true;
 			subcommands.add(new TurnCommand(degreesToTurn, 1, .5));
 			subcommands.get(0).init();
-			//subcommands.add(new DriveCommand(new TimerStopCondition((long)distanceToMove), .5));//TODO, make this work on
+			
+			//<temp>
+			distanceToMove=1;
+			//</temp>
+			//4- DO 6 and 7
+			//3- DO 4 and 5
+			//2- DO 2 and 3
+			//1- DO 0 and 1
+			ArrayList<Encoder> encoders=new ArrayList<>();
+			encoders.add((Encoder)SensorController.getInstance().getSensor("ENCODER0"));
+			encoders.add((Encoder)SensorController.getInstance().getSensor("ENCODER1"));
+			subcommands.add(new DriveCommand(new DistanceStopCondition(encoders, (int)distanceToMove), .5));//TODO, make this work on
 			return false;
 		}
 	}
