@@ -3,11 +3,13 @@ package babbage;
 import comms.XboxController;
 import physicalOutput.IMotor;
 import physicalOutput.SparkMotor;
+import robot.Global;
 import robot.IControl;
+import robotDefinitions.BabbageControl;
 
 public class Intake extends IControl {
 	private IMotor[] intakeMotors;
-	private XboxController controller;
+	private BabbageControl controller;
 	private double speed=0;
 	
 	//775 motors
@@ -22,7 +24,7 @@ public class Intake extends IControl {
 	}
 
 	public void autonomousInit() {
-		controller=XboxController.getXboxController();
+		controller=(BabbageControl) Global.controlObjects.get("CONTROL");
 	}
 
 	public void autonomousPeriodic() {
@@ -30,7 +32,7 @@ public class Intake extends IControl {
 	}
 	
 	public void teleopInit() {
-		controller=XboxController.getXboxController();
+		controller=(BabbageControl) Global.controlObjects.get("CONTROL");
 	}
 
 	public void teleopPeriodic() {
@@ -38,7 +40,7 @@ public class Intake extends IControl {
 	}
 	
 	private void update() {
-		if (controller.getAHeld()) {
+		if (controller.intakeSpeed()) {
 			speed=1;
 		}
 		else {

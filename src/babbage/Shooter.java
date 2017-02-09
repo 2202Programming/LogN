@@ -1,16 +1,15 @@
 package babbage;
 
-import comms.DebugMode;
 import comms.SmartWriter;
 import comms.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import physicalOutput.IMotor;
-import physicalOutput.ServoMotor;
+import robot.Global;
 import robot.IControl;
+import robotDefinitions.BabbageControl;
 
 public class Shooter extends IControl {
 	private IMotor shooterMotors;
-	private XboxController controller;
+	private BabbageControl controller;
 	private double speed = -0.2;
 	private ShooterState state;
 	private Chamber shoosterChamber;
@@ -23,7 +22,7 @@ public class Shooter extends IControl {
 
 	public Shooter(IMotor motors, IMotor newChamber, IMotor turret) {
 		shooterMotors = motors;
-		controller = XboxController.getXboxController();
+		controller = (BabbageControl) Global.controlObjects.get("CONTROL");
 		shoosterChamber = new Chamber(newChamber);
 		shoosterTurret = new Turret(turret);
 	}
@@ -33,13 +32,13 @@ public class Shooter extends IControl {
 	 */
 	public void updateUserInput() {
 		//if the user wants to start shooting
-		_startShoosting = controller.getRightTriggerHeld();
+		_startShoosting = controller.startShooting();
 		//Can be pressed at any time to stop shooting 
-		_abort = controller.getBHeld();
+		_abort = controller.stopShooting();
 		//If we are primed, shoot the ball
-		_fire = state == ShooterState.PRIMED?controller.getRightTriggerHeld():false;
+		_fire = state == ShooterState.PRIMED?controller.startShooting():false;
 		//If we are primed, reverse the shooter motors to unclog balls
-		_reverse = state == ShooterState.PRIMED||state == ShooterState.REVERSE?controller.getRightBumperHeld():false;
+		_reverse = state == ShooterState.PRIMED||state == ShooterState.REVERSE?controller.reverseShooter():false;
 	}
 
 	/**
