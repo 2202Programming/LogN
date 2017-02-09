@@ -19,10 +19,10 @@ public class ServoMotor extends IMotor {
 	}
 	
 	/**
-	 * Sets the motor's angle from min to max
+	 * Sets the angle of the servo on a scale from -1 to 1
 	 * @param x: the angle to set the servo
 	 */
 	protected void setMotor(double x) {
-		part.setAngle(Math.max(minAngle, x%maxAngle));
+		part.setAngle(( ((x+1)/2f)*(maxAngle-minAngle) )+minAngle);
 	}
 }

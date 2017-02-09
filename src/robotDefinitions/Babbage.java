@@ -47,7 +47,7 @@ public class Babbage extends RobotDefinitionBase {
 		_properties.put("BRMOTORPIN", "0");//PWM2
 		//Shooter pins
 		_properties.put("SHOOTWHEEL", "11");//MainShooterWheel
-		_properties.put("CHAMBERMOTOR","8");//Motor to load balls
+		_properties.put("CHAMBERMOTOR","7");//Motor to load balls
 		_properties.put("TURRETMOTOR", "9");//Motor to rotate shooter
 		//Gear holder
 		_properties.put("GEARMOTOR", "6");
@@ -94,10 +94,10 @@ public class Babbage extends RobotDefinitionBase {
 //		IMotor SR = new SparkMotor(getInt("SRMOTORPIN"),false);
 		
 		//TODO put real motors
-//		IMotor S = new TalonSRX(getInt("SHOOTWHEEL"), false, false);
+		IMotor S = new TalonSRX(getInt("SHOOTWHEEL"), false, false);
 //		IMotor T = new ServoMotor(getInt("TURRETMOTOR"));
-//		IMotor C = new SparkMotor(getInt("CHAMBERMOTOR"), false);
-//		Shooter p = new Shooter(S, T, C);
+		IMotor C = new SparkMotor(getInt("CHAMBERMOTOR"), false);
+		Shooter p = new Shooter(S, C, C);
 		
 		IMotor G = new SparkMotor(getInt("GEARMOTOR"), false);
 		GearHolder GH = new GearHolder(G);

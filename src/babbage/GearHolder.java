@@ -8,7 +8,7 @@ import robot.IControl;
 public class GearHolder extends IControl {
 	private IMotor activator;
 	private XboxController controller;
-	private final double SPEED = 0.4;
+	private final double SPEED = 0.5;
 	private boolean isDown;
 	
 	public GearHolder(IMotor motor){

@@ -1,7 +1,9 @@
 package babbage;
 
+import comms.DebugMode;
 import comms.SmartWriter;
 import comms.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import physicalOutput.IMotor;
 import physicalOutput.ServoMotor;
 import robot.IControl;
@@ -9,7 +11,7 @@ import robot.IControl;
 public class Shooter extends IControl {
 	private IMotor shooterMotors;
 	private XboxController controller;
-	private double speed = 0;
+	private double speed = -0.2;
 	private ShooterState state;
 	private Chamber shoosterChamber;
 	private Turret shoosterTurret;
@@ -19,7 +21,7 @@ public class Shooter extends IControl {
 	private boolean _fire;
 	private boolean _reverse;
 
-	public Shooter(IMotor motors, IMotor newChamber, ServoMotor turret) {
+	public Shooter(IMotor motors, IMotor newChamber, IMotor turret) {
 		shooterMotors = motors;
 		controller = XboxController.getXboxController();
 		shoosterChamber = new Chamber(newChamber);
@@ -31,19 +33,20 @@ public class Shooter extends IControl {
 	 */
 	public void updateUserInput() {
 		//if the user wants to start shooting
-		_startShoosting = controller.getRightTriggerPressed();
+		_startShoosting = controller.getRightTriggerHeld();
 		//Can be pressed at any time to stop shooting 
-		_abort = controller.getBPressed();
+		_abort = controller.getBHeld();
 		//If we are primed, shoot the ball
-		_fire = state == ShooterState.PRIMED?controller.getRightTriggerPressed():false;
+		_fire = state == ShooterState.PRIMED?controller.getRightTriggerHeld():false;
 		//If we are primed, reverse the shooter motors to unclog balls
-		_reverse = state == ShooterState.PRIMED?controller.getRightBumperPressed():false;
+		_reverse = state == ShooterState.PRIMED||state == ShooterState.REVERSE?controller.getRightBumperHeld():false;
 	}
 
 	/**
 	 * displays user input for debug purpose
 	 */
 	public void displayUserInput() {
+		SmartWriter.putS("ShooterState", state.toString());
 		SmartWriter.putB("_startShoosting", _startShoosting);
 		SmartWriter.putB("_abort", _abort);
 		SmartWriter.putB("_fire", _fire);
@@ -55,12 +58,15 @@ public class Shooter extends IControl {
 	 */
 	public void teleopInit() {
 		shooterMotors.setSpeed(0);
+		shoosterChamber.init();
 		state = ShooterState.IDLE;
 	}
 
 	public void teleopPeriodic() {
 		//get all user input
 		updateUserInput();
+		//display user input
+		displayUserInput();
 		//reset everything if abort
 		if (_abort) {
 			teleopInit();
@@ -79,10 +85,13 @@ public class Shooter extends IControl {
 		if (_fire) {
 			//TODO check if balls are in the shooter and make some decision about that
 			shoot();
+		}else{
+			shoosterChamber.init();
 		}
 		//Reverse the shooter motor if Primed
-		if (state == ShooterState.PRIMED && _reverse) {
+		if (_reverse) {
 			reverse();
+			state = ShooterState.REVERSE;
 		}
 		else {
 			if (state == ShooterState.REVERSE) {
@@ -91,7 +100,7 @@ public class Shooter extends IControl {
 			}
 		}
 		// Turret code starts
-
+		
 	}
 
 	/**
@@ -99,7 +108,7 @@ public class Shooter extends IControl {
 	 * @return true if the motors are at speed
 	 */
 	public boolean windUp() {
-		shooterMotors.setSpeed(0.5);
+		shooterMotors.setSpeed(speed);
 		// TODO checks motor speed
 		return true;
 	}
@@ -117,7 +126,7 @@ public class Shooter extends IControl {
 	 * @return true always(may change)
 	 */
 	public boolean reverse() {
-		shooterMotors.setSpeed( -0.5);
+		shooterMotors.setSpeed( -speed);
 		return true;
 	}
 
@@ -142,6 +151,10 @@ class Chamber {
 		chamber = newChamber;
 
 	}
+	
+	public void init(){
+		chamber.setSpeed(0);
+	}
 
 	/**
 	 * Tell the chamber to start shooting<br>
@@ -150,7 +163,7 @@ class Chamber {
 	 * @return true if there are balls in the shooter currently
 	 */
 	public boolean shoot() {
-		chamber.setSpeed(0.5);
+		chamber.setSpeed(-0.3);
 		// TODO check if there are balls in the shooter
 		return true;
 	}
@@ -163,7 +176,7 @@ class Chamber {
  *
  */
 class Turret {
-	private ServoMotor turretMotor;
+	private IMotor turretMotor;
 
 	/**
 	 * Create a new turret
@@ -171,7 +184,7 @@ class Turret {
 	 * @param tMotor
 	 *            the motor that controls the turret; must be a servo
 	 */
-	public Turret(ServoMotor tMotor) {
+	public Turret(IMotor tMotor) {
 		turretMotor = tMotor;
 	}
 
