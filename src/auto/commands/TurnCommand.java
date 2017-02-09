@@ -43,7 +43,9 @@ public class TurnCommand implements ICommand {
 		SmartWriter.putD("PID Turning Motor Power", motorValue);
 		drive.setLeftMotors(motorValue);
 		drive.setRightMotors(-motorValue);
-		if (stopCondition.stopNow()) {
+		boolean stopNow=stopCondition.stopNow();
+		SmartWriter.putB("hghjkhjghg", stopNow);
+		if (stopNow) {
 			drive.setLeftMotors(0);
 			drive.setRightMotors(0);
 			drive.setDriveControl(DriveControl.DRIVE_CONTROLLED);
