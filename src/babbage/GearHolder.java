@@ -1,19 +1,20 @@
 package babbage;
 
 import comms.SmartWriter;
-import comms.XboxController;
 import physicalOutput.IMotor;
+import robot.Global;
 import robot.IControl;
+import robotDefinitions.ControlBase;
 
 public class GearHolder extends IControl {
 	private IMotor activator;
-	private XboxController controller;
+	private ControlBase controller;
 	private final double SPEED = 0.5;
 	private boolean isDown;
 	
 	public GearHolder(IMotor motor){
 		activator = motor;
-		controller = XboxController.getXboxController(1);
+		controller = Global.controlObjects.get("CONTROL");
 		isDown = false;
 	}
 	

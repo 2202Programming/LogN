@@ -17,6 +17,7 @@ import physicalOutput.IMotor;
 import physicalOutput.ServoMotor;
 import physicalOutput.SparkMotor;
 import physicalOutput.TalonSRX;
+import robot.Global;
 import robot.IControl;
 
 /**
@@ -61,7 +62,7 @@ public class Babbage extends RobotDefinitionBase {
 		
 		// Create map to store public objects
 		Map<String, IControl> temp=super.loadControlObjects();
-		
+		Global.controlObjects.put("CONTROL", new BabbageControl());
 		NetworkTables visionTable = new NetworkTables(TableNamesEnum.VISION_TABLE);
 		temp.put("NT", visionTable);
 		
