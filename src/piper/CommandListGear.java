@@ -22,6 +22,10 @@ public class CommandListGear extends IControl{
 		controller=XboxController.getXboxController();
 	}
 	
+	public void teleopInit() {
+		running=false;
+	}
+	
 	public void teleopPeriodic() {
 		SmartWriter.putS("Drive type", ((IDrive)(Global.controlObjects.get("DRIVE"))).getDriveControl().toString());
 		if (controller.getYPressed()) {

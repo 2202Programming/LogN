@@ -33,6 +33,7 @@ public class RunPegVisionCommand implements ICommand {
 	public boolean run() {
 		if (doneWithVision) {
 			if (subcommands.isEmpty()) {
+				SmartWriter.putS("Peg Vision State", "Done, but I shouldn't be here");
 				return true;
 			}
 			else {
@@ -43,6 +44,7 @@ public class RunPegVisionCommand implements ICommand {
 						subcommands.get(0).init();
 					}
 					else {
+						SmartWriter.putS("Peg Vision State", "Done");
 						return true;
 					}
 				}

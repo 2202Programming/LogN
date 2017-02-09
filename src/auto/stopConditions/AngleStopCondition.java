@@ -36,16 +36,20 @@ public class AngleStopCondition implements IStopCondition{
 
 	public void init() {
 		navX.reset();
+		firstTimeInRightSpot=Long.MAX_VALUE;
 	}
 
 
 	public boolean stopNow() {
+		firstTimeInRightSpot=Math.min(firstTimeInRightSpot, System.currentTimeMillis()+20);
 		double angle=navX.getAngle();
-		if (Math.abs(angle-degreesToTurn)>marginOfError) {
+		if (Math.abs(getError())>marginOfError) {
+			SmartWriter.putS("Angle Stop Condidition", "In wrong spot "+(getError()));
 			//not in the area
 			firstTimeInRightSpot=System.currentTimeMillis()+20;//soonest possible is next update
 		}
 		else {
+			SmartWriter.putS("Angle Stop Condition", "In right spot, "+firstTimeInRightSpot+" "+System.currentTimeMillis());
 			if (System.currentTimeMillis()-secondsInRange*1000>firstTimeInRightSpot) {
 				return true;
 			}
