@@ -8,16 +8,17 @@ import comms.XboxController;
  */
 public class BabbageControl extends ControlBase {
 
-
-
-	/** BabbageControl
+	/**
+	 * BabbageControl
 	 * 
 	 */
 	public BabbageControl() {
-		
+
 	}
 
-	/** gearHolder - places gear on peg
+	/**
+	 * gearHolder - places gear on peg
+	 * 
 	 * @return
 	 */
 	public boolean toggleGearHolder() {
@@ -42,16 +43,6 @@ public class BabbageControl extends ControlBase {
 	// reverse shooters, unclogs balls
 	public boolean reverseShooter() {
 		return controllers[1].getRightBumperHeld();
-	}
-
-	// turns left and right
-	public double getLeftJoystickX() {
-		return controllers[0].getLeftJoystickX();
-	}
-
-	// foward and reverse
-	public double getLeftJoystickY() {
-		return controllers[0].getLeftJoystickY();
 	}
 
 	// engage high-goal vision

@@ -13,4 +13,14 @@ public abstract class ControlBase extends IControl {
 
 	public abstract XboxController[] getControllers();
 
+	// turns left and right
+	public double getLeftJoystickX() {
+		return controllers[0].getLeftJoystickX();
+	}
+
+	// foward and reverse
+	public double getLeftJoystickY() {
+		return controllers[0].getLeftJoystickY();
+	}
+
 }
