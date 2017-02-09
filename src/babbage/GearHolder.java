@@ -4,17 +4,17 @@ import comms.SmartWriter;
 import physicalOutput.IMotor;
 import robot.Global;
 import robot.IControl;
-import robotDefinitions.ControlBase;
+import robotDefinitions.BabbageControl;
 
 public class GearHolder extends IControl {
 	private IMotor activator;
-	private ControlBase controller;
+	private BabbageControl controller;
 	private final double SPEED = 0.5;
 	private boolean isDown;
 	
 	public GearHolder(IMotor motor){
 		activator = motor;
-		controller = Global.controlObjects.get("CONTROL");
+		controller = (BabbageControl) Global.controlObjects.get("CONTROL");
 		isDown = false;
 	}
 	
@@ -23,7 +23,7 @@ public class GearHolder extends IControl {
 	}
 	
 	public void teleopPeriodic(){
-		if(controller.getLeftBumperPressed()){
+		if(controller.toggleGearHolder()){
 			isDown = !isDown;
 		}
 		if(isDown){

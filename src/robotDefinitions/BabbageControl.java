@@ -20,7 +20,7 @@ public class BabbageControl extends ControlBase {
 	/** gearHolder - places gear on peg
 	 * @return
 	 */
-	public boolean gearHolder() {
+	public boolean toggleGearHolder() {
 		return controllers[1].getLeftBumperPressed();
 	}
 
