@@ -157,7 +157,7 @@ public class XboxController extends IControl {
 	 * @param currentlyDown
 	 */
 	private void updateButton(int buttonCode, boolean currentlyDown) {
-		SmartWriter.putB(buttonCode + _port, currentlyDown, DebugMode.FULL);
+		SmartWriter.putB(buttonCode +" " + _port, currentlyDown, DebugMode.FULL);
 		lastFrame[buttonCode] = thisFrame[buttonCode];
 		if ( !currentlyDown) {
 			debounceCounters[buttonCode] = 0;

@@ -102,7 +102,7 @@ public class Babbage extends RobotDefinitionBase {
 		Shooter p = new Shooter(S, C, T, T);
 
 		IMotor G = new SparkMotor(getInt("GEARMOTOR"), false);
-		GearHolder GH = new GearHolder(G);
+		//GearHolder GH = new GearHolder(G);
 
 		// temp.put("DRIVE", AD);
 		// temp.put("CR", CR);
