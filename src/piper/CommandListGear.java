@@ -5,6 +5,7 @@ import auto.CommandListRunner;
 import auto.commands.RunPegVisionCommand;
 import comms.SmartWriter;
 import comms.XboxController;
+import drive.DriveControl;
 import drive.IDrive;
 import robot.Global;
 import robot.IControl;
@@ -17,8 +18,8 @@ public class CommandListGear extends IControl{
 	
 	public CommandListGear() {
 		commands = new CommandList();
-		commands.addCommand(new RunPegVisionCommand(.6));
-		commands.addCommand(new RunPegVisionCommand(1));
+		commands.addCommand(new RunPegVisionCommand(.5));
+		commands.addCommand(new RunPegVisionCommand(.8));
 		runner=new CommandListRunner(commands);
 		controller=XboxController.getXboxController();
 	}
@@ -32,6 +33,11 @@ public class CommandListGear extends IControl{
 		if (controller.getYPressed()) {
 			runner.init();
 			running=true;
+		}
+		if (running&&(controller.getStartPressed()||controller.getStartHeld())) {
+			running=false;
+			((IDrive)Global.controlObjects.get("DRIVE")).setDriveControl(DriveControl.DRIVE_CONTROLLED);
+			runner.stop();
 		}
 		if (running) {
 			running=!runner.runList();

@@ -7,6 +7,8 @@ import auto.stopConditions.DistanceStopCondition;
 import comms.NetworkTables;
 import comms.SmartWriter;
 import comms.TableNamesEnum;
+import drive.DriveControl;
+import drive.IDrive;
 import edu.wpi.first.wpilibj.Encoder;
 import input.SensorController;
 import robot.Global;
@@ -29,6 +31,7 @@ public class RunPegVisionCommand implements ICommand {
 		doneWithVision=false;
 		subcommands.clear();
 		table.setBoolean("processVision", true);
+		((IDrive)Global.controlObjects.get("DRIVE")).setDriveControl(DriveControl.EXTERNAL_CONTROL);
 	}
 
 	public boolean run() {
@@ -62,14 +65,14 @@ public class RunPegVisionCommand implements ICommand {
 			degreesToTurn=table.getDouble("degreesToTurn");
 			distanceToMove=table.getDouble("distanceToMove");
 			SmartWriter.putD("degreesToTurn final", degreesToTurn);
-			SmartWriter.putD("distanceToMove final", distanceToMove);
+			SmartWriter.putD("distanceT)oMove final", distanceToMove);
 			doneWithVision=true;
 			subcommands.add(new TurnCommand(degreesToTurn, 1, .5));
 			subcommands.get(0).init();
 			
+			distanceToMove-=20;
 			distanceToMove*=percentToFinish;
 			
-			distanceToMove-=20;
 			//<temp>
 			//distanceToMove=1;
 			//</temp>
