@@ -10,6 +10,7 @@ import drive.ArcadeDrive;
 import drive.IDrive;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SerialPort;
+import input.EncoderMonitor;
 import input.NavXTester;
 import input.SensorController;
 import physicalOutput.IMotor;
@@ -74,9 +75,17 @@ public class Piper extends RobotDefinitionBase {
 		IDrive AD=new ArcadeDrive(FL, FR, BL, BR);
 		iControlMap.put("DRIVE", AD);
 
+		Encoder e0 =new Encoder(0, 1);
+		Encoder e1 =  new Encoder(2, 3);
+		
+		EncoderMonitor em = new EncoderMonitor();
+		
+		em.add("ENCODER0", e0);
+		em.add("ENCODER1", e1);
+		
 		SensorController SC=SensorController.getInstance();
-		SC.registerSensor("ENCODER0", new Encoder(0, 1));
-		SC.registerSensor("ENCODER1", new Encoder(2, 3));
+		SC.registerSensor("ENCODER0", e0);
+		SC.registerSensor("ENCODER1", e1);
 		SC.registerSensor("NAVX", new AHRS(SerialPort.Port.kMXP));
 
 		new NavXTester();
