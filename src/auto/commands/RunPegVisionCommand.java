@@ -73,7 +73,6 @@ public class RunPegVisionCommand implements ICommand {
 			//2- DO 2 and 3
 			//1- DO 0 and 1
 			ArrayList<Encoder> encoders=new ArrayList<>();
-			encoders.add((Encoder)SensorController.getInstance().getSensor("ENCODER0"));
 			encoders.add((Encoder)SensorController.getInstance().getSensor("ENCODER1"));
 			subcommands.add(new DriveCommand(new DistanceStopCondition(encoders, (int)distanceToMove), .5));//TODO, make this work on
 			return false;

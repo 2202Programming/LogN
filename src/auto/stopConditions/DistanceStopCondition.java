@@ -29,10 +29,9 @@ public class DistanceStopCondition implements IStopCondition {
 		for(Encoder x: enc){
 			//x.get() returns encoder counts
 			//encoder count -> inches will need to be put here
-			Encoder encoder = new Encoder(0, 1);
-			sum += x.get();
+			sum += x.getDistance();
 		}
-		SmartWriter.putD("Encoder Count", sum);
+		SmartWriter.putD("AUTO - AVG Encoder Count", sum/enc.size());
 		return (sum/enc.size()) > duration;
 	}
 

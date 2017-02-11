@@ -1,5 +1,7 @@
 package robotDefinitions;
 
+import java.util.List;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -75,24 +77,25 @@ public class Piper extends RobotDefinitionBase {
 		IDrive AD=new ArcadeDrive(FL, FR, BL, BR);
 		iControlMap.put("DRIVE", AD);
 
-		Encoder e0 =new Encoder(0, 1);
-		Encoder e1 =  new Encoder(2, 3);
+		Encoder encoder0 =new Encoder(0, 1);
+		Encoder encoder1 =  new Encoder(2, 3);
+		encoder0.setDistancePerPulse(0.058);
+		encoder1.setDistancePerPulse(0.06529);
 		
 		EncoderMonitor em = new EncoderMonitor();
 		
-		em.add("ENCODER0", e0);
-		em.add("ENCODER1", e1);
+		em.add("ENCODER0", encoder0);
+		em.add("ENCODER1", encoder1);
 		
 		SensorController SC=SensorController.getInstance();
-		SC.registerSensor("ENCODER0", e0);
-		SC.registerSensor("ENCODER1", e1);
+		SC.registerSensor("ENCODER0", encoder0);
+		SC.registerSensor("ENCODER1", encoder1);
 		SC.registerSensor("NAVX", new AHRS(SerialPort.Port.kMXP));
 
 		new NavXTester();
 		//new NavXPIDTunable();
 		//new CommandListRunnerDoNotKeepItSucks();
-
-		//new PegPiCommunications();
+		
 		new CommandListGear();
 		// v  YOU HAVE TO CREATE THIS AFTER CREATING NAVX!!! v
 		//CommandListRunnerDoNotKeepItSucks sucks = new CommandListRunnerDoNotKeepItSucks();
