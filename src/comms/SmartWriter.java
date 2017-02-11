@@ -23,7 +23,7 @@ public class SmartWriter {
 	/**
 	 * The maximum DebugMode for which messages are printed to SmartDashboard.
 	 */
-	private static DebugMode debugMode=DebugMode.DEBUG;
+	private static DebugMode debugMode=DebugMode.FULL;
 
 	/**
 	 * Sets the field with name <i>name</i> on the SmartDashboard to
