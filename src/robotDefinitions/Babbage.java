@@ -3,6 +3,7 @@ package robotDefinitions;
 import java.util.HashMap;
 import java.util.Map;
 
+import babbage.HighGoalTurning;
 import babbage.Intake;
 import auto.CommandListRunner;
 import comms.NetworkTables;
@@ -69,7 +70,8 @@ public class Babbage extends RobotDefinitionBase {
 
 		// Create IDrive arcade drive I dont know why we cast it as a IDrive though
 		IDrive AD=new ArcadeDrive(FL, FR, BL, BR);
-		Intake intake=new Intake();
+		//Intake intake=new Intake();
+		HighGoalTurning hgt=new HighGoalTurning();
 		
 		// Create the autonomous command list maker, and command runner
 //		CommandListMaker CLM = new CommandListMaker(AD);
