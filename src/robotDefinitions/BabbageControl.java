@@ -22,7 +22,7 @@ public class BabbageControl extends ControlBase {
 	 * @return
 	 */
 	public boolean toggleGearHolder() {
-		return controllers[0].getLeftBumperPressed();
+		return controllers[0].getRightBumperHeld();
 	}
 
 	// speeds up intake
@@ -30,14 +30,13 @@ public class BabbageControl extends ControlBase {
 		return controllers[0].getAHeld();
 	}
 
+	public boolean intakeEngaged() {
+		return controllers[2].getAHeld();
+	}
+
 	// starts shooting
 	public boolean startShooting() {
 		return controllers[1].getRightTriggerHeld();
-	}
-
-	// stops shooting
-	public boolean stopShooting() {
-		return controllers[1].getBPressed();
 	}
 
 	// reverse shooters, unclogs balls
@@ -52,24 +51,77 @@ public class BabbageControl extends ControlBase {
 
 	// engage gear peg vision
 	public boolean gpVision() {
-		return controllers[1].getLeftBumperPressed();
+		return controllers[0].getLeftBumperPressed();
 	}
 
-	// cancel high-goal vision
+	/**
+	 * cancel high-goal vision
+	 * 
+	 * @return
+	 */
 	public boolean cancelHg() {
 		return controllers[1].getStartPressed();
 	}
 
-	// cancel high-goal vision
+	/**
+	 * cancel high-goal vision
+	 * 
+	 * @return
+	 */
 	public boolean cancelGp() {
-		return controllers[1].getBackPressed();
+		return controllers[0].getStartPressed();
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean climberOn() {
+		return controllers[2].getBHeld();
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean cimberHold() {
+		return controllers[2].getXHeld();
+	}
+
+	public boolean autoFieldPosition0() {
+		return controllers[2].getYHeld();
+	}
+
+	public boolean autoFieldPosition1() {
+		return controllers[2].getLeftBumperHeld();
+	}
+
+	public boolean autoFieldPosition2() {
+		return controllers[2].getRightBumperHeld();
+	}
+
+	public boolean autoShooter() {
+		return controllers[2].getBackHeld();
+	}
+
+	public boolean autoGear() {
+		return controllers[2].getStartHeld();
+	}
+
+	public boolean leftJoystickPress() {
+		return controllers[2].getL3Held();
+	}
+
+	public boolean rightJoystickPress() {
+		return controllers[2].getR3Held();
 	}
 
 	@Override
 	public XboxController[] getControllers() {
-		XboxController[] controllers = new XboxController[2];
+		XboxController[] controllers = new XboxController[3];
 		controllers[0] = XboxController.getXboxController(0);
 		controllers[1] = XboxController.getXboxController(1);
+		controllers[2] = XboxController.getXboxController(2);
 		return controllers;
 	}
 

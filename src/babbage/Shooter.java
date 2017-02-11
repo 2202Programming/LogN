@@ -33,8 +33,6 @@ public class Shooter extends IControl {
 	public void updateUserInput() {
 		//if the user wants to start shooting
 		_startShoosting = controller.startShooting();
-		//Can be pressed at any time to stop shooting 
-		_abort = controller.stopShooting();
 		//If we are primed, shoot the ball
 		_fire = state == ShooterState.PRIMED?controller.startShooting():false;
 		//If we are primed, reverse the shooter motors to unclog balls
@@ -66,10 +64,7 @@ public class Shooter extends IControl {
 		updateUserInput();
 		//display user input
 		displayUserInput();
-		//reset everything if abort
-		if (_abort) {
-			teleopInit();
-		}
+		
 		//If the user wants to start firing, begin to wind the motors
 		if (_startShoosting && state == ShooterState.IDLE) {
 			state = ShooterState.WINDUP;
@@ -94,12 +89,11 @@ public class Shooter extends IControl {
 		}
 		else {
 			if (state == ShooterState.REVERSE) {
-				//If we just reversed, we need to wind up the motors again
-				state = ShooterState.WINDUP;
+				teleopInit();
 			}
 		}
 		// Turret code starts
-		shoosterTurret.setAngle(controller.getLeftJoystickX(1));
+		//shoosterTurret.setAngle(controller.getLeftJoystickX(1));
 		//shoosterTurret.setHeight(controller.getRightJoystickY(1));
 	}
 
