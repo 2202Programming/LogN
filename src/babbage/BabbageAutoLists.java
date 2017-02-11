@@ -24,7 +24,7 @@ public class BabbageAutoLists {
 		CommandList CL = new CommandList();
 		SmartWriter.putS("AutoList", "centerRed", DebugMode.COMPETITION);
 		CL.addCommand(new DriveCommand(new DistanceStopCondition(null, distanceFromWall), speed));
-		CL.addCommand(new RunPegVisionCommand());
+		CL.addCommand(new RunPegVisionCommand(1));
 		return CL;
 	}
 	
@@ -38,7 +38,7 @@ public class BabbageAutoLists {
 		SmartWriter.putS("AutoList", "Boiler Red", DebugMode.COMPETITION);
 		CL.addCommand(new DriveCommand(new DistanceStopCondition(null, distanceFromWall), speed));
 		CL.addCommand(new TurnCommand(new AngleStopCondition(-45,1,0.3)));
-		CL.addCommand(new RunPegVisionCommand());
+		CL.addCommand(new RunPegVisionCommand(1));
 		return CL;
 	}
 
@@ -52,7 +52,7 @@ public class BabbageAutoLists {
 		SmartWriter.putS("AutoList", "Not Boiler Red", DebugMode.COMPETITION);
 		CL.addCommand(new DriveCommand(new DistanceStopCondition(null, distanceFromWall), speed));
 		CL.addCommand(new TurnCommand(new AngleStopCondition(45,1,0.3)));
-		CL.addCommand(new RunPegVisionCommand());
+		CL.addCommand(new RunPegVisionCommand(1));
 		return CL;
 	}
 	
@@ -64,8 +64,8 @@ public class BabbageAutoLists {
 	public static CommandList centerBlue(){
 		CommandList CL = new CommandList();
 		SmartWriter.putS("AutoList", "Center Blue", DebugMode.COMPETITION);
-		CL.addCommand(new DriveCommand(new DistanceStopCondition(null, distanceFromWall)));
-		CL.addCommand(new RunPegVisionCommand());
+		CL.addCommand(new DriveCommand(new DistanceStopCondition(null, distanceFromWall), speed));
+		CL.addCommand(new RunPegVisionCommand(1));
 		return CL;
 	}
 	
@@ -79,7 +79,7 @@ public class BabbageAutoLists {
 		SmartWriter.putS("AutoList", "Boilerblue", DebugMode.COMPETITION);
 		CL.addCommand(new DriveCommand(new DistanceStopCondition(null, distanceFromWall), speed));
 		CL.addCommand(new TurnCommand(new AngleStopCondition(45,1,0.3)));
-		CL.addCommand(new RunPegVisionCommand());
+		CL.addCommand(new RunPegVisionCommand(1));
 		return CL;
 	}
 	
@@ -94,7 +94,7 @@ public class BabbageAutoLists {
 		SmartWriter.putS("AutoList", "Not Boiler Blue", DebugMode.COMPETITION);
 		CL.addCommand(new DriveCommand(new DistanceStopCondition(null, distanceFromWall), speed));
 		CL.addCommand(new TurnCommand(new AngleStopCondition(-45,1,0.3)));
-		CL.addCommand(new RunPegVisionCommand());
+		CL.addCommand(new RunPegVisionCommand(1));
 		return CL;
 	}
 }
