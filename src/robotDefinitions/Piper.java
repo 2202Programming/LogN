@@ -1,18 +1,23 @@
 package robotDefinitions;
 
+import java.util.List;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import comms.SmartWriter;
 import drive.ArcadeDrive;
 import drive.IDrive;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SerialPort;
+import input.EncoderMonitor;
 import input.NavXTester;
 import input.SensorController;
 import physicalOutput.IMotor;
 import physicalOutput.SparkMotor;
-import piperAutoPID.NavXPIDTunable;
+import piper.CommandListGear;
 import robot.IControl;
 
 /**
@@ -50,6 +55,7 @@ public class Piper extends RobotDefinitionBase {
 	 */
 	public Map<String, IControl> loadControlObjects() {
 
+		SmartWriter.putS("Robot is piper...", "asdf");
 		// Create map to store public objects
 		Map<String, IControl> iControlMap=super.loadControlObjects();
 
@@ -69,14 +75,31 @@ public class Piper extends RobotDefinitionBase {
 		// Create IDrive arcade drive I dont know why we cast it as a IDrive
 		// though
 		IDrive AD=new ArcadeDrive(FL, FR, BL, BR);
-		iControlMap.put("ARCADE_DRIVE", AD);
+		iControlMap.put("DRIVE", AD);
 
+		//Encoder stuff
+		Encoder encoder0 =new Encoder(0, 1);
+		Encoder encoder1 =  new Encoder(2, 3);
+		encoder0.setDistancePerPulse(0.058);
+		encoder1.setDistancePerPulse(0.06529);
+		EncoderMonitor em = new EncoderMonitor();
+		em.add("ENCODER0", encoder0);
+		em.add("ENCODER1", encoder1);
+		
 		SensorController SC=SensorController.getInstance();
+		SC.registerSensor("ENCODER0", encoder0);
+		SC.registerSensor("ENCODER1", encoder1);
 		SC.registerSensor("NAVX", new AHRS(SerialPort.Port.kMXP));
 
 		new NavXTester();
-		new NavXPIDTunable();
-
+		//new NavXPIDTunable();
+		//new CommandListRunnerDoNotKeepItSucks();
+		
+		new CommandListGear();
+		// v  YOU HAVE TO CREATE THIS AFTER CREATING NAVX!!! v
+		//CommandListRunnerDoNotKeepItSucks sucks = new CommandListRunnerDoNotKeepItSucks();
+		
+		
 		// Create the autonomous command list maker, and command runner
 		// CommandListMaker CLM = new CommandListMaker(AD);
 		// CommandListRunner CR = new CommandListRunner(CLM.makeList1(),"PIPER"); //

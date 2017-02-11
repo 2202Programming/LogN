@@ -52,7 +52,7 @@ public class Babbage extends RobotDefinitionBase {
 		// Create map to store public objects
 		Map<String, IControl> temp=super.loadControlObjects();
 		
-		NetworkTables visionTable = new NetworkTables(TableNamesEnum.VISION_TABLE);
+		NetworkTables visionTable = new NetworkTables(TableNamesEnum.VisionTable);
 		temp.put("NT", visionTable);
 		
 		//TODO add the sensors here

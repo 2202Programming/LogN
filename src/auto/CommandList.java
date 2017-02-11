@@ -43,4 +43,8 @@ public class CommandList {
 		}
 		return new EmptyCommand(new TimerStopCondition(1));
 	}
+	
+	public int size() {
+		return iCommands.size();
+	}
 }

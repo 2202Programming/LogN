@@ -12,10 +12,26 @@ public class NetworkTables extends IControl{
 	}
 	
 	public double getDouble(String key){
-		return table.getNumber(key, -1);
+		return table.getNumber(key, 0);
 	}
 	
 	public void setDouble(String key, double value){
 		table.putNumber(key, value);
+	}
+	
+	public String getString(String key){
+		return table.getString(key, "");
+	}
+	
+	public void setString(String key, String value){
+		table.putString(key, value);
+	}
+	
+	public boolean getBoolean(String key){
+		return table.getBoolean(key, false);
+	}
+	
+	public void setBoolean(String key, boolean value){
+		table.putBoolean(key, value);
 	}
 }

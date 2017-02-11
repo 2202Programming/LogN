@@ -41,7 +41,7 @@ public class NavXPIDTunable extends IControl implements AutoPIDTunable {
 
 		// Disable the drive from controlling the movement
 
-		drive=(IDrive)Global.controlObjects.get("ARCADE_DRIVE");
+		drive=(IDrive)Global.controlObjects.get("DRIVE");
 		;
 		drive.setDriveControl(DriveControl.EXTERNAL_CONTROL);
 
@@ -54,7 +54,6 @@ public class NavXPIDTunable extends IControl implements AutoPIDTunable {
 	 */
 	public void autonomousPeriodic() {
 		SmartWriter.putS("PID Tuning Status", "Starting", DebugMode.DEBUG);
-		tuner.update();
 		updateMotors();
 	}
 
@@ -103,6 +102,7 @@ public class NavXPIDTunable extends IControl implements AutoPIDTunable {
 	public void setValue(double turnValue) {
 		turnPower=turnValue;
 	}
+	
 
 	private void updateMotors() {
 		// Positive is right, according to NavX
@@ -111,8 +111,8 @@ public class NavXPIDTunable extends IControl implements AutoPIDTunable {
 			turnPower/=Math.abs(turnPower);
 		}
 		SmartWriter.putD("Turn Power", turnPower, DebugMode.DEBUG);
-		drive.setLeftMotors(turnPower);
-		drive.setRightMotors(-turnPower);
+		drive.setLeftMotors(-turnPower);
+		drive.setRightMotors(turnPower);
 	}
 
 	/**
@@ -130,7 +130,6 @@ public class NavXPIDTunable extends IControl implements AutoPIDTunable {
 		return plus180-180;
 	}
 
-	@Override
 	public void giveInfo(PIDValues bestValues, int bestTuneTime, PIDValues testingValues, int lastTestTime) {
 		SmartWriter.putS("Best PID Values: ", bestValues.toString(), DebugMode.DEBUG);
 		SmartWriter.putD("Best PID time", bestTuneTime, DebugMode.DEBUG);
