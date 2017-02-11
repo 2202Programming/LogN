@@ -22,7 +22,7 @@ public class BabbageControl extends ControlBase {
 	 * @return
 	 */
 	public boolean toggleGearHolder() {
-		return controllers[1].getLeftBumperPressed();
+		return controllers[0].getLeftBumperPressed();
 	}
 
 	// speeds up intake

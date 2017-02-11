@@ -99,7 +99,8 @@ public class Shooter extends IControl {
 			}
 		}
 		// Turret code starts
-		
+		shoosterTurret.setAngle(controller.getLeftJoystickX(1));
+		//shoosterTurret.setHeight(controller.getRightJoystickY(1));
 	}
 
 	/**
@@ -198,5 +199,8 @@ class Turret {
 	public void setAngle(double angle) {
 		// for a servo this actually sets the angle not the speed
 		turretMotor.setSpeed(angle);
+	}
+	public void setHeight(double height) {
+		
 	}
 }
