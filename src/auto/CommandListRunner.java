@@ -65,4 +65,7 @@ public class CommandListRunner extends IControl {
 		}
 	}
 
+	public void stop() {
+		commandNum=commands.size();
+	}
 }

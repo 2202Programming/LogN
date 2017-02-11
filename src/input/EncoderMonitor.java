@@ -19,6 +19,9 @@ public class EncoderMonitor extends IControl {
 		encoders.put(name, e);
 	}
 	
+	/**
+	 * Print the encoder values to smart dashboard
+	 */
 	public void teleopPeriodic(){
 		for(Entry<String, Encoder> entry : encoders.entrySet()){
 			SmartWriter.putD(entry.getKey(), entry.getValue().get());
@@ -26,6 +29,9 @@ public class EncoderMonitor extends IControl {
 		}
 	}
 	
+	/**
+	 * Print the encoder values to smart dashboard
+	 */
 	public void autonomousPeriodic(){
 		for(Entry<String, Encoder> entry : encoders.entrySet()){
 			SmartWriter.putD(entry.getKey(), entry.getValue().get());
@@ -33,18 +39,27 @@ public class EncoderMonitor extends IControl {
 		}
 	}
 	
+	/**
+	 * Reset all of the encoders
+	 */
 	public void teleopInit() {
 		for(Entry<String, Encoder> entry : encoders.entrySet()) {
 			entry.getValue().reset();
 		}
 	}
 	
+	/**
+	 * Reset all of the encoders
+	 */
 	public void autonomousInit() {
 		for(Entry<String, Encoder> entry : encoders.entrySet()) {
 			entry.getValue().reset();
 		}
 	}
 	
+	/**
+	 * Reset all of the encoders
+	 */
 	public void disabledInit() {
 		for(Entry<String, Encoder> entry : encoders.entrySet()) {
 			entry.getValue().reset();

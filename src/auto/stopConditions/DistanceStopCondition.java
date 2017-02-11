@@ -16,14 +16,13 @@ public class DistanceStopCondition implements IStopCondition {
 		for(Encoder e : enc){
 		}
 	}
-	@Override
+
 	public void init() {
 		for(Encoder x: enc){
 			x.reset();
 		}
 	}
 
-	@Override
 	public boolean stopNow() {
 		int sum = 0;
 		for(Encoder x: enc){
