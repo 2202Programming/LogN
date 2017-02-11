@@ -27,85 +27,83 @@ import robot.IControl;
  */
 public class Babbage extends RobotDefinitionBase {
 
-	
 	protected boolean useXML() {
 		return false;
 	}
 
-	
 	protected String loadDefinitionName() {
 		return "BABBAGE";
 	}
 
-	
 	protected void loadManualDefinitions() {
-		_properties=new HashMap<String, String>();
-		
+		_properties = new HashMap<String, String>();
+
 		// Default Motor Pins
-		_properties.put("FLMOTORPIN", "2");//PWM3
-		_properties.put("BLMOTORPIN", "3");//PWM4
-		_properties.put("FRMOTORPIN", "1");//PWM1
-		_properties.put("BRMOTORPIN", "0");//PWM2
-		//Shooter pins
-		_properties.put("SHOOTWHEEL", "11");//MainShooterWheel
-		_properties.put("CHAMBERMOTOR","7");//Motor to load balls
-		_properties.put("TURRETMOTOR", "9");//Motor to rotate shooter
-		//Gear holder
+		_properties.put("FLMOTORPIN", "2");// PWM3
+		_properties.put("BLMOTORPIN", "3");// PWM4
+		_properties.put("FRMOTORPIN", "1");// PWM1
+		_properties.put("BRMOTORPIN", "0");// PWM2
+		// Shooter pins
+		_properties.put("SHOOTWHEEL", "11");// MainShooterWheel
+		_properties.put("CHAMBERMOTOR", "7");// Motor to load balls
+		_properties.put("TURRETMOTOR", "9");// Motor to rotate shooter
+		// Gear holder
 		_properties.put("GEARMOTOR", "6");
 	}
 
 	/***
 	 * 
-	 * @return  Control object map for Tim
+	 * @return Control object map for Tim
 	 */
 	public Map<String, IControl> loadControlObjects() {
-		
+
 		// Create map to store public objects
-		Map<String, IControl> temp=super.loadControlObjects();
+		Map<String, IControl> temp = super.loadControlObjects();
 		Global.controlObjects.put("CONTROL", new BabbageControl());
 		NetworkTables visionTable = new NetworkTables(TableNamesEnum.VISION_TABLE);
 		temp.put("NT", visionTable);
-		
-		//TODO add the sensors here
-		SensorController SC =  SensorController.getInstance();
-		
-		/*
-		// Creates the global solenoid controller
-		SolenoidController SO = SolenoidController.getInstance();
-		SO.registerSolenoid("TRIGGER", new DoubleSolenoid(1,1));
-		//TODO register the solenoids here
-		 */
-		
-		// Create IMotors for Arcade Drive
-		IMotor FL=new SparkMotor(getInt("FLMOTORPIN"),false);
-		IMotor FR=new SparkMotor(getInt("FRMOTORPIN"),true);
-		IMotor BL=new SparkMotor(getInt("BLMOTORPIN"),false);
-		IMotor BR=new SparkMotor(getInt("BRMOTORPIN"),true);
 
-		// Create IDrive arcade drive I dont know why we cast it as a IDrive though
-		IDrive AD=new ArcadeDrive(FL, FR, BL, BR);
-		//Intake intake=new Intake();
-		
+		// TODO add the sensors here
+		SensorController SC = SensorController.getInstance();
+
+		/*
+		 * // Creates the global solenoid controller SolenoidController SO =
+		 * SolenoidController.getInstance(); SO.registerSolenoid("TRIGGER", new
+		 * DoubleSolenoid(1,1)); //TODO register the solenoids here
+		 */
+
+		// Create IMotors for Arcade Drive
+		IMotor FL = new SparkMotor(getInt("FLMOTORPIN"), false);
+		IMotor FR = new SparkMotor(getInt("FRMOTORPIN"), true);
+		IMotor BL = new SparkMotor(getInt("BLMOTORPIN"), false);
+		IMotor BR = new SparkMotor(getInt("BRMOTORPIN"), true);
+
+		// Create IDrive arcade drive I dont know why we cast it as a IDrive
+		// though
+		IDrive AD = new ArcadeDrive(FL, FR, BL, BR);
+		// Intake intake=new Intake();
+
 		// Create the autonomous command list maker, and command runner
-//		CommandListMaker CLM = new CommandListMaker(AD);
-//		CommandListRunner CR = new CommandListRunner(CLM.makeList1(),"PIPER");  // makes list one for the TIM robot
-		
-		//Create the IMotors for the Shooter class
-//		IMotor SL = new SparkMotor(getInt("SLMOTORPIN"),false);
-//		IMotor SR = new SparkMotor(getInt("SRMOTORPIN"),false);
-		
-		//TODO put real motors
+		// CommandListMaker CLM = new CommandListMaker(AD);
+		// CommandListRunner CR = new
+		// CommandListRunner(CLM.makeList1(),"PIPER"); // makes list one for the
+		// TIM robot
+
+		// Create the IMotors for the Shooter class
+		// IMotor SL = new SparkMotor(getInt("SLMOTORPIN"),false);
+		// IMotor SR = new SparkMotor(getInt("SRMOTORPIN"),false);
+
+		// TODO put real motors
 		IMotor S = new TalonSRX(getInt("SHOOTWHEEL"), false, false);
-//		IMotor T = new ServoMotor(getInt("TURRETMOTOR"));
+		ServoMotor T = new ServoMotor(getInt("TURRETMOTOR"));
 		IMotor C = new SparkMotor(getInt("CHAMBERMOTOR"), false);
-		Shooter p = new Shooter(S, C, C);
-		
+		Shooter p = new Shooter(S, C, T, T);
+
 		IMotor G = new SparkMotor(getInt("GEARMOTOR"), false);
 		GearHolder GH = new GearHolder(G);
-		
-		//temp.put("DRIVE", AD);		
-//		temp.put("CR", CR);
-		
+
+		// temp.put("DRIVE", AD);
+		// temp.put("CR", CR);
 
 		return temp;
 	}

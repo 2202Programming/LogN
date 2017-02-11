@@ -47,12 +47,12 @@ public class BabbageControl extends ControlBase {
 
 	// engage high-goal vision
 	public boolean hgVision() {
-		return controllers[1].getYPressed();
+		return controllers[1].getLeftTriggerPressed();
 	}
 
 	// engage gear peg vision
 	public boolean gpVision() {
-		return controllers[1].getAPressed();
+		return controllers[1].getLeftBumperPressed();
 	}
 
 	// cancel high-goal vision

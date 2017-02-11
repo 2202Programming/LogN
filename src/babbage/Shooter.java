@@ -1,8 +1,8 @@
 package babbage;
 
 import comms.SmartWriter;
-import comms.XboxController;
 import physicalOutput.IMotor;
+import physicalOutput.ServoMotor;
 import robot.Global;
 import robot.IControl;
 import robotDefinitions.BabbageControl;
@@ -20,11 +20,11 @@ public class Shooter extends IControl {
 	private boolean _fire;
 	private boolean _reverse;
 
-	public Shooter(IMotor motors, IMotor newChamber, IMotor turret) {
+	public Shooter(IMotor motors, IMotor newChamber, ServoMotor turret, ServoMotor bturret) {
 		shooterMotors = motors;
 		controller = (BabbageControl) Global.controlObjects.get("CONTROL");
 		shoosterChamber = new Chamber(newChamber);
-		shoosterTurret = new Turret(turret);
+		shoosterTurret = new Turret(turret, bturret);
 	}
 
 	/**
@@ -177,6 +177,7 @@ class Chamber {
  */
 class Turret {
 	private IMotor turretMotor;
+	private IMotor angleMotor;
 
 	/**
 	 * Create a new turret
@@ -184,8 +185,9 @@ class Turret {
 	 * @param tMotor
 	 *            the motor that controls the turret; must be a servo
 	 */
-	public Turret(IMotor tMotor) {
+	public Turret(IMotor tMotor, IMotor aMotor) {
 		turretMotor = tMotor;
+		angleMotor = aMotor;
 	}
 
 	/**
@@ -201,6 +203,6 @@ class Turret {
 		turretMotor.setSpeed(angle);
 	}
 	public void setHeight(double height) {
-		
+		angleMotor.setSpeed(height);
 	}
 }
