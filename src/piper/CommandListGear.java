@@ -17,7 +17,8 @@ public class CommandListGear extends IControl{
 	
 	public CommandListGear() {
 		commands = new CommandList();
-		commands.addCommand(new RunPegVisionCommand());
+		commands.addCommand(new RunPegVisionCommand(.6));
+		commands.addCommand(new RunPegVisionCommand(1));
 		runner=new CommandListRunner(commands);
 		controller=XboxController.getXboxController();
 	}

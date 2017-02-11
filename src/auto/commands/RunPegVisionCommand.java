@@ -17,9 +17,11 @@ public class RunPegVisionCommand implements ICommand {
 	private double distanceToMove;
 	private boolean doneWithVision=false;
 	private ArrayList<ICommand> subcommands=new ArrayList<>();
+	private double percentToFinish=0;
 	
-	public RunPegVisionCommand() {
+	public RunPegVisionCommand(double percentToFinish) {
 		table=new NetworkTables(TableNamesEnum.VisionTable);
+		this.percentToFinish=percentToFinish;
 	}
 
 	public void init() {
@@ -65,8 +67,11 @@ public class RunPegVisionCommand implements ICommand {
 			subcommands.add(new TurnCommand(degreesToTurn, 1, .5));
 			subcommands.get(0).init();
 			
+			distanceToMove*=percentToFinish;
+			
+			distanceToMove-=20;
 			//<temp>
-			distanceToMove=1;
+			//distanceToMove=1;
 			//</temp>
 			//4- DO 6 and 7
 			//3- DO 4 and 5

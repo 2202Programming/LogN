@@ -77,13 +77,12 @@ public class Piper extends RobotDefinitionBase {
 		IDrive AD=new ArcadeDrive(FL, FR, BL, BR);
 		iControlMap.put("DRIVE", AD);
 
+		//Encoder stuff
 		Encoder encoder0 =new Encoder(0, 1);
 		Encoder encoder1 =  new Encoder(2, 3);
 		encoder0.setDistancePerPulse(0.058);
 		encoder1.setDistancePerPulse(0.06529);
-		
 		EncoderMonitor em = new EncoderMonitor();
-		
 		em.add("ENCODER0", encoder0);
 		em.add("ENCODER1", encoder1);
 		
