@@ -8,13 +8,15 @@ public abstract class ControlBase extends IControl {
 	protected XboxController[] controllers;
 
 	public ControlBase() {
-		controllers = getControllers();
+		controllers=getControllers();
 	}
 
 	public abstract XboxController[] getControllers();
 
 	/**
-	 * getLeftJoystickX - returns the x value of the controller at controllers[port]
+	 * getLeftJoystickX - returns the x value of the controller at
+	 * controllers[port]
+	 * 
 	 * @param port
 	 * @return
 	 */
@@ -23,49 +25,68 @@ public abstract class ControlBase extends IControl {
 	}
 
 	/**
-	 * getLeftJoystickY - returns the y value of the controller at controllers[port]
+	 * getLeftJoystickY - returns the y value of the controller at
+	 * controllers[port]
+	 * 
 	 * @param port
 	 * @return
 	 */
 	public double getLeftJoystickY(int port) {
 		return controllers[port].getLeftJoystickY();
 	}
-	/** getRightJoystickX - returns the x value of the right joystick of controller
-	 *  
+
+	/**
+	 * getRightJoystickX - returns the x value of the right joystick of
+	 * controller
+	 * 
 	 * @return
 	 */
 	public double getRightJoystickX(int port) {
 		return controllers[port].getRightJoystickX();
 	}
-	/**getLeftJoystickY - returns the y value of the right joystick of controller
+
+	/**
+	 * getLeftJoystickY - returns the y value of the right joystick of
+	 * controller
 	 * 
 	 * @return
 	 */
 	public double getRightJoystickY(int port) {
 		return controllers[port].getRightJoystickY();
 	}
-	// turns left and right
-		public double getLeftJoystickX() {
-			return controllers[0].getLeftJoystickX();
-		}
 
-		/**getLeftJoyStickY - returns the y value of the left joystick of controller 0
-		 * 
-		 * @return
-		 */
-		public double getLeftJoystickY() {
-			return controllers[0].getLeftJoystickY();
-		}
-		/** getRightJoystickX - returns the x value of the right joystick of controller 0
-		 * @return
-		 */
-		public double getRightJoystickX() {
-			return controllers[0].getRightJoystickX();
-		}
-		/**getLeftJoystickY - returns the y value of the right joystick of controller 0
-		 * @return
-		 */
-		public double getRightJoystickY() {
-			return controllers[0].getRightJoystickY();
-		}
+	// turns left and right
+	public double getLeftJoystickX() {
+		return controllers[0].getLeftJoystickX();
+	}
+
+	/**
+	 * getLeftJoyStickY - returns the y value of the left joystick of controller
+	 * 0
+	 * 
+	 * @return
+	 */
+	public double getLeftJoystickY() {
+		return controllers[0].getLeftJoystickY();
+	}
+
+	/**
+	 * getRightJoystickX - returns the x value of the right joystick of
+	 * controller 0
+	 * 
+	 * @return
+	 */
+	public double getRightJoystickX() {
+		return controllers[0].getRightJoystickX();
+	}
+
+	/**
+	 * getLeftJoystickY - returns the y value of the right joystick of
+	 * controller 0
+	 * 
+	 * @return
+	 */
+	public double getRightJoystickY() {
+		return controllers[0].getRightJoystickY();
+	}
 }

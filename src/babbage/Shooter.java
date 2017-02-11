@@ -22,7 +22,7 @@ public class Shooter extends IControl {
 
 	public Shooter(IMotor motors, IMotor newChamber, ServoMotor turret, ServoMotor bturret) {
 		shooterMotors = motors;
-		controller = (BabbageControl) Global.controlObjects.get("CONTROL");
+		controller = (BabbageControl) Global.controllers;
 		shoosterChamber = new Chamber(newChamber);
 		shoosterTurret = new Turret(turret, bturret);
 	}

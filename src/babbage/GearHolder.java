@@ -14,7 +14,7 @@ public class GearHolder extends IControl {
 	
 	public GearHolder(IMotor motor){
 		activator = motor;
-		controller = (BabbageControl) Global.controlObjects.get("CONTROL");
+		controller = (BabbageControl) Global.controllers;
 		isDown = false;
 	}
 	

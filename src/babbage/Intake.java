@@ -24,7 +24,7 @@ public class Intake extends IControl {
 	}
 
 	public void autonomousInit() {
-		controller=(BabbageControl) Global.controlObjects.get("CONTROL");
+		controller=(BabbageControl) Global.controllers;
 	}
 
 	public void autonomousPeriodic() {
@@ -32,7 +32,7 @@ public class Intake extends IControl {
 	}
 	
 	public void teleopInit() {
-		controller=(BabbageControl) Global.controlObjects.get("CONTROL");
+		controller=(BabbageControl) Global.controllers;
 	}
 
 	public void teleopPeriodic() {

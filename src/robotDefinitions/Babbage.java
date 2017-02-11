@@ -59,7 +59,9 @@ public class Babbage extends RobotDefinitionBase {
 
 		// Create map to store public objects
 		Map<String, IControl> temp = super.loadControlObjects();
-		Global.controlObjects.put("CONTROL", new BabbageControl());
+		BabbageControl BC = new BabbageControl();
+		temp.put("CONTROL", BC);
+		Global.controllers = BC;
 		NetworkTables visionTable = new NetworkTables(TableNamesEnum.VISION_TABLE);
 		temp.put("NT", visionTable);
 

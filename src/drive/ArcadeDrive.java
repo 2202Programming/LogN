@@ -62,7 +62,7 @@ public class ArcadeDrive extends IDrive {
 		this.frontRight=fr;
 		this.backLeft=bl;
 		this.backRight=br;
-		controller=(ControlBase) Global.controlObjects.get("CONTROL");
+		controller=Global.controllers;
 	}
 
 	/**
