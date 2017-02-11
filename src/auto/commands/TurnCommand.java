@@ -3,12 +3,11 @@ package auto.commands;
 import PID.PIDController;
 import PID.PIDValues;
 import auto.ICommand;
+import auto.IStopCondition;
 import auto.stopConditions.AngleStopCondition;
-import comms.DebugMode;
 import comms.SmartWriter;
 import drive.DriveControl;
 import drive.IDrive;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.Global;
 import robot.Robot;
 
@@ -20,12 +19,18 @@ public class TurnCommand implements ICommand {
 	private static PIDValues pidValues;
 	private IDrive drive;
 	
+	
 	public TurnCommand(double degreesToTurn) {
-		this(degreesToTurn, 1, 0.3);
+		this(new AngleStopCondition(degreesToTurn, 1, 0.3));
 	}
 	
-	public TurnCommand(double degreesToTurn, double marginOfErrorDegrees, double secondsInRange) {
-		stopCondition=new AngleStopCondition(degreesToTurn, marginOfErrorDegrees, secondsInRange);
+	public TurnCommand(double degreesToTurn, double maxError, double timeInRange) {
+		this(new AngleStopCondition(degreesToTurn, maxError, timeInRange));
+	}
+	
+	
+	public TurnCommand(AngleStopCondition stop) {
+		stopCondition=stop;
 		loadPIDValues();
 	}
 	
