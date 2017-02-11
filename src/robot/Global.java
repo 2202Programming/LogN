@@ -2,6 +2,8 @@ package robot;
 
 import java.util.Map;
 
+import robotDefinitions.ControlBase;
+
 /**
  * A class for global variables that are not part of any specific class
  */
@@ -11,5 +13,7 @@ public class Global {
 	//debugMode was moved to SmartWriter.
 	//don't set!!!!
 	public static Map<String, IControl> controlObjects;
+	
+	public static ControlBase controllers;
 
 }

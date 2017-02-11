@@ -8,7 +8,8 @@ import robot.IControl;
  * controller rumble. I will do this eventually --SecondThread
  */
 public class XboxController extends IControl {
-
+	private String _port;
+	
 	private Joystick leftJoystick, rightJoystick;
 	private boolean teehee = true;
 
@@ -82,7 +83,7 @@ public class XboxController extends IControl {
 	 * @return The singleton of this class
 	 */
 	public static XboxController getXboxController(int port) {
-		if (port > 3) {
+		if (port <= 3) {
 			if (xboxController[port] == null) {
 				xboxController[port] = new XboxController(port);
 			}
@@ -104,6 +105,7 @@ public class XboxController extends IControl {
 	 * anything.
 	 */
 	private XboxController(int port) {
+		_port = port + "";
 		leftJoystick = new Joystick(port);
 		rightJoystick = new Joystick(port);
 
@@ -155,7 +157,7 @@ public class XboxController extends IControl {
 	 * @param currentlyDown
 	 */
 	private void updateButton(int buttonCode, boolean currentlyDown) {
-		SmartWriter.putB(buttonCode + "", currentlyDown, DebugMode.FULL);
+		SmartWriter.putB(buttonCode +" " + _port, currentlyDown, DebugMode.FULL);
 		lastFrame[buttonCode] = thisFrame[buttonCode];
 		if ( !currentlyDown) {
 			debounceCounters[buttonCode] = 0;
