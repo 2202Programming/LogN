@@ -4,15 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import babbage.HighGoalTurning;
-import babbage.GearHolder;
 import babbage.Intake;
 import babbage.Shooter;
-import auto.CommandListRunner;
 import comms.NetworkTables;
 import comms.TableNamesEnum;
 import drive.ArcadeDrive;
 import drive.IDrive;
-import edu.wpi.first.wpilibj.DigitalInput;
 import input.SensorController;
 import physicalOutput.IMotor;
 import physicalOutput.ServoMotor;
@@ -60,14 +57,14 @@ public class Babbage extends RobotDefinitionBase {
 
 		// Create map to store public objects
 		Map<String, IControl> temp = super.loadControlObjects();
-		BabbageControl BC = new BabbageControl();
-		temp.put("CONTROL", BC);
-		Global.controllers = BC;
+		BabbageControl babbageControl = new BabbageControl();
+		temp.put("CONTROL", babbageControl);
+		Global.controllers = babbageControl ;
 		NetworkTables visionTable = new NetworkTables(TableNamesEnum.VisionTable);
 		temp.put("NT", visionTable);
 
 		// TODO add the sensors here
-		SensorController SC = SensorController.getInstance();
+		SensorController sensorController = SensorController.getInstance();
 
 		/*
 		 * // Creates the global solenoid controller SolenoidController SO =
@@ -81,7 +78,7 @@ public class Babbage extends RobotDefinitionBase {
 		IMotor BL = new SparkMotor(getInt("BLMOTORPIN"), false);
 		IMotor BR = new SparkMotor(getInt("BRMOTORPIN"), true);
 
-		// Create IDrive arcade drive I dont know why we cast it as a IDrive though
+		// Create IDrive arcade drive I don't know why we cast it as a IDrive though
 		IDrive arcadeDrive=new ArcadeDrive(FL, FR, BL, BR);
 		HighGoalTurning highGoalTurnings=new HighGoalTurning();
 		

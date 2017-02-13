@@ -3,7 +3,6 @@ package auto.commands;
 import PID.PIDController;
 import PID.PIDValues;
 import auto.ICommand;
-import auto.IStopCondition;
 import auto.stopConditions.AngleStopCondition;
 import comms.SmartWriter;
 import drive.DriveControl;
@@ -72,6 +71,11 @@ public class TurnCommand implements ICommand {
 			break;
 		case UNKNOWN:
 			//TODO setPIDVALUES
+			break;
+		case MECHANUMDRIVE:
+			//TODO setPIDVALUES
+			break;
+		default:
 			break;
 		
 		}

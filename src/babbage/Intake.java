@@ -1,6 +1,5 @@
 package babbage;
 
-import comms.XboxController;
 import physicalOutput.IMotor;
 import physicalOutput.SparkMotor;
 import robot.Global;

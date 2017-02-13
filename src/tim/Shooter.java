@@ -4,7 +4,6 @@ import comms.DebugMode;
 import comms.SmartWriter;
 import comms.XboxController;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import physicalOutput.IMotor;
 import physicalOutput.SolenoidController;
 import robot.IControl;

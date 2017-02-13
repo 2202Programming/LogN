@@ -2,7 +2,6 @@ package auto.commands;
 
 import auto.ICommand;
 import auto.IStopCondition;
-import auto.stopConditions.TimerStopCondition;
 import drive.DriveControl;
 import drive.IDrive;
 import robot.Global;
