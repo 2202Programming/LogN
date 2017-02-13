@@ -63,7 +63,7 @@ public class Babbage extends RobotDefinitionBase {
 		BabbageControl BC = new BabbageControl();
 		temp.put("CONTROL", BC);
 		Global.controllers = BC;
-		NetworkTables visionTable = new NetworkTables(TableNamesEnum.VISION_TABLE);
+		NetworkTables visionTable = new NetworkTables(TableNamesEnum.VisionTable);
 		temp.put("NT", visionTable);
 
 		// TODO add the sensors here
@@ -82,8 +82,8 @@ public class Babbage extends RobotDefinitionBase {
 		IMotor BR = new SparkMotor(getInt("BRMOTORPIN"), true);
 
 		// Create IDrive arcade drive I dont know why we cast it as a IDrive though
-		IDrive AD=new ArcadeDrive(FL, FR, BL, BR);
-		HighGoalTurning hgt=new HighGoalTurning();
+		IDrive arcadeDrive=new ArcadeDrive(FL, FR, BL, BR);
+		HighGoalTurning highGoalTurnings=new HighGoalTurning();
 		
 		
 		IMotor[] shooterMotors= {new SparkMotor(getInt("SHOOTER1PIN"), true),new SparkMotor(getInt("SHOOTER2PIN"), true)};
@@ -100,12 +100,12 @@ public class Babbage extends RobotDefinitionBase {
 		// IMotor SR = new SparkMotor(getInt("SRMOTORPIN"),false);
 
 		// TODO put real motors
-		IMotor S = new TalonSRX(getInt("SHOOTWHEEL"), false, false);
-		ServoMotor T = new ServoMotor(getInt("TURRETMOTOR"));
-		IMotor C = new SparkMotor(getInt("CHAMBERMOTOR"), false);
-		Shooter p = new Shooter(S, C, T, T);
+		IMotor shooterWheelMotor = new TalonSRX(getInt("SHOOTWHEEL"), false, false);
+		ServoMotor turretMotor = new ServoMotor(getInt("TURRETMOTOR"));
+		IMotor chamberMotor = new SparkMotor(getInt("CHAMBERMOTOR"), false);
+		Shooter shooter = new Shooter(shooterWheelMotor, chamberMotor, turretMotor, turretMotor);
 
-		IMotor G = new SparkMotor(getInt("GEARMOTOR"), false);
+		IMotor gearMotor = new SparkMotor(getInt("GEARMOTOR"), false);
 		//GearHolder GH = new GearHolder(G);
 
 		// temp.put("DRIVE", AD);
