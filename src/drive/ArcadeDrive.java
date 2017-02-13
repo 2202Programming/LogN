@@ -2,8 +2,9 @@ package drive;
 
 import comms.DebugMode;
 import comms.SmartWriter;
-import comms.XboxController;
 import physicalOutput.IMotor;
+import robot.Global;
+import robotDefinitions.ControlBase;
 
 /**
  * An arcade drive that uses only the left JoyStick to move. <br>
@@ -38,7 +39,7 @@ public class ArcadeDrive extends IDrive {
 	/**
 	 * Used for controller input
 	 */
-	private XboxController controller;
+	private ControlBase controller;
 
 	/**
 	 * holds the values to pass to the motors from when they are calculated in
@@ -61,7 +62,7 @@ public class ArcadeDrive extends IDrive {
 		this.frontRight=fr;
 		this.backLeft=bl;
 		this.backRight=br;
-		controller=XboxController.getXboxController();
+		controller=Global.controllers;
 	}
 
 	/**

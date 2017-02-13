@@ -67,7 +67,7 @@ public class MechanumRobot extends RobotDefinitionBase {
 		IMotor BL=new JaguarMotor(getInt("BLMOTORPIN"),true);
 		IMotor BR=new JaguarMotor(getInt("BRMOTORPIN"),false);
 		// Create IDrive arcade drive 
-		IDrive AD=new ArcadeDrive(FL, FR, BL, BR);
+		IDrive AD=new ArcadeDrive(FL, FR, BL, BR); 
 		
 		// Create the autonomous command list maker, and command runner
 		//CommandListMaker CLM = new CommandListMaker();
