@@ -67,16 +67,16 @@ public class Tim extends RobotDefinitionBase {
 		Map<String, IControl> temp=super.loadControlObjects();
 		
 		// Creates the global sensor controller
-		SensorController SC = SensorController.getInstance();
-		SC.registerSensor("FLENCODER", new Encoder(1,1));
-		SC.registerSensor("FRENCODER", new Encoder(1,2));
-		SC.registerSensor("NAVX", new AHRS(SerialPort.Port.kMXP));
+		SensorController sensorController = SensorController.getInstance();
+		sensorController.registerSensor("FLENCODER", new Encoder(1,1));
+		sensorController.registerSensor("FRENCODER", new Encoder(1,2));
+		sensorController.registerSensor("NAVX", new AHRS(SerialPort.Port.kMXP));
 		//TODO add the sensors here
 		
 		// Creates the global solenoid controller
-		SolenoidController SO = SolenoidController.getInstance();
+		SolenoidController solenoidController = SolenoidController.getInstance();
 		//Example to add solenoid:
-		SO.registerSolenoid("TRIGGER", new DoubleSolenoid(2,3));
+		solenoidController.registerSolenoid("TRIGGER", new DoubleSolenoid(2,3));
 		//TODO register the solenoids here
 
 		// Create IMotors for Arcade Drive
@@ -85,25 +85,18 @@ public class Tim extends RobotDefinitionBase {
 		IMotor BL=new JaguarMotor(getInt("BLMOTORPIN"),true);
 		IMotor BR=new JaguarMotor(getInt("BRMOTORPIN"),false);
 
-		Compressor compressor = new Compressor();
-		// Create IDrive arcade drive 
-		IDrive AD=new ArcadeDrive(FL, FR, BL, BR);
-		
-		// Create the autonomous command list maker, and command runner
-		//CommandListMaker CLM = new CommandListMaker();
-		//CommandListRunner CR = new CommandListRunner(CLM.makeList1(),"TIM");  // makes list one for the TIM robot
+		new Compressor();
+
+		IDrive arcadeDrive=new ArcadeDrive(FL, FR, BL, BR);
 		
 		//Create the IMotors for the Shooter class
-		IMotor SL = new JaguarMotor(getInt("SLMOTORPIN"),false);
-		IMotor SR = new JaguarMotor(getInt("SRMOTORPIN"),false);
-		IMotor SH = new VictorMotor(getInt("SHMOTORPIN"),false);
+		IMotor shooterLeftMotor = new JaguarMotor(getInt("SLMOTORPIN"),false);
+		IMotor shooterRightMotor = new JaguarMotor(getInt("SRMOTORPIN"),false);
+		IMotor shooterHeightMotor = new VictorMotor(getInt("SHMOTORPIN"),false);
 		
 		// Create the class for Tim's shooter
-		Shooter S = new Shooter(SL, SR, SH);
-		//EnableCompressor compressorTester = new EnableCompressor(compressor);
-		temp.put("DRIVE", AD);		
-//		temp.put("CR", CR);
-//		temp.put("S", S);
+		Shooter S = new Shooter(shooterLeftMotor, shooterRightMotor, shooterHeightMotor);
+		temp.put("DRIVE", arcadeDrive);		
 		
 		return temp;
 	}

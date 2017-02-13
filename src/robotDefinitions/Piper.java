@@ -74,22 +74,22 @@ public class Piper extends RobotDefinitionBase {
 
 		// Create IDrive arcade drive I dont know why we cast it as a IDrive
 		// though
-		IDrive AD=new ArcadeDrive(FL, FR, BL, BR);
-		iControlMap.put("DRIVE", AD);
+		IDrive arcadeDrive=new ArcadeDrive(FL, FR, BL, BR);
+		iControlMap.put("DRIVE", arcadeDrive);
 
 		//Encoder stuff
 		Encoder encoder0 =new Encoder(0, 1);
 		Encoder encoder1 =  new Encoder(2, 3);
 		encoder0.setDistancePerPulse(0.058);
 		encoder1.setDistancePerPulse(0.06529);
-		EncoderMonitor em = new EncoderMonitor();
-		em.add("ENCODER0", encoder0);
-		em.add("ENCODER1", encoder1);
+		EncoderMonitor encoderMonitor = new EncoderMonitor();
+		encoderMonitor.add("ENCODER0", encoder0);
+		encoderMonitor.add("ENCODER1", encoder1);
 		
-		SensorController SC=SensorController.getInstance();
-		SC.registerSensor("ENCODER0", encoder0);
-		SC.registerSensor("ENCODER1", encoder1);
-		SC.registerSensor("NAVX", new AHRS(SerialPort.Port.kMXP));
+		SensorController sensorController=SensorController.getInstance();
+		sensorController.registerSensor("ENCODER0", encoder0);
+		sensorController.registerSensor("ENCODER1", encoder1);
+		sensorController.registerSensor("NAVX", new AHRS(SerialPort.Port.kMXP));
 
 		new NavXTester();
 		//new NavXPIDTunable();
