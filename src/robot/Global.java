@@ -10,10 +10,11 @@ import robotDefinitions.ControlBase;
 public class Global {
 	//to get an instance of Sensor or Solenoid Controllers, use SomeController.getInstance()
 
-	//debugMode was moved to SmartWriter.
 	//don't set!!!!
 	public static Map<String, IControl> controlObjects;
 	
 	public static ControlBase controllers;
+	
+	public static ControlBase controlBase;
 
 }
