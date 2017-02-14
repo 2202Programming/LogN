@@ -5,7 +5,6 @@ import com.kauailabs.navx.frc.AHRS;
 import auto.IStopCondition;
 import comms.SmartWriter;
 import input.SensorController;
-import robot.Global;
 
 public class AngleStopCondition implements IStopCondition{
 	
@@ -42,7 +41,6 @@ public class AngleStopCondition implements IStopCondition{
 
 	public boolean stopNow() {
 		firstTimeInRightSpot=Math.min(firstTimeInRightSpot, System.currentTimeMillis()+20);
-		double angle=navX.getAngle();
 		if (Math.abs(getError())>marginOfError) {
 			SmartWriter.putS("Angle Stop Condidition", "In wrong spot "+(getError()));
 			//not in the area

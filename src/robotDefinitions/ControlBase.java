@@ -1,6 +1,7 @@
 package robotDefinitions;
 
 import comms.XboxController;
+import robot.Global;
 import robot.IControl;
 
 public abstract class ControlBase extends IControl {
@@ -9,6 +10,7 @@ public abstract class ControlBase extends IControl {
 
 	public ControlBase() {
 		controllers=getControllers();
+		Global.controlBase=this;
 	}
 
 	public abstract XboxController[] getControllers();

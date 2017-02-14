@@ -13,8 +13,6 @@ public class DistanceStopCondition implements IStopCondition {
 	public DistanceStopCondition(List<Encoder> encoder, int inches) {
 		enc = encoder;
 		duration = inches;
-		for(Encoder e : enc){
-		}
 	}
 
 	public void init() {

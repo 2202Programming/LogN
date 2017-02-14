@@ -45,12 +45,12 @@ public class BabbageControl extends ControlBase {
 	}
 
 	// engage high-goal vision
-	public boolean hgVision() {
+	public boolean startHighGoalVision() {
 		return controllers[1].getLeftTriggerPressed();
 	}
 
 	// engage gear peg vision
-	public boolean gpVision() {
+	public boolean startPegVision() {
 		return controllers[0].getLeftBumperPressed();
 	}
 
@@ -59,16 +59,16 @@ public class BabbageControl extends ControlBase {
 	 * 
 	 * @return
 	 */
-	public boolean cancelHg() {
+	public boolean cancelHighGoalVision() {
 		return controllers[1].getStartPressed();
 	}
 
 	/**
-	 * cancel high-goal vision
+	 * cancel Peg vision
 	 * 
 	 * @return
 	 */
-	public boolean cancelGp() {
+	public boolean cancelPegVision() {
 		return controllers[0].getStartPressed();
 	}
 
@@ -88,7 +88,7 @@ public class BabbageControl extends ControlBase {
 		return controllers[2].getXHeld();
 	}
 
-	public boolean autoFieldPosition0() {
+	public boolean autoFieldPosition0() {//Aren't we doing this through Smart Dashboard?
 		return controllers[2].getYHeld();
 	}
 

@@ -56,7 +56,7 @@ public class XboxController extends IControl {
 	private final int RIGHT_TRIGGER_CODE = 11;
 
 	private final int NUMBER_OF_BUTTONS = 12;
-	private final int maxDebounceCounter = 10;
+	private final int maxDebounceCounter = 3;
 	private int[] debounceCounters = new int[NUMBER_OF_BUTTONS];
 	private boolean[] thisFrame = new boolean[NUMBER_OF_BUTTONS];
 	private boolean[] lastFrame = new boolean[NUMBER_OF_BUTTONS];
