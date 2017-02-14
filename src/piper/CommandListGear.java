@@ -2,6 +2,7 @@ package piper;
 
 import auto.CommandList;
 import auto.CommandListRunner;
+import auto.commands.DrivingPegVisionCommand;
 import auto.commands.RunPegVisionCommand;
 import comms.SmartWriter;
 import comms.XboxController;
@@ -18,8 +19,9 @@ public class CommandListGear extends IControl{
 	
 	public CommandListGear() {
 		commands = new CommandList();
-		commands.addCommand(new RunPegVisionCommand(.5));
-		commands.addCommand(new RunPegVisionCommand(.8));
+		commands.addCommand(new DrivingPegVisionCommand(1));
+		//commands.addCommand(new RunPegVisionCommand(.5));
+		//commands.addCommand(new RunPegVisionCommand(.8));
 		runner=new CommandListRunner(commands);
 		controller=XboxController.getXboxController();
 	}
