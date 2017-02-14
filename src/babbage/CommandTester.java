@@ -14,12 +14,12 @@ public class CommandTester extends IControl
 public CommandTester() 
 {
 	commandList = BabbageAutoLists.centerBlue();
+	new CommandListRunner(commandList);
 }
 	
 	
 public void autonomousInit() 
 {
-	new CommandListRunner(commandList).runList();
 	
 }
 	

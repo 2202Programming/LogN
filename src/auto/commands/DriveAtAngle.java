@@ -4,6 +4,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import auto.ICommand;
 import auto.IStopCondition;
+import comms.SmartWriter;
 import drive.DriveControl;
 import drive.IDrive;
 import input.SensorController;
@@ -32,13 +33,14 @@ public class DriveAtAngle implements ICommand {
 	}
 
 	public boolean run() {
-		if (navx.getAngle()>angle) {
-			drive.setLeftMotors(fastSpeed);
-			drive.setRightMotors(slowSpeed);
-		}
-		else {
+		SmartWriter.putS("TargetAngle driveAtAngle ", getError()+"");
+		if (getError()>0) {
 			drive.setLeftMotors(slowSpeed);
 			drive.setRightMotors(fastSpeed);
+		}
+		else {
+			drive.setLeftMotors(fastSpeed);
+			drive.setRightMotors(slowSpeed);
 		}
 		if (stopCondition.stopNow()) {
 			drive.setLeftMotors(0);
@@ -47,6 +49,14 @@ public class DriveAtAngle implements ICommand {
 			return true;
 		}
 		return false;
+	}
+	
+	public double getError() {
+		double angle=navx.getAngle();
+		if (angle>180) {
+			angle=angle-360;
+		}
+		return angle-this.angle;
 	}
 
 }

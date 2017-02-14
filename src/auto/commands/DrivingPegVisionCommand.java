@@ -39,6 +39,7 @@ public class DrivingPegVisionCommand implements ICommand {
 		
 		encoders=new ArrayList<>();
 		encoders.add((Encoder)SensorController.getInstance().getSensor("ENCODER1"));
+		encoders.get(0).reset();
 	}
 
 	public boolean run() {
@@ -89,7 +90,7 @@ public class DrivingPegVisionCommand implements ICommand {
 
 			ArrayList<Encoder> encoders=new ArrayList<>();
 			encoders.add((Encoder)SensorController.getInstance().getSensor("ENCODER1"));
-			subcommands.add(new DriveAtAngle(new DistanceStopCondition(encoders, (int)distanceToMove), .6, 0.4, degreesToTurn));		
+			subcommands.add(new DriveAtAngle(new DistanceStopCondition(encoders, (int)distanceToMove), 0.3, 0.6, degreesToTurn));		
 			return false;
 		}
 	}
