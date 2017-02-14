@@ -3,6 +3,7 @@ package robotDefinitions;
 import java.util.HashMap;
 import java.util.Map;
 
+import babbage.CommandTester;
 import babbage.HighGoalTurning;
 import babbage.Intake;
 import babbage.Shooter;
@@ -102,6 +103,12 @@ public class Babbage extends RobotDefinitionBase {
 		IMotor chamberMotor = new SparkMotor(getInt("CHAMBERMOTOR"), false);
 		Shooter shooter = new Shooter(shooterWheelMotor, chamberMotor, turretMotor, turretMotor);
 
+		
+		
+//		CommandTester commandTester = new CommandTester();
+		
+		
+		
 		IMotor gearMotor = new SparkMotor(getInt("GEARMOTOR"), false);
 		//GearHolder GH = new GearHolder(G);
 
