@@ -2,6 +2,7 @@ package drive;
 
 import comms.DebugMode;
 import comms.SmartWriter;
+import comms.XboxController;
 import physicalOutput.IMotor;
 import robot.Global;
 import robotDefinitions.ControlBase;
@@ -39,7 +40,7 @@ public class ArcadeDrive extends IDrive {
 	/**
 	 * Used for controller input
 	 */
-	private ControlBase controller;
+	private XboxController controller;
 
 	/**
 	 * holds the values to pass to the motors from when they are calculated in
@@ -62,7 +63,9 @@ public class ArcadeDrive extends IDrive {
 		this.frontRight=fr;
 		this.backLeft=bl;
 		this.backRight=br;
-		controller=Global.controllers;
+		//controller=Global.controllers;
+		controller = XboxController.getXboxController();
+		
 	}
 
 	/**
