@@ -22,14 +22,22 @@ public class HighGoalTurning extends IControl {
 	
 	public void teleopInit() {
 		table.setBoolean("processVisionHighGoal", true);
+		SmartWriter.putD("NumberToTurnTo5", 50);
+		SmartWriter.putD("High Goal angle", table.getDouble("degreesToSetHighGoal"));
+		SmartWriter.putD("now angle", servo.getAngle());
 	}
 	
 	public void teleopPeriodic() {
-		if (!waitingToTurnShooter) {
+		servo.setAngle(SmartWriter.getD("NumberToTurnTo5"));
+		/*if (!waitingToTurnShooter) {
 			if (!table.getBoolean("processVisionHighGoal")) {
-				targetAngle=servo.getAngle()+table.getDouble("degreesToSetHighGoal");
-				servo.setAngle(targetAngle);
+				targetAngle=servo.getAngle()-table.getDouble("degreesToSetHighGoal");
+				servo.setAngle(servo.getAngle()+table.getDouble("degreesToSetHighGoal"));
+				SmartWriter.putD("High Goal angle", table.getDouble("degreesToSetHighGoal"));
+				targetAngle=0;
 				waitingToTurnShooter=true;
+
+				
 			}
 		}
 		else {
@@ -39,6 +47,6 @@ public class HighGoalTurning extends IControl {
 				waitingToTurnShooter=false;
 				table.setBoolean("processVisionHighGoal", true);
 			}
-		}
+		}*/
 	}
 }
