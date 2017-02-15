@@ -93,7 +93,7 @@ public class Shooter extends IControl {
 			}
 		}
 		// Turret code starts
-		//shoosterTurret.setAngle(controller.getLeftJoystickX(1));
+		shoosterTurret.setAngle(controller.getLeftJoystickX(1));
 		//shoosterTurret.setHeight(controller.getRightJoystickY(1));
 	}
 
