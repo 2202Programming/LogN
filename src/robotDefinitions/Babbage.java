@@ -3,6 +3,8 @@ package robotDefinitions;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.kauailabs.navx.frc.AHRS;
+
 import babbage.CommandTester;
 import babbage.HighGoalTurning;
 import babbage.Intake;
@@ -11,6 +13,10 @@ import comms.NetworkTables;
 import comms.TableNamesEnum;
 import drive.ArcadeDrive;
 import drive.IDrive;
+import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SerialPort;
+import input.EncoderMonitor;
 import input.SensorController;
 import physicalOutput.IMotor;
 import physicalOutput.ServoMotor;
@@ -63,13 +69,28 @@ public class Babbage extends RobotDefinitionBase {
 		Map<String, IControl> temp = super.loadControlObjects();
 		BabbageControl babbageControl = new BabbageControl();
 		temp.put("CONTROL", babbageControl);
-		Global.controllers = babbageControl ;
+		Global.controllers = babbageControl;
 		NetworkTables visionTable = new NetworkTables(TableNamesEnum.VisionTable);
 		temp.put("NT", visionTable);
 
 		// TODO add the sensors here
 		SensorController sensorController = SensorController.getInstance();
 
+		// Encoder stuff
+		Encoder encoder0 = new Encoder(0, 1);
+		Encoder encoder1 = new Encoder(2, 3);
+		encoder0.setDistancePerPulse(0.058);
+		encoder1.setDistancePerPulse(0.06529);
+		EncoderMonitor encoderMonitor = new EncoderMonitor();
+		encoderMonitor.add("ENCODER0", encoder0);
+		encoderMonitor.add("ENCODER1", encoder1);
+
+		sensorController.registerSensor("ENCODER0", encoder0);
+		sensorController.registerSensor("ENCODER1", encoder1);
+		sensorController.registerSensor("NAVX", new AHRS(SerialPort.Port.kMXP));
+
+		Ultrasonic rangeFinder = new Ultrasonic(9, 8);
+		sensorController.registerSensor("RANGE", rangeFinder);
 		/*
 		 * // Creates the global solenoid controller SolenoidController SO =
 		 * SolenoidController.getInstance(); SO.registerSolenoid("TRIGGER", new
