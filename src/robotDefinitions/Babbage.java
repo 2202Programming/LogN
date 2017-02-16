@@ -36,15 +36,19 @@ public class Babbage extends RobotDefinitionBase {
 	protected void loadManualDefinitions() {
 		_properties = new HashMap<String, String>();
 
+		// Intake system
+		_properties.put("LIFTERMOTOR", "5");
+		_properties.put("INTAKEMOTOR", "0");
 		// Default Motor Pins
-		_properties.put("FLMOTORPIN", "2");// PWM3
-		_properties.put("BLMOTORPIN", "3");// PWM4
-		_properties.put("FRMOTORPIN", "1");// PWM1
-		_properties.put("BRMOTORPIN", "0");// PWM2
+		_properties.put("FLMOTORPIN", "3");
+		_properties.put("BLMOTORPIN", "4");
+		_properties.put("FRMOTORPIN", "2");
+		_properties.put("BRMOTORPIN", "1");
 		// Shooter pins
 		_properties.put("SHOOTWHEEL", "11");// MainShooterWheel
-		_properties.put("CHAMBERMOTOR", "7");// Motor to load balls
+		_properties.put("CHAMBERMOTOR", "8");// Motor to load balls
 		_properties.put("TURRETMOTOR", "9");// Motor to rotate shooter
+		_properties.put("AGITATORMOTOR", "7");//Agitates balls
 		// Gear holder
 		_properties.put("GEARMOTOR", "6");
 	}
