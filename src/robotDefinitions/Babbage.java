@@ -11,6 +11,7 @@ import comms.NetworkTables;
 import comms.TableNamesEnum;
 import drive.ArcadeDrive;
 import drive.IDrive;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import input.SensorController;
 import physicalOutput.IMotor;
 import physicalOutput.ServoMotor;
@@ -69,7 +70,8 @@ public class Babbage extends RobotDefinitionBase {
 
 		// TODO add the sensors here
 		SensorController sensorController = SensorController.getInstance();
-
+		Ultrasonic rangeFinder = new Ultrasonic(9, 8);
+		sensorController.registerSensor("RANGE", rangeFinder);
 		/*
 		 * // Creates the global solenoid controller SolenoidController SO =
 		 * SolenoidController.getInstance(); SO.registerSolenoid("TRIGGER", new
