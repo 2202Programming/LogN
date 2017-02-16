@@ -10,6 +10,7 @@ import comms.TableNamesEnum;
 import drive.DriveControl;
 import drive.IDrive;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import input.SensorController;
 import robot.Global;
 
@@ -72,7 +73,12 @@ public class DrivingPegVisionCommand implements ICommand {
 
 			distanceToMove-=20;
 			distanceToMove*=percentToFinish;
-
+			
+			//Sets the power based on rangeFinder
+			float power = .5f;
+			Ultrasonic rangeFinder = (Ultrasonic) SensorController.getInstance().getSensor("RANGE");
+			if(rangeFinder.getRangeInches() < 12)
+				 power = .2f;
 			// <temp>
 			// distanceToMove=1;
 			// </temp>
@@ -82,7 +88,7 @@ public class DrivingPegVisionCommand implements ICommand {
 			// 1- DO 0 and 1
 			ArrayList<Encoder> encoders=new ArrayList<>();
 			encoders.add((Encoder)SensorController.getInstance().getSensor("ENCODER1"));
-			subcommands.add(new DriveCommand(new DistanceStopCondition(encoders, (int)distanceToMove), .5));		return false;
+			subcommands.add(new DriveCommand(new DistanceStopCondition(encoders, (int)distanceToMove), power));		return false;
 		}
 	}
 }
