@@ -13,6 +13,7 @@ import comms.NetworkTables;
 import comms.TableNamesEnum;
 import drive.ArcadeDrive;
 import drive.IDrive;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SerialPort;
 import input.EncoderMonitor;
@@ -88,6 +89,8 @@ public class Babbage extends RobotDefinitionBase {
 		sensorController.registerSensor("ENCODER1", encoder1);
 		sensorController.registerSensor("NAVX", new AHRS(SerialPort.Port.kMXP));
 
+		Ultrasonic rangeFinder = new Ultrasonic(9, 8);
+		sensorController.registerSensor("RANGE", rangeFinder);
 		/*
 		 * // Creates the global solenoid controller SolenoidController SO =
 		 * SolenoidController.getInstance(); SO.registerSolenoid("TRIGGER", new
