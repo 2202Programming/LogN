@@ -38,10 +38,10 @@ public class Babbage extends RobotDefinitionBase {
 		_properties = new HashMap<String, String>();
 
 		// Default Motor Pins
-		_properties.put("FLMOTORPIN", "2");// PWM3
-		_properties.put("BLMOTORPIN", "3");// PWM4
-		_properties.put("FRMOTORPIN", "1");// PWM1
-		_properties.put("BRMOTORPIN", "0");// PWM2
+		_properties.put("FLMOTORPIN", "2");
+		_properties.put("BLMOTORPIN", "3");
+		_properties.put("FRMOTORPIN", "1");
+		_properties.put("BRMOTORPIN", "0");
 		// Shooter pins
 		_properties.put("SHOOTWHEEL", "11");// MainShooterWheel
 		_properties.put("CHAMBERMOTOR", "7");// Motor to load balls
@@ -84,11 +84,13 @@ public class Babbage extends RobotDefinitionBase {
 
 		// Create IDrive arcade drive I don't know why we cast it as a IDrive though
 		IDrive arcadeDrive=new ArcadeDrive(FL, FR, BL, BR);
+		
+		
 		HighGoalTurning highGoalTurnings=new HighGoalTurning();
 		
 		
 		IMotor[] intakeMotors= {new SparkMotor(getInt("INTAKE1"), true),new SparkMotor(getInt("INTAKE2"), true)};
-		Intake intake=new Intake(intakeMotors);
+		//Intake intake=new Intake(intakeMotors);
 		
 		// Create the autonomous command list maker, and command runner
 		// CommandListMaker CLM = new CommandListMaker(AD);

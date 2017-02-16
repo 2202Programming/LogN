@@ -31,6 +31,10 @@ public class NetworkTables extends IControl{
 		return table.getBoolean(key, false);
 	}
 	
+	public boolean getBoolean(String key, boolean defaultValue){
+		return table.getBoolean(key, defaultValue);
+	}
+	
 	public void setBoolean(String key, boolean value){
 		table.putBoolean(key, value);
 	}
