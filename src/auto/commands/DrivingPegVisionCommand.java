@@ -20,6 +20,7 @@ public class DrivingPegVisionCommand implements ICommand {
 	private boolean doneWithVision=false;
 	private ArrayList<ICommand> subcommands=new ArrayList<>();
 	private double percentToFinish=0;
+	ArrayList<Encoder> encoders;
 
 	public DrivingPegVisionCommand(double percentToFinish) {
 		table=new NetworkTables(TableNamesEnum.VisionTable);
@@ -27,11 +28,18 @@ public class DrivingPegVisionCommand implements ICommand {
 	}
 
 	public void init() {
-		SmartWriter.putD("Peg Vision activates", System.currentTimeMillis());
+		SmartWriter.putD("Peg Vision activated", System.currentTimeMillis());
 		doneWithVision=false;
 		subcommands.clear();
 		table.setBoolean("processVision", true);
-		((IDrive)Global.controlObjects.get("DRIVE")).setDriveControl(DriveControl.EXTERNAL_CONTROL);
+		IDrive drive=(IDrive)Global.controlObjects.get("DRIVE");
+		drive.setDriveControl(DriveControl.EXTERNAL_CONTROL);
+		drive.setLeftMotors(0.5);
+		drive.setRightMotors(0.5);
+		
+		encoders=new ArrayList<>();
+		encoders.add((Encoder)SensorController.getInstance().getSensor("ENCODER1"));
+		encoders.get(0).reset();
 	}
 
 	public boolean run() {
@@ -65,24 +73,25 @@ public class DrivingPegVisionCommand implements ICommand {
 			degreesToTurn=table.getDouble("degreesToTurn");
 			distanceToMove=table.getDouble("distanceToMove");
 			SmartWriter.putD("degreesToTurn final", degreesToTurn);
-			SmartWriter.putD("distanceT)oMove final", distanceToMove);
+			SmartWriter.putD("distanceToMove final", distanceToMove);
 			doneWithVision=true;
-			subcommands.add(new TurnCommand(degreesToTurn, 1, .5));
+			
+			subcommands.add(new TurnCommand(degreesToTurn, 0.5, .001));
 			subcommands.get(0).init();
 
-			distanceToMove-=20;
+			double distanceTraveled=encoders.get(0).getDistance();
+			double distanceX=Math.cos(Math.toRadians(degreesToTurn))*distanceTraveled;
+			double distanceY=Math.sin(Math.toRadians(degreesToTurn))*distanceTraveled;
+			double increasedAngle=Math.toDegrees(Math.atan2(distanceY, distanceToMove-distanceX));
+			degreesToTurn+=increasedAngle;
+			distanceToMove=Math.hypot(distanceToMove-distanceX, distanceY);
+			
 			distanceToMove*=percentToFinish;
 
-			// <temp>
-			// distanceToMove=1;
-			// </temp>
-			// 4- DO 6 and 7
-			// 3- DO 4 and 5
-			// 2- DO 2 and 3
-			// 1- DO 0 and 1
 			ArrayList<Encoder> encoders=new ArrayList<>();
 			encoders.add((Encoder)SensorController.getInstance().getSensor("ENCODER1"));
-			subcommands.add(new DriveCommand(new DistanceStopCondition(encoders, (int)distanceToMove), .5));		return false;
+			subcommands.add(new DriveAtAngle(new DistanceStopCondition(encoders, (int)distanceToMove), 0.3, 0.6, degreesToTurn));		
+			return false;
 		}
 	}
 }

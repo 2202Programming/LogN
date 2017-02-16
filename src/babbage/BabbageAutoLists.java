@@ -1,5 +1,8 @@
 package babbage;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import auto.CommandList;
 import auto.commands.DriveCommand;
 import auto.commands.RunPegVisionCommand;
@@ -8,12 +11,16 @@ import auto.stopConditions.AngleStopCondition;
 import auto.stopConditions.DistanceStopCondition;
 import comms.DebugMode;
 import comms.SmartWriter;
+import edu.wpi.first.wpilibj.Encoder;
+import input.SensorController;
 
 //TODO all distances, speeds and angles are not final
 
 public class BabbageAutoLists {
 	private final static double speed = 0.7;
 	private final static int distanceFromWall = 39;
+	private static SensorController sensors = SensorController.getInstance();
+	private static List<Encoder> encoders;
 	
 	/** Tells the robot to move forward. Then, it runs
 	 * the PegVision

@@ -3,6 +3,7 @@ package robotDefinitions;
 import java.util.HashMap;
 import java.util.Map;
 
+import babbage.CommandTester;
 import babbage.HighGoalTurning;
 import babbage.Intake;
 import babbage.Shooter;
@@ -47,6 +48,9 @@ public class Babbage extends RobotDefinitionBase {
 		_properties.put("TURRETMOTOR", "9");// Motor to rotate shooter
 		// Gear holder
 		_properties.put("GEARMOTOR", "6");
+		//Intake Motors
+		_properties.put("INTAKE1", "4");
+		_properties.put("INTAKE2", "5");
 	}
 
 	/***
@@ -83,8 +87,8 @@ public class Babbage extends RobotDefinitionBase {
 		HighGoalTurning highGoalTurnings=new HighGoalTurning();
 		
 		
-		IMotor[] shooterMotors= {new SparkMotor(getInt("SHOOTER1PIN"), true),new SparkMotor(getInt("SHOOTER2PIN"), true)};
-		Intake intake=new Intake(shooterMotors);
+		IMotor[] intakeMotors= {new SparkMotor(getInt("INTAKE1"), true),new SparkMotor(getInt("INTAKE2"), true)};
+		Intake intake=new Intake(intakeMotors);
 		
 		// Create the autonomous command list maker, and command runner
 		// CommandListMaker CLM = new CommandListMaker(AD);
@@ -102,6 +106,12 @@ public class Babbage extends RobotDefinitionBase {
 		IMotor chamberMotor = new SparkMotor(getInt("CHAMBERMOTOR"), false);
 		Shooter shooter = new Shooter(shooterWheelMotor, chamberMotor, turretMotor, turretMotor);
 
+		
+		
+//		CommandTester commandTester = new CommandTester();
+		
+		
+		
 		IMotor gearMotor = new SparkMotor(getInt("GEARMOTOR"), false);
 		//GearHolder GH = new GearHolder(G);
 
