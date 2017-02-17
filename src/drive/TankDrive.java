@@ -2,8 +2,9 @@ package drive;
 
 import comms.DebugMode;
 import comms.SmartWriter;
-import comms.XboxController;
 import physicalOutput.IMotor;
+import robot.Global;
+import robotDefinitions.ControlBase;
 
 public class TankDrive extends IDrive  {
 
@@ -30,7 +31,7 @@ public class TankDrive extends IDrive  {
 	/**
 	 * Used for controller input
 	 */
-	private XboxController controller;
+	private ControlBase controller;
 
 	/**
 	 * holds the values to pass to the motors from when they are calculated in
@@ -54,7 +55,7 @@ public class TankDrive extends IDrive  {
 		this.frontRight=fr;
 		this.backLeft=bl;
 		this.backRight=br;
-		controller=XboxController.getXboxController();
+		controller=Global.controllers;
 	}
 	
 	

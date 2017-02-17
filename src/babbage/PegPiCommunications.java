@@ -4,13 +4,14 @@ import comms.DebugMode;
 import comms.NetworkTables;
 import comms.SmartWriter;
 import comms.TableNamesEnum;
-import comms.XboxController;
+import robot.Global;
 import robot.IControl;
+import robotDefinitions.BabbageControl;
 
 public class PegPiCommunications extends IControl  {
 	
 	private VisionStates state=VisionStates.WAITING_TO_TAKE_PICTURE;
-	private XboxController controller;
+	private BabbageControl controller;
 	private NetworkTables table;
 	
 	public PegPiCommunications() {		
@@ -37,7 +38,7 @@ public class PegPiCommunications extends IControl  {
 	}
 
 	private void init() {
-		controller=XboxController.getXboxController();
+		controller=(BabbageControl) Global.controllers;
 		state=VisionStates.WAITING_TO_TAKE_PICTURE;
 	}
 	
@@ -45,7 +46,7 @@ public class PegPiCommunications extends IControl  {
 		SmartWriter.putS("Peg Vision State", state.toString(), DebugMode.DEBUG);
 		switch (state) {
 		case WAITING_TO_TAKE_PICTURE:
-			if (controller.getXPressed()) {
+			if (controller.startPegVision()) {
 				table.setBoolean("processVision", true);
 				state=VisionStates.PROCESSING;
 			}

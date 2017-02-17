@@ -4,16 +4,16 @@ import auto.CommandList;
 import auto.CommandListRunner;
 import auto.commands.RunPegVisionCommand;
 import comms.SmartWriter;
-import comms.XboxController;
 import drive.DriveControl;
 import drive.IDrive;
 import robot.Global;
 import robot.IControl;
+import robotDefinitions.BabbageControl;
 
 public class CommandListGear extends IControl{
 	private CommandList commands;
 	private CommandListRunner runner;
-	private XboxController controller;
+	private BabbageControl controller;
 	public boolean running=false;
 	
 	public CommandListGear() {
@@ -21,7 +21,7 @@ public class CommandListGear extends IControl{
 		commands.addCommand(new RunPegVisionCommand(.5));
 		commands.addCommand(new RunPegVisionCommand(.8));
 		runner=new CommandListRunner(commands);
-		controller=XboxController.getXboxController();
+		controller=(BabbageControl) Global.controllers;
 	}
 	
 	public void teleopInit() {
@@ -30,11 +30,11 @@ public class CommandListGear extends IControl{
 	
 	public void teleopPeriodic() {
 		SmartWriter.putS("Drive type", ((IDrive)(Global.controlObjects.get("DRIVE"))).getDriveControl().toString());
-		if (controller.getYPressed()) {
+		if (controller.startPegVision()) {
 			runner.init();
 			running=true;
 		}
-		if (running&&(controller.getStartPressed()||controller.getStartHeld())) {
+		if (running&&(controller.cancelPegVision())){
 			running=false;
 			((IDrive)Global.controlObjects.get("DRIVE")).setDriveControl(DriveControl.DRIVE_CONTROLLED);
 			runner.stop();
