@@ -12,7 +12,7 @@ public class HighGoalTurning extends IControl {
 	private Servo servo;
 	private NetworkTables table;
 	private boolean waitingToTurnShooter=false;
-	private double targetAngle=0;
+	private double targetAngle=90;
 	private XboxController controller;
 	private boolean processingVision=false;
 
@@ -23,6 +23,8 @@ public class HighGoalTurning extends IControl {
 	}
 
 	public void teleopInit() {
+		targetAngle = 90;
+		servo.setAngle(targetAngle);
 		table.setBoolean("processVisionHighGoal", false);
 		processingVision=false;
 	}
