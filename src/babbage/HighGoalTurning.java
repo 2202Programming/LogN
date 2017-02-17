@@ -34,13 +34,13 @@ public class HighGoalTurning extends IControl {
 			}
 			else {
 				processingVision=false;
-				double angle=table.getDouble("degreesToSetHighGoal");
-				SmartWriter.putS("High Goal Vision Result:", "Distance: "+table.getDouble("distanceFromHighGoal")+
-						"   Angle: "+angle);
+				targetAngle = servo.getAngle()+ table.getDouble("degreesToSetHighGoal");
+				SmartWriter.putS("High Goal Vision Result:", "Distance: " +targetAngle);
+				servo.setAngle(targetAngle);
 			}
 		}
 		else {
-			if (controller.getYPressed()) {
+			if (Math.abs(servo.getAngle() - targetAngle) < 0.1) {
 				table.setBoolean("processVisionHighGoal", true);
 				processingVision=true;
 			}
