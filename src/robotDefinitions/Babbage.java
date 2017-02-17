@@ -70,47 +70,32 @@ public class Babbage extends RobotDefinitionBase {
 		// TODO add the sensors here
 		SensorController sensorController = SensorController.getInstance();
 
-		/*
-		 * // Creates the global solenoid controller SolenoidController SO =
-		 * SolenoidController.getInstance(); SO.registerSolenoid("TRIGGER", new
-		 * DoubleSolenoid(1,1)); //TODO register the solenoids here
-		 */
-
 		// Create IMotors for Arcade Drive
 		IMotor FL = new SparkMotor(getInt("FLMOTORPIN"), false);
 		IMotor FR = new SparkMotor(getInt("FRMOTORPIN"), true);
 		IMotor BL = new SparkMotor(getInt("BLMOTORPIN"), false);
 		IMotor BR = new SparkMotor(getInt("BRMOTORPIN"), true);
 
-		// Create IDrive arcade drive I don't know why we cast it as a IDrive though
+		// Create IDrive arcade drive
 		IDrive arcadeDrive=new ArcadeDrive(FL, FR, BL, BR);
 		HighGoalTurning highGoalTurnings=new HighGoalTurning();
 		
-		
-		IMotor[] shooterMotors= {new SparkMotor(getInt("SHOOTER1PIN"), true),new SparkMotor(getInt("SHOOTER2PIN"), true)};
-		Intake intake=new Intake(shooterMotors);
-		
-		// Create the autonomous command list maker, and command runner
-		// CommandListMaker CLM = new CommandListMaker(AD);
-		// CommandListRunner CR = new
-		// CommandListRunner(CLM.makeList1(),"PIPER"); // makes list one for the
-		// TIM robot
+		//Intake
+		IMotor[] intakeMotors= {new SparkMotor(getInt("INTAKEMOTOR"),false)};
+		Intake intake=new Intake(intakeMotors);
 
-		// Create the IMotors for the Shooter class
-		// IMotor SL = new SparkMotor(getInt("SLMOTORPIN"),false);
-		// IMotor SR = new SparkMotor(getInt("SRMOTORPIN"),false);
-
-		// TODO put real motors
+		//Shooter
 		IMotor shooterWheelMotor = new TalonSRX(getInt("SHOOTWHEEL"), false, false);
 		ServoMotor turretMotor = new ServoMotor(getInt("TURRETMOTOR"));
 		IMotor chamberMotor = new SparkMotor(getInt("CHAMBERMOTOR"), false);
+		//TODO the fourth motor will be the shooter angle motor
 		Shooter shooter = new Shooter(shooterWheelMotor, chamberMotor, turretMotor, turretMotor);
 
+		//Gear Holder
 		IMotor gearMotor = new SparkMotor(getInt("GEARMOTOR"), false);
 		//GearHolder GH = new GearHolder(G);
 
-		// temp.put("DRIVE", AD);
-		// temp.put("CR", CR);
+		temp.put("DRIVE", arcadeDrive);
 
 		return temp;
 	}
