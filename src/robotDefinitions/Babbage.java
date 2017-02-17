@@ -83,8 +83,9 @@ public class Babbage extends RobotDefinitionBase {
 		HighGoalTurning highGoalTurnings=new HighGoalTurning();
 		
 		
-		IMotor[] shooterMotors= {new SparkMotor(getInt("SHOOTER1PIN"), true),new SparkMotor(getInt("SHOOTER2PIN"), true)};
-		Intake intake=new Intake(shooterMotors);
+		//DANIEL, this is a runtime error because you never set SHOOTER1PIN or SHOOTER2PIN in loadManualDefinitions
+		//IMotor[] shooterMotors= {new SparkMotor(getInt("SHOOTER1PIN"), true),new SparkMotor(getInt("SHOOTER2PIN"), true)};
+		//Intake intake=new Intake(shooterMotors);
 		
 		// Create the autonomous command list maker, and command runner
 		// CommandListMaker CLM = new CommandListMaker(AD);

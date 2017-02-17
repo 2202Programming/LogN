@@ -12,6 +12,7 @@ public class HighGoalTurning extends IControl {
 	private NetworkTables table;
 	private boolean waitingToTurnShooter=false;
 	private double targetAngle=0;
+	private int lookingForHighGoalState=0;
 	
 	public HighGoalTurning() {
 		servo=new Servo(8);
@@ -27,9 +28,20 @@ public class HighGoalTurning extends IControl {
 	public void teleopPeriodic() {
 		if (!waitingToTurnShooter) {
 			if (!table.getBoolean("processVisionHighGoal")) {
-				targetAngle=servo.getAngle()+table.getDouble("degreesToSetHighGoal");
-				servo.setAngle(targetAngle);
-				waitingToTurnShooter=true;
+				//Vision is done
+				if (table.getBoolean("HighGoalVisionSucceeded")) {					
+					targetAngle=servo.getAngle()+table.getDouble("degreesToSetHighGoal");
+					servo.setAngle(targetAngle);
+					waitingToTurnShooter=true;
+				}
+				else {
+					//if we don't find it, we will follow the pattern: 0, 30, 60, 90, 120, 150, 180, 0, 30...
+					lookingForHighGoalState++;
+					lookingForHighGoalState%=7;
+					targetAngle=lookingForHighGoalState*30;
+					servo.setAngle(targetAngle);
+					waitingToTurnShooter=true;
+				}
 			}
 		}
 		else {
