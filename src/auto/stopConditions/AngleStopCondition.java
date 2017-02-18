@@ -59,6 +59,7 @@ public class AngleStopCondition implements IStopCondition{
 	public double getError() {
 		SmartWriter.putS("NAVXFirmware", navX.getFirmwareVersion());
 		double angle=navX.getAngle();
+		SmartWriter.putD("NavXAngle", navX.getAngle());
 		if (angle>180) {
 			angle=angle-360;
 		}

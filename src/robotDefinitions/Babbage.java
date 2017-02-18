@@ -3,6 +3,8 @@ package robotDefinitions;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.kauailabs.navx.frc.AHRS;
+
 import LED.LEDController;
 import babbage.Climber;
 import babbage.Intake;
@@ -12,12 +14,15 @@ import comms.TableNamesEnum;
 import drive.ArcadeDrive;
 import drive.IDrive;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.I2C.Port;
+import edu.wpi.first.wpilibj.SerialPort;
 import input.EncoderMonitor;
 import input.SensorController;
 import physicalOutput.IMotor;
 import physicalOutput.ServoMotor;
 import physicalOutput.SparkMotor;
 import physicalOutput.TalonSRX;
+import piper.CommandListGear;
 import robot.Global;
 import robot.IControl;
 
@@ -80,6 +85,7 @@ public class Babbage extends RobotDefinitionBase {
 		// TODO add the sensors here
 		SensorController sensorController = SensorController.getInstance();
 		sensorController.registerSensor("ENCODER0", encoder0);
+		sensorController.registerSensor("NAVX", new AHRS(SerialPort.Port.kMXP));
 
 		// Create IMotors for Arcade Drive
 		IMotor leftMotors = new SparkMotor(getInt("LEFTMOTORPIN"), false);
@@ -107,7 +113,9 @@ public class Babbage extends RobotDefinitionBase {
 		
 		IMotor climbMotor = new SparkMotor(getInt("LIFTERMOTOR"), true);
 		Climber climb = new Climber(climbMotor);
-
+		new CommandListGear();
+		
+		
 		temp.put("DRIVE", arcadeDrive);
 
 		return temp;
