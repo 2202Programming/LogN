@@ -10,7 +10,10 @@ import robot.IControl;
 public class EncoderMonitor extends IControl {
 
 	HashMap<String, Encoder> encoders;
-	
+	/**
+	 * This class will print the values of all encoders during all modes<br>
+	 * Also it will reset during init phases
+	 */
 	public EncoderMonitor() {
 		encoders = new HashMap<String, Encoder>();
 	}

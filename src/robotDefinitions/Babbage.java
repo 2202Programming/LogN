@@ -3,13 +3,15 @@ package robotDefinitions;
 import java.util.HashMap;
 import java.util.Map;
 
-import babbage.HighGoalTurning;
+import LED.LEDActiveState;
+import LED.LEDController;
 import babbage.Intake;
 import babbage.Shooter;
 import comms.NetworkTables;
 import comms.TableNamesEnum;
 import drive.ArcadeDrive;
 import drive.IDrive;
+import edu.wpi.first.wpilibj.Relay;
 import input.SensorController;
 import physicalOutput.IMotor;
 import physicalOutput.ServoMotor;
@@ -36,27 +38,40 @@ public class Babbage extends RobotDefinitionBase {
 	protected void loadManualDefinitions() {
 		_properties = new HashMap<String, String>();
 
+		// Intake system
+		_properties.put("LIFTERMOTOR", "5");
+		_properties.put("INTAKEMOTOR", "0");
 		// Default Motor Pins
-		_properties.put("FLMOTORPIN", "2");// PWM3
-		_properties.put("BLMOTORPIN", "3");// PWM4
-		_properties.put("FRMOTORPIN", "1");// PWM1
-		_properties.put("BRMOTORPIN", "0");// PWM2
+		_properties.put("FLMOTORPIN", "3");
+		_properties.put("BLMOTORPIN", "4");
+		_properties.put("FRMOTORPIN", "2");
+		_properties.put("BRMOTORPIN", "1");
 		// Shooter pins
 		_properties.put("SHOOTWHEEL", "11");// MainShooterWheel
-		_properties.put("CHAMBERMOTOR", "7");// Motor to load balls
+		_properties.put("CHAMBERMOTOR", "8");// Motor to load balls
 		_properties.put("TURRETMOTOR", "9");// Motor to rotate shooter
+		_properties.put("AGITATORMOTOR", "7");//Agitates balls
 		// Gear holder
 		_properties.put("GEARMOTOR", "6");
 	}
 
 	/***
 	 * 
-	 * @return Control object map for Tim
+	 * @return Control object map for Babbage
 	 */
 	public Map<String, IControl> loadControlObjects() {
 
 		// Create map to store public objects
 		Map<String, IControl> temp = super.loadControlObjects();
+		//most important class goes at the front
+		Relay red = new Relay(1);
+		Relay blue = new Relay(2);
+		Relay green = new Relay(0);
+		LEDController ledController = new LEDController();
+		ledController.addLED(red, LEDActiveState.RED);
+		ledController.addLED(blue, LEDActiveState.BLUE);
+		ledController.addLED(green, LEDActiveState.ENABLED);
+		
 		BabbageControl babbageControl = new BabbageControl();
 		temp.put("CONTROL", babbageControl);
 		Global.controllers = babbageControl ;
@@ -66,48 +81,32 @@ public class Babbage extends RobotDefinitionBase {
 		// TODO add the sensors here
 		SensorController sensorController = SensorController.getInstance();
 
-		/*
-		 * // Creates the global solenoid controller SolenoidController SO =
-		 * SolenoidController.getInstance(); SO.registerSolenoid("TRIGGER", new
-		 * DoubleSolenoid(1,1)); //TODO register the solenoids here
-		 */
-
 		// Create IMotors for Arcade Drive
 		IMotor FL = new SparkMotor(getInt("FLMOTORPIN"), false);
 		IMotor FR = new SparkMotor(getInt("FRMOTORPIN"), true);
 		IMotor BL = new SparkMotor(getInt("BLMOTORPIN"), false);
 		IMotor BR = new SparkMotor(getInt("BRMOTORPIN"), true);
 
-		// Create IDrive arcade drive I don't know why we cast it as a IDrive though
+		// Create IDrive arcade drive
 		IDrive arcadeDrive=new ArcadeDrive(FL, FR, BL, BR);
 		HighGoalTurning highGoalTurning=new HighGoalTurning();
 		
-		
-		//DANIEL, this is a runtime error because you never set SHOOTER1PIN or SHOOTER2PIN in loadManualDefinitions
-		//IMotor[] shooterMotors= {new SparkMotor(getInt("SHOOTER1PIN"), true),new SparkMotor(getInt("SHOOTER2PIN"), true)};
-		//Intake intake=new Intake(shooterMotors);
-		
-		// Create the autonomous command list maker, and command runner
-		// CommandListMaker CLM = new CommandListMaker(AD);
-		// CommandListRunner CR = new
-		// CommandListRunner(CLM.makeList1(),"PIPER"); // makes list one for the
-		// TIM robot
+		//Intake
+		IMotor[] intakeMotors= {new SparkMotor(getInt("INTAKEMOTOR"),false)};
+		Intake intake=new Intake(intakeMotors);
 
-		// Create the IMotors for the Shooter class
-		// IMotor SL = new SparkMotor(getInt("SLMOTORPIN"),false);
-		// IMotor SR = new SparkMotor(getInt("SRMOTORPIN"),false);
-
-		// TODO put real motors
+		//Shooter
 		IMotor shooterWheelMotor = new TalonSRX(getInt("SHOOTWHEEL"), false, false);
 		ServoMotor turretMotor = new ServoMotor(getInt("TURRETMOTOR"));
 		IMotor chamberMotor = new SparkMotor(getInt("CHAMBERMOTOR"), false);
+		//TODO the fourth motor will be the shooter angle motor
 		Shooter shooter = new Shooter(shooterWheelMotor, chamberMotor, turretMotor, turretMotor);
 
+		//Gear Holder
 		IMotor gearMotor = new SparkMotor(getInt("GEARMOTOR"), false);
 		//GearHolder GH = new GearHolder(G);
 
-		// temp.put("DRIVE", AD);
-		// temp.put("CR", CR);
+		temp.put("DRIVE", arcadeDrive);
 
 		return temp;
 	}
