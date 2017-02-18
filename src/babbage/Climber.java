@@ -30,7 +30,7 @@ public class Climber extends IControl {
 		}
 		else {
 			if (controllers.climberOn()) {
-				climber.setSpeed(0.25);
+				climber.setSpeed(.5);
 			}
 			else {
 				climber.setSpeed( -0);
