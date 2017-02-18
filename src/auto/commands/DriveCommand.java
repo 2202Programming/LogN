@@ -31,6 +31,9 @@ public class DriveCommand implements ICommand {
 	}
 
 	public boolean run() {
+		if (drive==null) {
+			init();
+		}
 		drive.setLeftMotors(speed);
 		drive.setRightMotors(speed);
 		if (stopCondition.stopNow()) {

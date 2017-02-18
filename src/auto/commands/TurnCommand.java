@@ -61,7 +61,7 @@ public class TurnCommand implements ICommand {
 	private void loadPIDValues() {
 		switch(Robot.name) {
 		case BABBAGE:
-			pidValues=new PIDValues(0.01, 0.0001, .15);
+			pidValues=new PIDValues(0.01, 0.0002, .15);
 			break;
 		case PIPER:
 			pidValues=new PIDValues(0.02, 0.0005, 0.15);//new PIDValues(0.005, 0.0002, 0.15);

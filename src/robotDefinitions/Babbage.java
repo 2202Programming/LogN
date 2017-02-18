@@ -113,10 +113,10 @@ public class Babbage extends RobotDefinitionBase {
 		
 		IMotor climbMotor = new SparkMotor(getInt("LIFTERMOTOR"), true);
 		Climber climb = new Climber(climbMotor);
+		temp.put("DRIVE", arcadeDrive);
 		new CommandListGear();
 		
 		
-		temp.put("DRIVE", arcadeDrive);
 
 		return temp;
 	}

@@ -11,7 +11,7 @@ public class Shooter extends IControl {
 	private IMotor shooterMotors;
 	private IMotor agitatorMotor;
 	private BabbageControl controller;
-	private double speed = 600;
+	private double speed = 1000;
 	private ShooterState state;
 	private Chamber shoosterChamber;
 	private Turret shoosterTurret;
@@ -95,7 +95,7 @@ public class Shooter extends IControl {
 			}
 		}
 		// Turret code starts
-		shoosterTurret.setAngle(controller.getLeftJoystickX(1));
+		shoosterTurret.setAngle((controller.getLeftJoystickX(1) +1)/2f);
 		//shoosterTurret.setHeight(controller.getRightJoystickY(1));
 	}
 
@@ -105,7 +105,7 @@ public class Shooter extends IControl {
 	 */
 	public boolean windUp() {
 		shooterMotors.setSpeed(speed);
-		agitatorMotor.setSpeed(0.5);
+		agitatorMotor.setSpeed(0.9);
 		// TODO checks motor speed
 		return true;
 	}
@@ -160,7 +160,7 @@ class Chamber {
 	 * @return true if there are balls in the shooter currently
 	 */
 	public boolean shoot() {
-		chamber.setSpeed(-0.3);
+		chamber.setSpeed(-0.7);
 		// TODO check if there are balls in the shooter
 		return true;
 	}

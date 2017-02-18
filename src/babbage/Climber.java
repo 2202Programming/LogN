@@ -7,34 +7,34 @@ import robotDefinitions.BabbageControl;
 
 public class Climber extends IControl {
 	private IMotor climber;
-	private boolean started;
+	private boolean turbo;
 	private BabbageControl controllers;
 	private int counter;
-	
-	public Climber(IMotor motor){
+
+	public Climber(IMotor motor) {
 		climber = motor;
-		started = false;
-		controllers = (BabbageControl) Global.controllers;
+		turbo = false;
+		controllers = (BabbageControl)Global.controllers;
 	}
-	
-	public void teleopInit(){
+
+	public void teleopInit() {
 		climber.setSpeed(0);
-		started = false;
+		turbo = false;
 		counter = 0;
 	}
-	
-	public void teleopPeriodic(){
-		if(controllers.climberOn()){
-			started = true;
+
+	public void teleopPeriodic() {
+		turbo = controllers.climberHold();
+		if (turbo) {
 			climber.setSpeed(0.9);
-		}else{
-			if(started){
-				climber.setSpeed(-0.2);
-			}
 		}
-		
-		if(controllers.climberHold()){
-			climber.setSpeed(0.05);
+		else {
+			if (controllers.climberOn()) {
+				climber.setSpeed(0.25);
+			}
+			else {
+				climber.setSpeed( -0);
+			}
 		}
 	}
 }

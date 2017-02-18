@@ -2,6 +2,7 @@ package piper;
 
 import auto.CommandList;
 import auto.CommandListRunner;
+import auto.commands.DrivingPegVisionCommand;
 import auto.commands.RunPegVisionCommand;
 import auto.commands.TurnCommand;
 import comms.SmartWriter;
@@ -19,8 +20,7 @@ public class CommandListGear extends IControl{
 	
 	public CommandListGear() {
 		commands = new CommandList();
-		commands.addCommand(new TurnCommand(60));
-		//commands.addCommand(new RunPegVisionCommand(.5));
+		commands.addCommand(new DrivingPegVisionCommand(1));
 		//commands.addCommand(new RunPegVisionCommand(.8));
 		runner=new CommandListRunner(commands);
 		controller=(BabbageControl) Global.controllers;
@@ -33,7 +33,9 @@ public class CommandListGear extends IControl{
 	public void teleopPeriodic() {
 		SmartWriter.putS("Drive type", ((IDrive)(Global.controlObjects.get("DRIVE"))).getDriveControl().toString());
 		if (controller.startPegVision()) {
+			System.out.println("Starting vision...");
 			runner.init();
+			((IDrive)Global.controlObjects.get("DRIVE")).setDriveControl(DriveControl.EXTERNAL_CONTROL);
 			running=true;
 		}
 		if (running&&(controller.cancelPegVision())){
