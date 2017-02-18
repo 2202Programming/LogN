@@ -7,80 +7,63 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Relay.Direction;
+import edu.wpi.first.wpilibj.Relay.Value;
 import robot.IControl;
 
 public class LEDController extends IControl {
-	private List<Relay> redLEDs = new LinkedList<>();
-	private List<Relay> blueLEDs = new LinkedList<>();
-	private List<Relay> enabledLEDs = new LinkedList<>();
-	
+	private Relay red = new Relay(1, Direction.kForward);
+	private Relay blue = new Relay(2, Direction.kForward);
+	private Relay green = new Relay(0, Direction.kForward);
+
 	private DriverStation ds = DriverStation.getInstance();
-	
-	public void addLED(Relay led, LEDActiveState state){
-		switch(state){
-		case RED:
-			redLEDs.add(led);
-			break;
-		case BLUE:
-			blueLEDs.add(led);
-			break;
-		case ENABLED:
-			enabledLEDs.add(led);
-			break;
-		}
-	}
-	
+
 	/**
 	 * Checks to see if we are on the red alliance
+	 * 
 	 * @return
 	 */
-	private boolean isRedTeam(){
+	private boolean isRedTeam() {
 		return ds.getAlliance() == Alliance.Red;
 	}
-	
+
 	/**
-	 * resets all LEDs 
+	 * resets all LEDs
 	 */
-	private void resetLEDs(){
-		for(Relay x: redLEDs){
-			x.setDirection(Direction.kReverse);
-		}
-		for(Relay x: blueLEDs){
-			x.setDirection(Direction.kReverse);
-		}
-		for(Relay x: enabledLEDs){
-			x.setDirection(Direction.kReverse);
-		}
+	private void resetLEDs() {
+		red.set(Value.kOff);
+		blue.set(Value.kOff);
+		green.set(Value.kOff);
 	}
-	
+
 	/**
 	 * Activates LEDs based on what team we are on
 	 */
-	private void activateLEDs(){
+	private void activateLEDs() {
+		// resetLEDs();
+		if (ds.getAlliance() == Alliance.Red){
+			red.set(Value.kOff);
+			blue.set(Value.kOn);
+		}
+		else{
+			blue.set(Value.kOff);
+			red.set(Value.kOn);
+		}
+		green.set(Value.kOn);
+	}
+
+	public void robotInit() {
 		resetLEDs();
-		for(Relay x: enabledLEDs){
-			x.setDirection(Direction.kForward);
-		}
-		if(isRedTeam()){
-			for(Relay x: redLEDs){
-				x.setDirection(Direction.kForward);
-			}
-		}else{
-			for(Relay x: blueLEDs){
-				x.setDirection(Direction.kForward);
-			}
-		}
 	}
-	
-	public void teleopInit(){
+
+	public void teleopInit() {
 		activateLEDs();
 	}
-	
-	public void autonomousInit(){
+
+	public void autonomousInit() {
 		activateLEDs();
 	}
-	
-	public void disabledInit(){
+
+	public void disabledInit() {
 		resetLEDs();
 	}
 }

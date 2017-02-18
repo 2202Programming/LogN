@@ -14,6 +14,7 @@ import drive.ArcadeDrive;
 import drive.IDrive;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.Relay.Direction;
 import input.EncoderMonitor;
 import input.SensorController;
 import physicalOutput.IMotor;
@@ -64,15 +65,9 @@ public class Babbage extends RobotDefinitionBase {
 
 		// Create map to store public objects
 		Map<String, IControl> temp = super.loadControlObjects();
-		// most important class goes at the front
-		Relay red = new Relay(1);
-		Relay blue = new Relay(2);
-		Relay green = new Relay(0);
+		//most important class goes at the front
 		LEDController ledController = new LEDController();
-		ledController.addLED(red, LEDActiveState.RED);
-		ledController.addLED(blue, LEDActiveState.BLUE);
-		ledController.addLED(green, LEDActiveState.ENABLED);
-
+		
 		BabbageControl babbageControl = new BabbageControl();
 		temp.put("CONTROL", babbageControl);
 		Global.controllers = babbageControl;
@@ -92,16 +87,24 @@ public class Babbage extends RobotDefinitionBase {
 		sensorController.registerSensor("ENCODER1", encoder1);
 
 		// Create IMotors for Arcade Drive
-		IMotor FL = new SparkMotor(getInt("LEFTMOTORPIN"), false);
-		IMotor FR = new SparkMotor(getInt("RIGHTMOTORPIN"), true);
+		IMotor leftMotors = new SparkMotor(getInt("LEFTMOTORPIN"), false);
+		IMotor rightMotors = new SparkMotor(getInt("RIGHTMOTORPIN"), true);
 
 		// Create IDrive arcade drive
-		IDrive arcadeDrive = new ArcadeDrive(FL, FR);
-		HighGoalTurning highGoalTurning = new HighGoalTurning();
+		IDrive arcadeDrive=new ArcadeDrive(leftMotors, rightMotors);
+		//HighGoalTurning highGoalTurnings=new HighGoalTurning();
+		
+		//Intake
+		IMotor[] intakeMotors= {new SparkMotor(getInt("INTAKEMOTOR"),true)};
+		Intake intake=new Intake(intakeMotors);
 
-		// Intake
-		IMotor[] intakeMotors = {new SparkMotor(getInt("INTAKEMOTOR"), false)};
-		Intake intake = new Intake(intakeMotors);
+		//Shooter
+		IMotor shooterWheelMotor = new TalonSRX(getInt("SHOOTWHEEL"), false, false);
+		ServoMotor turretMotor = new ServoMotor(getInt("TURRETMOTOR"));
+		IMotor chamberMotor = new SparkMotor(getInt("CHAMBERMOTOR"), false);
+		IMotor agitatorMotor = new SparkMotor(getInt("AGITATORMOTOR"), false);
+		//TODO the fourth motor will be the shooter angle motor
+		//Shooter shooter = new Shooter(shooterWheelMotor, chamberMotor, agitatorMotor, turretMotor, turretMotor);
 
 		// Shooter
 //		IMotor shooterWheelMotor = new TalonSRX(getInt("SHOOTWHEEL"), false, false);

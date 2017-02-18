@@ -47,6 +47,12 @@ public class ArcadeDrive extends IDrive {
 	 */
 	private double leftMotors=0, rightMotors=0;
 
+	public ArcadeDrive(IMotor fl, IMotor fr) {
+		this.frontLeft=fl;
+		this.frontRight=fr;
+		controller=Global.controllers;
+	}
+	
 	/**
 	 * @param fl
 	 *            The front left motor

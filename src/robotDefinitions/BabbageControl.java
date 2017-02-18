@@ -84,7 +84,7 @@ public class BabbageControl extends ControlBase {
 	 * 
 	 * @return
 	 */
-	public boolean cimberHold() {
+	public boolean climberHold() {
 		return controllers[2].getXHeld();
 	}
 
