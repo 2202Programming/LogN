@@ -3,13 +3,15 @@ package robotDefinitions;
 import java.util.HashMap;
 import java.util.Map;
 
-import babbage.HighGoalTurning;
+import LED.LEDActiveState;
+import LED.LEDController;
 import babbage.Intake;
 import babbage.Shooter;
 import comms.NetworkTables;
 import comms.TableNamesEnum;
 import drive.ArcadeDrive;
 import drive.IDrive;
+import edu.wpi.first.wpilibj.Relay;
 import input.SensorController;
 import physicalOutput.IMotor;
 import physicalOutput.ServoMotor;
@@ -55,12 +57,21 @@ public class Babbage extends RobotDefinitionBase {
 
 	/***
 	 * 
-	 * @return Control object map for Tim
+	 * @return Control object map for Babbage
 	 */
 	public Map<String, IControl> loadControlObjects() {
 
 		// Create map to store public objects
 		Map<String, IControl> temp = super.loadControlObjects();
+		//most important class goes at the front
+		Relay red = new Relay(1);
+		Relay blue = new Relay(2);
+		Relay green = new Relay(0);
+		LEDController ledController = new LEDController();
+		ledController.addLED(red, LEDActiveState.RED);
+		ledController.addLED(blue, LEDActiveState.BLUE);
+		ledController.addLED(green, LEDActiveState.ENABLED);
+		
 		BabbageControl babbageControl = new BabbageControl();
 		temp.put("CONTROL", babbageControl);
 		Global.controllers = babbageControl ;
@@ -78,7 +89,7 @@ public class Babbage extends RobotDefinitionBase {
 
 		// Create IDrive arcade drive
 		IDrive arcadeDrive=new ArcadeDrive(FL, FR, BL, BR);
-		HighGoalTurning highGoalTurnings=new HighGoalTurning();
+		//HighGoalTurning highGoalTurnings=new HighGoalTurning();
 		
 		//Intake
 		IMotor[] intakeMotors= {new SparkMotor(getInt("INTAKEMOTOR"),false)};
