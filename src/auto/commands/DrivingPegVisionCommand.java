@@ -36,6 +36,7 @@ public class DrivingPegVisionCommand implements ICommand {
 
 	public boolean run() {
 		if (doneWithVision) {
+		
 			if (subcommands.isEmpty()) {
 				SmartWriter.putS("Peg Vision State", "Done, but I shouldn't be here");
 				return true;
@@ -65,7 +66,7 @@ public class DrivingPegVisionCommand implements ICommand {
 			degreesToTurn=table.getDouble("degreesToTurn");
 			distanceToMove=table.getDouble("distanceToMove");
 			SmartWriter.putD("degreesToTurn final", degreesToTurn);
-			SmartWriter.putD("distanceT)oMove final", distanceToMove);
+			SmartWriter.putD("distanceToMove final", distanceToMove);
 			doneWithVision=true;
 			subcommands.add(new TurnCommand(degreesToTurn, 1, .5));
 			subcommands.get(0).init();

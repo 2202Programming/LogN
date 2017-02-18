@@ -89,7 +89,7 @@ public class Babbage extends RobotDefinitionBase {
 
 		// Create IDrive arcade drive
 		IDrive arcadeDrive=new ArcadeDrive(FL, FR, BL, BR);
-		//HighGoalTurning highGoalTurnings=new HighGoalTurning();
+		HighGoalTurning highGoalTurning=new HighGoalTurning();
 		
 		//Intake
 		IMotor[] intakeMotors= {new SparkMotor(getInt("INTAKEMOTOR"),false)};
