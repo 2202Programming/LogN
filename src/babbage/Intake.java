@@ -41,13 +41,12 @@ public class Intake extends IControl {
 	}
 
 	private void update() {
-		System.out.println(controller.intakeEngaged());
 		if (controller.intakeEngaged()) {
 			if (controller.intakeSpeed()) {
 				speed = 1;
 			}
 			else {
-				speed = 0.5;
+				speed = 0.75;
 			}
 		}else{
 			speed = 0;

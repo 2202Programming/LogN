@@ -2,9 +2,10 @@ package babbage;
 
 import physicalOutput.IMotor;
 import robot.Global;
+import robot.IControl;
 import robotDefinitions.BabbageControl;
 
-public class Climber {
+public class Climber extends IControl {
 	private IMotor climber;
 	private boolean started;
 	private BabbageControl controllers;
@@ -23,15 +24,13 @@ public class Climber {
 	}
 	
 	public void teleopPeriodic(){
+		System.out.println(controllers.climberOn());
 		if(controllers.climberOn()){
 			started = true;
 			climber.setSpeed(0.9);
 		}else{
 			if(started){
 				climber.setSpeed(-0.2);
-				if(++counter > 200){
-					teleopInit();
-				}
 			}
 		}
 		

@@ -6,6 +6,7 @@ import java.util.Map;
 import LED.LEDController;
 import babbage.Climber;
 import babbage.Intake;
+import babbage.Shooter;
 import comms.NetworkTables;
 import comms.TableNamesEnum;
 import drive.ArcadeDrive;
@@ -72,15 +73,13 @@ public class Babbage extends RobotDefinitionBase {
 
 		// Encoders
 		Encoder encoder0 = new Encoder(0, 1);
-		Encoder encoder1 = new Encoder(2, 3);
+		encoder0.setDistancePerPulse(0.0534);
 		EncoderMonitor encoderMonitor = new EncoderMonitor();
 		encoderMonitor.add("ENCODER0", encoder0);
-		encoderMonitor.add("ENCODER1", encoder1);
 
 		// TODO add the sensors here
 		SensorController sensorController = SensorController.getInstance();
 		sensorController.registerSensor("ENCODER0", encoder0);
-		sensorController.registerSensor("ENCODER1", encoder1);
 
 		// Create IMotors for Arcade Drive
 		IMotor leftMotors = new SparkMotor(getInt("LEFTMOTORPIN"), false);
@@ -100,7 +99,7 @@ public class Babbage extends RobotDefinitionBase {
 		IMotor chamberMotor = new SparkMotor(getInt("CHAMBERMOTOR"), false);
 		IMotor agitatorMotor = new SparkMotor(getInt("AGITATORMOTOR"), false);
 		//TODO the 5th motor will be the shooter angle motor
-		//Shooter shooter = new Shooter(shooterWheelMotor, chamberMotor, agitatorMotor, turretMotor, turretMotor);
+		Shooter shooter = new Shooter(shooterWheelMotor, chamberMotor, agitatorMotor, turretMotor, turretMotor);
 
 		// Gear Holder
 		IMotor gearMotor = new SparkMotor(getInt("GEARMOTOR"), false);
