@@ -1,5 +1,6 @@
 package robotDefinitions;
 
+import comms.SmartWriter;
 import comms.XboxController;
 
 /**
@@ -31,6 +32,7 @@ public class BabbageControl extends ControlBase {
 	}
 
 	public boolean intakeEngaged() {
+		SmartWriter.putB("back3", controllers[2].getAHeld());
 		return controllers[2].getAHeld();
 	}
 

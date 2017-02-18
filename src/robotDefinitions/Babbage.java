@@ -3,18 +3,14 @@ package robotDefinitions;
 import java.util.HashMap;
 import java.util.Map;
 
-import LED.LEDActiveState;
 import LED.LEDController;
-import babbage.HighGoalTurning;
+import babbage.Climber;
 import babbage.Intake;
-import babbage.Shooter;
 import comms.NetworkTables;
 import comms.TableNamesEnum;
 import drive.ArcadeDrive;
 import drive.IDrive;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Relay;
-import edu.wpi.first.wpilibj.Relay.Direction;
 import input.EncoderMonitor;
 import input.SensorController;
 import physicalOutput.IMotor;
@@ -103,19 +99,15 @@ public class Babbage extends RobotDefinitionBase {
 		ServoMotor turretMotor = new ServoMotor(getInt("TURRETMOTOR"));
 		IMotor chamberMotor = new SparkMotor(getInt("CHAMBERMOTOR"), false);
 		IMotor agitatorMotor = new SparkMotor(getInt("AGITATORMOTOR"), false);
-		//TODO the fourth motor will be the shooter angle motor
+		//TODO the 5th motor will be the shooter angle motor
 		//Shooter shooter = new Shooter(shooterWheelMotor, chamberMotor, agitatorMotor, turretMotor, turretMotor);
-
-		// Shooter
-//		IMotor shooterWheelMotor = new TalonSRX(getInt("SHOOTWHEEL"), false, false);
-//		ServoMotor turretMotor = new ServoMotor(getInt("TURRETMOTOR"));
-//		IMotor chamberMotor = new SparkMotor(getInt("CHAMBERMOTOR"), false);
-		// TODO the fourth motor will be the shooter angle motor
-		//Shooter shooter = new Shooter(shooterWheelMotor, chamberMotor, turretMotor, turretMotor);
 
 		// Gear Holder
 		IMotor gearMotor = new SparkMotor(getInt("GEARMOTOR"), false);
 		// GearHolder GH = new GearHolder(G);
+		
+		IMotor climbMotor = new SparkMotor(getInt("LIFTERMOTOR"), true);
+		Climber climb = new Climber(climbMotor);
 
 		temp.put("DRIVE", arcadeDrive);
 

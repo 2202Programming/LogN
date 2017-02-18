@@ -70,12 +70,6 @@ public class ArcadeDrive extends IDrive {
 		this.backRight=br;
 		controller=Global.controllers;
 	}
-	
-	public ArcadeDrive(IMotor left, IMotor right) {
-		frontLeft=left;
-		frontRight=right;
-		controller=Global.controllers;
-	}
 
 	/**
 	 * Sets <i>leftMotors</i> and <i>rightMotors</i> to what they are suppose to

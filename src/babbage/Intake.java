@@ -9,19 +9,19 @@ import robotDefinitions.BabbageControl;
 public class Intake extends IControl {
 	private IMotor[] intakeMotors;
 	private BabbageControl controller;
-	private double speed=0;
+	private double speed = 0;
 
 	// 775 motors
 	// 2 motors ports 4 and 5
 	public Intake(IMotor[] motors) {
-		intakeMotors=motors;
+		intakeMotors = motors;
 	}
 
 	public void robotInit() {
 	}
 
 	public void autonomousInit() {
-		controller=(BabbageControl) Global.controllers;
+		controller = (BabbageControl)Global.controllers;
 	}
 
 	public void autonomousPeriodic() {
@@ -29,7 +29,7 @@ public class Intake extends IControl {
 	}
 
 	public void teleopInit() {
-		controller=(BabbageControl) Global.controllers;
+		controller = (BabbageControl)Global.controllers;
 	}
 
 	public void teleopPeriodic() {
@@ -37,15 +37,20 @@ public class Intake extends IControl {
 	}
 
 	public void disabledInit() {
-		speed=0;
+		speed = 0;
 	}
 
 	private void update() {
-		if (controller.intakeSpeed()) {
-			speed=1;
-		}
-		else {
-			speed=0.5;
+		System.out.println(controller.intakeEngaged());
+		if (controller.intakeEngaged()) {
+			if (controller.intakeSpeed()) {
+				speed = 1;
+			}
+			else {
+				speed = 0.5;
+			}
+		}else{
+			speed = 0;
 		}
 		for (IMotor motor : intakeMotors) {
 			motor.setSpeed(speed);
