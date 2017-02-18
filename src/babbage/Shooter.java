@@ -9,6 +9,7 @@ import robotDefinitions.BabbageControl;
 
 public class Shooter extends IControl {
 	private IMotor shooterMotors;
+	private IMotor agitatorMotor;
 	private BabbageControl controller;
 	private double speed = -0.2;
 	private ShooterState state;
@@ -20,7 +21,7 @@ public class Shooter extends IControl {
 	private boolean _fire;
 	private boolean _reverse;
 
-	public Shooter(IMotor motors, IMotor newChamber, ServoMotor turret, ServoMotor bturret) {
+	public Shooter(IMotor motors, IMotor newChamber, IMotor agitator, ServoMotor turret, ServoMotor bturret) {
 		shooterMotors = motors;
 		controller = (BabbageControl) Global.controllers;
 		shoosterChamber = new Chamber(newChamber);

@@ -47,6 +47,12 @@ public class ArcadeDrive extends IDrive {
 	 */
 	private double leftMotors=0, rightMotors=0;
 
+	public ArcadeDrive(IMotor fl, IMotor fr) {
+		this.frontLeft=fl;
+		this.frontRight=fr;
+		controller=Global.controllers;
+	}
+	
 	/**
 	 * @param fl
 	 *            The front left motor
@@ -92,8 +98,8 @@ public class ArcadeDrive extends IDrive {
 	 */
 	private void setLeftMotorsRaw(double speed) {
 		SmartWriter.putD("Motor Raw Value", speed, DebugMode.DEBUG);
-		frontLeft.setSpeed(speed);
-		backLeft.setSpeed(speed);
+		if (frontLeft!=null) frontLeft.setSpeed(speed);
+		if (backLeft!=null) backLeft.setSpeed(speed);
 	}
 
 	/**
@@ -102,8 +108,8 @@ public class ArcadeDrive extends IDrive {
 	 * Postconditions: sets the motors
 	 */
 	private void setRightMotorsRaw(double speed) {
-		frontRight.setSpeed(speed);
-		backRight.setSpeed(speed);
+		if (frontRight!=null) frontRight.setSpeed(speed);
+		if (backRight!=null) backRight.setSpeed(speed);
 	}
 
 	/**
