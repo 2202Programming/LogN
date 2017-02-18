@@ -57,7 +57,7 @@ public class Shooter extends IControl {
 		if (controller.stopShooter()) {
 			curSpeed = 0;
 		}
-		else */if (controller.speedUpShooter() && curSpeed < 1) {
+		else if (controller.speedUpShooter() && curSpeed < 1) {
 			curSpeed += .2;
 		}
 		else if (controller.slowDownShooter() && curSpeed > 0) {

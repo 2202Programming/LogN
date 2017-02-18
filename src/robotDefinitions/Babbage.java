@@ -5,6 +5,7 @@ import java.util.Map;
 
 import LED.LEDActiveState;
 import LED.LEDController;
+import babbage.HighGoalTurning;
 import babbage.Intake;
 import babbage.Shooter;
 import comms.NetworkTables;
