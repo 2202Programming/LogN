@@ -12,7 +12,9 @@ import comms.NetworkTables;
 import comms.TableNamesEnum;
 import drive.ArcadeDrive;
 import drive.IDrive;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Relay;
+import input.EncoderMonitor;
 import input.SensorController;
 import physicalOutput.IMotor;
 import physicalOutput.ServoMotor;
@@ -51,7 +53,7 @@ public class Babbage extends RobotDefinitionBase {
 		_properties.put("SHOOTWHEEL", "11");// MainShooterWheel
 		_properties.put("CHAMBERMOTOR", "8");// Motor to load balls
 		_properties.put("TURRETMOTOR", "9");// Motor to rotate shooter
-		_properties.put("AGITATORMOTOR", "7");//Agitates balls
+		_properties.put("AGITATORMOTOR", "7");// Agitates balls
 		// Gear holder
 		_properties.put("GEARMOTOR", "6");
 	}
@@ -64,7 +66,7 @@ public class Babbage extends RobotDefinitionBase {
 
 		// Create map to store public objects
 		Map<String, IControl> temp = super.loadControlObjects();
-		//most important class goes at the front
+		// most important class goes at the front
 		Relay red = new Relay(1);
 		Relay blue = new Relay(2);
 		Relay green = new Relay(0);
@@ -72,15 +74,24 @@ public class Babbage extends RobotDefinitionBase {
 		ledController.addLED(red, LEDActiveState.RED);
 		ledController.addLED(blue, LEDActiveState.BLUE);
 		ledController.addLED(green, LEDActiveState.ENABLED);
-		
+
 		BabbageControl babbageControl = new BabbageControl();
 		temp.put("CONTROL", babbageControl);
-		Global.controllers = babbageControl ;
+		Global.controllers = babbageControl;
 		NetworkTables visionTable = new NetworkTables(TableNamesEnum.VisionTable);
 		temp.put("NT", visionTable);
 
+		// Encoders
+		Encoder encoder0 = new Encoder(0, 1);
+		Encoder encoder1 = new Encoder(2, 3);
+		EncoderMonitor encoderMonitor = new EncoderMonitor();
+		encoderMonitor.add("ENCODER0", encoder0);
+		encoderMonitor.add("ENCODER1", encoder1);
+
 		// TODO add the sensors here
 		SensorController sensorController = SensorController.getInstance();
+		sensorController.registerSensor("ENCODER0", encoder0);
+		sensorController.registerSensor("ENCODER1", encoder1);
 
 		// Create IMotors for Arcade Drive
 		IMotor FL = new SparkMotor(getInt("FLMOTORPIN"), false);
@@ -89,23 +100,23 @@ public class Babbage extends RobotDefinitionBase {
 		IMotor BR = new SparkMotor(getInt("BRMOTORPIN"), true);
 
 		// Create IDrive arcade drive
-		IDrive arcadeDrive=new ArcadeDrive(FL, FR, BL, BR);
-		HighGoalTurning highGoalTurning=new HighGoalTurning();
-		
-		//Intake
-		IMotor[] intakeMotors= {new SparkMotor(getInt("INTAKEMOTOR"),false)};
-		Intake intake=new Intake(intakeMotors);
+		IDrive arcadeDrive = new ArcadeDrive(FL, FR, BL, BR);
+		HighGoalTurning highGoalTurning = new HighGoalTurning();
 
-		//Shooter
+		// Intake
+		IMotor[] intakeMotors = {new SparkMotor(getInt("INTAKEMOTOR"), false)};
+		Intake intake = new Intake(intakeMotors);
+
+		// Shooter
 		IMotor shooterWheelMotor = new TalonSRX(getInt("SHOOTWHEEL"), false, false);
 		ServoMotor turretMotor = new ServoMotor(getInt("TURRETMOTOR"));
 		IMotor chamberMotor = new SparkMotor(getInt("CHAMBERMOTOR"), false);
-		//TODO the fourth motor will be the shooter angle motor
+		// TODO the fourth motor will be the shooter angle motor
 		Shooter shooter = new Shooter(shooterWheelMotor, chamberMotor, turretMotor, turretMotor);
 
-		//Gear Holder
+		// Gear Holder
 		IMotor gearMotor = new SparkMotor(getInt("GEARMOTOR"), false);
-		//GearHolder GH = new GearHolder(G);
+		// GearHolder GH = new GearHolder(G);
 
 		temp.put("DRIVE", arcadeDrive);
 
