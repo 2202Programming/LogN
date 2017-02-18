@@ -4,7 +4,9 @@ import comms.NetworkTables;
 import comms.SmartWriter;
 import comms.TableNamesEnum;
 import edu.wpi.first.wpilibj.Servo;
+import robot.Global;
 import robot.IControl;
+import robotDefinitions.BabbageControl;
 
 public class HighGoalTurning extends IControl {
 
@@ -12,11 +14,12 @@ public class HighGoalTurning extends IControl {
 	private NetworkTables table;
 	private boolean waitingToTurnShooter=false;
 	private double targetAngle=0;
+	private BabbageControl babbageControl;
 	
 	public HighGoalTurning() {
 		servo=new Servo(8);
 		table=new NetworkTables(TableNamesEnum.VisionTable);
-
+		babbageControl=(BabbageControl)Global.controllers;
 	}
 	
 	
@@ -25,6 +28,7 @@ public class HighGoalTurning extends IControl {
 	}
 	
 	public void teleopPeriodic() {
+		
 		if (!waitingToTurnShooter) {
 			if (!table.getBoolean("processVisionHighGoal")) {
 				targetAngle=servo.getAngle()+table.getDouble("degreesToSetHighGoal");
@@ -35,7 +39,7 @@ public class HighGoalTurning extends IControl {
 		else {
 			double error=Math.abs(servo.getAngle()-targetAngle);
 			SmartWriter.putD("High Goal Error", error);
-			if (error<0.1) {
+			if (error<0.1&&!babbageControl.pauseHighGoalVision()) {
 				waitingToTurnShooter=false;
 				table.setBoolean("processVisionHighGoal", true);
 			}
