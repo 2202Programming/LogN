@@ -15,8 +15,6 @@ public class Intake extends IControl {
 	// 2 motors ports 4 and 5
 	public Intake(IMotor[] motors) {
 		intakeMotors=motors;
-		intakeMotors[0]=new SparkMotor(4, true);
-		intakeMotors[1]=new SparkMotor(5, true);
 	}
 
 	public void robotInit() {
