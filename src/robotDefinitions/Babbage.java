@@ -47,11 +47,11 @@ public class Babbage extends RobotDefinitionBase {
 		_properties.put("RIGHTMOTORPIN", "0");
 		// Shooter pins
 		_properties.put("SHOOTWHEEL", "11");// MainShooterWheel
-		_properties.put("CHAMBERMOTOR", "8");// Motor to load balls
+		_properties.put("CHAMBERMOTOR", "5");// Motor to load balls
 		_properties.put("TURRETMOTOR", "9");// Motor to rotate shooter
-		_properties.put("AGITATORMOTOR", "7");// Agitates balls
+		_properties.put("AGITATORMOTOR", "6");// Agitates balls
 		// Gear holder
-		_properties.put("GEARMOTOR", "6");
+		_properties.put("GEARMOTOR", "7");
 	}
 
 	/***
@@ -94,9 +94,9 @@ public class Babbage extends RobotDefinitionBase {
 		Intake intake=new Intake(intakeMotors);
 
 		//Shooter
-		IMotor shooterWheelMotor = new TalonSRX(getInt("SHOOTWHEEL"), false, false);
+		IMotor shooterWheelMotor = new TalonSRX(getInt("SHOOTWHEEL"), false, true);
 		ServoMotor turretMotor = new ServoMotor(getInt("TURRETMOTOR"));
-		IMotor chamberMotor = new SparkMotor(getInt("CHAMBERMOTOR"), false);
+		IMotor chamberMotor = new SparkMotor(getInt("CHAMBERMOTOR"), true);
 		IMotor agitatorMotor = new SparkMotor(getInt("AGITATORMOTOR"), false);
 		//TODO the 5th motor will be the shooter angle motor
 		Shooter shooter = new Shooter(shooterWheelMotor, chamberMotor, agitatorMotor, turretMotor, turretMotor);

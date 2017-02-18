@@ -24,7 +24,6 @@ public class Climber extends IControl {
 	}
 	
 	public void teleopPeriodic(){
-		System.out.println(controllers.climberOn());
 		if(controllers.climberOn()){
 			started = true;
 			climber.setSpeed(0.9);

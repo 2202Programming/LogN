@@ -11,7 +11,7 @@ public class Shooter extends IControl {
 	private IMotor shooterMotors;
 	private IMotor agitatorMotor;
 	private BabbageControl controller;
-	private double speed = -0.2;
+	private double speed = 600;
 	private ShooterState state;
 	private Chamber shoosterChamber;
 	private Turret shoosterTurret;
@@ -26,6 +26,7 @@ public class Shooter extends IControl {
 		controller = (BabbageControl) Global.controllers;
 		shoosterChamber = new Chamber(newChamber);
 		shoosterTurret = new Turret(turret, bturret);
+		agitatorMotor = agitator;
 	}
 
 	/**
@@ -37,7 +38,7 @@ public class Shooter extends IControl {
 		//If we are primed, shoot the ball
 		_fire = state == ShooterState.PRIMED?controller.startShooting():false;
 		//If we are primed, reverse the shooter motors to unclog balls
-		_reverse = state == ShooterState.PRIMED||state == ShooterState.REVERSE?controller.reverseShooter():false;
+		_reverse = (state == ShooterState.PRIMED||state == ShooterState.REVERSE)?controller.reverseShooter():false;
 	}
 
 	/**
@@ -46,7 +47,6 @@ public class Shooter extends IControl {
 	public void displayUserInput() {
 		SmartWriter.putS("ShooterState", state.toString());
 		SmartWriter.putB("_startShoosting", _startShoosting);
-		SmartWriter.putB("_abort", _abort);
 		SmartWriter.putB("_fire", _fire);
 		SmartWriter.putB("_reverse", _reverse);
 	}
@@ -56,6 +56,7 @@ public class Shooter extends IControl {
 	 */
 	public void teleopInit() {
 		shooterMotors.setSpeed(0);
+		agitatorMotor.setSpeed(0);
 		shoosterChamber.init();
 		state = ShooterState.IDLE;
 	}
@@ -104,6 +105,7 @@ public class Shooter extends IControl {
 	 */
 	public boolean windUp() {
 		shooterMotors.setSpeed(speed);
+		agitatorMotor.setSpeed(0.5);
 		// TODO checks motor speed
 		return true;
 	}
