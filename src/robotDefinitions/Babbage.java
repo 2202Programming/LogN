@@ -42,13 +42,11 @@ public class Babbage extends RobotDefinitionBase {
 		_properties = new HashMap<String, String>();
 
 		// Intake system
-		_properties.put("LIFTERMOTOR", "5");
-		_properties.put("INTAKEMOTOR", "0");
+		_properties.put("LIFTERMOTOR", "2");
+		_properties.put("INTAKEMOTOR", "4");
 		// Default Motor Pins
-		_properties.put("FLMOTORPIN", "3");
-		_properties.put("BLMOTORPIN", "4");
-		_properties.put("FRMOTORPIN", "2");
-		_properties.put("BRMOTORPIN", "1");
+		_properties.put("LEFTMOTORPIN", "1");
+		_properties.put("RIGHTMOTORPIN", "0");
 		// Shooter pins
 		_properties.put("SHOOTWHEEL", "11");// MainShooterWheel
 		_properties.put("CHAMBERMOTOR", "8");// Motor to load balls
@@ -94,13 +92,11 @@ public class Babbage extends RobotDefinitionBase {
 		sensorController.registerSensor("ENCODER1", encoder1);
 
 		// Create IMotors for Arcade Drive
-		IMotor FL = new SparkMotor(getInt("FLMOTORPIN"), false);
-		IMotor FR = new SparkMotor(getInt("FRMOTORPIN"), true);
-		IMotor BL = new SparkMotor(getInt("BLMOTORPIN"), false);
-		IMotor BR = new SparkMotor(getInt("BRMOTORPIN"), true);
+		IMotor FL = new SparkMotor(getInt("LEFTMOTORPIN"), false);
+		IMotor FR = new SparkMotor(getInt("RIGHTMOTORPIN"), true);
 
 		// Create IDrive arcade drive
-		IDrive arcadeDrive = new ArcadeDrive(FL, FR, BL, BR);
+		IDrive arcadeDrive = new ArcadeDrive(FL, FR);
 		HighGoalTurning highGoalTurning = new HighGoalTurning();
 
 		// Intake
@@ -108,11 +104,11 @@ public class Babbage extends RobotDefinitionBase {
 		Intake intake = new Intake(intakeMotors);
 
 		// Shooter
-		IMotor shooterWheelMotor = new TalonSRX(getInt("SHOOTWHEEL"), false, false);
-		ServoMotor turretMotor = new ServoMotor(getInt("TURRETMOTOR"));
-		IMotor chamberMotor = new SparkMotor(getInt("CHAMBERMOTOR"), false);
+//		IMotor shooterWheelMotor = new TalonSRX(getInt("SHOOTWHEEL"), false, false);
+//		ServoMotor turretMotor = new ServoMotor(getInt("TURRETMOTOR"));
+//		IMotor chamberMotor = new SparkMotor(getInt("CHAMBERMOTOR"), false);
 		// TODO the fourth motor will be the shooter angle motor
-		Shooter shooter = new Shooter(shooterWheelMotor, chamberMotor, turretMotor, turretMotor);
+		//Shooter shooter = new Shooter(shooterWheelMotor, chamberMotor, turretMotor, turretMotor);
 
 		// Gear Holder
 		IMotor gearMotor = new SparkMotor(getInt("GEARMOTOR"), false);
