@@ -54,7 +54,7 @@ public class Shooter extends IControl {
 
 	public void teleopPeriodic() {
 		//sets the speed for the shooter wheels Right bumper - faster, Left bumper - slower
-		if (controller()) {
+		if (controller.stopShooter()) {
 			curSpeed = 0;
 		}
 		else if (controller.speedUpShooter() && curSpeed < 1) {

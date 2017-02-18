@@ -6,6 +6,10 @@ public class TimControl extends ControlBase {
 	public TimControl() {
 
 	}
+	
+	public boolean stopShooter(){
+		return controllers[0].getBHeld();
+	}
 
 	/** speedUpShooter - Speeds up the shooter
 	 * 
