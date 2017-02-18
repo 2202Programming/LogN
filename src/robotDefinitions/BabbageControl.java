@@ -59,8 +59,8 @@ public class BabbageControl extends ControlBase {
 	 * 
 	 * @return
 	 */
-	public boolean cancelHighGoalVision() {
-		return controllers[1].getStartPressed();
+	public boolean pauseHighGoalVision() {
+		return controllers[1].getStartHeld();
 	}
 
 	/**
