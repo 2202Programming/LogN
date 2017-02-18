@@ -80,7 +80,7 @@ public class Babbage extends RobotDefinitionBase {
 
 		// Create IDrive arcade drive I don't know why we cast it as a IDrive though
 		IDrive arcadeDrive=new ArcadeDrive(FL, FR, BL, BR);
-		HighGoalTurning highGoalTurnings=new HighGoalTurning();
+		HighGoalTurning highGoalTurning=new HighGoalTurning();
 		
 		
 		//DANIEL, this is a runtime error because you never set SHOOTER1PIN or SHOOTER2PIN in loadManualDefinitions

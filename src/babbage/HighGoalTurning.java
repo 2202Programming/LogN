@@ -4,6 +4,7 @@ import comms.NetworkTables;
 import comms.SmartWriter;
 import comms.TableNamesEnum;
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.IControl;
 
 public class HighGoalTurning extends IControl {
@@ -23,22 +24,28 @@ public class HighGoalTurning extends IControl {
 	
 	public void teleopInit() {
 		table.setBoolean("processVisionHighGoal", true);
+		waitingToTurnShooter=true;
+		targetAngle=90;
+		servo.setAngle(targetAngle);
 	}
 	
 	public void teleopPeriodic() {
 		if (!waitingToTurnShooter) {
 			if (!table.getBoolean("processVisionHighGoal")) {
+				SmartWriter.putB("ProcessVisionHighGoal", table.getBoolean("processVisionHighGoal"));
 				//Vision is done
+				SmartWriter.putD("VisionSucessLevel", table.getDouble("HighGoalVisionSucceeded"));
 				if (table.getBoolean("HighGoalVisionSucceeded")) {					
 					targetAngle=servo.getAngle()+table.getDouble("degreesToSetHighGoal");
+					targetAngle=Math.max(0, Math.min(targetAngle, 180));
 					servo.setAngle(targetAngle);
 					waitingToTurnShooter=true;
 				}
 				else {
 					//if we don't find it, we will follow the pattern: 0, 30, 60, 90, 120, 150, 180, 0, 30...
 					lookingForHighGoalState++;
-					lookingForHighGoalState%=7;
-					targetAngle=lookingForHighGoalState*30;
+					lookingForHighGoalState%=18;
+					targetAngle=lookingForHighGoalState*10;
 					servo.setAngle(targetAngle);
 					waitingToTurnShooter=true;
 				}
