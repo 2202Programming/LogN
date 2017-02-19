@@ -30,11 +30,11 @@ public class BabbageAutoLists {
 	 */
 	public static CommandList centerRed(){
 		
-		encoders.add((Encoder) sensors.getSensor("encoder0"));
+		encoders.add((Encoder) sensors.getSensor("ENCODER0"));
 		
 		CommandList CL = new CommandList();
 		SmartWriter.putS("AutoList", "centerRed", DebugMode.COMPETITION);
-		CL.addCommand(new DriveCommand(new DistanceStopCondition(encoders, distanceFromWall), speed));
+		//CL.addCommand(new DriveCommand(new DistanceStopCondition(encoders, distanceFromWall), speed));
 		CL.addCommand(new RunPegVisionCommand(1));
 		return CL;
 	}
@@ -46,7 +46,7 @@ public class BabbageAutoLists {
 	 */
 	public static CommandList boilerRed(){
 		
-		encoders.add((Encoder) sensors.getSensor("encoder0"));
+		encoders.add((Encoder) sensors.getSensor("ENCODER0"));
 		
 		CommandList CL = new CommandList();
 		SmartWriter.putS("AutoList", "Boiler Red", DebugMode.COMPETITION);
@@ -63,7 +63,7 @@ public class BabbageAutoLists {
 	 */
 	public static CommandList notBoilerRed(){
 		
-		encoders.add((Encoder) sensors.getSensor("encoder0"));
+		encoders.add((Encoder) sensors.getSensor("ENCODER0"));
 		
 		CommandList CL = new CommandList();
 		SmartWriter.putS("AutoList", "Not Boiler Red", DebugMode.COMPETITION);
@@ -80,11 +80,11 @@ public class BabbageAutoLists {
 	 */
 	public static CommandList centerBlue(){
 		
-		encoders.add((Encoder) sensors.getSensor("encoder0"));
+		encoders.add((Encoder) sensors.getSensor("ENCODER0"));
 		
 		CommandList CL = new CommandList();
 		SmartWriter.putS("AutoList", "Center Blue", DebugMode.COMPETITION);
-		CL.addCommand(new DriveCommand(new DistanceStopCondition(encoders, distanceFromWall), speed));
+		//CL.addCommand(new DriveCommand(new DistanceStopCondition(encoders, distanceFromWall), speed));
 		CL.addCommand(new RunPegVisionCommand(1));
 		return CL;
 	}
@@ -96,7 +96,7 @@ public class BabbageAutoLists {
 	 */
 	public static CommandList boilerBlue(){
 		
-		encoders.add((Encoder) sensors.getSensor("encoder0"));
+		encoders.add((Encoder) sensors.getSensor("ENCODER0"));
 		
 		CommandList CL = new CommandList();
 		SmartWriter.putS("AutoList", "Boilerblue", DebugMode.COMPETITION);
@@ -114,7 +114,7 @@ public class BabbageAutoLists {
 	 */
 	public static CommandList notBoilerBlue(){
 		
-		encoders.add((Encoder) sensors.getSensor("encoder0"));
+		encoders.add((Encoder) sensors.getSensor("ENCODER0"));
 		
 		CommandList CL = new CommandList();
 		SmartWriter.putS("AutoList", "Not Boiler Blue", DebugMode.COMPETITION);

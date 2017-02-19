@@ -8,65 +8,55 @@ import robot.Global;
 import robot.IControl;
 import robotDefinitions.BabbageControl;
 
-public class CommandTester extends IControl
-{
+public class CommandTester extends IControl {
 
 	private CommandList commandList;
-	private BabbageControl controllers = (BabbageControl) Global.controllers;
-	private DriverStation ds;
-	
-public CommandTester() 
-{
-	/*
-	commandList = BabbageAutoLists.centerBlue();
-	new CommandListRunner(commandList);
-	*/
-	
-	boolean blueSide = false;
-	if (ds.getAlliance() == Alliance.Red) {
-		blueSide = false;
+	private BabbageControl controllers = (BabbageControl)Global.controllers;
+	private DriverStation ds=DriverStation.getInstance();
+
+	public CommandTester() {
+		/*
+		 * commandList = BabbageAutoLists.centerBlue(); new
+		 * CommandListRunner(commandList);
+		 */
+
+		boolean blueSide = false;
+		if (ds.getAlliance() == Alliance.Red) {
+			blueSide = false;
+		}
+		else {
+			blueSide = true;
+		}
+
+		if ( !blueSide) {
+			if (controllers.autoFieldPosition1()) {
+				commandList = BabbageAutoLists.centerRed();
+			}
+			if (controllers.autoFieldPosition2()) {
+				commandList = BabbageAutoLists.boilerRed();
+			}
+			if (controllers.autoFieldPosition0()) {
+				commandList = BabbageAutoLists.notBoilerRed();
+			}
+		}
+
+		if (blueSide) {
+			if (controllers.autoFieldPosition1()) {
+				commandList = BabbageAutoLists.centerBlue();
+			}
+			if (controllers.autoFieldPosition0()) {
+				commandList = BabbageAutoLists.boilerBlue();
+			}
+			if (controllers.autoFieldPosition2()) {
+				commandList = BabbageAutoLists.notBoilerBlue();
+			}
+		}
+
+		new CommandListRunner(commandList);
 	}
-	else {
-		blueSide = true;
+
+	public void autonomousInit() {
+
 	}
-	
-	if (!blueSide) {
-		if (controllers.autoFieldPosition1()) {			
-			commandList = BabbageAutoLists.centerRed();
-		}
-		if (controllers.autoFieldPosition2()) {			
-			commandList = BabbageAutoLists.boilerRed();
-		}
-		if (controllers.autoFieldPosition0()) {			
-			commandList = BabbageAutoLists.notBoilerRed();
-		}
-	}
-	
-	if (blueSide) {
-		if (controllers.autoFieldPosition1()) {			
-			commandList = BabbageAutoLists.centerBlue();
-		}
-		if (controllers.autoFieldPosition0()) {			
-			commandList = BabbageAutoLists.boilerBlue();
-		}
-		if (controllers.autoFieldPosition2()) {			
-			commandList = BabbageAutoLists.notBoilerBlue();
-		}
-	}
-	
-	new CommandListRunner(commandList);
-}
-	
-	
-public void autonomousInit() 
-{
-	
-}
-	
-	
-	
-	
-	
-	
-	
+
 }
