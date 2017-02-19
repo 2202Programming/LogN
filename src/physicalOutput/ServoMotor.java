@@ -25,4 +25,8 @@ public class ServoMotor extends IMotor {
 	protected void setMotor(double x) {
 		part.set(x);
 	}
+	
+	public double getAngle() {
+		return part.getAngle();
+	}
 }
