@@ -80,6 +80,7 @@ public class Babbage extends RobotDefinitionBase {
 		// Encoders
 		Encoder encoder0 = new Encoder(0, 1);
 		encoder0.setDistancePerPulse(0.0534);
+		encoder0.setReverseDirection(true);
 		EncoderMonitor encoderMonitor = new EncoderMonitor();
 		encoderMonitor.add("ENCODER0", encoder0);
 

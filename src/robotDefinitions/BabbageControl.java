@@ -90,7 +90,7 @@ public class BabbageControl extends ControlBase {
 		return controllers[2].getXHeld();
 	}
 
-	public boolean autoFieldPosition0() {//Aren't we doing this through Smart Dashboard?
+	public boolean autoFieldPosition0() {
 		return controllers[2].getYHeld();
 	}
 

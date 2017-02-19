@@ -20,7 +20,7 @@ public class BabbageAutoLists {
 	private final static double speed = 0.7;
 	private final static int distanceFromWall = 39;
 	private static SensorController sensors = SensorController.getInstance();
-	private static List<Encoder> encoders;
+	private static List<Encoder> encoders = new ArrayList<Encoder>();
 	
 	
 	/** Tells the robot to move forward. Then, it runs

@@ -11,7 +11,7 @@ public class Shooter extends IControl {
 	private IMotor shooterMotors;
 	private IMotor agitatorMotor;
 	private BabbageControl controller;
-	private double speed = 1000;
+	private double speed = 1200;
 	private ShooterState state;
 	private Chamber shoosterChamber;
 	private Turret shoosterTurret;
