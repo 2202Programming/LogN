@@ -7,10 +7,10 @@ import auto.stopConditions.DistanceStopCondition;
 import comms.NetworkTables;
 import comms.SmartWriter;
 import comms.TableNamesEnum;
+import drive.ArcadeDrive;
 import drive.DriveControl;
 import drive.IDrive;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Ultrasonic;
 import input.SensorController;
 import robot.Global;
 
@@ -21,7 +21,8 @@ public class DrivingPegVisionCommand implements ICommand {
 	private boolean doneWithVision = false;
 	private ArrayList<ICommand> subcommands = new ArrayList<>();
 	private double percentToFinish = 0;
-	ArrayList<Encoder> encoders;
+	private ArrayList<Encoder> encoders;
+	private IDrive drive;
 
 	public DrivingPegVisionCommand(double percentToFinish) {
 		table = new NetworkTables(TableNamesEnum.VisionTable);
@@ -33,13 +34,13 @@ public class DrivingPegVisionCommand implements ICommand {
 		doneWithVision = false;
 		subcommands.clear();
 		table.setBoolean("processVision", true);
-		IDrive drive = (IDrive) Global.controlObjects.get("DRIVE");
+		drive = (IDrive) Global.controlObjects.get("DRIVE");
 		drive.setDriveControl(DriveControl.EXTERNAL_CONTROL);
 		drive.setLeftMotors(0.5);
 		drive.setRightMotors(0.5);
 
 		encoders = new ArrayList<>();
-		encoders.add((Encoder) SensorController.getInstance().getSensor("ENCODER1"));
+		encoders.add((Encoder) SensorController.getInstance().getSensor("ENCODER0"));
 		encoders.get(0).reset();
 	}
 
@@ -57,6 +58,7 @@ public class DrivingPegVisionCommand implements ICommand {
 						subcommands.get(0).init();
 					} else {
 						SmartWriter.putS("Peg Vision State", "Done");
+						//((ArcadeDrive)drive).setReverse(false);
 						return true;
 					}
 				}
@@ -69,6 +71,7 @@ public class DrivingPegVisionCommand implements ICommand {
 			return false;
 		} else {
 			// vision is done
+			//((ArcadeDrive)drive).setReverse(true);
 			degreesToTurn = table.getDouble("degreesToTurn");
 			distanceToMove = table.getDouble("distanceToMove");
 			SmartWriter.putD("degreesToTurn final", degreesToTurn);
@@ -97,7 +100,7 @@ public class DrivingPegVisionCommand implements ICommand {
 			//}
 
 			ArrayList<Encoder> encoders = new ArrayList<>();
-			encoders.add((Encoder) SensorController.getInstance().getSensor("ENCODER1"));
+			encoders.add((Encoder) SensorController.getInstance().getSensor("ENCODER0"));
 			subcommands.add(new DriveAtAngle(new DistanceStopCondition(encoders, (int) distanceToMove), slowPower,
 					fastPower, degreesToTurn));
 			return false;

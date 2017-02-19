@@ -48,8 +48,8 @@ public class Babbage extends RobotDefinitionBase {
 		_properties.put("LIFTERMOTOR", "2");
 		_properties.put("INTAKEMOTOR", "4");
 		// Default Motor Pins
-		_properties.put("LEFTMOTORPIN", "1");
-		_properties.put("RIGHTMOTORPIN", "0");
+		_properties.put("LEFTMOTORPIN", "0");
+		_properties.put("RIGHTMOTORPIN", "1");
 		// Shooter pins
 		_properties.put("SHOOTWHEEL", "11");// MainShooterWheel
 		_properties.put("CHAMBERMOTOR", "5");// Motor to load balls
