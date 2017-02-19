@@ -4,6 +4,7 @@ import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 
+import comms.DebugMode;
 import comms.SmartWriter;
 
 public class TalonSRX extends IMotor {
@@ -61,7 +62,7 @@ public class TalonSRX extends IMotor {
 	@Override
 	protected void setMotor(double x) {
 		part.set(x);
-		SmartWriter.putD("TalonSpeed", part.getSpeed());
+		SmartWriter.putD("ShooterSpeed", part.getSpeed(),DebugMode.COMPETITION);
 	}
 
 	public double getSpeed() {

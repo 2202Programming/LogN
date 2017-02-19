@@ -20,6 +20,9 @@ public class Shooter extends IControl {
 	private boolean _abort;
 	private boolean _fire;
 	private boolean _reverse;
+	
+	private boolean direction;
+	private int agCounter;
 
 	public Shooter(IMotor motors, IMotor newChamber, IMotor agitator, ServoMotor turret, ServoMotor bturret) {
 		shooterMotors = motors;
@@ -59,6 +62,9 @@ public class Shooter extends IControl {
 		agitatorMotor.setSpeed(0);
 		shoosterChamber.init();
 		state = ShooterState.IDLE;
+		
+		direction = true;
+		agCounter = 0;
 	}
 
 	public void teleopPeriodic() {
@@ -76,6 +82,10 @@ public class Shooter extends IControl {
 			if (windUp()) {
 				state = ShooterState.PRIMED;
 			}
+		}
+		
+		if(state == ShooterState.PRIMED){
+			agitate();
 		}
 		//Shoot the ball
 		if (_fire) {
@@ -105,11 +115,23 @@ public class Shooter extends IControl {
 	 * Winds up the shooter motors
 	 * @return true if the motors are at speed
 	 */
-	public boolean windUp() {
+	private boolean windUp() {
 		shooterMotors.setSpeed(speed);
-		agitatorMotor.setSpeed(0.9);
 		// TODO checks motor speed
 		return true;
+	}
+	
+	private void agitate(){
+		if(direction){
+			agitatorMotor.setSpeed(0.9);
+		}else{
+			agitatorMotor.setSpeed(-0.9);
+		}
+		
+		if(++agCounter > 50){
+			direction = !direction;
+			agCounter = 0;
+		}
 	}
 	
 	/**
