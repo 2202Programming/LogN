@@ -7,6 +7,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import LED.LEDController;
 import babbage.Climber;
+import babbage.CommandTester;
 import babbage.HighGoalTurning;
 import babbage.Intake;
 import babbage.Shooter;
@@ -15,7 +16,6 @@ import comms.TableNamesEnum;
 import drive.ArcadeDrive;
 import drive.IDrive;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.SerialPort;
 import input.EncoderMonitor;
 import input.SensorController;
@@ -117,6 +117,7 @@ public class Babbage extends RobotDefinitionBase {
 		Climber climb = new Climber(climbMotor);
 		temp.put("DRIVE", arcadeDrive);
 		new CommandListGear();
+		new CommandTester();
 		
 		
 
