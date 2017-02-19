@@ -41,7 +41,8 @@ public class DrivingPegVisionCommand implements ICommand {
 
 		encoders = new ArrayList<>();
 		encoders.add((Encoder) SensorController.getInstance().getSensor("ENCODER0"));
-		encoders.get(0).reset();
+		encoders.get(0
+				).reset();
 	}
 
 	public boolean run() {
@@ -91,8 +92,8 @@ public class DrivingPegVisionCommand implements ICommand {
 			distanceToMove *= percentToFinish;
 
 			// Sets the power based on rangeFinder
-			float slowPower = .3f;
-			float fastPower = .6f;
+			float slowPower = .25f;
+			float fastPower = .4f;
 			//Ultrasonic rangeFinder = (Ultrasonic) SensorController.getInstance().getSensor("RANGE");
 			//if (rangeFinder.getRangeInches() < 12) {
 			//	slowPower = .2f;

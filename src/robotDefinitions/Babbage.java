@@ -7,6 +7,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import LED.LEDController;
 import babbage.Climber;
+import babbage.HighGoalTurning;
 import babbage.Intake;
 import babbage.Shooter;
 import comms.NetworkTables;
@@ -106,7 +107,8 @@ public class Babbage extends RobotDefinitionBase {
 		IMotor agitatorMotor = new SparkMotor(getInt("AGITATORMOTOR"), false);
 		//TODO the 5th motor will be the shooter angle motor
 		Shooter shooter = new Shooter(shooterWheelMotor, chamberMotor, agitatorMotor, turretMotor, turretMotor);
-
+		//HighGoalTurning turning=new HighGoalTurning();
+		
 		// Gear Holder
 		IMotor gearMotor = new SparkMotor(getInt("GEARMOTOR"), false);
 		// GearHolder GH = new GearHolder(G);
