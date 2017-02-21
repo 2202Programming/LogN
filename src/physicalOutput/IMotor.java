@@ -5,36 +5,36 @@ import robot.IControl;
 //leinad's stuff
 
 /**
- * 
+ * The super class for motors
  */
 public abstract class IMotor extends IControl {
 
 	/**
-	 * 
+	 * Not necessarily used by anything; make sure we use this, because I don't think anyone does
 	 */
 	protected boolean enabled;
 
 	/**
-	 * 
+	 * default value to set motors but is overriden by subclasses I think
 	 */
 	protected double setValue;
-	
+
 	/**
-	 * 
+	 * True if the values of the motors is really -1 times what they should be sent
 	 */
 	protected boolean reverse;
-	
+
 	/**
 	 * Default constructor disables the motor and sets setValue to 0.0;
 	 */
 	public IMotor() {
 		this(false);
 	}
-	
-	public IMotor(boolean reverse){
+
+	public IMotor(boolean reverse) {
 		enabled=false;
 		setValue=0.0;
-		this.reverse = reverse;
+		this.reverse=reverse;
 	}
 
 	/**
@@ -46,7 +46,7 @@ public abstract class IMotor extends IControl {
 	 * Set speed to zero in init
 	 */
 	public void teleopInit() {
-		enabled = true;
+		enabled=true;
 		this.setMotor(0.0);
 	}
 
@@ -64,6 +64,7 @@ public abstract class IMotor extends IControl {
 	 * Set speed to zero in init
 	 */
 	public void autonomousInit() {
+		enabled = true;
 		this.setMotor(0.0);
 	}
 
@@ -75,30 +76,37 @@ public abstract class IMotor extends IControl {
 		else
 			this.setMotor(0.0);
 	}
+	
+	public void diabledInit()
+	{
+		enabled = false;
+		setMotor(0);
+	}
 
 	/**
 	 * Sets whether this motor is enabled or not to <i>enabled</i> <br>
 	 * <br>
-	 * Preconditions: none<br>
-	 * Postconditions: If <i>enabled</i> is false, this motor will become or
-	 * stay disabled. If <i>enabled</i>is true, this motor will become or stay
-	 * enabled.
 	 */
 	public void setEnabled(boolean enabled) {
 		this.enabled=enabled;
 	}
 
 	/**
-	 * Sets the value that will be applied to the motor and reverses if necessary<br>
+	 * Sets the value that will be applied to the motor and reverses if
+	 * necessary<br>
 	 * Preconditions: The value inputed is between -1.0 and 1.0<br>
 	 * Postconditions: setValue will be updated
 	 * 
 	 * @param xSpeed
 	 */
 	public void setSpeed(double xSpeed) {
-		if(reverse){
+		if (reverse) {
 			xSpeed*=-1;
 		}
 		setValue=xSpeed;
+	}
+	
+	public double getSpeed(){
+		return setValue;
 	}
 }

@@ -1,18 +1,24 @@
 package robotDefinitions;
 
+import java.util.List;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import babbage.CommandTester;
+import comms.SmartWriter;
 import drive.ArcadeDrive;
 import drive.IDrive;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SerialPort;
+import input.EncoderMonitor;
 import input.NavXTester;
 import input.SensorController;
 import physicalOutput.IMotor;
 import physicalOutput.SparkMotor;
-import piperAutoPID.NavXPIDTunable;
+import piper.CommandListGear;
 import robot.IControl;
 
 /**
@@ -50,6 +56,7 @@ public class Piper extends RobotDefinitionBase {
 	 */
 	public Map<String, IControl> loadControlObjects() {
 
+		SmartWriter.putS("Robot is piper...", "asdf");
 		// Create map to store public objects
 		Map<String, IControl> iControlMap=super.loadControlObjects();
 
@@ -68,18 +75,36 @@ public class Piper extends RobotDefinitionBase {
 
 		// Create IDrive arcade drive I dont know why we cast it as a IDrive
 		// though
-		IDrive AD=new ArcadeDrive(FL, FR, BL, BR);
-		iControlMap.put("ARCADE_DRIVE", AD);
+		IDrive arcadeDrive=new ArcadeDrive(FL, FR, BL, BR);
+		iControlMap.put("DRIVE", arcadeDrive);
 
-		SensorController SC=SensorController.getInstance();
-		SC.registerSensor("NAVX", new AHRS(SerialPort.Port.kMXP));
+		//Encoder stuff
+		Encoder encoder0 =new Encoder(0, 1);
+		Encoder encoder1 =  new Encoder(2, 3);
+		encoder0.setDistancePerPulse(0.058);
+		encoder1.setDistancePerPulse(0.06529);
+		EncoderMonitor encoderMonitor = new EncoderMonitor();
+		encoderMonitor.add("ENCODER0", encoder0);
+		encoderMonitor.add("ENCODER1", encoder1);
+		
+		SensorController sensorController=SensorController.getInstance();
+		sensorController.registerSensor("ENCODER0", encoder0);
+		sensorController.registerSensor("ENCODER1", encoder1);
+		sensorController.registerSensor("NAVX", new AHRS(SerialPort.Port.kMXP));
 
 		new NavXTester();
-		new NavXPIDTunable();
-
+		//new NavXPIDTunable();
+		//new CommandListRunnerDoNotKeepItSucks();
+		
+		new CommandListGear();
+		// v  YOU HAVE TO CREATE THIS AFTER CREATING NAVX!!! v
+		//CommandListRunnerDoNotKeepItSucks sucks = new CommandListRunnerDoNotKeepItSucks();
+		
+		CommandTester commandTester = new CommandTester();
+		
 		// Create the autonomous command list maker, and command runner
 		// CommandListMaker CLM = new CommandListMaker(AD);
-		// CommandRunner CR = new CommandRunner(CLM.makeList1(),"PIPER"); //
+		// CommandListRunner CR = new CommandListRunner(CLM.makeList1(),"PIPER"); //
 		// makes list one for the TIM robot
 
 		// Create the IMotors for the Shooter class

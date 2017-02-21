@@ -4,7 +4,9 @@ import comms.DebugMode;
 import comms.SmartWriter;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import robotDefinitions.Babbage;
+import robotDefinitions.ControlBase;
 import robotDefinitions.IRobotDefinition;
+import robotDefinitions.MechanumRobot;
 import robotDefinitions.Piper;
 import robotDefinitions.RobotName;
 import robotDefinitions.Tim;
@@ -16,17 +18,17 @@ import robotDefinitions.Tim;
 public class Robot extends IterativeRobot {
 
 	private IRobotDefinition robotDefinition;
-
+	public static RobotName name;
 	
 
 	public void robotInit() {
 		SmartWriter.putS("Robot State", "Initsing", DebugMode.DEBUG);
 		// String to say which robot we are using could later be made into a XML
 		// property getter
-		RobotName name=RobotName.BABBAGE; // TODO Can we get this from the robot so
+		name=RobotName.BABBAGE; // TODO Can we get this from the robot so
 										// it automatically knows what robot it
 										// is?
-
+		SmartWriter.putS("RobotName", name.toString(), DebugMode.COMPETITION);
 		// Switch to decide which robot definition to use
 		switch (name) {
 		case TIM:
@@ -34,6 +36,9 @@ public class Robot extends IterativeRobot {
 			break;
 		case PIPER:
 			robotDefinition=new Piper();
+			break;
+		case MECHANUMDRIVE:
+			robotDefinition=new MechanumRobot();
 			break;
 		case BABBAGE:
 			robotDefinition=new Babbage();

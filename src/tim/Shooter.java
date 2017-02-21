@@ -2,12 +2,12 @@ package tim;
 
 import comms.DebugMode;
 import comms.SmartWriter;
-import comms.XboxController;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import physicalOutput.IMotor;
 import physicalOutput.SolenoidController;
+import robot.Global;
 import robot.IControl;
+import robotDefinitions.TimControl;
 
 public class Shooter extends IControl {
 	// 0-disabled 1-enabled 2-external
@@ -15,7 +15,7 @@ public class Shooter extends IControl {
 	private IMotor left;
 	private IMotor right;
 	private IMotor height;
-	private XboxController controller;
+	private TimControl controller;
 	private double curSpeed;
 	private double heightSpeed;
 	private SolenoidController sc;
@@ -26,8 +26,8 @@ public class Shooter extends IControl {
 		this.left = left;
 		this.right = right;
 		this.height = height;
-		controller = XboxController.getXboxController();
-		sc=SolenoidController.getInstance();
+		controller = (TimControl) Global.controllers;
+		sc = SolenoidController.getInstance();
 		curSpeed = 0;
 		heightSpeed = 0;
 		try {
@@ -54,21 +54,21 @@ public class Shooter extends IControl {
 
 	public void teleopPeriodic() {
 		//sets the speed for the shooter wheels Right bumper - faster, Left bumper - slower
-		if (controller.getBPressed()) {
+		if (controller.stopShooter()) {
 			curSpeed = 0;
 		}
-		else if (controller.getRightBumperPressed() && curSpeed < 1) {
+		else if (controller.speedUpShooter() && curSpeed < 1) {
 			curSpeed += .2;
 		}
-		else if (controller.getLeftBumperPressed() && curSpeed > 0) {
+		else if (controller.slowDownShooter() && curSpeed > 0) {
 			curSpeed -= .2;
 		}
 		setShootRaw(curSpeed);
 
 		//Sets the elevation of the shooter Y - up, X - down
-		if(controller.getXHeld()){
+		if(controller.shooterHeight()<0){
 			heightSpeed = -1.0;
-		}else if(controller.getYHeld()){
+		}else if(controller.shooterHeight()>0){
 			heightSpeed = 0.75;
 		}else{
 			heightSpeed = 0;
@@ -77,7 +77,7 @@ public class Shooter extends IControl {
 		SmartWriter.putS("motorStatus",height+"", DebugMode.DEBUG);
 		setHeightRaw(heightSpeed);
 	
-		if(controller.getAHeld()) 
+		if(controller.shoot())  //Formerly getAHeld() 
 		{
 			SmartWriter.putB("ABotten", true, DebugMode.DEBUG);
 			trigger.set(DoubleSolenoid.Value.kReverse);

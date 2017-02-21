@@ -3,15 +3,29 @@ package robotDefinitions;
 import java.util.HashMap;
 import java.util.Map;
 
-import auto.CommandRunner;
+import com.kauailabs.navx.frc.AHRS;
+
+import LED.LEDController;
+import babbage.Climber;
+import babbage.CommandTester;
+import babbage.HighGoalTurning;
+import babbage.Intake;
+import babbage.Shooter;
 import comms.NetworkTables;
-import comms.TableNames;
+import comms.TableNamesEnum;
 import drive.ArcadeDrive;
 import drive.IDrive;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SerialPort;
+import input.EncoderMonitor;
+import input.SensorController;
 import physicalOutput.IMotor;
+import physicalOutput.ServoMotor;
 import physicalOutput.SparkMotor;
+import physicalOutput.TalonSRX;
+import piper.CommandListGear;
+import robot.Global;
 import robot.IControl;
-import tim.CommandListMaker;
 
 /**
  * The Piper implementation of IDefinition.<br>
@@ -20,69 +34,92 @@ import tim.CommandListMaker;
  */
 public class Babbage extends RobotDefinitionBase {
 
-	
 	protected boolean useXML() {
 		return false;
 	}
 
-	
 	protected String loadDefinitionName() {
 		return "BABBAGE";
 	}
 
-	
 	protected void loadManualDefinitions() {
-		_properties=new HashMap<String, String>();
-		
+		_properties = new HashMap<String, String>();
+
+		// Intake system
+		_properties.put("LIFTERMOTOR", "2");
+		_properties.put("INTAKEMOTOR", "4");
 		// Default Motor Pins
-		_properties.put("FLMOTORPIN", "2");//PWM3
-		_properties.put("BLMOTORPIN", "3");//PWM4
-		_properties.put("FRMOTORPIN", "1");//PWM1
-		_properties.put("BRMOTORPIN", "0");//PWM2
+		_properties.put("LEFTMOTORPIN", "0");
+		_properties.put("RIGHTMOTORPIN", "1");
+		// Shooter pins
+		_properties.put("SHOOTWHEEL", "11");// MainShooterWheel
+		_properties.put("CHAMBERMOTOR", "5");// Motor to load balls
+		_properties.put("TURRETMOTOR", "9");// Motor to rotate shooter
+		_properties.put("AGITATORMOTOR", "6");// Agitates balls
+		// Gear holder
+		_properties.put("GEARMOTOR", "7");
 	}
 
 	/***
 	 * 
-	 * @return  Control object map for Tim
+	 * @return Control object map for Babbage
 	 */
 	public Map<String, IControl> loadControlObjects() {
-		
-		// Create map to store public objects
-		Map<String, IControl> temp=super.loadControlObjects();
-		
-		NetworkTables visionTable = new NetworkTables(TableNames.VISION_TABLE);
-		temp.put("NT", visionTable);
-		
-		//TODO add the sensors here
-		/*
-		// Creates the global solenoid controller
-		SolenoidController SO = SolenoidController.getInstance();
-		SO.registerSolenoid("TRIGGER", new DoubleSolenoid(1,1));
-		//TODO register the solenoids here
-		 */
-		
-		// Create IMotors for Arcade Drive
-		IMotor FL=new SparkMotor(getInt("FLMOTORPIN"),false);
-		IMotor FR=new SparkMotor(getInt("FRMOTORPIN"),true);
-		IMotor BL=new SparkMotor(getInt("BLMOTORPIN"),false);
-		IMotor BR=new SparkMotor(getInt("BRMOTORPIN"),true);
 
-		// Create IDrive arcade drive I dont know why we cast it as a IDrive though
-		IDrive AD=new ArcadeDrive(FL, FR, BL, BR);
+		// Create map to store public objects
+		Map<String, IControl> temp = super.loadControlObjects();
+		//most important class goes at the front
+		LEDController ledController = new LEDController();
 		
-		// Create the autonomous command list maker, and command runner
-//		CommandListMaker CLM = new CommandListMaker(AD);
-//		CommandRunner CR = new CommandRunner(CLM.makeList1(),"PIPER");  // makes list one for the TIM robot
+		BabbageControl babbageControl = new BabbageControl();
+		temp.put("CONTROL", babbageControl);
+		Global.controllers = babbageControl;
+		NetworkTables visionTable = new NetworkTables(TableNamesEnum.VisionTable);
+		temp.put("NT", visionTable);
+
+		// Encoders
+		Encoder encoder0 = new Encoder(0, 1);
+		encoder0.setDistancePerPulse(0.0534);
+		encoder0.setReverseDirection(true);
+		EncoderMonitor encoderMonitor = new EncoderMonitor();
+		encoderMonitor.add("ENCODER0", encoder0);
+
+		// TODO add the sensors here
+		SensorController sensorController = SensorController.getInstance();
+		sensorController.registerSensor("ENCODER0", encoder0);
+		sensorController.registerSensor("NAVX", new AHRS(SerialPort.Port.kMXP));
+
+		// Create IMotors for Arcade Drive
+		IMotor leftMotors = new SparkMotor(getInt("LEFTMOTORPIN"), false);
+		IMotor rightMotors = new SparkMotor(getInt("RIGHTMOTORPIN"), true);
+
+		// Create IDrive arcade drive
+		IDrive arcadeDrive=new ArcadeDrive(leftMotors, rightMotors);
+		//HighGoalTurning highGoalTurnings=new HighGoalTurning();
 		
-		//Create the IMotors for the Shooter class
-//		IMotor SL = new SparkMotor(getInt("SLMOTORPIN"),false);
-//		IMotor SR = new SparkMotor(getInt("SRMOTORPIN"),false);
+		//Intake
+		IMotor[] intakeMotors= {new SparkMotor(getInt("INTAKEMOTOR"),true)};
+		Intake intake=new Intake(intakeMotors);
+
+		//Shooter
+		IMotor shooterWheelMotor = new TalonSRX(getInt("SHOOTWHEEL"), false, true);
+		ServoMotor turretMotor = new ServoMotor(getInt("TURRETMOTOR"));
+		IMotor chamberMotor = new SparkMotor(getInt("CHAMBERMOTOR"), true);
+		IMotor agitatorMotor = new SparkMotor(getInt("AGITATORMOTOR"), false);
+		//TODO the 5th motor will be the shooter angle motor
+		Shooter shooter = new Shooter(shooterWheelMotor, chamberMotor, agitatorMotor, turretMotor, turretMotor);
+		HighGoalTurning turning=new HighGoalTurning(turretMotor);
 		
+		// Gear Holder
+		IMotor gearMotor = new SparkMotor(getInt("GEARMOTOR"), false);
+		// GearHolder GH = new GearHolder(G);
 		
+		IMotor climbMotor = new SparkMotor(getInt("LIFTERMOTOR"), true);
+		Climber climb = new Climber(climbMotor);
+		temp.put("DRIVE", arcadeDrive);
+		new CommandListGear();
+		new CommandTester();
 		
-		
-//		temp.put("AD", AD);		
-//		temp.put("CR", CR);
 		
 
 		return temp;

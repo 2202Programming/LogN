@@ -111,10 +111,6 @@ public abstract class IControl {
 		for (int i=0; i<allObjects.size(); i++) {			
 			allObjects.get(i).autonomousInit();
 		}
-		
-		for (IControl i:allObjects) {
-			i.autonomousInit();
-		}
 	}
 	
 	public static void callAutonomousPeriodic() {

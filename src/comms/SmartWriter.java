@@ -23,7 +23,7 @@ public class SmartWriter {
 	/**
 	 * The maximum DebugMode for which messages are printed to SmartDashboard.
 	 */
-	private static DebugMode debugMode=DebugMode.DEBUG;
+	private static DebugMode debugMode=DebugMode.COMPETITION;
 
 	/**
 	 * Sets the field with name <i>name</i> on the SmartDashboard to
@@ -188,7 +188,7 @@ public class SmartWriter {
 	 * @return The value in the text box with the name <i>name</i>
 	 */
 	public static String getS(String name) {
-		return SmartDashboard.getString(name);
+		return SmartDashboard.getString(name, "");
 	}
 
 	/**
@@ -206,7 +206,7 @@ public class SmartWriter {
 	 * @return The value in the text box with the name <i>name</i>
 	 */
 	public static boolean getB(String name) {
-		return SmartDashboard.getBoolean(name);
+		return SmartDashboard.getBoolean(name, false);
 	}
 
 	/**
@@ -224,7 +224,7 @@ public class SmartWriter {
 	 * @return The value in the text box with the name <i>name</i>
 	 */
 	public static double getD(String name) {
-		return SmartDashboard.getNumber(name);
+		return SmartDashboard.getNumber(name, 0);
 	}
 	
 	/**
@@ -246,7 +246,7 @@ public class SmartWriter {
 		if (!stopPrintingErrors) {
 			System.err.println("Exception occured in: "+timeOccured+".");
 			e.printStackTrace(System.err);
-			stopPrintingErrors=true;
+			stopPrintingErrors=false;
 		}
 	}
 
