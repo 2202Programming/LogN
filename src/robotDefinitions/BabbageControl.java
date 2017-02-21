@@ -45,6 +45,10 @@ public class BabbageControl extends ControlBase {
 	public boolean reverseShooter() {
 		return controllers[1].getRightBumperHeld();
 	}
+	
+	public boolean shooterSpeedToggle(){
+		return controllers[1].getAPressed();
+	}
 
 	// engage high-goal vision
 	public boolean startHighGoalVision() {

@@ -1,5 +1,6 @@
 package babbage;
 
+import comms.DebugMode;
 import comms.SmartWriter;
 import physicalOutput.IMotor;
 import physicalOutput.ServoMotor;
@@ -11,7 +12,7 @@ public class Shooter extends IControl {
 	private IMotor shooterMotors;
 	private IMotor agitatorMotor;
 	private BabbageControl controller;
-	private double speed = 1200;
+	private double speed = 1050;
 	private ShooterState state;
 	private Chamber shoosterChamber;
 	private Turret shoosterTurret;
@@ -65,6 +66,7 @@ public class Shooter extends IControl {
 		
 		direction = true;
 		agCounter = 0;
+		
 	}
 
 	public void teleopPeriodic() {
@@ -73,6 +75,14 @@ public class Shooter extends IControl {
 		//display user input
 		displayUserInput();
 		
+		SmartWriter.putD("ShooterSetSpeed", speed, DebugMode.COMPETITION);
+//		if(controller.shooterSpeedToggle()){
+//			speed+=50;
+//			if (speed>=1250) {
+//				speed=1000;
+//				state=ShooterState.WINDUP;		
+//			}
+//		}
 		//If the user wants to start firing, begin to wind the motors
 		if (_startShoosting && state == ShooterState.IDLE) {
 			state = ShooterState.WINDUP;
