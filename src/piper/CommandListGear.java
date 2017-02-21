@@ -21,9 +21,9 @@ public class CommandListGear extends IControl{
 	public CommandListGear() {
 		commands = new CommandList();
 		//commands.addCommand(new DrivingPegVisionCommand(1));
+		commands.addCommand(new RunPegVisionCommand(.6));
 		commands.addCommand(new RunPegVisionCommand(1));
 		runner=new CommandListRunner(commands);
-		runner.setCallAutomatically(false);
 		controller=(BabbageControl) Global.controllers;
 	}
 	

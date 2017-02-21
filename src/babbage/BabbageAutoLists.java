@@ -13,6 +13,7 @@ import comms.DebugMode;
 import comms.SmartWriter;
 import edu.wpi.first.wpilibj.Encoder;
 import input.SensorController;
+import piper.CommandListGear;
 
 //TODO all distances, speeds and angles are not final
 
@@ -35,7 +36,9 @@ public class BabbageAutoLists {
 		CommandList CL = new CommandList();
 		SmartWriter.putS("AutoList", "centerRed", DebugMode.COMPETITION);
 		//CL.addCommand(new DriveCommand(new DistanceStopCondition(encoders, distanceFromWall), speed));
+		CL.addCommand(new RunPegVisionCommand(.6));
 		CL.addCommand(new RunPegVisionCommand(1));
+		//CL.addCommand(new RunPegVisionCommand(1));
 		return CL;
 	}
 	
@@ -85,6 +88,7 @@ public class BabbageAutoLists {
 		CommandList CL = new CommandList();
 		SmartWriter.putS("AutoList", "Center Blue", DebugMode.COMPETITION);
 		//CL.addCommand(new DriveCommand(new DistanceStopCondition(encoders, distanceFromWall), speed));
+		CL.addCommand(new RunPegVisionCommand(.6));
 		CL.addCommand(new RunPegVisionCommand(1));
 		return CL;
 	}

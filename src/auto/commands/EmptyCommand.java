@@ -19,4 +19,8 @@ public class EmptyCommand implements ICommand {
 	public boolean run() {
 		return stop.stopNow();
 	}
+	
+	public void stop(){
+		
+	}
 }
