@@ -15,6 +15,4 @@ public class Global {
 	
 	public static ControlBase controllers;
 	
-	public static ControlBase controlBase;
-
 }

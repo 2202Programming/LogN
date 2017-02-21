@@ -41,12 +41,20 @@ public class ArcadeDrive extends IDrive {
 	 */
 	private ControlBase controller;
 
+	private boolean drivingIsFlipped=false;
+	
 	/**
 	 * holds the values to pass to the motors from when they are calculated in
 	 * TeleopPeriodic to when they are suppose to be passed to the motors
 	 */
 	private double leftMotors=0, rightMotors=0;
 
+	public ArcadeDrive(IMotor fl, IMotor fr) {
+		this.frontLeft=fl;
+		this.frontRight=fr;
+		controller=Global.controllers;
+	}
+	
 	/**
 	 * @param fl
 	 *            The front left motor
@@ -63,6 +71,14 @@ public class ArcadeDrive extends IDrive {
 		this.backLeft=bl;
 		this.backRight=br;
 		controller=Global.controllers;
+	}
+	
+	public void teleopInit() {
+		autonomousInit();
+	}
+	
+	public void autonomousInit() {
+		drivingIsFlipped=false;
 	}
 
 	/**
@@ -91,9 +107,15 @@ public class ArcadeDrive extends IDrive {
 	 * Postconditions: sets the motors
 	 */
 	private void setLeftMotorsRaw(double speed) {
-		SmartWriter.putD("Motor Raw Value", speed, DebugMode.DEBUG);
-		frontLeft.setSpeed(speed);
-		backLeft.setSpeed(speed);
+		if (drivingIsFlipped) {
+			speed*=-1;
+			if (frontRight!=null) frontRight.setSpeed(speed);
+			if (backRight!=null) backRight.setSpeed(speed);
+		}
+		else {			
+			if (frontLeft!=null) frontLeft.setSpeed(speed);
+			if (backLeft!=null) backLeft.setSpeed(speed);
+		}
 	}
 
 	/**
@@ -102,8 +124,15 @@ public class ArcadeDrive extends IDrive {
 	 * Postconditions: sets the motors
 	 */
 	private void setRightMotorsRaw(double speed) {
-		frontRight.setSpeed(speed);
-		backRight.setSpeed(speed);
+		if (drivingIsFlipped) {
+			speed*=-1;
+			if (frontLeft!=null) frontLeft.setSpeed(speed);
+			if (backLeft!=null) backLeft.setSpeed(speed);
+		}
+		else {
+			if (frontRight!=null) frontRight.setSpeed(speed);
+			if (backRight!=null) backRight.setSpeed(speed);
+		}
 	}
 
 	/**
@@ -245,15 +274,10 @@ public class ArcadeDrive extends IDrive {
 		return new Vector2(leftMotorsTemp, rightMotorsTemp);
 	}
 	
-	public static void main(String[] a) {
-		System.out.println(getMotorOutputs(1, 1));
-		System.out.println(getMotorOutputs(.9, 1));
-		System.out.println(getMotorOutputs(.8, 1));
-		System.out.println(getMotorOutputs(.7, 1));
-		System.out.println(getMotorOutputs(.6, 1));
-		System.out.println(getMotorOutputs(.5, 1));
-	}
 	
+	public void setReverse(boolean reversed) {
+		drivingIsFlipped=reversed;
+	}
 	
 }
 
@@ -281,5 +305,6 @@ class Vector2 {
 	public String toString() {
 		return "< x: "+String.format("%.2f", x)+", y: "+String.format("%.2f", y)+">";
 	}
+	
 	
 }

@@ -4,6 +4,9 @@ import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 
+import comms.DebugMode;
+import comms.SmartWriter;
+
 public class TalonSRX extends IMotor {
 
 	CANTalon part;
@@ -28,7 +31,7 @@ public class TalonSRX extends IMotor {
 			part.setAllowableClosedLoopErr(0);
 
 			part.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-			part.reverseSensor(false);
+			part.reverseSensor(!reverse);
 			part.changeControlMode(TalonControlMode.Speed);
 
 			// limit the error wind up, greater than IZone, zeros the integrator.
@@ -58,7 +61,8 @@ public class TalonSRX extends IMotor {
 
 	@Override
 	protected void setMotor(double x) {
-		part.set((x + 1) / 2f);
+		part.set(x);
+		SmartWriter.putD("ShooterSpeed", part.getSpeed(),DebugMode.COMPETITION);
 	}
 
 	public double getSpeed() {

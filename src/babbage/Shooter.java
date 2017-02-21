@@ -1,5 +1,6 @@
 package babbage;
 
+import comms.DebugMode;
 import comms.SmartWriter;
 import physicalOutput.IMotor;
 import physicalOutput.ServoMotor;
@@ -9,8 +10,9 @@ import robotDefinitions.BabbageControl;
 
 public class Shooter extends IControl {
 	private IMotor shooterMotors;
+	private IMotor agitatorMotor;
 	private BabbageControl controller;
-	private double speed = -0.2;
+	private double speed = 1050;
 	private ShooterState state;
 	private Chamber shoosterChamber;
 	private Turret shoosterTurret;
@@ -19,12 +21,16 @@ public class Shooter extends IControl {
 	private boolean _abort;
 	private boolean _fire;
 	private boolean _reverse;
+	
+	private boolean direction;
+	private int agCounter;
 
-	public Shooter(IMotor motors, IMotor newChamber, ServoMotor turret, ServoMotor bturret) {
+	public Shooter(IMotor motors, IMotor newChamber, IMotor agitator, ServoMotor turret, ServoMotor bturret) {
 		shooterMotors = motors;
 		controller = (BabbageControl) Global.controllers;
 		shoosterChamber = new Chamber(newChamber);
 		shoosterTurret = new Turret(turret, bturret);
+		agitatorMotor = agitator;
 	}
 
 	/**
@@ -36,7 +42,7 @@ public class Shooter extends IControl {
 		//If we are primed, shoot the ball
 		_fire = state == ShooterState.PRIMED?controller.startShooting():false;
 		//If we are primed, reverse the shooter motors to unclog balls
-		_reverse = state == ShooterState.PRIMED||state == ShooterState.REVERSE?controller.reverseShooter():false;
+		_reverse = (state == ShooterState.PRIMED||state == ShooterState.REVERSE)?controller.reverseShooter():false;
 	}
 
 	/**
@@ -45,7 +51,6 @@ public class Shooter extends IControl {
 	public void displayUserInput() {
 		SmartWriter.putS("ShooterState", state.toString());
 		SmartWriter.putB("_startShoosting", _startShoosting);
-		SmartWriter.putB("_abort", _abort);
 		SmartWriter.putB("_fire", _fire);
 		SmartWriter.putB("_reverse", _reverse);
 	}
@@ -55,8 +60,13 @@ public class Shooter extends IControl {
 	 */
 	public void teleopInit() {
 		shooterMotors.setSpeed(0);
+		agitatorMotor.setSpeed(0);
 		shoosterChamber.init();
 		state = ShooterState.IDLE;
+		
+		direction = true;
+		agCounter = 0;
+		
 	}
 
 	public void teleopPeriodic() {
@@ -65,6 +75,14 @@ public class Shooter extends IControl {
 		//display user input
 		displayUserInput();
 		
+		SmartWriter.putD("ShooterSetSpeed", speed, DebugMode.COMPETITION);
+//		if(controller.shooterSpeedToggle()){
+//			speed+=50;
+//			if (speed>=1250) {
+//				speed=1000;
+//				state=ShooterState.WINDUP;		
+//			}
+//		}
 		//If the user wants to start firing, begin to wind the motors
 		if (_startShoosting && state == ShooterState.IDLE) {
 			state = ShooterState.WINDUP;
@@ -74,6 +92,10 @@ public class Shooter extends IControl {
 			if (windUp()) {
 				state = ShooterState.PRIMED;
 			}
+		}
+		
+		if(state == ShooterState.PRIMED){
+			agitate();
 		}
 		//Shoot the ball
 		if (_fire) {
@@ -93,7 +115,9 @@ public class Shooter extends IControl {
 			}
 		}
 		// Turret code starts
-		shoosterTurret.setAngle(controller.getLeftJoystickX(1));
+		if (controller.pauseHighGoalVision()) {
+			shoosterTurret.setAngle((controller.getLeftJoystickX(1) +1)/2f);
+		}
 		//shoosterTurret.setHeight(controller.getRightJoystickY(1));
 	}
 
@@ -101,10 +125,23 @@ public class Shooter extends IControl {
 	 * Winds up the shooter motors
 	 * @return true if the motors are at speed
 	 */
-	public boolean windUp() {
+	private boolean windUp() {
 		shooterMotors.setSpeed(speed);
 		// TODO checks motor speed
 		return true;
+	}
+	
+	private void agitate(){
+		if(direction){
+			agitatorMotor.setSpeed(0.9);
+		}else{
+			agitatorMotor.setSpeed(-0.9);
+		}
+		
+		if(++agCounter > 50){
+			direction = !direction;
+			agCounter = 0;
+		}
 	}
 	
 	/**
@@ -157,7 +194,7 @@ class Chamber {
 	 * @return true if there are balls in the shooter currently
 	 */
 	public boolean shoot() {
-		chamber.setSpeed(-0.3);
+		chamber.setSpeed(-0.7);
 		// TODO check if there are balls in the shooter
 		return true;
 	}

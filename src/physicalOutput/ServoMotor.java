@@ -23,6 +23,10 @@ public class ServoMotor extends IMotor {
 	 * @param x: the angle to set the servo
 	 */
 	protected void setMotor(double x) {
-		part.setAngle(( ((x+1)/2f)*(maxAngle-minAngle) )+minAngle);
+		part.set(x);
+	}
+	
+	public double getAngle() {
+		return part.getAngle();
 	}
 }

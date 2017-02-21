@@ -1,5 +1,6 @@
 package robotDefinitions;
 
+import comms.SmartWriter;
 import comms.XboxController;
 
 /**
@@ -31,6 +32,7 @@ public class BabbageControl extends ControlBase {
 	}
 
 	public boolean intakeEngaged() {
+		SmartWriter.putB("back3", controllers[2].getAHeld());
 		return controllers[2].getAHeld();
 	}
 
@@ -42,6 +44,10 @@ public class BabbageControl extends ControlBase {
 	// reverse shooters, unclogs balls
 	public boolean reverseShooter() {
 		return controllers[1].getRightBumperHeld();
+	}
+	
+	public boolean shooterSpeedToggle(){
+		return controllers[1].getAPressed();
 	}
 
 	// engage high-goal vision
@@ -59,8 +65,8 @@ public class BabbageControl extends ControlBase {
 	 * 
 	 * @return
 	 */
-	public boolean cancelHighGoalVision() {
-		return controllers[1].getStartPressed();
+	public boolean pauseHighGoalVision() {
+		return controllers[1].getStartHeld();
 	}
 
 	/**
@@ -84,11 +90,11 @@ public class BabbageControl extends ControlBase {
 	 * 
 	 * @return
 	 */
-	public boolean cimberHold() {
+	public boolean climberHold() {
 		return controllers[2].getXHeld();
 	}
 
-	public boolean autoFieldPosition0() {//Aren't we doing this through Smart Dashboard?
+	public boolean autoFieldPosition0() {
 		return controllers[2].getYHeld();
 	}
 

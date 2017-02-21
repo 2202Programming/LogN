@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import babbage.CommandTester;
 import comms.SmartWriter;
 import drive.ArcadeDrive;
 import drive.IDrive;
@@ -99,6 +100,7 @@ public class Piper extends RobotDefinitionBase {
 		// v  YOU HAVE TO CREATE THIS AFTER CREATING NAVX!!! v
 		//CommandListRunnerDoNotKeepItSucks sucks = new CommandListRunnerDoNotKeepItSucks();
 		
+		CommandTester commandTester = new CommandTester();
 		
 		// Create the autonomous command list maker, and command runner
 		// CommandListMaker CLM = new CommandListMaker(AD);

@@ -10,7 +10,6 @@ public abstract class ControlBase extends IControl {
 
 	public ControlBase() {
 		controllers=getControllers();
-		Global.controlBase=this;
 	}
 
 	public abstract XboxController[] getControllers();

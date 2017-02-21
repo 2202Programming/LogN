@@ -3,6 +3,7 @@ package input;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import comms.DebugMode;
 import comms.SmartWriter;
 import edu.wpi.first.wpilibj.Encoder;
 import robot.IControl;
@@ -27,8 +28,8 @@ public class EncoderMonitor extends IControl {
 	 */
 	public void teleopPeriodic(){
 		for(Entry<String, Encoder> entry : encoders.entrySet()){
-			SmartWriter.putD(entry.getKey(), entry.getValue().get());
-			SmartWriter.putD(entry.getKey() + " DISTANCE", entry.getValue().getDistance());
+			SmartWriter.putD(entry.getKey(), entry.getValue().get(), DebugMode.COMPETITION);
+			SmartWriter.putD(entry.getKey() + " DISTANCE", entry.getValue().getDistance(), DebugMode.COMPETITION);
 		}
 	}
 	
@@ -37,8 +38,8 @@ public class EncoderMonitor extends IControl {
 	 */
 	public void autonomousPeriodic(){
 		for(Entry<String, Encoder> entry : encoders.entrySet()){
-			SmartWriter.putD(entry.getKey(), entry.getValue().get());
-			SmartWriter.putD(entry.getKey() + " DISTANCE", entry.getValue().getDistance());
+			SmartWriter.putD(entry.getKey(), entry.getValue().get(),DebugMode.COMPETITION);
+			SmartWriter.putD(entry.getKey() + " DISTANCE", entry.getValue().getDistance(),DebugMode.COMPETITION);
 		}
 	}
 	

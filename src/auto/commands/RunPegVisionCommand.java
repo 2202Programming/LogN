@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import auto.ICommand;
 import auto.stopConditions.DistanceStopCondition;
+import comms.DebugMode;
 import comms.NetworkTables;
 import comms.SmartWriter;
 import comms.TableNamesEnum;
@@ -12,6 +13,7 @@ import drive.IDrive;
 import edu.wpi.first.wpilibj.Encoder;
 import input.SensorController;
 import robot.Global;
+import robotDefinitions.BabbageControl;
 
 public class RunPegVisionCommand implements ICommand {
 	private NetworkTables table;
@@ -35,6 +37,10 @@ public class RunPegVisionCommand implements ICommand {
 	}
 
 	public boolean run() {
+		if (((BabbageControl)(Global.controllers)).cancelPegVision()) {
+			//doneWithVision=true;
+			return true;
+		}
 		if (doneWithVision) {
 			if (subcommands.isEmpty()) {
 				SmartWriter.putS("Peg Vision State", "Done, but I shouldn't be here");
@@ -64,8 +70,7 @@ public class RunPegVisionCommand implements ICommand {
 			//vision is done
 			degreesToTurn=table.getDouble("degreesToTurn");
 			distanceToMove=table.getDouble("distanceToMove");
-			SmartWriter.putD("degreesToTurn final", degreesToTurn);
-			SmartWriter.putD("distanceT)oMove final", distanceToMove);
+			SmartWriter.putS("Peg Vision Results", "Angle: "+degreesToTurn+", Distance: "+distanceToMove, DebugMode.COMPETITION);
 			doneWithVision=true;
 			subcommands.add(new TurnCommand(degreesToTurn, 1, .5));
 			subcommands.get(0).init();
@@ -81,7 +86,7 @@ public class RunPegVisionCommand implements ICommand {
 			//2- DO 2 and 3
 			//1- DO 0 and 1
 			ArrayList<Encoder> encoders=new ArrayList<>();
-			encoders.add((Encoder)SensorController.getInstance().getSensor("ENCODER1"));
+			encoders.add((Encoder)SensorController.getInstance().getSensor("ENCODER0"));
 			subcommands.add(new DriveCommand(new DistanceStopCondition(encoders, (int)distanceToMove), .5));
 			return false;
 		}

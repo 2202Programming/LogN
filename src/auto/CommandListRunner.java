@@ -64,6 +64,10 @@ public class CommandListRunner extends IControl {
 			runList();
 		}
 	}
+	
+	public void teleopInit(){
+		stop();
+	}
 
 	public void stop() {
 		commandNum=commands.size();
