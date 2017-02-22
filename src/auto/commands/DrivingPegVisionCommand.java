@@ -25,10 +25,12 @@ public class DrivingPegVisionCommand implements ICommand {
 	private double percentToFinish=0;
 	private ArrayList<Encoder> encoders;
 	private IDrive drive;
+	private float speed=0;
 
-	public DrivingPegVisionCommand(double percentToFinish) {
+	public DrivingPegVisionCommand(double percentToFinish, float speed) {
 		table=new NetworkTables(TableNamesEnum.VisionTable);
 		this.percentToFinish=percentToFinish;
+		this.speed=speed;
 	}
 
 	public void init() {
@@ -38,8 +40,8 @@ public class DrivingPegVisionCommand implements ICommand {
 		table.setBoolean("processVision", true);
 		drive=(IDrive)Global.controlObjects.get("DRIVE");
 		drive.setDriveControl(DriveControl.EXTERNAL_CONTROL);
-		drive.setLeftMotors(0.3);
-		drive.setRightMotors(0.3);
+		drive.setLeftMotors(speed);
+		drive.setRightMotors(speed);
 
 		encoders=new ArrayList<>();
 		encoders.add((Encoder)SensorController.getInstance().getSensor("ENCODER0"));
@@ -78,8 +80,8 @@ public class DrivingPegVisionCommand implements ICommand {
 
 			distanceToMove*=percentToFinish;
 
-			float slowPower=.25f;
-			float fastPower=.4f;
+			float slowPower=speed-0.1f;
+			float fastPower=speed+0.1f;
 
 			CommandList list=new CommandList();
 			list.addCommand(new TurnCommand(degreesToTurn, 0.5, .001));
