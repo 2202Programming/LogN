@@ -3,11 +3,11 @@ package auto;
 import auto.commands.EmptyCommand;
 import robot.IControl;
 
-public class CommandListRunner extends IControl {
+public class CommandListRunner {
 	private int commandNum;
 	private int prevCommandNum;
 	private CommandList commands;
-	private boolean callAutomatically=true;
+	private ICommand curCommand;
 
 	/**
 	 * Constructor for CommandListRunner<br>
@@ -20,10 +20,6 @@ public class CommandListRunner extends IControl {
 	public CommandListRunner(CommandList xCommands) {
 		commands = xCommands;
 		init();
-	}
-	
-	public void setCallAutomatically(boolean shouldCallAutomatically) {
-		this.callAutomatically=shouldCallAutomatically;
 	}
 	
 	/**
@@ -39,37 +35,20 @@ public class CommandListRunner extends IControl {
 	 * @return if the list has finished
 	 */
 	public boolean runList() {
-		ICommand curCommand = commands.getCommand(commandNum);
+		curCommand = commands.getCommand(commandNum);
 		if(curCommand instanceof EmptyCommand) return true;
 		if (prevCommandNum != commandNum) {
 			prevCommandNum = commandNum;
 			curCommand.init();
 		}
-		if (commands.getCommand(commandNum).run()) {
+		if (curCommand.run()) {
 			commandNum++;
 		}
 		return false;
 	}
 
-	//All below are IControl overrides
-
-	// starts at the first commandNum
-	public void autonomousInit() {
-		init();
-	}
-
-	// runs the command every cycle
-	public void autonomousPeriodic() {
-		if (callAutomatically) {
-			runList();
-		}
-	}
-	
-	public void teleopInit(){
-		stop();
-	}
-
 	public void stop() {
 		commandNum=commands.size();
+		curCommand.stop();
 	}
 }

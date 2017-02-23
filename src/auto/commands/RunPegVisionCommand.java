@@ -2,6 +2,8 @@ package auto.commands;
 
 import java.util.ArrayList;
 
+import auto.CommandList;
+import auto.CommandListRunner;
 import auto.ICommand;
 import auto.stopConditions.DistanceStopCondition;
 import comms.DebugMode;
@@ -20,7 +22,7 @@ public class RunPegVisionCommand implements ICommand {
 	private double degreesToTurn;
 	private double distanceToMove;
 	private boolean doneWithVision=false;
-	private ArrayList<ICommand> subcommands=new ArrayList<>();
+	private CommandListRunner runner;
 	private double percentToFinish=0;
 	
 	public RunPegVisionCommand(double percentToFinish) {
@@ -31,65 +33,49 @@ public class RunPegVisionCommand implements ICommand {
 	public void init() {
 		SmartWriter.putD("Peg Vision activates", System.currentTimeMillis());
 		doneWithVision=false;
-		subcommands.clear();
+		runner=null;
 		table.setBoolean("processVision", true);
-		((IDrive)Global.controlObjects.get("DRIVE")).setDriveControl(DriveControl.EXTERNAL_CONTROL);
+		IDrive drive=((IDrive)Global.controlObjects.get("DRIVE"));
+		drive.setDriveControl(DriveControl.EXTERNAL_CONTROL);
+		drive.setLeftMotors(0);
+		drive.setRightMotors(0);
 	}
 
 	public boolean run() {
 		if (((BabbageControl)(Global.controllers)).cancelPegVision()) {
-			//doneWithVision=true;
+			stop();
 			return true;
 		}
 		if (doneWithVision) {
-			if (subcommands.isEmpty()) {
-				SmartWriter.putS("Peg Vision State", "Done, but I shouldn't be here");
-				return true;
-			}
-			else {
-				SmartWriter.putS("Peg Vision State", "Turning/Driveing");
-				if (subcommands.get(0).run()) {
-					subcommands.remove(0);
-					if (!subcommands.isEmpty()) {
-						subcommands.get(0).init();
-					}
-					else {
-						SmartWriter.putS("Peg Vision State", "Done");
-						return true;
-					}
-				}
-				return false;
-			}
+			return runner.runList();
 		}
+		
 		if (table.getBoolean("processVision")) {
 			SmartWriter.putS("Peg Vision State", "Visioning");
-			//vision is still running
 			return false;
 		}
 		else {
-			//vision is done
 			degreesToTurn=table.getDouble("degreesToTurn");
 			distanceToMove=table.getDouble("distanceToMove");
 			SmartWriter.putS("Peg Vision Results", "Angle: "+degreesToTurn+", Distance: "+distanceToMove, DebugMode.COMPETITION);
 			doneWithVision=true;
-			subcommands.add(new TurnCommand(degreesToTurn, 1, .5));
-			subcommands.get(0).init();
 			
-			distanceToMove-=20;
+			CommandList list=new CommandList();
+			list.addCommand(new TurnCommand(degreesToTurn, 1, .5));
+			
+			distanceToMove-=5;
 			distanceToMove*=percentToFinish;
 			
-			//<temp>
-			//distanceToMove=1;
-			//</temp>
-			//4- DO 6 and 7
-			//3- DO 4 and 5
-			//2- DO 2 and 3
-			//1- DO 0 and 1
 			ArrayList<Encoder> encoders=new ArrayList<>();
 			encoders.add((Encoder)SensorController.getInstance().getSensor("ENCODER0"));
-			subcommands.add(new DriveCommand(new DistanceStopCondition(encoders, (int)distanceToMove), .5));
+			list.addCommand(new DriveCommand(new DistanceStopCondition(encoders, (int)distanceToMove), .3));
+			runner=new CommandListRunner(list);
+			runner.init();
 			return false;
 		}
 	}
 	
+	public void stop(){
+		runner.stop();
+	}
 }

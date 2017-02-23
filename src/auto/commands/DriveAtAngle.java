@@ -43,9 +43,7 @@ public class DriveAtAngle implements ICommand {
 			drive.setRightMotors(slowSpeed);
 		}
 		if (stopCondition.stopNow()) {
-			drive.setLeftMotors(0);
-			drive.setRightMotors(0);
-			drive.setDriveControl(DriveControl.DRIVE_CONTROLLED);
+			stop();
 			return true;
 		}
 		return false;
@@ -58,5 +56,10 @@ public class DriveAtAngle implements ICommand {
 		}
 		return angle-this.angle;
 	}
-
+	
+	public void stop(){
+		drive.setLeftMotors(0);
+		drive.setRightMotors(0);
+		drive.setDriveControl(DriveControl.DRIVE_CONTROLLED);
+	}
 }

@@ -28,6 +28,7 @@ public class CommandTester extends IControl {
 
 	public void autonomousInit() {
 		runner = new CommandListRunner(BabbageAutoLists.centerBlue());
+		runner.init();
 //		boolean blueSide = false;
 //		if (ds.getAlliance() == Alliance.Red) {
 //			blueSide = false;
@@ -80,6 +81,12 @@ public class CommandTester extends IControl {
 //				runner = new CommandListRunner(commandList);
 //			}
 //		}
+		
+		runner.runList();
+	}
+	
+	public void teleopInit(){
+		runner.stop();
 	}
 	
 }

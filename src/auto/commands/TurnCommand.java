@@ -50,18 +50,22 @@ public class TurnCommand implements ICommand {
 		boolean stopNow=stopCondition.stopNow();
 		SmartWriter.putB("hghjkhjghg", stopNow);
 		if (stopNow) {
-			drive.setLeftMotors(0);
-			drive.setRightMotors(0);
-			drive.setDriveControl(DriveControl.DRIVE_CONTROLLED);
+			stop();
 			return true;
 		}
 		return false;
 	}
 	
+	public void stop(){
+		drive.setLeftMotors(0);
+		drive.setRightMotors(0);
+		drive.setDriveControl(DriveControl.DRIVE_CONTROLLED);
+	}
+	
 	private void loadPIDValues() {
 		switch(Robot.name) {
 		case BABBAGE:
-			pidValues=new PIDValues(0.01, 0.0002, .15);
+			pidValues=new PIDValues(0.015, 0.0007, .15);
 			break;
 		case PIPER:
 			pidValues=new PIDValues(0.02, 0.0005, 0.15);//new PIDValues(0.005, 0.0002, 0.15);
