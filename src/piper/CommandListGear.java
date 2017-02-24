@@ -2,7 +2,9 @@ package piper;
 
 import auto.CommandList;
 import auto.CommandListRunner;
-import auto.commands.RunPegVisionCommand;
+import auto.commands.ContinuousPegVisionCommand;
+import auto.commands.DriveCommand;
+import auto.stopConditions.TimerStopCondition;
 import comms.SmartWriter;
 import drive.DriveControl;
 import drive.IDrive;
@@ -20,8 +22,10 @@ public class CommandListGear extends IControl{
 		commands = new CommandList();
 		//commands.addCommand(new DrivingPegVisionCommand(0.1, 0.3f));
 		//commands.addCommand(new DrivingPegVisionCommand(1, .2f));
-		commands.addCommand(new RunPegVisionCommand(.6));
-		commands.addCommand(new RunPegVisionCommand(1));
+		//commands.addCommand(new RunPegVisionCommand(.6));
+		//commands.addCommand(new RunPegVisionCommand(1));
+		commands.addCommand(new ContinuousPegVisionCommand(100));
+		commands.addCommand(new DriveCommand(new TimerStopCondition(200), 0.6));
 		runner=new CommandListRunner(commands);
 		controller=(BabbageControl) Global.controllers;
 	}
