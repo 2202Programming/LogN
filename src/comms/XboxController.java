@@ -129,10 +129,6 @@ public class XboxController extends IControl {
 		update();
 	}
 	
-	public void disabledPeriodic() {
-		update();
-	}
-	
 
 	/**
 	 * Updates the pressed/held values for each of the buttons and joystick
