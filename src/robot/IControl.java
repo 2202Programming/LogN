@@ -114,32 +114,32 @@ public abstract class IControl {
 	}
 	
 	public static void callAutonomousPeriodic() {
-		for (IControl i:allObjects) {
-			i.autonomousPeriodic();
+		for (int i=0; i<allObjects.size(); i++) {
+			allObjects.get(i).autonomousPeriodic();
 		}
 	}
 	
 	public static void callTeleopInit() {
-		for (IControl i:allObjects) {
-			i.teleopInit();
+		for (int i=0; i<allObjects.size(); i++) {
+			allObjects.get(i).teleopInit();
 		}
 	}
 	
 	public static void callTeleopPeriodic() {
-		for (IControl i:allObjects) {
-			i.teleopPeriodic();
+		for (int i=0; i<allObjects.size(); i++) {
+			allObjects.get(i).teleopPeriodic();
 		}
 	}
 	
 	public static void callDisabledInit() {
-		for (IControl i:allObjects) {
-			i.disabledInit();
+		for (int i=0; i<allObjects.size(); i++) {
+			allObjects.get(i).disabledInit();
 		}
 	}
 	
 	public static void callDisabledPeriodic() {
-		for (IControl i:allObjects) {
-			i.disabledPeriodic();
+		for (int i=0; i<allObjects.size(); i++) {
+			allObjects.get(i).disabledPeriodic();
 		}
 	}
 

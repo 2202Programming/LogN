@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 import comms.DebugMode;
 import comms.SmartWriter;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import robot.IControl;
 
 public class EncoderMonitor extends IControl {
@@ -27,6 +28,7 @@ public class EncoderMonitor extends IControl {
 	 * Print the encoder values to smart dashboard
 	 */
 	public void teleopPeriodic(){
+		SmartWriter.putD("DistanceSensorDistance", ((Ultrasonic)SensorController.getInstance().getSensor("DISTANCESENSOR")).getRangeInches());
 		for(Entry<String, Encoder> entry : encoders.entrySet()){
 			SmartWriter.putD(entry.getKey(), entry.getValue().get(), DebugMode.COMPETITION);
 			SmartWriter.putD(entry.getKey() + " DISTANCE", entry.getValue().getDistance(), DebugMode.COMPETITION);

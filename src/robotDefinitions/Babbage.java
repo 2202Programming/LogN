@@ -17,6 +17,7 @@ import drive.ArcadeDrive;
 import drive.IDrive;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import input.EncoderMonitor;
 import input.SensorController;
 import physicalOutput.IMotor;
@@ -88,6 +89,7 @@ public class Babbage extends RobotDefinitionBase {
 		SensorController sensorController = SensorController.getInstance();
 		sensorController.registerSensor("ENCODER0", encoder0);
 		sensorController.registerSensor("NAVX", new AHRS(SerialPort.Port.kMXP));
+		sensorController.registerSensor("DISTANCESENSOR", new Ultrasonic(7, 8));
 
 		// Create IMotors for Arcade Drive
 		IMotor leftMotors = new SparkMotor(getInt("LEFTMOTORPIN"), false);
@@ -101,14 +103,14 @@ public class Babbage extends RobotDefinitionBase {
 		IMotor[] intakeMotors= {new SparkMotor(getInt("INTAKEMOTOR"),true)};
 		Intake intake=new Intake(intakeMotors);
 
-		//Shooter
-		IMotor shooterWheelMotor = new TalonSRX(getInt("SHOOTWHEEL"), false, true);
-		ServoMotor turretMotor = new ServoMotor(getInt("TURRETMOTOR"));
-		IMotor chamberMotor = new SparkMotor(getInt("CHAMBERMOTOR"), true);
-		IMotor agitatorMotor = new SparkMotor(getInt("AGITATORMOTOR"), false);
-		//TODO the 5th motor will be the shooter angle motor
-		Shooter shooter = new Shooter(shooterWheelMotor, chamberMotor, agitatorMotor, turretMotor, turretMotor);
-		HighGoalTurning turning=new HighGoalTurning(turretMotor);
+//		//Shooter
+//		IMotor shooterWheelMotor = new TalonSRX(getInt("SHOOTWHEEL"), false, true);
+//		ServoMotor turretMotor = new ServoMotor(getInt("TURRETMOTOR"));
+//		IMotor chamberMotor = new SparkMotor(getInt("CHAMBERMOTOR"), true);
+//		IMotor agitatorMotor = new SparkMotor(getInt("AGITATORMOTOR"), false);
+//		//TODO the 5th motor will be the shooter angle motor
+//		Shooter shooter = new Shooter(shooterWheelMotor, chamberMotor, agitatorMotor, turretMotor, turretMotor);
+//		HighGoalTurning turning=new HighGoalTurning(turretMotor);
 		
 		// Gear Holder
 		IMotor gearMotor = new SparkMotor(getInt("GEARMOTOR"), false);

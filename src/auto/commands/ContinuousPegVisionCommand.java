@@ -24,7 +24,7 @@ public class ContinuousPegVisionCommand implements ICommand {
 	private double distanceToMove;
 	private boolean doneWithVision=false;
 	private double distance;
-	private Ultrasonic distanceSensor=new Ultrasonic(7, 8);//7 is not in use
+	private Ultrasonic distanceSensor;//7 is not in use
 	private DriveAtAngle driveAtAngleCommand;
 	private ArrayList<Encoder> encoders;
 	private double lastAngle=0;
@@ -32,7 +32,10 @@ public class ContinuousPegVisionCommand implements ICommand {
 	public ContinuousPegVisionCommand(double percentToFinish) {
 		table=new NetworkTables(TableNamesEnum.VisionTable);
 		driveAtAngleCommand=new DriveAtAngle(new TimerStopCondition(10000), 0.3, 0);
+		
+		distanceSensor=(Ultrasonic) SensorController.getInstance().getSensor("DISTANCESENSOR");
 		distanceSensor.setAutomaticMode(true);
+		
 	}
 
 	public void init() {
