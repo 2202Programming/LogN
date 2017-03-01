@@ -17,6 +17,7 @@ import drive.ArcadeDrive;
 import drive.IDrive;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import input.EncoderMonitor;
 import input.SensorController;
 import physicalOutput.IMotor;
@@ -52,9 +53,10 @@ public class Babbage extends RobotDefinitionBase {
 		_properties.put("LEFTMOTORPIN", "0");
 		_properties.put("RIGHTMOTORPIN", "1");
 		// Shooter pins
-		_properties.put("SHOOTWHEEL", "11");// MainShooterWheel
+		_properties.put("SHOOTWHEEL", "62");// MainShooterWheel
 		_properties.put("CHAMBERMOTOR", "5");// Motor to load balls
-		_properties.put("TURRETMOTOR", "9");// Motor to rotate shooter
+		_properties.put("TURRETMOTOR", "9");// Motor to rotate shooter left and right
+		_properties.put("HEIGHTMOTOR", "8");// Motor to rotate shooter up and down
 		_properties.put("AGITATORMOTOR", "6");// Agitates balls
 		// Gear holder
 		_properties.put("GEARMOTOR", "7");
@@ -88,6 +90,7 @@ public class Babbage extends RobotDefinitionBase {
 		SensorController sensorController = SensorController.getInstance();
 		sensorController.registerSensor("ENCODER0", encoder0);
 		sensorController.registerSensor("NAVX", new AHRS(SerialPort.Port.kMXP));
+		sensorController.registerSensor("DISTANCESENSOR", new Ultrasonic(7, 8));
 
 		// Create IMotors for Arcade Drive
 		IMotor leftMotors = new SparkMotor(getInt("LEFTMOTORPIN"), false);
@@ -102,13 +105,14 @@ public class Babbage extends RobotDefinitionBase {
 		Intake intake=new Intake(intakeMotors);
 
 		//Shooter
-		IMotor shooterWheelMotor = new TalonSRX(getInt("SHOOTWHEEL"), false, true);
+		IMotor shooterWheelMotor = new TalonSRX(getInt("SHOOTWHEEL"), true, true);
 		ServoMotor turretMotor = new ServoMotor(getInt("TURRETMOTOR"));
+		ServoMotor heightMotor = new ServoMotor(getInt("HEIGHTMOTOR"));
 		IMotor chamberMotor = new SparkMotor(getInt("CHAMBERMOTOR"), true);
 		IMotor agitatorMotor = new SparkMotor(getInt("AGITATORMOTOR"), false);
 		//TODO the 5th motor will be the shooter angle motor
-		Shooter shooter = new Shooter(shooterWheelMotor, chamberMotor, agitatorMotor, turretMotor, turretMotor);
-		HighGoalTurning turning=new HighGoalTurning(turretMotor);
+		Shooter shooter = new Shooter(shooterWheelMotor, chamberMotor, agitatorMotor, turretMotor, heightMotor);
+		HighGoalTurning turning=new HighGoalTurning(turretMotor, heightMotor);
 		
 		// Gear Holder
 		IMotor gearMotor = new SparkMotor(getInt("GEARMOTOR"), false);

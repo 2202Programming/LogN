@@ -124,6 +124,11 @@ public class XboxController extends IControl {
 		SmartWriter.putD("StickY", getLeftJoystickY(), DebugMode.DEBUG);
 		SmartWriter.putD("StickX", getLeftJoystickX(), DebugMode.DEBUG);
 	}
+	
+	public void autonomousPeriodic() {
+		update();
+	}
+	
 
 	/**
 	 * Updates the pressed/held values for each of the buttons and joystick

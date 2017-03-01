@@ -11,4 +11,9 @@ public interface ICommand {
 	 * @return true if the command is finished
 	 */
 	public boolean run();
+	
+	/**
+	 * Stops the command
+	 */
+	public void stop();
 }

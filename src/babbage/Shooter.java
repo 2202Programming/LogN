@@ -20,7 +20,7 @@ public class Shooter extends IControl {
 	private boolean _startShoosting;
 	private boolean _abort;
 	private boolean _fire;
-	private boolean _reverse;
+	private boolean _windDown;
 	
 	private boolean direction;
 	private int agCounter;
@@ -42,7 +42,7 @@ public class Shooter extends IControl {
 		//If we are primed, shoot the ball
 		_fire = state == ShooterState.PRIMED?controller.startShooting():false;
 		//If we are primed, reverse the shooter motors to unclog balls
-		_reverse = (state == ShooterState.PRIMED||state == ShooterState.REVERSE)?controller.reverseShooter():false;
+		_windDown = (state == ShooterState.PRIMED||state == ShooterState.REVERSE)?controller.reverseShooter():false;
 	}
 
 	/**
@@ -52,7 +52,7 @@ public class Shooter extends IControl {
 		SmartWriter.putS("ShooterState", state.toString());
 		SmartWriter.putB("_startShoosting", _startShoosting);
 		SmartWriter.putB("_fire", _fire);
-		SmartWriter.putB("_reverse", _reverse);
+		SmartWriter.putB("_reverse", _windDown);
 	}
 
 	/**
@@ -105,8 +105,8 @@ public class Shooter extends IControl {
 			shoosterChamber.init();
 		}
 		//Reverse the shooter motor if Primed
-		if (_reverse) {
-			reverse();
+		if (_windDown) {
+			windDown();
 			state = ShooterState.REVERSE;
 		}
 		else {
@@ -117,8 +117,9 @@ public class Shooter extends IControl {
 		// Turret code starts
 		if (controller.pauseHighGoalVision()) {
 			shoosterTurret.setAngle((controller.getLeftJoystickX(1) +1)/2f);
+			shoosterTurret.setHeight((controller.getRightJoystickY(1) + 1)/2f);
+			//shoosterTurret.setHeight(0.9);
 		}
-		//shoosterTurret.setHeight(controller.getRightJoystickY(1));
 	}
 
 	/**
@@ -156,8 +157,8 @@ public class Shooter extends IControl {
 	 * Sets the motors backwards
 	 * @return true always(may change)
 	 */
-	public boolean reverse() {
-		shooterMotors.setSpeed( -speed);
+	public boolean windDown() {
+		shooterMotors.setSpeed(0);
 		return true;
 	}
 

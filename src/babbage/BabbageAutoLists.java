@@ -4,21 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import auto.CommandList;
+import auto.commands.ContinuousPegVisionCommand;
 import auto.commands.DriveCommand;
-import auto.commands.RunPegVisionCommand;
 import auto.commands.TurnCommand;
 import auto.stopConditions.AngleStopCondition;
 import auto.stopConditions.DistanceStopCondition;
-import comms.DebugMode;
-import comms.SmartWriter;
+import auto.stopConditions.TimerStopCondition;
 import edu.wpi.first.wpilibj.Encoder;
+import auto.commands.WaitCommand;
 import input.SensorController;
 
 //TODO all distances, speeds and angles are not final
 
 public class BabbageAutoLists {
 	private final static double speed = 0.7;
-	private final static int distanceFromWall = 39;
+	private final static int distanceFromWall = 60;
+	private final static int turnAngle = 60;
+	private final static double turnTolerance = 2;
+	private final static double toleranceTime = 0.2;
 	private static SensorController sensors = SensorController.getInstance();
 	private static List<Encoder> encoders = new ArrayList<Encoder>();
 	
@@ -29,13 +32,11 @@ public class BabbageAutoLists {
 	 * @return returns Commandlist for the Red Center position
 	 */
 	public static CommandList centerRed(){
-		
 		encoders.add((Encoder) sensors.getSensor("ENCODER0"));
-		
 		CommandList CL = new CommandList();
-		SmartWriter.putS("AutoList", "centerRed", DebugMode.COMPETITION);
-		//CL.addCommand(new DriveCommand(new DistanceStopCondition(encoders, distanceFromWall), speed));
-		CL.addCommand(new RunPegVisionCommand(1));
+		CL.addCommand(new WaitCommand(new TimerStopCondition(500)));
+		CL.addCommand(new ContinuousPegVisionCommand(1));
+		CL.addCommand(new DriveCommand(new TimerStopCondition(400), 1));
 		return CL;
 	}
 	
@@ -49,10 +50,10 @@ public class BabbageAutoLists {
 		encoders.add((Encoder) sensors.getSensor("ENCODER0"));
 		
 		CommandList CL = new CommandList();
-		SmartWriter.putS("AutoList", "Boiler Red", DebugMode.COMPETITION);
 		CL.addCommand(new DriveCommand(new DistanceStopCondition(encoders, distanceFromWall), speed));
-		CL.addCommand(new TurnCommand(new AngleStopCondition(-45,1,0.3)));
-		CL.addCommand(new RunPegVisionCommand(1));
+		CL.addCommand(new TurnCommand(new AngleStopCondition(-turnAngle,turnTolerance,toleranceTime)));
+		CL.addCommand(new ContinuousPegVisionCommand(1));
+		CL.addCommand(new DriveCommand(new TimerStopCondition(400), 1));
 		return CL;
 	}
 
@@ -66,10 +67,10 @@ public class BabbageAutoLists {
 		encoders.add((Encoder) sensors.getSensor("ENCODER0"));
 		
 		CommandList CL = new CommandList();
-		SmartWriter.putS("AutoList", "Not Boiler Red", DebugMode.COMPETITION);
 		CL.addCommand(new DriveCommand(new DistanceStopCondition(encoders, distanceFromWall), speed));
-		CL.addCommand(new TurnCommand(new AngleStopCondition(45,1,0.3)));
-		CL.addCommand(new RunPegVisionCommand(1));
+		CL.addCommand(new TurnCommand(new AngleStopCondition(turnAngle,turnTolerance,toleranceTime)));
+		CL.addCommand(new ContinuousPegVisionCommand(1));
+		CL.addCommand(new DriveCommand(new TimerStopCondition(400), 1));
 		return CL;
 	}
 	
@@ -79,13 +80,11 @@ public class BabbageAutoLists {
 	 * @return returns Commandlist for the Blue Center position
 	 */
 	public static CommandList centerBlue(){
-		
 		encoders.add((Encoder) sensors.getSensor("ENCODER0"));
-		
 		CommandList CL = new CommandList();
-		SmartWriter.putS("AutoList", "Center Blue", DebugMode.COMPETITION);
-		//CL.addCommand(new DriveCommand(new DistanceStopCondition(encoders, distanceFromWall), speed));
-		CL.addCommand(new RunPegVisionCommand(1));
+		CL.addCommand(new WaitCommand(new TimerStopCondition(500)));
+		CL.addCommand(new ContinuousPegVisionCommand(1));
+		CL.addCommand(new DriveCommand(new TimerStopCondition(400), 1));
 		return CL;
 	}
 	
@@ -99,10 +98,10 @@ public class BabbageAutoLists {
 		encoders.add((Encoder) sensors.getSensor("ENCODER0"));
 		
 		CommandList CL = new CommandList();
-		SmartWriter.putS("AutoList", "Boilerblue", DebugMode.COMPETITION);
 		CL.addCommand(new DriveCommand(new DistanceStopCondition(encoders, distanceFromWall), speed));
-		CL.addCommand(new TurnCommand(new AngleStopCondition(45,1,0.3)));
-		CL.addCommand(new RunPegVisionCommand(1));
+		CL.addCommand(new TurnCommand(new AngleStopCondition(turnAngle,turnTolerance,toleranceTime)));
+		CL.addCommand(new ContinuousPegVisionCommand(1));
+		CL.addCommand(new DriveCommand(new TimerStopCondition(400), 1));
 		return CL;
 	}
 	
@@ -117,10 +116,10 @@ public class BabbageAutoLists {
 		encoders.add((Encoder) sensors.getSensor("ENCODER0"));
 		
 		CommandList CL = new CommandList();
-		SmartWriter.putS("AutoList", "Not Boiler Blue", DebugMode.COMPETITION);
 		CL.addCommand(new DriveCommand(new DistanceStopCondition(encoders, distanceFromWall), speed));
-		CL.addCommand(new TurnCommand(new AngleStopCondition(-45,1,0.3)));
-		CL.addCommand(new RunPegVisionCommand(1));
+		CL.addCommand(new TurnCommand(new AngleStopCondition(-turnAngle,turnTolerance,toleranceTime)));
+		CL.addCommand(new ContinuousPegVisionCommand(1));
+		CL.addCommand(new DriveCommand(new TimerStopCondition(400), 1));
 		return CL;
 	}
 }
