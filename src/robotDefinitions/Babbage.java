@@ -53,9 +53,10 @@ public class Babbage extends RobotDefinitionBase {
 		_properties.put("LEFTMOTORPIN", "0");
 		_properties.put("RIGHTMOTORPIN", "1");
 		// Shooter pins
-		_properties.put("SHOOTWHEEL", "11");// MainShooterWheel
+		_properties.put("SHOOTWHEEL", "62");// MainShooterWheel
 		_properties.put("CHAMBERMOTOR", "5");// Motor to load balls
-		_properties.put("TURRETMOTOR", "9");// Motor to rotate shooter
+		_properties.put("TURRETMOTOR", "9");// Motor to rotate shooter left and right
+		_properties.put("HEIGHTMOTOR", "8");// Motor to rotate shooter up and down
 		_properties.put("AGITATORMOTOR", "6");// Agitates balls
 		// Gear holder
 		_properties.put("GEARMOTOR", "7");
@@ -103,14 +104,15 @@ public class Babbage extends RobotDefinitionBase {
 		IMotor[] intakeMotors= {new SparkMotor(getInt("INTAKEMOTOR"),true)};
 		Intake intake=new Intake(intakeMotors);
 
-//		//Shooter
-//		IMotor shooterWheelMotor = new TalonSRX(getInt("SHOOTWHEEL"), false, true);
-//		ServoMotor turretMotor = new ServoMotor(getInt("TURRETMOTOR"));
-//		IMotor chamberMotor = new SparkMotor(getInt("CHAMBERMOTOR"), true);
-//		IMotor agitatorMotor = new SparkMotor(getInt("AGITATORMOTOR"), false);
-//		//TODO the 5th motor will be the shooter angle motor
-//		Shooter shooter = new Shooter(shooterWheelMotor, chamberMotor, agitatorMotor, turretMotor, turretMotor);
-//		HighGoalTurning turning=new HighGoalTurning(turretMotor);
+		//Shooter
+		IMotor shooterWheelMotor = new TalonSRX(getInt("SHOOTWHEEL"), true, true);
+		ServoMotor turretMotor = new ServoMotor(getInt("TURRETMOTOR"));
+		ServoMotor heightMotor = new ServoMotor(getInt("HEIGHTMOTOR"));
+		IMotor chamberMotor = new SparkMotor(getInt("CHAMBERMOTOR"), true);
+		IMotor agitatorMotor = new SparkMotor(getInt("AGITATORMOTOR"), false);
+		//TODO the 5th motor will be the shooter angle motor
+		Shooter shooter = new Shooter(shooterWheelMotor, chamberMotor, agitatorMotor, turretMotor, heightMotor);
+		HighGoalTurning turning=new HighGoalTurning(turretMotor, heightMotor);
 		
 		// Gear Holder
 		IMotor gearMotor = new SparkMotor(getInt("GEARMOTOR"), false);

@@ -15,6 +15,7 @@ public class TalonSRX extends IMotor {
 	public TalonSRX(int x, boolean reverse) {
 		super(reverse);
 		part = new CANTalon(x);
+		part.setPID(0.001, 0, 0);
 		part.changeControlMode(TalonControlMode.PercentVbus);
 		hasEncoder = false;
 	}
@@ -24,12 +25,13 @@ public class TalonSRX extends IMotor {
 		if (hasEncoder) {
 			part.configEncoderCodesPerRev(4096);
 			part.setProfile(0);
-			part.setF(0.013); /// 0.008562
-			part.setP(0.018); // 102/4000 .1*1023/4000Uerror = 0.0255
-			part.setI(0.00002); // set P/100 to start
+			part.setF(0.001); /// 0.008562
+			part.setP(0.08); // 102/4000 .1*1023/4000Uerror = 0.0255
+			part.setI(0.0001); // set P/100 to start
 			part.setD(0.0000);
 			part.setAllowableClosedLoopErr(0);
 
+			part.configPeakOutputVoltage(0, -12);
 			part.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 			part.reverseSensor(!reverse);
 			part.changeControlMode(TalonControlMode.Speed);
@@ -39,7 +41,7 @@ public class TalonSRX extends IMotor {
 			// err= 500RPM (50r/min)*(4096U/rev)*(1/60 min/s)*(1/10 s/100ms)
 			// = 3410 U/100ms (U is pulses or native units)
 			//
-			part.setIZone(0); // should be in native-units (pulses/100ms)
+			//part.setIZone(0); // should be in native-units (pulses/100ms)
 			// Izone seems to break the CL control by zeroing the iAcc when the err gets to zero
 			// this feels like a bug in the SRX. - Derek
 			part.setEncPosition(0);
@@ -55,7 +57,7 @@ public class TalonSRX extends IMotor {
 			part.setEncPosition(0);
 			part.ClearIaccum();
 			part.clearStickyFaults();
-			part.setAllowableClosedLoopErr(20);
+			part.setAllowableClosedLoopErr(0);
 		}
 	}
 

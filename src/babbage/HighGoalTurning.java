@@ -12,17 +12,18 @@ import robotDefinitions.BabbageControl;
 
 public class HighGoalTurning extends IControl {
 
-	private ServoMotor servo;
+	private ServoMotor servo, heightServoMotor;
 	private NetworkTables table;
 	private boolean waitingToTurnShooter=false;
 	private double targetAngle=90;
 	//private XboxController controller;
 	private boolean processingVision=false;
 
-	public HighGoalTurning(ServoMotor turnShooterServo) {
+	public HighGoalTurning(ServoMotor turnShooterServo, ServoMotor heightShooterMotor) {
 		servo=turnShooterServo;
 		table=new NetworkTables(TableNamesEnum.VisionTable);
 		//controller=XboxController.getXboxController();
+		heightServoMotor=heightShooterMotor;
 	}
 
 	public void teleopInit() {
@@ -43,10 +44,16 @@ public class HighGoalTurning extends IControl {
 			}
 			else {
 				processingVision=false;
-				targetAngle = servo.getAngle()- table.getDouble("degreesToSetHighGoal")*3.8;
-				SmartWriter.putS("High Goal Vision Result:", "Distance: " +targetAngle);
+				targetAngle = servo.getAngle()- table.getDouble("degreesToSetHighGoal")*2;//*3.8;
+				double distance=table.getDouble("distanceFromHighGoal");
+				SmartWriter.putS("High Goal Vision Result2:", "Distance: " +distance);
 				servo.setSpeed(targetAngle/180);
 				targetAngle=Math.max(0, Math.min(180, targetAngle));
+				
+				//these are calculated constants that we found from testing and linear regression.
+				double angle=(distance+18.29)/145.5;
+				angle=Math.max(0, Math.min(1, angle));
+				heightServoMotor.setSpeed(angle);
 			}
 		}
 		else {
