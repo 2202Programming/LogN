@@ -12,7 +12,7 @@ public class Shooter extends IControl {
 	private IMotor shooterMotors;
 	private IMotor agitatorMotor;
 	private BabbageControl controller;
-	private double speed = 1050;
+	private double speed = 1100;
 	private ShooterState state;
 	private Chamber shoosterChamber;
 	private Turret shoosterTurret;
@@ -134,9 +134,9 @@ public class Shooter extends IControl {
 	
 	private void agitate(){
 		if(direction){
-			agitatorMotor.setSpeed(0.9);
+			agitatorMotor.setSpeed(0.6);
 		}else{
-			agitatorMotor.setSpeed(-0.9);
+			agitatorMotor.setSpeed(-0.6);
 		}
 		
 		if(++agCounter > 50){

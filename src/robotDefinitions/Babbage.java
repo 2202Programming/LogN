@@ -82,7 +82,7 @@ public class Babbage extends RobotDefinitionBase {
 		// Encoders
 		Encoder encoder0 = new Encoder(0, 1);
 		encoder0.setDistancePerPulse(0.0534);
-		encoder0.setReverseDirection(true);
+		encoder0.setReverseDirection(false);
 		EncoderMonitor encoderMonitor = new EncoderMonitor();
 		encoderMonitor.add("ENCODER0", encoder0);
 
@@ -108,7 +108,7 @@ public class Babbage extends RobotDefinitionBase {
 		IMotor shooterWheelMotor = new TalonSRX(getInt("SHOOTWHEEL"), true, true);
 		ServoMotor turretMotor = new ServoMotor(getInt("TURRETMOTOR"));
 		ServoMotor heightMotor = new ServoMotor(getInt("HEIGHTMOTOR"));
-		IMotor chamberMotor = new SparkMotor(getInt("CHAMBERMOTOR"), true);
+		IMotor chamberMotor = new SparkMotor(getInt("CHAMBERMOTOR"), false);
 		IMotor agitatorMotor = new SparkMotor(getInt("AGITATORMOTOR"), false);
 		//TODO the 5th motor will be the shooter angle motor
 		Shooter shooter = new Shooter(shooterWheelMotor, chamberMotor, agitatorMotor, turretMotor, heightMotor);

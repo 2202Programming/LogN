@@ -18,6 +18,8 @@ public class HighGoalTurning extends IControl {
 	private double targetAngle=90;
 	//private XboxController controller;
 	private boolean processingVision=false;
+	
+	private final double DEGREEOFFSET = -10;
 
 	public HighGoalTurning(ServoMotor turnShooterServo, ServoMotor heightShooterMotor) {
 		servo=turnShooterServo;
@@ -44,7 +46,7 @@ public class HighGoalTurning extends IControl {
 			}
 			else {
 				processingVision=false;
-				targetAngle = servo.getAngle()- table.getDouble("degreesToSetHighGoal")*2;//*3.8;
+				targetAngle = servo.getAngle()- table.getDouble("degreesToSetHighGoal")*2 + DEGREEOFFSET;//*3.8;
 				double distance=table.getDouble("distanceFromHighGoal");
 				SmartWriter.putS("High Goal Vision Result2:", "Distance: " +distance);
 				servo.setSpeed(targetAngle/180);
