@@ -28,6 +28,8 @@ public class ContinuousPegVisionCommand implements ICommand {
 	private DriveAtAngle driveAtAngleCommand;
 	private ArrayList<Encoder> encoders;
 	private double lastAngle=0;
+	private long msToRunFor=99999999;
+	private long maxEndTime=Long.MAX_VALUE;
 
 	public ContinuousPegVisionCommand(double percentToFinish) {
 		table=new NetworkTables(TableNamesEnum.VisionTable);
@@ -36,6 +38,11 @@ public class ContinuousPegVisionCommand implements ICommand {
 		distanceSensor=(Ultrasonic) SensorController.getInstance().getSensor("DISTANCESENSOR");
 		distanceSensor.setAutomaticMode(true);
 		
+	}
+	
+	public ContinuousPegVisionCommand(double percentToFinish, long msToRunFor) {
+		this(percentToFinish);
+		this.msToRunFor=msToRunFor;
 	}
 
 	public void init() {
@@ -48,6 +55,7 @@ public class ContinuousPegVisionCommand implements ICommand {
 		encoders.add((Encoder)SensorController.getInstance().getSensor("ENCODER0"));
 		encoders.get(0).reset();
 		lastAngle=0;
+		maxEndTime=System.currentTimeMillis()+msToRunFor;
 	}
 
 	public boolean run() {
@@ -56,6 +64,12 @@ public class ContinuousPegVisionCommand implements ICommand {
 			table.setBoolean("processVision", false);
 			return true;
 		}
+		
+		if (System.currentTimeMillis()>=maxEndTime) {
+			stop();
+			return true;
+		}
+		
 		
 		if (distanceSensor.getRangeInches()<24) {
 			driveAtAngleCommand.setSpeed(0.2);

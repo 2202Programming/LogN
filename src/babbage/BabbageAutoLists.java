@@ -35,7 +35,7 @@ public class BabbageAutoLists {
 		encoders.add((Encoder) sensors.getSensor("ENCODER0"));
 		CommandList CL = new CommandList();
 		CL.addCommand(new WaitCommand(new TimerStopCondition(500)));
-		CL.addCommand(new ContinuousPegVisionCommand(1));
+		CL.addCommand(new ContinuousPegVisionCommand(1, 4000));
 		CL.addCommand(new DriveCommand(new TimerStopCondition(400), 1));
 		return CL;
 	}
@@ -52,7 +52,7 @@ public class BabbageAutoLists {
 		CommandList CL = new CommandList();
 		CL.addCommand(new DriveCommand(new DistanceStopCondition(encoders, distanceFromWall), speed));
 		CL.addCommand(new TurnCommand(new AngleStopCondition(-turnAngle,turnTolerance,toleranceTime)));
-		CL.addCommand(new ContinuousPegVisionCommand(1));
+		CL.addCommand(new ContinuousPegVisionCommand(1, 4000));
 		CL.addCommand(new DriveCommand(new TimerStopCondition(400), 1));
 		return CL;
 	}
@@ -69,7 +69,7 @@ public class BabbageAutoLists {
 		CommandList CL = new CommandList();
 		CL.addCommand(new DriveCommand(new DistanceStopCondition(encoders, distanceFromWall), speed));
 		CL.addCommand(new TurnCommand(new AngleStopCondition(turnAngle,turnTolerance,toleranceTime)));
-		CL.addCommand(new ContinuousPegVisionCommand(1));
+		CL.addCommand(new ContinuousPegVisionCommand(1, 4000));
 		CL.addCommand(new DriveCommand(new TimerStopCondition(400), 1));
 		return CL;
 	}
@@ -83,7 +83,7 @@ public class BabbageAutoLists {
 		encoders.add((Encoder) sensors.getSensor("ENCODER0"));
 		CommandList CL = new CommandList();
 		CL.addCommand(new WaitCommand(new TimerStopCondition(500)));
-		CL.addCommand(new ContinuousPegVisionCommand(1));
+		CL.addCommand(new ContinuousPegVisionCommand(1, 4000));
 		CL.addCommand(new DriveCommand(new TimerStopCondition(400), 1));
 		return CL;
 	}
@@ -100,7 +100,7 @@ public class BabbageAutoLists {
 		CommandList CL = new CommandList();
 		CL.addCommand(new DriveCommand(new DistanceStopCondition(encoders, distanceFromWall), speed));
 		CL.addCommand(new TurnCommand(new AngleStopCondition(turnAngle,turnTolerance,toleranceTime)));
-		CL.addCommand(new ContinuousPegVisionCommand(1));
+		CL.addCommand(new ContinuousPegVisionCommand(1, 4000));
 		CL.addCommand(new DriveCommand(new TimerStopCondition(400), 1));
 		return CL;
 	}
@@ -118,7 +118,7 @@ public class BabbageAutoLists {
 		CommandList CL = new CommandList();
 		CL.addCommand(new DriveCommand(new DistanceStopCondition(encoders, distanceFromWall), speed));
 		CL.addCommand(new TurnCommand(new AngleStopCondition(-turnAngle,turnTolerance,toleranceTime)));
-		CL.addCommand(new ContinuousPegVisionCommand(1));
+		CL.addCommand(new ContinuousPegVisionCommand(1, 4000));
 		CL.addCommand(new DriveCommand(new TimerStopCondition(400), 1));
 		return CL;
 	}
