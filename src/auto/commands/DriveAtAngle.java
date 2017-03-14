@@ -33,7 +33,7 @@ public class DriveAtAngle implements ICommand {
 		usePID = true;
 		// these will most likely be small as the value needs to be under 1.0/
 		// -1.0
-		controller = new PIDController(0.01, 0.00005, .0, true, false);
+		controller = new PIDController(0.01, 0.00005, .01, true, false);
 		stopCondition = stop;
 		this.angle = angle;
 		slowSpeed = speed;
