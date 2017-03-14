@@ -65,6 +65,7 @@ public class TalonSRX extends IMotor {
 	protected void setMotor(double x) {
 		part.set(x);
 		SmartWriter.putD("ShooterSpeed", part.getSpeed(),DebugMode.COMPETITION);
+		SmartWriter.putD("Shooter Error", x - part.getSpeed(), DebugMode.COMPETITION);
 	}
 
 	public double getSpeed() {

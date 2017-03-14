@@ -19,7 +19,7 @@ public class HighGoalTurning extends IControl {
 	//private XboxController controller;
 	private boolean processingVision=false;
 	
-	private final double DEGREEOFFSET = -10;
+	private final double DEGREEOFFSET = -15;
 
 	public HighGoalTurning(ServoMotor turnShooterServo, ServoMotor heightShooterMotor) {
 		servo=turnShooterServo;
@@ -80,5 +80,13 @@ public class HighGoalTurning extends IControl {
 		 * waitingToTurnShooter=false; table.setBoolean("processVisionHighGoal",
 		 * true); } }
 		 */
+	}
+	
+	public void autonomousInit() {
+		teleopInit();
+	}
+	
+	public void autonomousPeriodic() {
+		teleopPeriodic();
 	}
 }
