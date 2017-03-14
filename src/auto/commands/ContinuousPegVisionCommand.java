@@ -2,16 +2,11 @@ package auto.commands;
 
 import java.util.ArrayList;
 
-import auto.CommandList;
-import auto.CommandListRunner;
 import auto.ICommand;
-import auto.stopConditions.DistanceStopCondition;
 import auto.stopConditions.TimerStopCondition;
 import comms.NetworkTables;
 import comms.SmartWriter;
 import comms.TableNamesEnum;
-import drive.DriveControl;
-import drive.IDrive;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import input.SensorController;
@@ -22,8 +17,6 @@ public class ContinuousPegVisionCommand implements ICommand {
 	private NetworkTables table;
 	private double degreesToTurn;
 	private double distanceToMove;
-	private boolean doneWithVision=false;
-	private double distance;
 	private Ultrasonic distanceSensor;//7 is not in use
 	private DriveAtAngle driveAtAngleCommand;
 	private ArrayList<Encoder> encoders;
@@ -47,7 +40,6 @@ public class ContinuousPegVisionCommand implements ICommand {
 
 	public void init() {
 		SmartWriter.putD("Peg Vision activated", System.currentTimeMillis());
-		doneWithVision=false;
 		driveAtAngleCommand.init();
 		driveAtAngleCommand.setAngle(0);
 		table.setBoolean("processVision", true);
