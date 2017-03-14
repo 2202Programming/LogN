@@ -13,6 +13,11 @@ import input.SensorController;
 import robot.Global;
 import robotDefinitions.BabbageControl;
 
+/**
+ * 
+ * @author 13dha
+ *
+ */
 public class ContinuousPegVisionCommand implements ICommand {
 	private NetworkTables table;
 	private double degreesToTurn;
@@ -24,6 +29,15 @@ public class ContinuousPegVisionCommand implements ICommand {
 	private long msToRunFor=99999999;
 	private long maxEndTime=Long.MAX_VALUE;
 
+	
+	/**
+	 * Constructs a ContinuousPegVision command object
+	 * 
+	 * @param percentToFinish
+	 * We don't actually use this at all anymore. We used to use it 
+	 * based on our distance results from when we were measuring 
+	 * distance from vision. We use an ultrasonic sensor now, though
+	 */
 	public ContinuousPegVisionCommand(double percentToFinish) {
 		table=new NetworkTables(TableNamesEnum.VisionTable);
 		driveAtAngleCommand=new DriveAtAngle(new TimerStopCondition(10000), 0.3, 0);
@@ -33,15 +47,25 @@ public class ContinuousPegVisionCommand implements ICommand {
 		
 	}
 	
+	/**
+	 * Constructs a ContinuousPegVision command that stops after a certain number of milliseconds
+	 * @param percentToFinish
+	 * We don't actually use this at all anymore. We used to use it 
+	 * based on our distance results from when we were measuring 
+	 * distance from vision. We use an ultrasonic sensor now, though
+	 * @param msToRunFor
+	 * The number of milliseconds before this command ends. We use this in autonomous in case we get stuck on the wall.
+	 */
 	public ContinuousPegVisionCommand(double percentToFinish, long msToRunFor) {
 		this(percentToFinish);
 		this.msToRunFor=msToRunFor;
 	}
 
+	//comments in ICommand
 	public void init() {
 		SmartWriter.putD("Peg Vision activated", System.currentTimeMillis());
 		driveAtAngleCommand.init();
-		driveAtAngleCommand.setAngle(0);
+		driveAtAngleCommand.setAngle(0);//drive forward until we know what angle we should drive at
 		table.setBoolean("processVision", true);
 		encoders=new ArrayList<>();
 		encoders.add((Encoder)SensorController.getInstance().getSensor("ENCODER0"));
@@ -63,6 +87,7 @@ public class ContinuousPegVisionCommand implements ICommand {
 		}
 		
 		
+		//Go slower if we are closer to where we want to be. If we are less than 10 inches from the target, the distance sensor will no longer work, so stop.
 		if (distanceSensor.getRangeInches()<24) {
 			driveAtAngleCommand.setSpeed(0.2);
 			if (distanceSensor.getRangeInches()<10) {
@@ -84,7 +109,7 @@ public class ContinuousPegVisionCommand implements ICommand {
 			}
 		}
 		
-		driveAtAngleCommand.run();
+		driveAtAngleCommand.run();//run the command to drive at an angle
 		SmartWriter.putD("Distance Sensor", distanceSensor.getRangeInches());
 		
 		if (table.getBoolean("processVision")) {
@@ -108,10 +133,10 @@ public class ContinuousPegVisionCommand implements ICommand {
 
 			double tempLastAngle=lastAngle;
 			lastAngle=driveAtAngleCommand.getAngle();
-			driveAtAngleCommand.setAngle(tempLastAngle+degreesToTurn);
+			driveAtAngleCommand.setAngle(tempLastAngle+degreesToTurn);//turn at the angle vision was when we took the picture, plus what vision said to turn
 			
 			table.setBoolean("processVision", true);
-			encoders.get(0).reset();
+			encoders.get(0).reset();//we don't use this anymore, it was from when we used encoders and vision to measure distance
 			return false;
 		}
 
