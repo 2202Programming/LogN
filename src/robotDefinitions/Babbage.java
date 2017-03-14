@@ -112,6 +112,7 @@ public class Babbage extends RobotDefinitionBase {
 		IMotor agitatorMotor = new SparkMotor(getInt("AGITATORMOTOR"), false);
 		//TODO the 5th motor will be the shooter angle motor
 		Shooter shooter = new Shooter(shooterWheelMotor, chamberMotor, agitatorMotor, turretMotor, heightMotor);
+		temp.put("SHOOTER", shooter);
 		HighGoalTurning turning=new HighGoalTurning(turretMotor, heightMotor);
 		
 		// Gear Holder
