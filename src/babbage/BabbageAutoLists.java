@@ -8,11 +8,11 @@ import auto.commands.ContinuousPegVisionCommand;
 import auto.commands.DriveCommand;
 import auto.commands.ShootCommand;
 import auto.commands.TurnCommand;
+import auto.commands.WaitCommand;
 import auto.stopConditions.AngleStopCondition;
 import auto.stopConditions.DistanceStopCondition;
 import auto.stopConditions.TimerStopCondition;
 import edu.wpi.first.wpilibj.Encoder;
-import auto.commands.WaitCommand;
 import input.SensorController;
 
 //TODO all distances, speeds and angles are not final
@@ -27,6 +27,26 @@ public class BabbageAutoLists {
 	private static List<Encoder> encoders = new ArrayList<Encoder>();
 	
 	
+	public static CommandList shootingRed() {
+		encoders.add((Encoder) sensors.getSensor("ENCODER0"));
+		CommandList cl=new CommandList();
+		cl.addCommand(new DriveCommand(new DistanceStopCondition(encoders, 64), 0.6));
+		cl.addCommand(new TurnCommand(-90, 10, 0.3));
+		cl.addCommand(new DriveCommand(new TimerStopCondition(1000), 0.6));
+		cl.addCommand(new ShootCommand());
+		return cl;
+	}
+	
+	public static CommandList shootingBlue() {
+		encoders.add((Encoder) sensors.getSensor("ENCODER0"));
+		CommandList cl=new CommandList();
+		cl.addCommand(new DriveCommand(new DistanceStopCondition(encoders, 64), 0.6));
+		cl.addCommand(new TurnCommand(-90, 10, 0.3));
+		cl.addCommand(new DriveCommand(new TimerStopCondition(1000), -0.6));
+		cl.addCommand(new ShootCommand());
+		return cl;
+	}
+	
 	/** Tells the robot to move forward. Then, it runs
 	 * the PegVision
 	 * 
@@ -38,7 +58,7 @@ public class BabbageAutoLists {
 		CL.addCommand(new WaitCommand(new TimerStopCondition(500)));
 		CL.addCommand(new ContinuousPegVisionCommand(1, 4000));
 		CL.addCommand(new DriveCommand(new TimerStopCondition(400), 1));
-		CL.addCommand(new ShootCommand());
+		//CL.addCommand(new ShootCommand());
 		return CL;
 	}
 	

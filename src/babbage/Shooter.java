@@ -150,10 +150,12 @@ public class Shooter extends IControl {
 			}
 		}
 		// Turret code starts
+		//If the start button is pressed, the turret starts using joystick controls.
+		//the servo takes a value 0-1
 		if (controller.pauseHighGoalVision()) {
 			shoosterTurret.setAngle((controller.getLeftJoystickX(1) + 1) / 2f);
 			shoosterTurret.setHeight((controller.getRightJoystickY(1) + 1) / 2f);
-			// shoosterTurret.setHeight(0.9);
+			//shoosterTurret.setHeight(0.05);
 		}
 	}
 
