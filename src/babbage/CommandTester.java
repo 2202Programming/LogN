@@ -50,6 +50,11 @@ public class CommandTester extends IControl {
 				commandList = BabbageAutoLists.notBoilerRed();
 				autoName = "notBoilerRed";
 			}
+			
+			if (controllers.autoShooter()) {
+				commandList = BabbageAutoLists.shootingRed();
+				autoName="shootingRed";
+			}
 		}
 		
 		if (blueSide) {
@@ -64,6 +69,10 @@ public class CommandTester extends IControl {
 			if (controllers.autoFieldPosition2()) {
 				commandList = BabbageAutoLists.notBoilerBlue();
 				autoName = "notBoilerBlue";
+			}
+			if (controllers.autoShooter()) {
+				commandList = BabbageAutoLists.shootingBlue();
+				autoName="shootingBlue";
 			}
 		}
 	}
