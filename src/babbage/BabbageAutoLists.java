@@ -32,7 +32,7 @@ public class BabbageAutoLists {
 		CommandList cl=new CommandList();
 		cl.addCommand(new DriveCommand(new DistanceStopCondition(encoders, 64), 0.6));
 		cl.addCommand(new TurnCommand(-90, 10, 0.3));
-		cl.addCommand(new DriveCommand(new TimerStopCondition(1000), 0.6));
+		cl.addCommand(new DriveCommand(new TimerStopCondition(1000), -0.6));
 		cl.addCommand(new ShootCommand());
 		return cl;
 	}
@@ -42,7 +42,7 @@ public class BabbageAutoLists {
 		CommandList cl=new CommandList();
 		cl.addCommand(new DriveCommand(new DistanceStopCondition(encoders, 64), 0.6));
 		cl.addCommand(new TurnCommand(-90, 10, 0.3));
-		cl.addCommand(new DriveCommand(new TimerStopCondition(1000), -0.6));
+		cl.addCommand(new DriveCommand(new TimerStopCondition(1000), 0.6));
 		cl.addCommand(new ShootCommand());
 		return cl;
 	}
