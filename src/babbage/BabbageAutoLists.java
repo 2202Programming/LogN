@@ -51,6 +51,7 @@ public class BabbageAutoLists {
 		
 		encoders.add((Encoder) sensors.getSensor("ENCODER0"));
 		
+		//TODO add timer built into this 
 		CommandList CL = new CommandList();
 		CL.addCommand(new DriveCommand(new DistanceStopCondition(encoders, distanceFromWall), speed));
 		CL.addCommand(new TurnCommand(new AngleStopCondition(-turnAngle,turnTolerance,toleranceTime)));

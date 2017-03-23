@@ -29,7 +29,7 @@ public class CommandTester extends IControl {
 	public void autonomousInit() {
 		runner = null;
 		boolean blueSide = false;
-		if (ds.getAlliance() == Alliance.Red) {
+		if (ds.getAlliance() == Alliance.Red) {//TODO make switch based on alliance side
 			blueSide = false;
 		}
 		else {
@@ -37,7 +37,7 @@ public class CommandTester extends IControl {
 		}
 		
 		autoName = "none";
-		if ( !blueSide) {
+		if (!blueSide) {
 			if (controllers.autoFieldPosition1()) {
 				commandList = BabbageAutoLists.centerRed();
 				autoName = "centerRed";
@@ -73,6 +73,7 @@ public class CommandTester extends IControl {
 		SmartWriter.putB("pos1", controllers.autoFieldPosition1(), DebugMode.COMPETITION);
 		SmartWriter.putB("pos2", controllers.autoFieldPosition2(), DebugMode.COMPETITION);
 		SmartWriter.putS("AutoName", autoName, DebugMode.COMPETITION);
+		
 		if(autoName.equals("none")){
 			autonomousInit();
 		}else{

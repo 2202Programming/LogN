@@ -92,7 +92,7 @@ public class Robot extends IterativeRobot {
 		
 		SmartWriter.putS("Robot State", "Disabled Init", DebugMode.COMPETITION);
 		try {
-			//IControl.callDisabledInit();
+			IControl.callDisabledInit();
 		} catch (Exception e) {
 			SmartWriter.outputError(e, "Disabled Init");
 		}
@@ -102,7 +102,7 @@ public class Robot extends IterativeRobot {
 		
 		SmartWriter.putS("Robot State", "Disabled Periodic", DebugMode.COMPETITION);
 		try {
-			//IControl.callDisabledPeriodic();
+			IControl.callDisabledPeriodic();
 		} catch (Exception e) {
 			SmartWriter.outputError(e, "Disabled Periodic");
 		}

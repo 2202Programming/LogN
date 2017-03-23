@@ -124,12 +124,12 @@ public class ContinuousPegVisionCommand implements ICommand {
 			SmartWriter.putD("degreesToTurn final", degreesToTurn);
 			SmartWriter.putD("distanceToMove final", distanceToMove);
 
-			double distanceTraveled=encoders.get(0).getDistance();
-			double distanceX=Math.cos(Math.toRadians(degreesToTurn))*distanceTraveled;
-			double distanceY=Math.sin(Math.toRadians(degreesToTurn))*distanceTraveled;
-			double increasedAngle=Math.toDegrees(Math.atan2(distanceY, distanceToMove-distanceX));
+			//double distanceTraveled=encoders.get(0).getDistance();
+			//double distanceX=Math.cos(Math.toRadians(degreesToTurn))*distanceTraveled;
+			//double distanceY=Math.sin(Math.toRadians(degreesToTurn))*distanceTraveled;
+			//double increasedAngle=Math.toDegrees(Math.atan2(distanceY, distanceToMove-distanceX));
 			//degreesToTurn+=increasedAngle;
-			distanceToMove=Math.hypot(distanceToMove-distanceX, distanceY);
+			//distanceToMove=Math.hypot(distanceToMove-distanceX, distanceY);
 
 			double tempLastAngle=lastAngle;
 			lastAngle=driveAtAngleCommand.getAngle();
