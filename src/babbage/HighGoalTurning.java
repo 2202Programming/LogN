@@ -18,6 +18,8 @@ public class HighGoalTurning extends IControl {
 	private double targetAngle=90;
 	//private XboxController controller;
 	private boolean processingVision=false;
+	
+	private final double DEGREEOFFSET = -10;
 
 	public HighGoalTurning(ServoMotor turnShooterServo, ServoMotor heightShooterMotor) {
 		servo=turnShooterServo;
@@ -44,14 +46,15 @@ public class HighGoalTurning extends IControl {
 			}
 			else {
 				processingVision=false;
-				targetAngle = servo.getAngle()- table.getDouble("degreesToSetHighGoal")*2;//*3.8;
-				double distance=table.getDouble("distanceFromHighGoal");
+				targetAngle = servo.getAngle()- table.getDouble("degreesToSetHighGoal")*2 + DEGREEOFFSET;//*3.8;
+				double distance=table.getDouble("distanceFromHighGoal")+14.75/2;//radius of tape retroreflective tape (really diameter/2)
+				distance -=5;//adjustment for overshooting
 				SmartWriter.putS("High Goal Vision Result2:", "Distance: " +distance);
 				servo.setSpeed(targetAngle/180);
 				targetAngle=Math.max(0, Math.min(180, targetAngle));
 				
 				//these are calculated constants that we found from testing and linear regression.
-				double angle=(distance+18.29)/145.5;
+				double angle=(distance*0.00504)-0.29071;
 				angle=Math.max(0, Math.min(1, angle));
 				heightServoMotor.setSpeed(angle);
 			}
@@ -78,5 +81,13 @@ public class HighGoalTurning extends IControl {
 		 * waitingToTurnShooter=false; table.setBoolean("processVisionHighGoal",
 		 * true); } }
 		 */
+	}
+	
+	public void autonomousInit() {
+		teleopInit();
+	}
+	
+	public void autonomousPeriodic() {
+		teleopPeriodic();
 	}
 }

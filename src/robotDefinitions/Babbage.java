@@ -53,7 +53,7 @@ public class Babbage extends RobotDefinitionBase {
 		_properties.put("LEFTMOTORPIN", "0");
 		_properties.put("RIGHTMOTORPIN", "1");
 		// Shooter pins
-		_properties.put("SHOOTWHEEL", "62");// MainShooterWheel
+		_properties.put("SHOOTWHEEL", "11");// MainShooterWheel
 		_properties.put("CHAMBERMOTOR", "5");// Motor to load balls
 		_properties.put("TURRETMOTOR", "9");// Motor to rotate shooter left and right
 		_properties.put("HEIGHTMOTOR", "8");// Motor to rotate shooter up and down
@@ -82,7 +82,7 @@ public class Babbage extends RobotDefinitionBase {
 		// Encoders
 		Encoder encoder0 = new Encoder(0, 1);
 		encoder0.setDistancePerPulse(0.0534);
-		encoder0.setReverseDirection(true);
+		encoder0.setReverseDirection(false);
 		EncoderMonitor encoderMonitor = new EncoderMonitor();
 		encoderMonitor.add("ENCODER0", encoder0);
 
@@ -112,6 +112,7 @@ public class Babbage extends RobotDefinitionBase {
 		IMotor agitatorMotor = new SparkMotor(getInt("AGITATORMOTOR"), false);
 		//TODO the 5th motor will be the shooter angle motor
 		Shooter shooter = new Shooter(shooterWheelMotor, chamberMotor, agitatorMotor, turretMotor, heightMotor);
+		temp.put("SHOOTER", shooter);
 		HighGoalTurning turning=new HighGoalTurning(turretMotor, heightMotor);
 		
 		// Gear Holder

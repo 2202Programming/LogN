@@ -28,7 +28,9 @@ public class EncoderMonitor extends IControl {
 	 * Print the encoder values to smart dashboard
 	 */
 	public void teleopPeriodic(){
-		SmartWriter.putD("DistanceSensorDistance", ((Ultrasonic)SensorController.getInstance().getSensor("DISTANCESENSOR")).getRangeInches());
+		Ultrasonic dist = (Ultrasonic)SensorController.getInstance().getSensor("DISTANCESENSOR");
+		SmartWriter.putD("DistanceSensorDistance", dist.getRangeInches());
+		SmartWriter.putD("DistanceInMilli", dist.getRangeMM());
 		for(Entry<String, Encoder> entry : encoders.entrySet()){
 			SmartWriter.putD(entry.getKey(), entry.getValue().get(), DebugMode.COMPETITION);
 			SmartWriter.putD(entry.getKey() + " DISTANCE", entry.getValue().getDistance(), DebugMode.COMPETITION);

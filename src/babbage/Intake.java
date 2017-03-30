@@ -40,6 +40,9 @@ public class Intake extends IControl {
 		speed = 0;
 	}
 
+	/**
+	 * The intake will run whenever it is engaged and will speed up with the press of the drivers button
+	 */
 	private void update() {
 		if (controller.intakeEngaged()) {
 			if (controller.intakeSpeed()) {

@@ -25,10 +25,10 @@ public class TalonSRX extends IMotor {
 		if (hasEncoder) {
 			part.configEncoderCodesPerRev(4096);
 			part.setProfile(0);
-			part.setF(0.001); /// 0.008562
-			part.setP(0.08); // 102/4000 .1*1023/4000Uerror = 0.0255
-			part.setI(0.0001); // set P/100 to start
-			part.setD(0.0000);
+			part.setF(0.025);//0.001);
+			part.setP(0.3);//0.1);
+			part.setI(0.00);//0.0001); Dont use this
+			part.setD(0.0000);//0
 			part.setAllowableClosedLoopErr(0);
 
 			part.configPeakOutputVoltage(0, -12);
@@ -65,6 +65,8 @@ public class TalonSRX extends IMotor {
 	protected void setMotor(double x) {
 		part.set(x);
 		SmartWriter.putD("ShooterSpeed", part.getSpeed(),DebugMode.COMPETITION);
+		SmartWriter.putD("Shooter Error", x - part.getSpeed(), DebugMode.COMPETITION);
+		
 	}
 
 	public double getSpeed() {

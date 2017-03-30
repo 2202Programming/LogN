@@ -95,15 +95,15 @@ public class BabbageControl extends ControlBase {
 	}
 
 	public boolean autoFieldPosition0() {
-		return controllers[2].getYHeld();
+		return controllers[2].getStartHeld();
 	}
 
 	public boolean autoFieldPosition1() {
-		return controllers[2].getLeftBumperHeld();
+		return controllers[2].getL3Held();
 	}
 
 	public boolean autoFieldPosition2() {
-		return controllers[2].getRightBumperHeld();
+		return controllers[2].getR3Held();
 	}
 
 	public boolean autoShooter() {
