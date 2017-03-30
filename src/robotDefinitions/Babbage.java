@@ -98,6 +98,7 @@ public class Babbage extends RobotDefinitionBase {
 
 		// Create IDrive arcade drive
 		IDrive arcadeDrive=new ArcadeDrive(leftMotors, rightMotors);
+		temp.put("DRIVE", arcadeDrive);
 		//HighGoalTurning highGoalTurnings=new HighGoalTurning();
 		
 		//Intake
@@ -121,7 +122,6 @@ public class Babbage extends RobotDefinitionBase {
 		
 		IMotor climbMotor = new SparkMotor(getInt("LIFTERMOTOR"), true);
 		Climber climb = new Climber(climbMotor);
-		temp.put("DRIVE", arcadeDrive);
 		new CommandListGear();
 		new CommandTester();
 		

@@ -14,6 +14,7 @@ public abstract class RobotDefinitionBase implements IRobotDefinition {
 	protected Map<String, String> _properties;
 	private boolean _useXMLBag;
 	private String _name;
+	public static final String DRIVENAME = "DRIVE";
 
 	/**
 	 * Default Constructor, uses abstract methods in order to define properties
