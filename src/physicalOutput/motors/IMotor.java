@@ -1,4 +1,4 @@
-package physicalOutput;
+package physicalOutput.motors;
 
 import robot.IControl;
 
@@ -99,7 +99,7 @@ public abstract class IMotor extends IControl {
 	 * 
 	 * @param xSpeed
 	 */
-	public void setSpeed(double xSpeed) {
+	public void set(double xSpeed) {
 		if (reverse) {
 			xSpeed*=-1;
 		}

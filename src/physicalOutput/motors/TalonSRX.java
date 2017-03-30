@@ -1,4 +1,4 @@
-package physicalOutput;
+package physicalOutput.motors;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;

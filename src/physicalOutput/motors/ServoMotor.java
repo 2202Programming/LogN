@@ -1,4 +1,4 @@
-package physicalOutput;
+package physicalOutput.motors;
 
 import edu.wpi.first.wpilibj.Servo;
 

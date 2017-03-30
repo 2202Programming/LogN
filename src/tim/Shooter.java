@@ -3,8 +3,8 @@ package tim;
 import comms.DebugMode;
 import comms.SmartWriter;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import physicalOutput.IMotor;
 import physicalOutput.SolenoidController;
+import physicalOutput.motors.IMotor;
 import robot.Global;
 import robot.IControl;
 import robotDefinitions.TimControl;
@@ -91,12 +91,12 @@ public class Shooter extends IControl {
 	}
 
 	private void setShootRaw(double power) {
-		left.setSpeed(power);
-		right.setSpeed(power);
+		left.set(power);
+		right.set(power);
 	}
 
 	private void setHeightRaw(double speed) {
-		height.setSpeed(speed);
+		height.set(speed);
 	}
 
 	/**

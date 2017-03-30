@@ -1,7 +1,7 @@
 package babbage;
 
-import physicalOutput.IMotor;
-import physicalOutput.SparkMotor;
+import physicalOutput.motors.IMotor;
+import physicalOutput.motors.SparkMotor;
 import robot.Global;
 import robot.IControl;
 import robotDefinitions.BabbageControl;
@@ -55,7 +55,7 @@ public class Intake extends IControl {
 			speed = 0;
 		}
 		for (IMotor motor : intakeMotors) {
-			motor.setSpeed(speed);
+			motor.set(speed);
 		}
 	}
 }

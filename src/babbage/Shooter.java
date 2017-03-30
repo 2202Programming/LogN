@@ -2,8 +2,8 @@ package babbage;
 
 import comms.DebugMode;
 import comms.SmartWriter;
-import physicalOutput.IMotor;
-import physicalOutput.ServoMotor;
+import physicalOutput.motors.IMotor;
+import physicalOutput.motors.ServoMotor;
 import robot.Global;
 import robot.IControl;
 import robotDefinitions.BabbageControl;
@@ -82,8 +82,8 @@ public class Shooter extends IControl {
 	 * sets motor speed to 0 and state to IDLE
 	 */
 	public void init() {
-		shooterMotors.setSpeed(0);
-		agitatorMotor.setSpeed(0);
+		shooterMotors.set(0);
+		agitatorMotor.set(0);
 		shoosterChamber.init();
 		state = ShooterState.IDLE;
 
@@ -165,17 +165,17 @@ public class Shooter extends IControl {
 	 * @return true if the motors are at speed
 	 */
 	private boolean windUp() {
-		shooterMotors.setSpeed(speed);
+		shooterMotors.set(speed);
 		// TODO checks motor speed
 		return true;
 	}
 
 	private void agitate() {
 		if (direction) {
-			agitatorMotor.setSpeed(0.6);
+			agitatorMotor.set(0.6);
 		}
 		else {
-			agitatorMotor.setSpeed( -0.6);
+			agitatorMotor.set( -0.6);
 		}
 
 		if ( ++agCounter > 50) {
@@ -199,7 +199,7 @@ public class Shooter extends IControl {
 	 * @return true always(may change)
 	 */
 	public boolean windDown() {
-		shooterMotors.setSpeed(0);
+		shooterMotors.set(0);
 		return true;
 	}
 
@@ -226,7 +226,7 @@ class Chamber {
 	}
 
 	public void init() {
-		chamber.setSpeed(0);
+		chamber.set(0);
 	}
 
 	/**
@@ -236,7 +236,7 @@ class Chamber {
 	 * @return true if there are balls in the shooter currently
 	 */
 	public boolean shoot() {
-		chamber.setSpeed( -0.7);
+		chamber.set( -0.7);
 		// TODO check if there are balls in the shooter
 		return true;
 	}
@@ -273,10 +273,10 @@ class Turret {
 	 */
 	public void setAngle(double angle) {
 		// for a servo this actually sets the angle not the speed
-		turretMotor.setSpeed(angle);
+		turretMotor.set(angle);
 	}
 
 	public void setHeight(double height) {
-		angleMotor.setSpeed(height);
+		angleMotor.set(height);
 	}
 }

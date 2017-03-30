@@ -1,6 +1,6 @@
 package babbage;
 
-import physicalOutput.IMotor;
+import physicalOutput.motors.IMotor;
 import robot.Global;
 import robot.IControl;
 import robotDefinitions.BabbageControl;
@@ -18,7 +18,7 @@ public class Climber extends IControl {
 	}
 
 	public void teleopInit() {
-		climber.setSpeed(0);
+		climber.set(0);
 		turbo = false;
 		counter = 0;
 	}
@@ -26,14 +26,14 @@ public class Climber extends IControl {
 	public void teleopPeriodic() {
 		turbo = controllers.climberHold();
 		if (turbo) {
-			climber.setSpeed(1);
+			climber.set(1);
 		}
 		else {
 			if (controllers.climberOn()) {
-				climber.setSpeed(.5);
+				climber.set(.5);
 			}
 			else {
-				climber.setSpeed( -0);
+				climber.set( -0);
 			}
 		}
 	}

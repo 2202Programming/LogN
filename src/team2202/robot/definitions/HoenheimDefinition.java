@@ -4,7 +4,7 @@ import java.util.Map;
 
 import drive.ArcadeDrive;
 import drive.IDrive;
-import physicalOutput.TalonMotor;
+import physicalOutput.motors.TalonMotor;
 import robot.IControl;
 import robotDefinitions.RobotDefinitionBase;
 
@@ -39,6 +39,7 @@ public class HoenheimDefinition extends RobotDefinitionBase {
 		toReturn.put(DRIVENAME, drive);
 		
 		return toReturn;
+
 	}
 
 }

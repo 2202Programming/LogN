@@ -1,7 +1,7 @@
 package babbage;
 
 import comms.SmartWriter;
-import physicalOutput.IMotor;
+import physicalOutput.motors.IMotor;
 import robot.Global;
 import robot.IControl;
 import robotDefinitions.BabbageControl;
@@ -19,7 +19,7 @@ public class GearHolder extends IControl {
 	}
 	
 	public void teleopInit(){
-		activator.setSpeed(0);
+		activator.set(0);
 	}
 	
 	public void teleopPeriodic(){
@@ -27,9 +27,9 @@ public class GearHolder extends IControl {
 			isDown = !isDown;
 		}
 		if(isDown){
-			activator.setSpeed(SPEED);
+			activator.set(SPEED);
 		}else{
-			activator.setSpeed(-SPEED);
+			activator.set(-SPEED);
 		}
 		SmartWriter.putD("gearMotor", activator.getSpeed());
 	}

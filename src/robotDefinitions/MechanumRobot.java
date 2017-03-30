@@ -7,9 +7,9 @@ import comms.XboxController;
 import drive.ArcadeDrive;
 import drive.IDrive;
 import input.SensorController;
-import physicalOutput.IMotor;
-import physicalOutput.JaguarMotor;
 import physicalOutput.SolenoidController;
+import physicalOutput.motors.IMotor;
+import physicalOutput.motors.JaguarMotor;
 import robot.IControl;
 
 /**

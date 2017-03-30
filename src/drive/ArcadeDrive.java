@@ -2,7 +2,7 @@ package drive;
 
 import comms.DebugMode;
 import comms.SmartWriter;
-import physicalOutput.IMotor;
+import physicalOutput.motors.IMotor;
 import robot.Global;
 import robotDefinitions.ControlBase;
 
@@ -109,12 +109,12 @@ public class ArcadeDrive extends IDrive {
 	private void setLeftMotorsRaw(double speed) {
 		if (drivingIsFlipped) {
 			speed*=-1;
-			if (frontRight!=null) frontRight.setSpeed(speed);
-			if (backRight!=null) backRight.setSpeed(speed);
+			if (frontRight!=null) frontRight.set(speed);
+			if (backRight!=null) backRight.set(speed);
 		}
 		else {			
-			if (frontLeft!=null) frontLeft.setSpeed(speed);
-			if (backLeft!=null) backLeft.setSpeed(speed);
+			if (frontLeft!=null) frontLeft.set(speed);
+			if (backLeft!=null) backLeft.set(speed);
 		}
 	}
 
@@ -126,12 +126,12 @@ public class ArcadeDrive extends IDrive {
 	private void setRightMotorsRaw(double speed) {
 		if (drivingIsFlipped) {
 			speed*=-1;
-			if (frontLeft!=null) frontLeft.setSpeed(speed);
-			if (backLeft!=null) backLeft.setSpeed(speed);
+			if (frontLeft!=null) frontLeft.set(speed);
+			if (backLeft!=null) backLeft.set(speed);
 		}
 		else {
-			if (frontRight!=null) frontRight.setSpeed(speed);
-			if (backRight!=null) backRight.setSpeed(speed);
+			if (frontRight!=null) frontRight.set(speed);
+			if (backRight!=null) backRight.set(speed);
 		}
 	}
 

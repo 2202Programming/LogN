@@ -1,29 +1,28 @@
-package physicalOutput;
-import edu.wpi.first.wpilibj.Victor;
+package physicalOutput.motors;
+import edu.wpi.first.wpilibj.Talon;
 
-//more leinad's stuff
 
 /**
- * Custom IMotor class for the Victor motor controller
+ * Custom IMotor class for the Talon motor controller
  */
-public class VictorMotor extends IMotor {
+public class TalonMotor extends IMotor {
 
     /**
-     * The constructor of a Victor Motor
+     * The constructor of a Talon motor
      * @param port
      * The port that the motor is plugged into
      * @param reverse
      * True if the motor should spin the opposite of the number it is passed
      */
-	public VictorMotor(int port,boolean reverse) {
+	public TalonMotor(int port,boolean reverse) {
     	super(reverse);
-    	part = new Victor(port);
+    	part = new Talon(port);
     }
 
     /**
      * 
      */
-    private Victor part;
+    private Talon part;
 
     /**
      * This is only run by IMotor, people call setSpeed in IMotor instead

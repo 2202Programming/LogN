@@ -5,7 +5,7 @@ import comms.SmartWriter;
 import comms.TableNamesEnum;
 import comms.XboxController;
 import edu.wpi.first.wpilibj.Servo;
-import physicalOutput.ServoMotor;
+import physicalOutput.motors.ServoMotor;
 import robot.Global;
 import robot.IControl;
 import robotDefinitions.BabbageControl;
@@ -30,7 +30,7 @@ public class HighGoalTurning extends IControl {
 
 	public void teleopInit() {
 		targetAngle = 90;
-		servo.setSpeed(targetAngle/180);
+		servo.set(targetAngle/180);
 		table.setBoolean("processVisionHighGoal", false);
 		processingVision=false;
 	}
@@ -50,17 +50,17 @@ public class HighGoalTurning extends IControl {
 				double distance=table.getDouble("distanceFromHighGoal")+14.75/2;//radius of tape retroreflective tape (really diameter/2)
 				distance -=5;//adjustment for overshooting
 				SmartWriter.putS("High Goal Vision Result2:", "Distance: " +distance);
-				servo.setSpeed(targetAngle/180);
+				servo.set(targetAngle/180);
 				targetAngle=Math.max(0, Math.min(180, targetAngle));
 				
 				//these are calculated constants that we found from testing and linear regression.
 				double angle=(distance*0.00504)-0.29071;
 				angle=Math.max(0, Math.min(1, angle));
-				heightServoMotor.setSpeed(angle);
+				heightServoMotor.set(angle);
 			}
 		}
 		else {
-			servo.setSpeed(targetAngle/180);
+			servo.set(targetAngle/180);
 			if (Math.abs(servo.getAngle() - targetAngle) < 0.1) {
 				table.setBoolean("processVisionHighGoal", true);
 				processingVision=true;
