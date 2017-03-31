@@ -9,6 +9,7 @@ import drive.DriveControl;
 import drive.IDrive;
 import input.SensorController;
 import robot.Global;
+import robotDefinitions.RobotDefinitionBase;
 
 public class BangBangTurnCommand implements ICommand {
 
@@ -24,7 +25,7 @@ public class BangBangTurnCommand implements ICommand {
 	
 	public void init() {
 		//set the objects and set external control
-		drive=(IDrive)Global.controlObjects.get("DRIVE");
+		drive=(IDrive)Global.controlObjects.get(RobotDefinitionBase.DRIVENAME);
 		drive.setDriveControl(DriveControl.EXTERNAL_CONTROL);
 		navx=(AHRS)SensorController.getInstance().getSensor("NAVX");
 		//reset navx so we turn degrees from when this command is called

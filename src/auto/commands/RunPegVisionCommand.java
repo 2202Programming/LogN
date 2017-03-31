@@ -15,6 +15,7 @@ import drive.IDrive;
 import edu.wpi.first.wpilibj.Encoder;
 import input.SensorController;
 import robot.Global;
+import robotDefinitions.RobotDefinitionBase;
 import team2202.robot.definitions.controls.BabbageControl;
 
 public class RunPegVisionCommand implements ICommand {
@@ -35,7 +36,7 @@ public class RunPegVisionCommand implements ICommand {
 		doneWithVision=false;
 		runner=null;
 		table.setBoolean("processVision", true);
-		IDrive drive=((IDrive)Global.controlObjects.get("DRIVE"));
+		IDrive drive=((IDrive)Global.controlObjects.get(RobotDefinitionBase.DRIVENAME));
 		drive.setDriveControl(DriveControl.EXTERNAL_CONTROL);
 		drive.setLeftMotors(0);
 		drive.setRightMotors(0);

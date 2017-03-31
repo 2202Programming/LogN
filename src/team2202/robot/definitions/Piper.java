@@ -81,7 +81,7 @@ public class Piper extends RobotDefinitionBase {
 		// Create IDrive arcade drive I dont know why we cast it as a IDrive
 		// though
 		IDrive arcadeDrive=new ArcadeDrive(FL, FR, BL, BR);
-		iControlMap.put("DRIVE", arcadeDrive);
+		iControlMap.put(RobotDefinitionBase.DRIVENAME, arcadeDrive);
 
 		//Encoder stuff
 		Encoder encoder0 =new Encoder(0, 1);

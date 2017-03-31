@@ -14,6 +14,7 @@ import drive.IDrive;
 import input.SensorController;
 import robot.Global;
 import robot.IControl;
+import robotDefinitions.RobotDefinitionBase;
 
 public class NavXPIDTunable extends IControl implements AutoPIDTunable {
 
@@ -41,7 +42,7 @@ public class NavXPIDTunable extends IControl implements AutoPIDTunable {
 
 		// Disable the drive from controlling the movement
 
-		drive=(IDrive)Global.controlObjects.get("DRIVE");
+		drive=(IDrive)Global.controlObjects.get(RobotDefinitionBase.DRIVENAME);
 		;
 		drive.setDriveControl(DriveControl.EXTERNAL_CONTROL);
 

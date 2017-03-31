@@ -10,6 +10,7 @@ import drive.DriveControl;
 import drive.IDrive;
 import robot.Global;
 import robot.IControl;
+import robotDefinitions.RobotDefinitionBase;
 import team2202.robot.definitions.controls.BabbageControl;
 
 public class CommandListGear extends IControl{
@@ -35,16 +36,16 @@ public class CommandListGear extends IControl{
 	}
 	
 	public void teleopPeriodic() {
-		SmartWriter.putS("Drive type", ((IDrive)(Global.controlObjects.get("DRIVE"))).getDriveControl().toString());
+		SmartWriter.putS("Drive type", ((IDrive)(Global.controlObjects.get(RobotDefinitionBase.DRIVENAME))).getDriveControl().toString());
 		if (controller.startPegVision()) {
 			System.out.println("Starting vision...");
 			runner.init();
-			((IDrive)Global.controlObjects.get("DRIVE")).setDriveControl(DriveControl.EXTERNAL_CONTROL);
+			((IDrive)Global.controlObjects.get(RobotDefinitionBase.DRIVENAME)).setDriveControl(DriveControl.EXTERNAL_CONTROL);
 			running=true;
 		}
 		if (running&&(controller.cancelPegVision())){
 			running=false;
-			((IDrive)Global.controlObjects.get("DRIVE")).setDriveControl(DriveControl.DRIVE_CONTROLLED);
+			((IDrive)Global.controlObjects.get(RobotDefinitionBase.DRIVENAME)).setDriveControl(DriveControl.DRIVE_CONTROLLED);
 			runner.stop();
 		}
 		if (running) {

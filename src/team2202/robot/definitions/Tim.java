@@ -97,7 +97,7 @@ public class Tim extends RobotDefinitionBase {
 		
 		// Create the class for Tim's shooter
 		Shooter S = new Shooter(shooterLeftMotor, shooterRightMotor, shooterHeightMotor);
-		temp.put("DRIVE", arcadeDrive);		
+		temp.put(RobotDefinitionBase.DRIVENAME, arcadeDrive);		
 		
 		return temp;
 	}

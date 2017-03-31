@@ -100,7 +100,7 @@ public class Babbage extends RobotDefinitionBase {
 
 		// Create IDrive arcade drive
 		IDrive arcadeDrive=new ArcadeDrive(leftMotors, rightMotors);
-		temp.put("DRIVE", arcadeDrive);
+		temp.put(RobotDefinitionBase.DRIVENAME, arcadeDrive);
 		//HighGoalTurning highGoalTurnings=new HighGoalTurning();
 		
 		//Intake
