@@ -1,4 +1,4 @@
-package babbage;
+package team2202.robot.components.babbage;
 
 import comms.DebugMode;
 import comms.SmartWriter;

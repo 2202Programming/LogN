@@ -6,11 +6,6 @@ import java.util.Map;
 import com.kauailabs.navx.frc.AHRS;
 
 import LED.LEDController;
-import babbage.Climber;
-import babbage.CommandTester;
-import babbage.HighGoalTurning;
-import babbage.Intake;
-import babbage.Shooter;
 import comms.NetworkTables;
 import comms.TableNamesEnum;
 import drive.ArcadeDrive;
@@ -24,10 +19,15 @@ import physicalOutput.motors.IMotor;
 import physicalOutput.motors.ServoMotor;
 import physicalOutput.motors.SparkMotor;
 import physicalOutput.motors.TalonSRX;
-import piper.CommandListGear;
 import robot.Global;
 import robot.IControl;
 import robotDefinitions.RobotDefinitionBase;
+import team2202.robot.components.babbage.Climber;
+import team2202.robot.components.babbage.CommandListGear;
+import team2202.robot.components.babbage.CommandTester;
+import team2202.robot.components.babbage.HighGoalTurning;
+import team2202.robot.components.babbage.Intake;
+import team2202.robot.components.babbage.Shooter;
 import team2202.robot.definitions.controls.BabbageControl;
 
 /**

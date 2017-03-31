@@ -1,4 +1,4 @@
-package tim;
+package team2202.robot.components.tim;
 
 import comms.DebugMode;
 import comms.SmartWriter;

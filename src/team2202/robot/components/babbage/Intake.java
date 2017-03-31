@@ -1,4 +1,4 @@
-package babbage;
+package team2202.robot.components.babbage;
 
 import physicalOutput.motors.IMotor;
 import physicalOutput.motors.SparkMotor;

@@ -1,8 +1,8 @@
 package auto.commands;
 
 import auto.ICommand;
-import babbage.Shooter;
 import robot.Global;
+import team2202.robot.components.babbage.Shooter;
 
 public class ShootCommand implements ICommand {
 	private Shooter shooter;

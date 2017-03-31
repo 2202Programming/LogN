@@ -7,7 +7,6 @@ import java.util.Map;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import babbage.CommandTester;
 import comms.SmartWriter;
 import drive.ArcadeDrive;
 import drive.IDrive;
@@ -18,10 +17,11 @@ import input.NavXTester;
 import input.SensorController;
 import physicalOutput.motors.IMotor;
 import physicalOutput.motors.SparkMotor;
-import piper.CommandListGear;
 import robot.Global;
 import robot.IControl;
 import robotDefinitions.RobotDefinitionBase;
+import team2202.robot.components.babbage.CommandListGear;
+import team2202.robot.components.babbage.CommandTester;
 import team2202.robot.definitions.controls.PiperControl;
 
 /**

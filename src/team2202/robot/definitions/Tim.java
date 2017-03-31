@@ -21,8 +21,8 @@ import physicalOutput.motors.JaguarMotor;
 import physicalOutput.motors.VictorMotor;
 import robot.IControl;
 import robotDefinitions.RobotDefinitionBase;
-import tim.CommandListMaker;
-import tim.Shooter;
+import team2202.robot.components.tim.CommandListMaker;
+import team2202.robot.components.tim.Shooter;
 
 /**
  * The Tim implementation of IDefinition.<br>
