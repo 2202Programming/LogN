@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import auto.CommandList;
-import auto.commands.ContinuousPegVisionCommand;
 import auto.commands.DriveCommand;
 import auto.commands.ShootCommand;
 import auto.commands.TurnCommand;
@@ -14,6 +13,7 @@ import auto.stopConditions.DistanceStopCondition;
 import auto.stopConditions.TimerStopCondition;
 import edu.wpi.first.wpilibj.Encoder;
 import input.SensorController;
+import team2202.robot.autoCommands.ContinuousPegVisionCommand;
 
 //TODO all distances, speeds and angles are not final
 

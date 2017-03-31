@@ -1,4 +1,4 @@
-package auto.commands;
+package team2202.robot.autoCommands;
 
 import com.kauailabs.navx.frc.AHRS;
 

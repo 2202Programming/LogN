@@ -2,7 +2,6 @@ package team2202.robot.components.babbage;
 
 import auto.CommandList;
 import auto.CommandListRunner;
-import auto.commands.ContinuousPegVisionCommand;
 import auto.commands.DriveCommand;
 import auto.stopConditions.TimerStopCondition;
 import comms.SmartWriter;
@@ -11,6 +10,7 @@ import drive.IDrive;
 import robot.Global;
 import robot.IControl;
 import robotDefinitions.RobotDefinitionBase;
+import team2202.robot.autoCommands.ContinuousPegVisionCommand;
 import team2202.robot.definitions.controls.BabbageControl;
 
 public class CommandListGear extends IControl{

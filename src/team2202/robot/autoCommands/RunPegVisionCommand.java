@@ -1,10 +1,12 @@
-package auto.commands;
+package team2202.robot.autoCommands;
 
 import java.util.ArrayList;
 
 import auto.CommandList;
 import auto.CommandListRunner;
 import auto.ICommand;
+import auto.commands.DriveCommand;
+import auto.commands.TurnCommand;
 import auto.stopConditions.DistanceStopCondition;
 import comms.DebugMode;
 import comms.NetworkTables;
