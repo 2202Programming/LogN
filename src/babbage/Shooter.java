@@ -6,7 +6,7 @@ import physicalOutput.motors.IMotor;
 import physicalOutput.motors.ServoMotor;
 import robot.Global;
 import robot.IControl;
-import robotDefinitions.BabbageControl;
+import team2202.robot.definitions.controls.BabbageControl;
 
 public class Shooter extends IControl {
 	private IMotor shooterMotors;

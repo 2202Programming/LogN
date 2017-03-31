@@ -1,6 +1,7 @@
-package robotDefinitions;
+package team2202.robot.definitions.controls;
 
 import comms.XboxController;
+import robotDefinitions.ControlBase;
 
 public class TimControl extends ControlBase {
 	public TimControl() {

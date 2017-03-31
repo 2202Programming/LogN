@@ -1,4 +1,4 @@
-package robotDefinitions;
+package team2202.robot.definitions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,6 +27,8 @@ import physicalOutput.motors.TalonSRX;
 import piper.CommandListGear;
 import robot.Global;
 import robot.IControl;
+import robotDefinitions.RobotDefinitionBase;
+import team2202.robot.definitions.controls.BabbageControl;
 
 /**
  * The Piper implementation of IDefinition.<br>

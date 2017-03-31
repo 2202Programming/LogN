@@ -1,4 +1,4 @@
-package robotDefinitions;
+package team2202.robot.definitions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +20,7 @@ import physicalOutput.motors.IMotor;
 import physicalOutput.motors.JaguarMotor;
 import physicalOutput.motors.VictorMotor;
 import robot.IControl;
+import robotDefinitions.RobotDefinitionBase;
 import tim.CommandListMaker;
 import tim.Shooter;
 

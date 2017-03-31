@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import input.SensorController;
 import robot.Global;
-import robotDefinitions.BabbageControl;
+import team2202.robot.definitions.controls.BabbageControl;
 
 /**
  * 

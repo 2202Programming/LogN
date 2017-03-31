@@ -1,7 +1,8 @@
-package robotDefinitions;
+package team2202.robot.definitions.controls;
 
 import comms.SmartWriter;
 import comms.XboxController;
+import robotDefinitions.ControlBase;
 
 /**
  * TODO: Add the implementation for Babbage control methods Add methods for

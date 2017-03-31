@@ -4,7 +4,7 @@ import physicalOutput.motors.IMotor;
 import physicalOutput.motors.SparkMotor;
 import robot.Global;
 import robot.IControl;
-import robotDefinitions.BabbageControl;
+import team2202.robot.definitions.controls.BabbageControl;
 
 public class Intake extends IControl {
 	private IMotor[] intakeMotors;

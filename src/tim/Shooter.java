@@ -7,7 +7,7 @@ import physicalOutput.SolenoidController;
 import physicalOutput.motors.IMotor;
 import robot.Global;
 import robot.IControl;
-import robotDefinitions.TimControl;
+import team2202.robot.definitions.controls.TimControl;
 
 public class Shooter extends IControl {
 	// 0-disabled 1-enabled 2-external

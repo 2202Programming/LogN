@@ -4,7 +4,7 @@ import comms.SmartWriter;
 import physicalOutput.motors.IMotor;
 import robot.Global;
 import robot.IControl;
-import robotDefinitions.BabbageControl;
+import team2202.robot.definitions.controls.BabbageControl;
 
 public class GearHolder extends IControl {
 	private IMotor activator;

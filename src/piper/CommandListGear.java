@@ -10,7 +10,7 @@ import drive.DriveControl;
 import drive.IDrive;
 import robot.Global;
 import robot.IControl;
-import robotDefinitions.BabbageControl;
+import team2202.robot.definitions.controls.BabbageControl;
 
 public class CommandListGear extends IControl{
 	private CommandList commands;

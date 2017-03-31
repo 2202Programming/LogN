@@ -1,4 +1,4 @@
-package robotDefinitions;
+package team2202.robot.definitions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,6 +11,7 @@ import physicalOutput.SolenoidController;
 import physicalOutput.motors.IMotor;
 import physicalOutput.motors.JaguarMotor;
 import robot.IControl;
+import robotDefinitions.RobotDefinitionBase;
 
 /**
  * The Tim implementation of IDefinition.<br>

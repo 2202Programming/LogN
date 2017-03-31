@@ -3,13 +3,13 @@ package robot;
 import comms.DebugMode;
 import comms.SmartWriter;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import robotDefinitions.Babbage;
 import robotDefinitions.ControlBase;
 import robotDefinitions.IRobotDefinition;
-import robotDefinitions.MechanumRobot;
-import robotDefinitions.Piper;
 import robotDefinitions.RobotName;
-import robotDefinitions.Tim;
+import team2202.robot.definitions.Babbage;
+import team2202.robot.definitions.MechanumRobot;
+import team2202.robot.definitions.Piper;
+import team2202.robot.definitions.Tim;
 
 /**
  * The main robot class that calls the IControl methods of each IControl object

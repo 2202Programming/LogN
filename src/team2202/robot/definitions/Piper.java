@@ -1,4 +1,4 @@
-package robotDefinitions;
+package team2202.robot.definitions;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -21,6 +21,8 @@ import physicalOutput.motors.SparkMotor;
 import piper.CommandListGear;
 import robot.Global;
 import robot.IControl;
+import robotDefinitions.RobotDefinitionBase;
+import team2202.robot.definitions.controls.PiperControl;
 
 /**
  * The Piper implementation of IDefinition.<br>

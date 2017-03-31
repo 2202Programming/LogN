@@ -15,7 +15,7 @@ import drive.IDrive;
 import edu.wpi.first.wpilibj.Encoder;
 import input.SensorController;
 import robot.Global;
-import robotDefinitions.BabbageControl;
+import team2202.robot.definitions.controls.BabbageControl;
 
 public class RunPegVisionCommand implements ICommand {
 	private NetworkTables table;

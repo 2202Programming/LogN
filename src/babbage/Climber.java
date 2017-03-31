@@ -3,7 +3,7 @@ package babbage;
 import physicalOutput.motors.IMotor;
 import robot.Global;
 import robot.IControl;
-import robotDefinitions.BabbageControl;
+import team2202.robot.definitions.controls.BabbageControl;
 
 public class Climber extends IControl {
 	private IMotor climber;
