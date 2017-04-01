@@ -237,8 +237,6 @@ public class SmartWriter {
 	 *            Auto init) as a string to be printed
 	 */
 	public static void outputError(Exception e, String timeOccured) {
-		// We are going to try to print to Stdout, but I think this isn't going
-		// to work.
 		// If this doesn't work, then we can try:
 		// -printing to System.out instead of System.err
 		// -printing to using SmartWriter (This would be more difficult because
@@ -246,7 +244,7 @@ public class SmartWriter {
 		if (!stopPrintingErrors) {
 			System.err.println("Exception occured in: "+timeOccured+".");
 			e.printStackTrace(System.err);
-			stopPrintingErrors=false;
+			stopPrintingErrors=true;
 		}
 	}
 

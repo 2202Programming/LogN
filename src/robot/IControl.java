@@ -3,6 +3,8 @@ package robot;
 import java.util.ArrayList;
 import java.util.List;
 
+import comms.SmartWriter;
+
 //done --SecondThread
 
 /**
@@ -15,17 +17,18 @@ import java.util.List;
 public abstract class IControl {
 
 	/**
-	 * A list of all created IControl objects which is used in update and init methods. IControl objects automatically
+	 * A list of all created IControl objects which is used in update and init
+	 * methods. IControl objects automatically
 	 */
-	private static List<IControl> allObjects=new ArrayList<IControl>();
-	
+	private static List<IControl> allObjects = new ArrayList<IControl>();
+
 	/**
-	 * Default constructor for all IControls 
+	 * Default constructor for all IControls
 	 */
 	public IControl() {
 		allObjects.add(this);
 	}
-	
+
 	/**
 	 * The first method called in a competition or as soon as code is deployed
 	 * to the robot in practice when it has connection to the drivers station.
@@ -36,7 +39,7 @@ public abstract class IControl {
 	 * Postconditions: none
 	 */
 	public void robotInit() {
-		
+
 	}
 
 	/**
@@ -100,46 +103,71 @@ public abstract class IControl {
 	 */
 	public void disabledPeriodic() {
 	}
-	
+
 	public static void callRobotInit() {
-		for (int i=0; i<allObjects.size(); i++) {			
-			allObjects.get(i).robotInit();
+		for (int i = 0; i < allObjects.size(); i++) {
+			try {
+				allObjects.get(i).robotInit();
+			} catch (Exception e) {
+				SmartWriter.outputError(e, "");
+			}
 		}
 	}
-	
+
 	public static void callAutonomousInit() {
-		for (int i=0; i<allObjects.size(); i++) {			
-			allObjects.get(i).autonomousInit();
+		for (int i = 0; i < allObjects.size(); i++) {
+			try {
+				allObjects.get(i).autonomousInit();
+			} catch (Exception e) {
+				SmartWriter.outputError(e, "");
+			}
 		}
 	}
-	
+
 	public static void callAutonomousPeriodic() {
-		for (int i=0; i<allObjects.size(); i++) {
-			allObjects.get(i).autonomousPeriodic();
+		for (int i = 0; i < allObjects.size(); i++) {
+			try {
+				allObjects.get(i).autonomousPeriodic();
+			} catch (Exception e) {
+				SmartWriter.outputError(e, "");
+			}
 		}
 	}
-	
+
 	public static void callTeleopInit() {
-		for (int i=0; i<allObjects.size(); i++) {
-			allObjects.get(i).teleopInit();
+		for (int i = 0; i < allObjects.size(); i++) {
+			try {
+				allObjects.get(i).teleopInit();
+			} catch (Exception e) {
+				SmartWriter.outputError(e, "");
+			}
 		}
 	}
-	
+
 	public static void callTeleopPeriodic() {
-		for (int i=0; i<allObjects.size(); i++) {
-			allObjects.get(i).teleopPeriodic();
+		for (int i = 0; i < allObjects.size(); i++) {
+			try {
+				allObjects.get(i).teleopPeriodic();
+			} catch (Exception e) {
+				SmartWriter.outputError(e, "");
+			}
 		}
 	}
-	
+
 	public static void callDisabledInit() {
-		for (int i=0; i<allObjects.size(); i++) {
-			allObjects.get(i).disabledInit();
+		for (int i = 0; i < allObjects.size(); i++) {
+			try {
+				allObjects.get(i).disabledInit();
+			} catch (Exception e) {
+				SmartWriter.outputError(e, "");
+			}
 		}
 	}
-	
+
+	//Nothing should happen during disabled periodic but we may need to change this.
 	public static void callDisabledPeriodic() {
-		for (int i=0; i<allObjects.size(); i++) {
-			allObjects.get(i).disabledPeriodic();
+		for (int i = 0; i < allObjects.size(); i++) {
+			//allObjects.get(i).disabledPeriodic();
 		}
 	}
 
