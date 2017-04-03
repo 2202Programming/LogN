@@ -4,6 +4,8 @@ import java.util.Map;
 
 import drive.ArcadeDrive;
 import drive.IDrive;
+import edu.wpi.first.wpilibj.Compressor;
+import physicalOutput.EnableCompressor;
 import physicalOutput.motors.TalonMotor;
 import robot.IControl;
 import robotDefinitions.RobotDefinitionBase;
@@ -30,6 +32,7 @@ public class HoenheimDefinition extends RobotDefinitionBase {
 	
 	public Map<String,IControl> loadControlObjects(){
 		Map<String,IControl> toReturn = super.loadControlObjects();
+		new EnableCompressor(new Compressor());
 		IDrive drive = new ArcadeDrive(
 				new TalonMotor(getInt("DM_FRONTLEFT"), true) ,
 				new TalonMotor(getInt("DM_FRONTRIGHT"), true),
