@@ -45,8 +45,8 @@ public class Piper extends RobotDefinitionBase {
 		_properties.put("BLMOTORPIN", "4");// PWM4
 		_properties.put("FRMOTORPIN", "1");// PWM1
 		_properties.put("BRMOTORPIN", "2");// PWM2
-		_properties.put("SFLMOTORPIN", "8");// Shooter front left
-		_properties.put("SBLMOTORPIN", "8");// Shooter back left
+		_properties.put("SFLMOTORPIN", "6");// Shooter front left
+		_properties.put("SBLMOTORPIN", "6");// Shooter back left
 		_properties.put("SFRMOTORPIN", "7");// Shooter front right
 		_properties.put("SBRMOTERPIN", "7");// Shooter back left
 	}
@@ -95,11 +95,12 @@ public class Piper extends RobotDefinitionBase {
 		sensorController.registerSensor("ENCODER1", encoder1);
 		sensorController.registerSensor("NAVX", new AHRS(SerialPort.Port.kMXP));
 		
-		IMotor[] shooterMotors = {new SparkMotor(6,true),new SparkMotor(7,true)};
+		IMotor[] shooterMotors = {new SparkMotor(getInt("SFLMOTORPIN"),true),new SparkMotor(getInt("SFRMOTORPIN"),true)};
 		ChainMotor shootMotors = new ChainMotor(shooterMotors);
 		
 		DoubleSolenoid heightSolenoid = new DoubleSolenoid(0, 1);
-		Shooter shooter = new Shooter(shootMotors, heightSolenoid);
+		DoubleSolenoid trigger = new DoubleSolenoid(2, 3);
+		Shooter shooter = new Shooter(shootMotors, heightSolenoid,trigger);
 
 //		new NavXTester();
 		//new NavXPIDTunable();

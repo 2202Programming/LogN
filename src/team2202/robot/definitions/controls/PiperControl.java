@@ -16,7 +16,7 @@ public class PiperControl extends ControlBase {
 
 	// starts shooting
 	public boolean startShooting() {
-		return controllers[0].getRightTriggerHeld();
+		return controllers[0].getRightTriggerPressed();
 	}
 
 	// stops shooting
