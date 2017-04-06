@@ -36,6 +36,10 @@ public class Intake extends IControl {
 		isOn=0;
 		return limitSwitch.get()==shouldBeOpen;
 	}
+	
+	public boolean isExtended(){
+		return !shouldBeOpen;
+	}
 
 	public void teleopInit() {
 		isOn = 0;

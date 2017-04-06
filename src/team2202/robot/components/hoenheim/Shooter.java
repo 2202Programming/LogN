@@ -4,16 +4,34 @@ import comms.XboxController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
-import physicalOutput.motors.IMotor;
+import edu.wpi.first.wpilibj.Timer;
+import physicalOutput.motors.IMotorPIDOutput;
 import robot.IControl;
 
 public class Shooter extends IControl {
 	
-	final double Kp = 0.009;
-	final double Ki = 0.0003; 
-	final double Kd = 0.006;
+	final double Kp                   = 0.009;
+	final double Ki                   = 0.0003;
+	final double Kd                   = 0.006;
+	final double READYTOFIRE          = 30;
+	final double FIRE                 = 225; 
+	final double PIDTOLERANCE         = 5.0;
+	final double RETRACTCPS           = 250; 
+	final double SHOOTCPS             = 900; 
+	final double LOADCPS              = 100.0;
+	final double VARRIABLEAUTOPIDFIRE = 0.92; // 0.85 //Change this varriable to test lower and lower shooter speed in autonomous mode. Normal is 1.00
+	final double RIGHT                = 5000;
+	final double HOME                 = 5;
+	final double ARMING               = 0;
+	final double STOPPEDSPEED         = 0.0;
+	final double FIRESPEED            = 0.7;
+	final double LOADINGSPEED         = 0.4;
+	final double ARMINGSPEED          = -0.1;
+	final double SHOOTINGSPEED        = 0.5;
+	final double MANUALPIDFIRE        = 1.00;
+	final double AUTOPIDFIRE          = 1.00;
 	
-	private IMotor shootMotorChain;
+	private IMotorPIDOutput shootMotorChain;
 	private Encoder shootEncoder;
 	private Intake intake;
 	private XboxController xboxController;
@@ -21,7 +39,7 @@ public class Shooter extends IControl {
 	private DigitalInput lowerLimit;
 	
 	private PIDController pidController;
-	private PIDOutput pidOutput;
+	private Timer shooterTimer;
 
 	private boolean readyShot;
 	private boolean lobShot;
@@ -32,30 +50,15 @@ public class Shooter extends IControl {
 	double twoStageEndPosition;
 	double twoStagePidFire;
 	int maxEncoderValue;
+	double previousTime;
 
 	private ShooterState state;
-	private boolean canFire;
 
 	public enum ShooterState {
-		STANDBY, RESET, READY_SHOT, SHOT_READY, STAGE_ONE_SHOT, STAGE_TWO_SHOT, FIRE
-	}
-	
-	private class PIDOutput implements edu.wpi.first.wpilibj.PIDOutput {
-
-		private double output;
-		
-		public double getOutput(){
-			return output;
-		}
-		@Override
-		public void pidWrite(double _output) {
-			// TODO Auto-generated method stub
-			output = _output;
-		}
-		
+		STANDBY, RESET, READY_SHOT, SHOT_READY, STAGE_ONE_SHOT, STAGE_TWO_SHOT, FIRE, RETRACTING, INIT
 	}
 
-	public Shooter(IMotor nshootMotorChain, Encoder nshootEncoder, Intake nintake, XboxController nxboxController,
+	public Shooter(IMotorPIDOutput nshootMotorChain, Encoder nshootEncoder, Intake nintake, XboxController nxboxController,
 			DigitalInput nupperLimit, DigitalInput nlowerLimit) {
 		shootMotorChain = nshootMotorChain;
 		shootEncoder    = nshootEncoder;
@@ -64,42 +67,49 @@ public class Shooter extends IControl {
 		upperLimit      = nupperLimit;
 		lowerLimit      = nlowerLimit;
 		
-		pidOutput       = new PIDOutput();
-		pidController   = new PIDController(Kp, Ki, Kd, shootEncoder, pidOutput);
+		pidController   = new PIDController(Kp, Ki, Kd, shootEncoder, shootMotorChain);
+		shooterTimer    = new Timer();
 	}
 
-	private boolean canShoot() {
-		// TODO get state from intake
-		return true;
-	}
-
-	public ShooterState getState() {
-		return state;
-	}
-
-	public void setState(ShooterState state) {
-		this.state = state;
-	}
-
-	public void getInput() {
+	private void getInput() {
 		readyShot  = xboxController.getRightTriggerHeld();
 		lobShot    = xboxController.getYPressed();
 		heavyShot  = xboxController.getXPressed();
 		normalShot = xboxController.getBackPressed();
 	}
-
-	public void TeleopInit() {
-		state = ShooterState.STANDBY;
-		shootEncoder.reset();
-		shootMotorChain.set(0);
+	
+	private double downRampProfile(double timeChange) {
+		return (timeChange * -RETRACTCPS);
 	}
 	
-
-
-	public void TeleopPeriodic() {
+	private double shootRampProfile(double timeChange){
+		return (timeChange * SHOOTCPS);
+	}
+	
+	private void ShooterStateMachine(){
 		getInput();
+		boolean isLowerLimit = lowerLimit.get();
+		
+		//for ramping
+		double timeChange = (shooterTimer.get() - previousTime);
+		previousTime = shooterTimer.get();
+		int count = shootEncoder.get();
+		if (maxEncoderValue < count) {
+			maxEncoderValue = count;
+		}
 
 		switch (state) {
+		case INIT:
+			if(isLowerLimit){
+				shootMotorChain.pidWrite(STOPPEDSPEED);
+				shootEncoder.reset();
+				pidController.enable();
+				pidController.setSetpoint(HOME);
+				state = ShooterState.STANDBY;
+			} else if(intake.isExtended()) {
+				shootMotorChain.pidWrite(ARMINGSPEED);
+			}
+			break;
 		case RESET:
 			intake.setShooting(false);
 			break;
@@ -120,31 +130,68 @@ public class Shooter extends IControl {
 		case SHOT_READY:
 			if (lobShot) {
 				twoStageSetupPosition = 5;
-				twoStagePidSetup = -0.08;
-				twoStageEndPosition = 250;
-				twoStagePidFire = 0.95;
-				state = ShooterState.STAGE_TWO_SHOT;
-				maxEncoderValue = 0;
+				twoStagePidSetup      = -0.08;
+				twoStageEndPosition   = 250;
+				twoStagePidFire       = 0.95;
+				state                 = ShooterState.STAGE_TWO_SHOT;
+				maxEncoderValue       = 0;
 				//pIDControlOutput->PIDOverideEnable(twoStagePidFire);
 			} else if (heavyShot) {
 				twoStageSetupPosition = 5;
-				twoStagePidSetup = -0.08;
-				twoStageEndPosition = 250;
-				twoStagePidFire = 0.95;
-				state = ShooterState.STAGE_TWO_SHOT;
-				maxEncoderValue = 0;
+				twoStagePidSetup      = -0.08;
+				twoStageEndPosition   = 250;
+				twoStagePidFire       = 0.95;
+				state                 = ShooterState.STAGE_TWO_SHOT;
+				maxEncoderValue       = 0;
 				//pIDControlOutput->PIDOverideEnable(twoStagePidFire);
 			} else if (normalShot) {
-				state = ShooterState.FIRE;
+				state           = ShooterState.FIRE;
 				maxEncoderValue = 0;
 				//pIDControlOutput->PIDOverideEnable(MANUALPIDFIRE);
 			}
 			break;
 		case FIRE:
-			boolean isUpperLimit = upperLimit.get();
+			if(upperLimit.get() || shootEncoder.get() >= FIRE) {
+				pidController.setSetpoint(FIRE);
+				shootMotorChain.overideDisable();
+				state = ShooterState.RETRACTING;
+			} else {
+				double countChange = shootRampProfile(timeChange);
+				double newSetPoint = pidController.getSetpoint() + countChange;
+				if(newSetPoint >= FIRE)
+					newSetPoint = FIRE;
+				pidController.setSetpoint(newSetPoint);
+			}
+			break;
+		case RETRACTING:
+			if(shootEncoder.get() <= HOME + 5){
+				pidController.setSetpoint(HOME);
+				state = ShooterState.STANDBY;
+			}
+			double positionChange = downRampProfile(timeChange);
+			double newSetpoint = pidController.getSetpoint() + positionChange;
+			if (newSetpoint <= HOME) {
+				newSetpoint = HOME;
+			}
+			pidController.setSetpoint(newSetpoint);			
 			break;
 		default:
 			break;
 		}
+	}
+
+	public void TeleopInit() {
+		state = ShooterState.STANDBY;
+		shootEncoder.reset();
+		
+		shooterTimer.stop();
+		shooterTimer.reset();
+		shooterTimer.start();
+		
+		previousTime = 0;
+	}
+
+	public void TeleopPeriodic() {
+		ShooterStateMachine();
 	}
 }
