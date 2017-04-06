@@ -1,4 +1,4 @@
-package piper;
+package team2202.robot.components.piper;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
