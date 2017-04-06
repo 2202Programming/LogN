@@ -1,7 +1,5 @@
 package team2202.robot.definitions;
 
-import java.util.List;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,18 +8,18 @@ import com.kauailabs.navx.frc.AHRS;
 import comms.SmartWriter;
 import drive.ArcadeDrive;
 import drive.IDrive;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SerialPort;
 import input.EncoderMonitor;
-import input.NavXTester;
 import input.SensorController;
+import physicalOutput.motors.ChainMotor;
 import physicalOutput.motors.IMotor;
 import physicalOutput.motors.SparkMotor;
 import robot.Global;
 import robot.IControl;
 import robotDefinitions.RobotDefinitionBase;
-import team2202.robot.components.babbage.CommandListGear;
-import team2202.robot.components.babbage.CommandTester;
+import team2202.robot.components.piper.Shooter;
 import team2202.robot.definitions.controls.PiperControl;
 
 /**
@@ -96,6 +94,12 @@ public class Piper extends RobotDefinitionBase {
 		sensorController.registerSensor("ENCODER0", encoder0);
 		sensorController.registerSensor("ENCODER1", encoder1);
 		sensorController.registerSensor("NAVX", new AHRS(SerialPort.Port.kMXP));
+		
+		IMotor[] shooterMotors = {new SparkMotor(6,true),new SparkMotor(7,true)};
+		ChainMotor shootMotors = new ChainMotor(shooterMotors);
+		
+		DoubleSolenoid heightSolenoid = new DoubleSolenoid(0, 1);
+		Shooter shooter = new Shooter(shootMotors, heightSolenoid);
 
 //		new NavXTester();
 		//new NavXPIDTunable();
