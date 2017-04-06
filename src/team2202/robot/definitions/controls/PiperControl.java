@@ -23,10 +23,10 @@ public class PiperControl extends ControlBase {
 	public boolean stopShooting() {
 		return controllers[0].getBPressed();
 	}
-
-	// reverse shooters, unclogs balls
-	public boolean reverseShooter() {
-		return controllers[0].getRightBumperHeld();
+	
+	//toggles the height of the shooter
+	public boolean toggleShooterHeight(){
+		return controllers[0].getRightBumperPressed();
 	}
 
 	// engage high-goal vision
