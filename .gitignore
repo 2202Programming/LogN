@@ -3,6 +3,7 @@
 
 ### Java ###
 *.class
+.classpath
 
 # BlueJ files
 *.ctxt
