@@ -100,17 +100,20 @@ public class Shooter extends IControl {
 
 		switch (state) {
 		case INIT:
-			if(isLowerLimit){
+			if(isLowerLimit && shootEncoder.getRate() < STOPPEDSPEED + 0.1){
 				shootMotorChain.pidWrite(STOPPEDSPEED);
 				shootEncoder.reset();
 				pidController.enable();
 				pidController.setSetpoint(HOME);
 				state = ShooterState.STANDBY;
-			} else if(intake.isExtended()) {
-				shootMotorChain.pidWrite(ARMINGSPEED);
-			}
+			} 
 			break;
 		case RESET:
+			if(isLowerLimit && shootEncoder.getRate() < STOPPEDSPEED + 0.1)
+			{
+				state = ShooterState.STANDBY;
+			}
+			shootMotorChain.pidWrite(STOPPEDSPEED);
 			intake.setShooting(false);
 			break;
 		case STANDBY:
