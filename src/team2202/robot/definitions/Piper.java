@@ -13,12 +13,14 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SerialPort;
 import input.EncoderMonitor;
 import input.SensorController;
+import physicalOutput.SolenoidController;
 import physicalOutput.motors.ChainMotor;
 import physicalOutput.motors.IMotor;
 import physicalOutput.motors.SparkMotor;
 import robot.Global;
 import robot.IControl;
 import robotDefinitions.RobotDefinitionBase;
+import team2202.robot.components.piper.Intake;
 import team2202.robot.components.piper.Shooter;
 import team2202.robot.definitions.controls.PiperControl;
 
@@ -49,6 +51,7 @@ public class Piper extends RobotDefinitionBase {
 		_properties.put("SBLMOTORPIN", "6");// Shooter back left
 		_properties.put("SFRMOTORPIN", "7");// Shooter front right
 		_properties.put("SBRMOTERPIN", "7");// Shooter back left
+		_properties.put("INTAKEMOTOR", "5");
 	}
 
 	/***
@@ -95,12 +98,19 @@ public class Piper extends RobotDefinitionBase {
 		sensorController.registerSensor("ENCODER1", encoder1);
 		sensorController.registerSensor("NAVX", new AHRS(SerialPort.Port.kMXP));
 		
+		SolenoidController solenoidController = SolenoidController.getInstance();
+		solenoidController.registerSolenoid("intakeSolenoid", new DoubleSolenoid(4,5));
+		
 		IMotor[] shooterMotors = {new SparkMotor(getInt("SFLMOTORPIN"),true),new SparkMotor(getInt("SFRMOTORPIN"),true)};
 		ChainMotor shootMotors = new ChainMotor(shooterMotors);
 		
 		DoubleSolenoid heightSolenoid = new DoubleSolenoid(0, 1);
 		DoubleSolenoid trigger = new DoubleSolenoid(2, 3);
 		Shooter shooter = new Shooter(shootMotors, heightSolenoid,trigger);
+		
+		
+		IMotor intakeMotor = new SparkMotor(getInt("INTAKEMOTOR"),false);
+		Intake intake = new Intake(intakeMotor);
 
 //		new NavXTester();
 		//new NavXPIDTunable();

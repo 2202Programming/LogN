@@ -1,5 +1,6 @@
 package team2202.robot.components.piper;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import physicalOutput.SolenoidController;
 import physicalOutput.motors.IMotor;
 import robot.Global;
@@ -26,9 +27,9 @@ public class Intake extends IControl {
 	public void teleopPeriodic() {
 		intakeOpen=controlBase.intakeSpeed();
 		if (intakeOpen) {
-			motor.set(1);
+			motor.set(.7);
 			try {
-				solenoidController.getSolenoid("intakeSolenoid").set(true);
+				solenoidController.getDoubleSolenoid("intakeSolenoid").set(Value.kForward);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -36,7 +37,7 @@ public class Intake extends IControl {
 		else {
 			motor.set(0);
 			try {
-				solenoidController.getSolenoid("intakeSolenoid").set(false);
+				solenoidController.getDoubleSolenoid("intakeSolenoid").set(Value.kReverse);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
