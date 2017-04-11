@@ -19,7 +19,6 @@ public class Robot extends IterativeRobot {
 
 	private IRobotDefinition robotDefinition;
 	public static RobotName name;
-	
 
 	public void robotInit() {
 		SmartWriter.putS("Robot State", "Initsing", DebugMode.DEBUG);
