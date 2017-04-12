@@ -2,6 +2,7 @@ package team2202.robot.components.hoenheim;
 
 import comms.XboxController;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import physicalOutput.SolenoidController;
 import physicalOutput.motors.IMotor;
 import robot.IControl;
@@ -49,7 +50,9 @@ public class Intake extends IControl {
 
 	public void teleopPeriodic() {
 		motor.set(isOn);
+		SmartDashboard.putString("In intake", "Shooting: "+shooting+" shouldBeOpen: "+shouldBeOpen);
 		if (!shooting) {
+			shouldBeOpen^=controller.getBPressed();
 			if (controller.getAHeld()) {
 				if (shouldBeOpen) {
 					isOn=1;

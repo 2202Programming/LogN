@@ -6,7 +6,13 @@ public class ChainMotor extends IMotor{
 	IMotor[] motors;
 	
 	public ChainMotor(List<IMotor> motorsIn){
-		motors = (IMotor[]) motorsIn.toArray();
+		motors=new IMotor[motorsIn.size()];
+		//n efficiency for linked list
+		int counter=0;
+		for (IMotor m:motorsIn) {
+			motors[counter]=m;
+			counter++;
+		}
 	}
 	
 	public ChainMotor(IMotor[] motorsIn){
