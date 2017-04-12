@@ -52,7 +52,7 @@ public class Intake extends IControl {
 		motor.set(isOn);
 		SmartDashboard.putString("In intake", "Shooting: "+shooting+" shouldBeOpen: "+shouldBeOpen);
 		if (!shooting) {
-			shouldBeOpen^=controller.getBPressed();
+			shouldBeOpen^=controller.getBPressed();//toggle on b pressed
 			if (controller.getAHeld()) {
 				if (shouldBeOpen) {
 					isOn=1;
@@ -69,7 +69,8 @@ public class Intake extends IControl {
 			isOn=0;
 		}
 		try {
-			solenoidController.getSolenoid("intakeSolenoid").set(shouldBeOpen);
+			solenoidController.getSolenoid("intakeSolenoid").set(!shouldBeOpen);
+			solenoidController.getSolenoid("intakeSolenoid2").set(shouldBeOpen);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
