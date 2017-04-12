@@ -1,14 +1,14 @@
 package team2202.robot.definitions;
 
-import java.awt.List;
 import java.util.ArrayList;
 import java.util.Map;
 
+import comms.XboxController;
 import drive.ArcadeDrive;
 import drive.IDrive;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Encoder;
 import physicalOutput.EnableCompressor;
 import physicalOutput.motors.ChainMotor;
 import physicalOutput.motors.IMotor;
@@ -36,42 +36,40 @@ public class HoenheimDefinition extends RobotDefinitionBase {
 	@Override
 	protected void loadManualDefinitions() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
-	public Map<String,IControl> loadControlObjects(){
-		Map<String,IControl> toReturn = super.loadControlObjects();
+
+	public Map<String, IControl> loadControlObjects() {
+		Map<String, IControl> toReturn = super.loadControlObjects();
 		new EnableCompressor(new Compressor());
 		TalonMotor frontLeft = new TalonMotor(3, false);
 		TalonMotor frontRight = new TalonMotor(1, true);
 		TalonMotor backLeft = new TalonMotor(4, false);
 		TalonMotor backRight = new TalonMotor(2, true);
 		IDrive drive = new ArcadeDrive(frontLeft, frontRight, backLeft, backRight);
-		
+
 		toReturn.put(DRIVENAME, drive);
-		
-		TalonMotor intakeMotor = new TalonMotor(7, false);
+
+		TalonMotor intakeMotor = new TalonMotor(9, false);
 		DigitalInput intakeLimitSwitch = new DigitalInput(3);
-		Intake intake = new Intake(intakeMotor, intakeLimitSwitch); 
-		
+		Intake intake = new Intake(intakeMotor, intakeLimitSwitch);
+
 		ArrayList<IMotor> shooterMotors = new ArrayList<IMotor>();
-		shooterChain.add(TalonMotor shooter1Left = new Talon());
-		shooterChain.add(TalonMotor shooter1Right = new Talon());
-		shooterChain.add(TalonMotor shooter2Left = new Talon());
-		shooterChain.add(TalonMotor shooter2Right = new Talon());
+		shooterMotors.add(new TalonMotor(5, false)); // leftShooterMotor
+		shooterMotors.add(new TalonMotor(7, true)); // rightShooterMotor
 		ChainMotor shooterChain = new ChainMotor(shooterMotors);
 		IMotorPIDOutput shooterChainControl = new IMotorPIDOutput(shooterChain);
-		
-		
-		Shooter shooter = new Shooter(shooterChainControl, );
-		
-		
-		//
-		//upper shooter limit switch: DIO 1
-		//lower shooter limit switch: DIO 0
-		
-		//
-		
+
+		Encoder shooterEncoder = new Encoder(4, 5);
+		XboxController controller = XboxController.getXboxController();
+		DigitalInput shooterUpperLimit = new DigitalInput(1);
+			// upper shooter limit switch: DIO 1
+		DigitalInput shooterLowerLimit = new DigitalInput(0);
+			// lower shooter limit switch: DIO 0
+
+		Shooter shooter = new Shooter(shooterChainControl, shooterEncoder, intake, controller, shooterUpperLimit,
+				shooterLowerLimit);
+
 		return toReturn;
 
 	}
