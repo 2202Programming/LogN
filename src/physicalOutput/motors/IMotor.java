@@ -42,6 +42,10 @@ public abstract class IMotor extends IControl {
 	 */
 	protected abstract void setMotor(double x);
 
+	
+	public void setReverse(boolean rev){
+		reverse = rev;
+	}
 	/**
 	 * Set speed to zero in init
 	 */

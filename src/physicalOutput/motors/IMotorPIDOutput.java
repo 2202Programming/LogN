@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.PIDOutput;
 
 public class IMotorPIDOutput implements PIDOutput {
 
-	IMotor motor;
+	public IMotor motor;
 	private boolean overide;
 	
 	public IMotorPIDOutput(IMotor nmotor) {
