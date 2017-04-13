@@ -2,6 +2,7 @@ package team2202.robot.components.tim;
 
 import comms.DebugMode;
 import comms.SmartWriter;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import physicalOutput.SolenoidController;
 import physicalOutput.motors.IMotor;
@@ -20,8 +21,9 @@ public class Shooter extends IControl {
 	private double heightSpeed;
 	private SolenoidController sc;
 	private DoubleSolenoid trigger;
+	private DigitalInput upperLimitSwitch, lowerLimitSwitch;
 
-	public Shooter(IMotor left, IMotor right, IMotor height) {
+	public Shooter(IMotor left, IMotor right, IMotor height, DigitalInput upperLimitSwitch, DigitalInput lowerLimitSwitch) {
 		state = 1;
 		this.left = left;
 		this.right = right;
@@ -36,6 +38,8 @@ public class Shooter extends IControl {
 			// TODO Auto-generated catch block
 			SmartWriter.putS("SolNcrushed", "Something goes wrong", DebugMode.DEBUG);
 		}
+		this.upperLimitSwitch=upperLimitSwitch;
+		this.lowerLimitSwitch=lowerLimitSwitch;
 	}
 
 	public void autonomousInit() {
@@ -66,12 +70,21 @@ public class Shooter extends IControl {
 		setShootRaw(curSpeed);
 
 		//Sets the elevation of the shooter Y - up, X - down
-		if(controller.shooterHeight()<0){
+		if(controller.shooterMoveUp()){
 			heightSpeed = -1.0;
-		}else if(controller.shooterHeight()>0){
+		}else if(controller.shooterMoveDown()){
 			heightSpeed = 0.75;
-		}else{
-			heightSpeed = 0;
+		}
+		else {
+			heightSpeed=0;
+		}
+		SmartWriter.putS("Limit Switches on TIM", "Upper: "+upperLimitSwitch.get()+", Lower: "+lowerLimitSwitch.get());
+		
+		if (!upperLimitSwitch.get()) {//if the upper limit switch is triggered
+			heightSpeed = Math.min(heightSpeed, 0);
+		}
+		if (!lowerLimitSwitch.get()) {//if the lower limit switch is triggered
+			heightSpeed=Math.max(heightSpeed, 0);
 		}
 		SmartWriter.putD("heightspeed",heightSpeed, DebugMode.DEBUG);
 		SmartWriter.putS("motorStatus",height+"", DebugMode.DEBUG);

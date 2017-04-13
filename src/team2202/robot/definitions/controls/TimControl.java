@@ -33,15 +33,19 @@ public class TimControl extends ControlBase {
 	 * @return
 	 */
 	public boolean shoot(){
-		return controllers[0].getBPressed();
+		return controllers[0].getAHeld();
 	}
 	
 	/**shooterHeight - Adjusts the height of the shooter
 	 * 
 	 * @return
 	 */
-	public double shooterHeight(){
-		return controllers[0].getRightJoystickY();
+	public boolean shooterMoveUp(){
+		return controllers[0].getYHeld();
+	}
+	
+	public boolean shooterMoveDown() {
+		return controllers[0].getXHeld();
 	}
 
 	@Override
