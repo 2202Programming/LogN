@@ -16,12 +16,10 @@ import physicalOutput.motors.ChainMotor;
 import physicalOutput.motors.IMotor;
 import physicalOutput.motors.IMotorPIDOutput;
 import physicalOutput.motors.TalonMotor;
-import robot.Global;
 import robot.IControl;
 import robotDefinitions.RobotDefinitionBase;
 import team2202.robot.components.hoenheim.Intake;
 import team2202.robot.components.hoenheim.Shooter;
-import team2202.robot.definitions.controls.HoenhiemControl;
 
 public class HoenheimDefinition extends RobotDefinitionBase {
 
@@ -44,7 +42,7 @@ public class HoenheimDefinition extends RobotDefinitionBase {
 	}
 
 	public Map<String, IControl> loadControlObjects() {
-		Global.controllers=new HoenhiemControl();
+		//Global.controllers=new HoenhiemControl(); THis shouldn't be commented!
 		Map<String, IControl> toReturn = super.loadControlObjects();
 		new EnableCompressor(new Compressor());
 		TalonMotor frontLeft = new TalonMotor(3, false);

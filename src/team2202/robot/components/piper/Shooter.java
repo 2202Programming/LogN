@@ -1,5 +1,6 @@
 package team2202.robot.components.piper;
 
+import comms.SmartWriter;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import physicalOutput.motors.ChainMotor;
@@ -12,6 +13,8 @@ public class Shooter extends IControl{
 	private DoubleSolenoid shooterHeight;
 	private DoubleSolenoid shooterTrigger;
 	private PiperControl controller;
+	
+	private double shooterSpeed=0.4;
 	
 	private boolean _shooterUp;
 	private boolean _shooterOn;
@@ -43,6 +46,14 @@ public class Shooter extends IControl{
 	public void teleopPeriodic(){
 		getUserInput();
 		
+		if (controller.getControllers()[0].getStartPressed()) {
+			shooterSpeed=Math.min(shooterSpeed+0.05, 0.5);
+		}
+		if (controller.getControllers()[0].getBackPressed()) {
+			shooterSpeed=Math.max(shooterSpeed-0.05, 0.1);
+		}
+		SmartWriter.putD("***ShooterSpeed:***", shooterSpeed);
+		
 		if(_shooterUp){
 			shooterHeight.set(Value.kForward);
 		}else{
@@ -50,7 +61,7 @@ public class Shooter extends IControl{
 		}
 		
 		if(_shooterOn){
-			shooterMotorChain.set(0.5);
+			shooterMotorChain.set(shooterSpeed);//0.5
 		}else{
 			shooterMotorChain.set(0);
 		}

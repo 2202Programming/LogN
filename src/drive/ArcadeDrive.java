@@ -73,6 +73,10 @@ public class ArcadeDrive extends IDrive {
 		controller=Global.controllers;
 	}
 	
+	public ArcadeDrive(IMotor fl, IMotor fr, double speedExponent) {
+		
+	}
+	
 	public void teleopInit() {
 		autonomousInit();
 	}
@@ -220,6 +224,7 @@ public class ArcadeDrive extends IDrive {
 		double stickXSquare=leftJoystickXInput*Math.abs(leftJoystickXInput)*Math.abs(leftJoystickXInput)*Math.abs(leftJoystickXInput);
 		double stickYSquare=leftJoystickYInput;
 		double radiusSquare=Math.abs(getRadiusOfSquare(stickXSquare, stickYSquare));
+		
 
 		// Normalize all stick inputs to have a maximum length of 1, because
 		// rawInput can be anywhere in the square with diagonals (-1, -1) and
