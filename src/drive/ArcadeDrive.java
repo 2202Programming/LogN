@@ -20,6 +20,7 @@ public class ArcadeDrive extends IDrive {
 	 * The motor corresponding to the front right wheel
 	 */
 	private IMotor frontRight;
+	
 
 	/**
 	 * The motor corresponding to the front left wheel
@@ -49,6 +50,11 @@ public class ArcadeDrive extends IDrive {
 	 */
 	private double leftMotors=0, rightMotors=0;
 
+	/**
+	 * This makes it easier to drive robots that tip
+	 */
+	private double maxAcceleration=100000;
+	
 	public ArcadeDrive(IMotor fl, IMotor fr) {
 		this.frontLeft=fl;
 		this.frontRight=fr;
@@ -73,8 +79,13 @@ public class ArcadeDrive extends IDrive {
 		controller=Global.controllers;
 	}
 	
-	public ArcadeDrive(IMotor fl, IMotor fr, double speedExponent) {
-		
+	public ArcadeDrive(IMotor fl, IMotor fr, IMotor bl, IMotor br, double maxAcceleration) {
+		this.frontLeft=fl;
+		this.frontRight=fr;
+		this.backLeft=bl;
+		this.backRight=br;
+		this.maxAcceleration=maxAcceleration;
+		controller=Global.controllers;
 	}
 	
 	public void teleopInit() {
@@ -98,11 +109,24 @@ public class ArcadeDrive extends IDrive {
 
 		Vector2 output=getMotorOutputs(stickXSquare, stickYSquare);
 
-		leftMotors=output.getX();
-		rightMotors=output.getY();
-
-		SmartWriter.putD("LeftMotors", leftMotors, DebugMode.FULL);
-		SmartWriter.putD("RightMotors", rightMotors, DebugMode.FULL);
+		double leftTarget=output.getX();
+		double rightTarget=output.getY();
+		if (Math.abs(leftTarget-leftMotors)<maxAcceleration) {
+			leftMotors=leftTarget;
+		}
+		else {
+			leftMotors+=Math.signum(leftTarget-leftMotors)*maxAcceleration;
+		}
+		
+		if (Math.abs(rightTarget-rightMotors)<maxAcceleration) {
+			rightMotors=rightTarget;
+		}
+		else {
+			rightMotors+=Math.signum(rightTarget-rightMotors)*maxAcceleration;
+		}
+		
+		SmartWriter.putD("LeftMotors", leftMotors, DebugMode.DEBUG);
+		SmartWriter.putD("RightMotors", rightMotors, DebugMode.DEBUG);
 	}
 
 	/**
