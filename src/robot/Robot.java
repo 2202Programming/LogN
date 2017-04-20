@@ -42,8 +42,10 @@ public class Robot extends IterativeRobot {
 			break;
 		case BABBAGE:
 			robotDefinition=new Babbage();
+			break;
 		case HOENHIEM:
 			robotDefinition=new HoenheimDefinition();
+			break;
 		default:
 			break;
 		}
