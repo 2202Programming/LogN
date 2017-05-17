@@ -3,6 +3,7 @@
 
 ### Java ###
 *.class
+.classpath
 
 # BlueJ files
 *.ctxt
@@ -22,3 +23,5 @@ hs_err_pid*
 dist/
 
 sysProps\.xml
+
+\.gradle/3\.2\.1/taskArtifacts/

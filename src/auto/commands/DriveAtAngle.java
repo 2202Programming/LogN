@@ -11,6 +11,7 @@ import drive.DriveControl;
 import drive.IDrive;
 import input.SensorController;
 import robot.Global;
+import robotDefinitions.RobotDefinitionBase;
 
 public class DriveAtAngle implements ICommand {
 
@@ -68,7 +69,7 @@ public class DriveAtAngle implements ICommand {
 		stopCondition.init();
 		navx = (AHRS) (SensorController.getInstance().getSensor("NAVX"));
 		navx.reset();
-		drive = (IDrive) Global.controlObjects.get("DRIVE");
+		drive = (IDrive) Global.controlObjects.get(RobotDefinitionBase.DRIVENAME);
 		drive.setDriveControl(DriveControl.EXTERNAL_CONTROL);
 		
 	}

@@ -5,6 +5,7 @@ import auto.IStopCondition;
 import drive.DriveControl;
 import drive.IDrive;
 import robot.Global;
+import robotDefinitions.RobotDefinitionBase;
 
 public class DriveCommand implements ICommand {
 
@@ -26,7 +27,7 @@ public class DriveCommand implements ICommand {
 	
 	public void init() {
 		stopCondition.init();
-		drive=(IDrive)Global.controlObjects.get("DRIVE");
+		drive=(IDrive)Global.controlObjects.get(RobotDefinitionBase.DRIVENAME);
 		drive.setDriveControl(DriveControl.EXTERNAL_CONTROL);
 	}
 

@@ -28,6 +28,10 @@ private Compressor compressor;
 		compressor.start();
 	}
 
+	public void teleopInit() {
+		autonomousInit();
+	}
+	
 	public void disabledInit() 
 	{
 		compressor.stop();

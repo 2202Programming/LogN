@@ -3,13 +3,14 @@ package robot;
 import comms.DebugMode;
 import comms.SmartWriter;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import robotDefinitions.Babbage;
 import robotDefinitions.ControlBase;
 import robotDefinitions.IRobotDefinition;
-import robotDefinitions.MechanumRobot;
-import robotDefinitions.Piper;
 import robotDefinitions.RobotName;
-import robotDefinitions.Tim;
+import team2202.robot.definitions.Babbage;
+import team2202.robot.definitions.HoenheimDefinition;
+import team2202.robot.definitions.MechanumRobot;
+import team2202.robot.definitions.Piper;
+import team2202.robot.definitions.Tim;
 
 /**
  * The main robot class that calls the IControl methods of each IControl object
@@ -19,7 +20,6 @@ public class Robot extends IterativeRobot {
 
 	private IRobotDefinition robotDefinition;
 	public static RobotName name;
-	
 
 	public void robotInit() {
 		SmartWriter.putS("Robot State", "Initsing", DebugMode.DEBUG);
@@ -42,6 +42,10 @@ public class Robot extends IterativeRobot {
 			break;
 		case BABBAGE:
 			robotDefinition=new Babbage();
+			break;
+		case HOENHIEM:
+			robotDefinition=new HoenheimDefinition();
+			break;
 		default:
 			break;
 		}

@@ -2,7 +2,7 @@ package drive;
 
 import comms.DebugMode;
 import comms.SmartWriter;
-import physicalOutput.IMotor;
+import physicalOutput.motors.IMotor;
 import robot.Global;
 import robotDefinitions.ControlBase;
 
@@ -20,6 +20,7 @@ public class ArcadeDrive extends IDrive {
 	 * The motor corresponding to the front right wheel
 	 */
 	private IMotor frontRight;
+	
 
 	/**
 	 * The motor corresponding to the front left wheel
@@ -49,6 +50,11 @@ public class ArcadeDrive extends IDrive {
 	 */
 	private double leftMotors=0, rightMotors=0;
 
+	/**
+	 * This makes it easier to drive robots that tip
+	 */
+	private double maxAcceleration=100000;
+	
 	public ArcadeDrive(IMotor fl, IMotor fr) {
 		this.frontLeft=fl;
 		this.frontRight=fr;
@@ -73,6 +79,15 @@ public class ArcadeDrive extends IDrive {
 		controller=Global.controllers;
 	}
 	
+	public ArcadeDrive(IMotor fl, IMotor fr, IMotor bl, IMotor br, double maxAcceleration) {
+		this.frontLeft=fl;
+		this.frontRight=fr;
+		this.backLeft=bl;
+		this.backRight=br;
+		this.maxAcceleration=maxAcceleration;
+		controller=Global.controllers;
+	}
+	
 	public void teleopInit() {
 		autonomousInit();
 	}
@@ -94,11 +109,24 @@ public class ArcadeDrive extends IDrive {
 
 		Vector2 output=getMotorOutputs(stickXSquare, stickYSquare);
 
-		leftMotors=output.getX();
-		rightMotors=output.getY();
-
-		SmartWriter.putD("LeftMotors", leftMotors, DebugMode.FULL);
-		SmartWriter.putD("RightMotors", rightMotors, DebugMode.FULL);
+		double leftTarget=output.getX();
+		double rightTarget=output.getY();
+		if (Math.abs(leftTarget-leftMotors)<maxAcceleration) {
+			leftMotors=leftTarget;
+		}
+		else {
+			leftMotors+=Math.signum(leftTarget-leftMotors)*maxAcceleration;
+		}
+		
+		if (Math.abs(rightTarget-rightMotors)<maxAcceleration) {
+			rightMotors=rightTarget;
+		}
+		else {
+			rightMotors+=Math.signum(rightTarget-rightMotors)*maxAcceleration;
+		}
+		
+		SmartWriter.putD("LeftMotors", leftMotors, DebugMode.DEBUG);
+		SmartWriter.putD("RightMotors", rightMotors, DebugMode.DEBUG);
 	}
 
 	/**
@@ -109,12 +137,12 @@ public class ArcadeDrive extends IDrive {
 	private void setLeftMotorsRaw(double speed) {
 		if (drivingIsFlipped) {
 			speed*=-1;
-			if (frontRight!=null) frontRight.setSpeed(speed);
-			if (backRight!=null) backRight.setSpeed(speed);
+			if (frontRight!=null) frontRight.set(speed);
+			if (backRight!=null) backRight.set(speed);
 		}
 		else {			
-			if (frontLeft!=null) frontLeft.setSpeed(speed);
-			if (backLeft!=null) backLeft.setSpeed(speed);
+			if (frontLeft!=null) frontLeft.set(speed);
+			if (backLeft!=null) backLeft.set(speed);
 		}
 	}
 
@@ -126,12 +154,12 @@ public class ArcadeDrive extends IDrive {
 	private void setRightMotorsRaw(double speed) {
 		if (drivingIsFlipped) {
 			speed*=-1;
-			if (frontLeft!=null) frontLeft.setSpeed(speed);
-			if (backLeft!=null) backLeft.setSpeed(speed);
+			if (frontLeft!=null) frontLeft.set(speed);
+			if (backLeft!=null) backLeft.set(speed);
 		}
 		else {
-			if (frontRight!=null) frontRight.setSpeed(speed);
-			if (backRight!=null) backRight.setSpeed(speed);
+			if (frontRight!=null) frontRight.set(speed);
+			if (backRight!=null) backRight.set(speed);
 		}
 	}
 
@@ -220,6 +248,7 @@ public class ArcadeDrive extends IDrive {
 		double stickXSquare=leftJoystickXInput*Math.abs(leftJoystickXInput)*Math.abs(leftJoystickXInput)*Math.abs(leftJoystickXInput);
 		double stickYSquare=leftJoystickYInput;
 		double radiusSquare=Math.abs(getRadiusOfSquare(stickXSquare, stickYSquare));
+		
 
 		// Normalize all stick inputs to have a maximum length of 1, because
 		// rawInput can be anywhere in the square with diagonals (-1, -1) and

@@ -9,6 +9,7 @@ import drive.DriveControl;
 import drive.IDrive;
 import robot.Global;
 import robot.Robot;
+import robotDefinitions.RobotDefinitionBase;
 
 
 public class TurnCommand implements ICommand {
@@ -35,7 +36,7 @@ public class TurnCommand implements ICommand {
 	
 	public void init() {
 		controller=new PIDController(pidValues);
-		drive=(IDrive)Global.controlObjects.get("DRIVE");
+		drive=(IDrive)Global.controlObjects.get(RobotDefinitionBase.DRIVENAME);
 		stopCondition.init();
 		drive.setDriveControl(DriveControl.EXTERNAL_CONTROL);
 	}

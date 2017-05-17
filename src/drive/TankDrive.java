@@ -2,7 +2,7 @@ package drive;
 
 import comms.DebugMode;
 import comms.SmartWriter;
-import physicalOutput.IMotor;
+import physicalOutput.motors.IMotor;
 import robot.Global;
 import robotDefinitions.ControlBase;
 
@@ -82,8 +82,8 @@ public class TankDrive extends IDrive  {
 	 * Postconditions: sets the motors
 	 */
 	private void setLeftMotorsRaw(double speed) {
-		frontLeft.setSpeed(speed);
-		backLeft.setSpeed(speed);
+		frontLeft.set(speed);
+		backLeft.set(speed);
 	}
 
 	/**
@@ -92,8 +92,8 @@ public class TankDrive extends IDrive  {
 	 * Postconditions: sets the motors
 	 */
 	private void setRightMotorsRaw(double speed) {
-		frontRight.setSpeed(speed);
-		backRight.setSpeed(speed);
+		frontRight.set(speed);
+		backRight.set(speed);
 	}
 
 	/**
