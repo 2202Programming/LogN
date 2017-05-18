@@ -6,6 +6,7 @@ import java.util.Map;
 import comms.XboxController;
 import drive.ArcadeDrive;
 import drive.IDrive;
+import drive.MechanumDrive;
 import edu.wpi.first.wpilibj.RobotDrive;
 import input.SensorController;
 import physicalOutput.SolenoidController;
@@ -53,8 +54,7 @@ public class MechanumRobot extends RobotDefinitionBase {
 		
 		// Create map to store public objects
 		Map<String, IControl> temp=super.loadControlObjects();
-		RobotDrive drive = new RobotDrive(getInt("FLMOTORPIN"), getInt("BLMOTORPIN"), getInt("FRMOTORPIN"), getInt("BRMOTORPIN"));
-		drive.mecanumDrive_Cartesian(controller.getLeftJoystickX(true), controller.getLeftJoystickY(true), controller.getRightJoystickX(true), 0);
+		new MechanumDrive(getInt("FLMOTORPIN"), getInt("BLMOTORPIN"), getInt("FRMOTORPIN"), getInt("BRMOTORPIN"));
 		return temp;
 	}
 
