@@ -5,6 +5,10 @@ import robotDefinitions.ControlBase;
 
 public class HoenhiemControl extends ControlBase {
 
+	public HoenhiemControl() {
+		super(false);
+	}
+
 	@Override
 	public XboxController[] getControllers() {
 		int a=5;

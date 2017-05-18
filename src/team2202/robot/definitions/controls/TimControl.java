@@ -5,7 +5,7 @@ import robotDefinitions.ControlBase;
 
 public class TimControl extends ControlBase {
 	public TimControl() {
-
+		super(false);
 	}
 	
 	public boolean stopShooter(){

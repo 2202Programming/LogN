@@ -15,7 +15,7 @@ public class BabbageControl extends ControlBase {
 	 * 
 	 */
 	public BabbageControl() {
-
+		super(false);
 	}
 
 	/**
