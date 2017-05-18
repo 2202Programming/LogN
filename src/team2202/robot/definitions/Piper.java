@@ -89,9 +89,9 @@ public class Piper extends RobotDefinitionBase {
 		Encoder encoder1 =  new Encoder(2, 3);
 		encoder0.setDistancePerPulse(0.058);
 		encoder1.setDistancePerPulse(0.06529);
-		EncoderMonitor encoderMonitor = new EncoderMonitor();
-		encoderMonitor.add("ENCODER0", encoder0);
-		encoderMonitor.add("ENCODER1", encoder1);
+		//EncoderMonitor encoderMonitor = new EncoderMonitor();
+		//encoderMonitor.add("ENCODER0", encoder0);
+		//encoderMonitor.add("ENCODER1", encoder1);
 		
 		SensorController sensorController=SensorController.getInstance();
 		sensorController.registerSensor("ENCODER0", encoder0);
