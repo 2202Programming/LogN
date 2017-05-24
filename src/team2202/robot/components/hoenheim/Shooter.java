@@ -15,7 +15,7 @@ public class Shooter extends IControl {
 	final double Ki = 0.0003;
 	final double Kd = 0.006;
 	final double READYTOFIRE = 30;
-	final double FIRE = 225;
+	final double FIRE = 260;
 	final double PIDTOLERANCE = 5.0;
 	final double RETRACTCPS = 250;
 	final double SHOOTCPS = 900;

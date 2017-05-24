@@ -7,9 +7,11 @@ import robot.IControl;
 public abstract class ControlBase extends IControl {
 
 	protected XboxController[] controllers;
+	private boolean useDeadZone;
 
-	public ControlBase() {
+	public ControlBase(boolean deadZone) {
 		controllers=getControllers();
+		useDeadZone = deadZone;
 	}
 
 	public abstract XboxController[] getControllers();

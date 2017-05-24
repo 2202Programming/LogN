@@ -63,6 +63,8 @@ public class XboxController extends IControl {
 	private boolean[] pressed = new boolean[NUMBER_OF_BUTTONS];
 	private boolean[] held = new boolean[NUMBER_OF_BUTTONS];
 	private boolean[] released = new boolean[NUMBER_OF_BUTTONS];
+	
+	private final static double DEADZONE=0.05;
 
 	/**
 	 * The singleton instance of this class. <i>xboxController</i> is null if
@@ -197,6 +199,46 @@ public class XboxController extends IControl {
 
 	public double getLeftJoystickY() {
 		return ( -1.0) * leftJoystick.getRawAxis(AXIS_LEFT_Y_WIPCODE);
+	}
+	
+	public double getRightJoystickX(boolean includeDeadzone) {
+		double unzoned=getRightJoystickX();
+		if (includeDeadzone) {
+			if (Math.abs(unzoned)<DEADZONE) {
+				return 0;
+			}
+		}
+		return unzoned;
+	}
+	
+	public double getRightJoystickY(boolean includeDeadzone) {
+		double unzoned=getRightJoystickY();
+		if (includeDeadzone) {
+			if (Math.abs(unzoned)<DEADZONE) {
+				return 0;
+			}
+		}
+		return unzoned;
+	}
+	
+	public double getLeftJoystickX(boolean includeDeadzone) {
+		double unzoned=getLeftJoystickX();
+		if (includeDeadzone) {
+			if (Math.abs(unzoned)<DEADZONE) {
+				return 0;
+			}
+		}
+		return unzoned;
+	}
+
+	public double getLeftJoystickY(boolean includeDeadzone) {
+		double unzoned=getLeftJoystickY();
+		if (includeDeadzone) {
+			if (Math.abs(unzoned)<DEADZONE) {
+				return 0;
+			}
+		}
+		return unzoned;
 	}
 
 	public boolean getXPressed() {

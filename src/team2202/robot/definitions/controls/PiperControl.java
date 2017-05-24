@@ -6,7 +6,7 @@ import robotDefinitions.ControlBase;
 public class PiperControl extends ControlBase {
 
 	public PiperControl() {
-
+		super(false);
 	}
 
 	// speeds up intake

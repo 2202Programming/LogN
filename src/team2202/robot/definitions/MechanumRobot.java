@@ -6,6 +6,8 @@ import java.util.Map;
 import comms.XboxController;
 import drive.ArcadeDrive;
 import drive.IDrive;
+import drive.MechanumDrive;
+import edu.wpi.first.wpilibj.RobotDrive;
 import input.SensorController;
 import physicalOutput.SolenoidController;
 import physicalOutput.motors.IMotor;
@@ -48,37 +50,11 @@ public class MechanumRobot extends RobotDefinitionBase {
 	 */
 	public Map<String, IControl> loadControlObjects() {
 		
-		XboxController.getXboxController();
+		XboxController controller = XboxController.getXboxController();
 		
 		// Create map to store public objects
 		Map<String, IControl> temp=super.loadControlObjects();
-		
-		// Creates the global sensor controller
-		SensorController SC = SensorController.getInstance();
-		//SC.registerSensor("Name", new AHRS(port));
-		//TODO add the sensors here
-		
-		// Creates the global solenoid controller
-		SolenoidController SO = SolenoidController.getInstance();
-		//Example to add solenoid:
-
-		// Create IMotors for Arcade Drive
-		IMotor FL=new JaguarMotor(getInt("FLMOTORPIN"),true);
-		IMotor FR=new JaguarMotor(getInt("FRMOTORPIN"),false);
-		IMotor BL=new JaguarMotor(getInt("BLMOTORPIN"),true);
-		IMotor BR=new JaguarMotor(getInt("BRMOTORPIN"),false);
-		// Create IDrive arcade drive 
-		IDrive AD=new ArcadeDrive(FL, FR, BL, BR); 
-		
-		// Create the autonomous command list maker, and command runner
-		//CommandListMaker CLM = new CommandListMaker();
-		//CommandRunner CR = new CommandRunner(CLM.makeList1(),"TIM");  // makes list one for the TIM robot
-		
-		//EnableCompressor compressorTester = new EnableCompressor(compressor);
-		temp.put("IDrive", AD);		
-//		temp.put("CR", CR);
-//		temp.put("S", S);
-		
+		new MechanumDrive(getInt("FLMOTORPIN"), getInt("BLMOTORPIN"), getInt("FRMOTORPIN"), getInt("BRMOTORPIN"));
 		return temp;
 	}
 
