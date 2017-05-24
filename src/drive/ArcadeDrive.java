@@ -106,11 +106,15 @@ public class ArcadeDrive extends IDrive {
 	protected void teleopUpdate() {
 		double stickXSquare=controller.getLeftJoystickX();
 		double stickYSquare=controller.getLeftJoystickY();
+		SmartWriter.putS("Direct Controller Output: ", stickXSquare+" "+stickYSquare+" "+Math.random());
 
 		Vector2 output=getMotorOutputs(stickXSquare, stickYSquare);
 
 		double leftTarget=output.getX();
 		double rightTarget=output.getY();
+		if (Double.isNaN(leftMotors)||Double.isNaN(rightTarget)) {
+			leftMotors=rightMotors=0.001;//fix for controller unplug issue
+		}
 		if (Math.abs(leftTarget-leftMotors)<maxAcceleration) {
 			leftMotors=leftTarget;
 		}
@@ -124,6 +128,8 @@ public class ArcadeDrive extends IDrive {
 		else {
 			rightMotors+=Math.signum(rightTarget-rightMotors)*maxAcceleration;
 		}
+		
+		SmartWriter.putS("Variables: ", leftTarget+" "+rightTarget+" "+maxAcceleration+" "+leftMotors+" "+rightMotors);
 		
 		SmartWriter.putD("LeftMotors", leftMotors, DebugMode.DEBUG);
 		SmartWriter.putD("RightMotors", rightMotors, DebugMode.DEBUG);
