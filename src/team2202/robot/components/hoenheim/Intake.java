@@ -66,7 +66,12 @@ public class Intake extends IControl {
 			}
 		}
 		else {
-			isOn=0;
+			if (!limitSwitch.get()) {
+				isOn=1;
+			}
+			else {				
+				isOn=0;
+			}
 		}
 		try {
 			solenoidController.getSolenoid("intakeSolenoid").set(!shouldBeOpen);
@@ -75,6 +80,5 @@ public class Intake extends IControl {
 			e.printStackTrace();
 		}
 	}
-	
 	
 }
