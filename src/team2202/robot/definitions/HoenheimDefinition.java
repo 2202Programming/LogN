@@ -57,7 +57,7 @@ public class HoenheimDefinition extends RobotDefinitionBase {
 		
 		toReturn.put(DRIVENAME, drive);
 
-		TalonMotor intakeMotor = new TalonMotor(9, false);
+		ChainMotor intakeMotor = new ChainMotor(new TalonMotor(9, false), new TalonMotor(10, false));
 		DigitalInput intakeLimitSwitch = new DigitalInput(2);
 		SolenoidController.getInstance().registerSolenoid("intakeSolenoid", new Solenoid(0));
 		SolenoidController.getInstance().registerSolenoid("intakeSolenoid2", new Solenoid(1));
