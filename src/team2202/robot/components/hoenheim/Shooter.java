@@ -15,7 +15,7 @@ public class Shooter extends IControl {
 	final double Ki = 0.0003;
 	final double Kd = 0.006;
 	final double READYTOFIRE = 30;
-	final double FIRE = 260;
+	final double FIRE = 200;
 	final double PIDTOLERANCE = 5.0;
 	final double RETRACTCPS = 250;
 	final double SHOOTCPS = 900;
@@ -178,8 +178,8 @@ public class Shooter extends IControl {
 			break;
 
 		case FIRE:
-			if (!upperLimit.get()){ // || (shootEncoder.get() >= FIRE)) {
-				pidController.setSetpoint(FIRE);
+			if (!upperLimit.get() || (shootEncoder.get() >= FIRE)) {
+				pidController.setSetpoint(HOME);
 				pidController.disable();
 				state = ShooterState.RETRACTING;
 			} else {
@@ -208,9 +208,7 @@ public class Shooter extends IControl {
 	}
 
 	public void teleopInit() {
-		state = ShooterState.STANDBY;
-
-		pidController.enable();
+		state = ShooterState.RETRACTING;
 
 		shootMotorChain.overideDisable();
 		shootMotorChain.pidWrite(0);
@@ -225,6 +223,6 @@ public class Shooter extends IControl {
 
 	public void teleopPeriodic() {
 		ShooterStateMachine();
-		SmartWriter.putS("Shooter State", state.toString());
+		SmartWriter.putS("Shooter State", state.toString(), DebugMode.COMPETITION);
 	}
 }
