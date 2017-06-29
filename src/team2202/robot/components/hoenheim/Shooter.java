@@ -77,8 +77,8 @@ public class Shooter extends IControl {
 
 	private void getInput() {
 		readyShot = xboxController.getRightTriggerHeld();
-		lobShot = xboxController.getYPressed();
-		heavyShot = xboxController.getXPressed();
+		lobShot = false;//xboxController.getYPressed();
+		heavyShot = false;//xboxController.getXPressed();
 		normalShot = xboxController.getAPressed();
 	}
 	
