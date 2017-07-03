@@ -127,6 +127,7 @@ public class Shooter extends IControl {
 				}
 			}
 
+			//This falls through to the next case
 		case RESET:
 
 			if (!isLowerLimit && (shootEncoder.getRate() < STOPPEDSPEED + 0.1)) {
@@ -150,7 +151,8 @@ public class Shooter extends IControl {
 			break;
 
 		case SHOT_READY:
-			if (lobShot) {
+			if (lobShot) {//TODO: ShooterState.STAGE_TWO_SHOT is not implemented, so you will lose all control of the robot
+				//if you press one of these buttons
 				twoStageSetupPosition = 5;
 				twoStagePidSetup = -0.08;
 				twoStageEndPosition = 250;
@@ -175,6 +177,7 @@ public class Shooter extends IControl {
 			} else if (!readyShot) {
 				state = ShooterState.RESET;
 			}
+			
 			break;
 
 		case FIRE:

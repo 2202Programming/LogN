@@ -34,7 +34,7 @@ public class Intake extends IControl {
 	public boolean setShooting(boolean shooting) {
 		this.shooting=shooting;
 		shouldBeOpen=shooting;
-		isOn=0;
+		//isOn=0;
 		return limitSwitch.get()==shouldBeOpen;
 	}
 	
@@ -49,8 +49,8 @@ public class Intake extends IControl {
 	}
 
 	public void teleopPeriodic() {
+		SmartDashboard.putString("In intake", "Shooting: "+shooting+" shouldBeOpen: "+shouldBeOpen+" isOn: "+isOn+" limit switch: "+limitSwitch.get());
 		motor.set(isOn);
-		SmartDashboard.putString("In intake", "Shooting: "+shooting+" shouldBeOpen: "+shouldBeOpen);
 		if (!shooting) {
 			shouldBeOpen^=controller.getBPressed();//toggle on b pressed
 			if (controller.getAHeld()) {
@@ -66,7 +66,12 @@ public class Intake extends IControl {
 			}
 		}
 		else {
-			isOn=0;
+			if (limitSwitch.get()) {
+				isOn=1;
+			}
+			else {				
+				isOn=0;
+			}
 		}
 		try {
 			solenoidController.getSolenoid("intakeSolenoid").set(!shouldBeOpen);
@@ -75,6 +80,5 @@ public class Intake extends IControl {
 			e.printStackTrace();
 		}
 	}
-	
 	
 }
