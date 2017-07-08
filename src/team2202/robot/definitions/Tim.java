@@ -97,7 +97,7 @@ public class Tim extends RobotDefinitionBase {
 		// Create the class for Tim's shooter
 		DigitalInput upperLimitSwitch=new DigitalInput(6);
 		DigitalInput lowerLimitSwitch=new DigitalInput(7);
-		Shooter S = new Shooter(shooterLeftMotor, shooterRightMotor, shooterHeightMotor, upperLimitSwitch, lowerLimitSwitch);
+		//Shooter S = new Shooter(shooterLeftMotor, shooterRightMotor);
 		temp.put(RobotDefinitionBase.DRIVENAME, arcadeDrive);		
 		
 		return temp;

@@ -54,7 +54,7 @@ public class HighGoalTurning extends IControl {
 				targetAngle=Math.max(0, Math.min(180, targetAngle));
 				
 				//these are calculated constants that we found from testing and linear regression.
-				double angle=(distance*0.00504)-0.29071;
+				double angle=(distance*0.00504)-0.29071+0.2;
 				angle=Math.max(0, Math.min(1, angle));
 				heightServoMotor.set(angle);
 			}

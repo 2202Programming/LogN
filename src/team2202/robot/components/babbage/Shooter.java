@@ -153,8 +153,10 @@ public class Shooter extends IControl {
 		//If the start button is pressed, the turret starts using joystick controls.
 		//the servo takes a value 0-1
 		if (controller.pauseHighGoalVision()) {
-			shoosterTurret.setAngle((controller.getLeftJoystickX(1) + 1) / 2f);
-			shoosterTurret.setHeight((controller.getRightJoystickY(1) + 1) / 2f);
+			shoosterTurret.setAngle(shoosterTurret.getAngle()+controller.getLeftJoystickX(1)/100);
+			shoosterTurret.setHeight(shoosterTurret.getHeight()+controller.getRightJoystickY(1)/100);
+			//shoosterTurret.setAngle((controller.getLeftJoystickX(1) + 1) / 2f);
+			//shoosterTurret.setHeight((controller.getRightJoystickY(1) + 1) / 2f);
 			//shoosterTurret.setHeight(0.05);
 		}
 	}
@@ -252,6 +254,9 @@ class Turret {
 	private IMotor turretMotor;
 	private IMotor angleMotor;
 
+	private double angle=0;
+	private double height=0;
+	
 	/**
 	 * Create a new turret
 	 * 
@@ -273,10 +278,20 @@ class Turret {
 	 */
 	public void setAngle(double angle) {
 		// for a servo this actually sets the angle not the speed
+		this.angle=angle;
 		turretMotor.set(angle);
 	}
 
 	public void setHeight(double height) {
+		this.height=height;
 		angleMotor.set(height);
+	}
+	
+	public double getAngle() {
+		return angle;
+	}
+	
+	public double getHeight() {
+		return height;
 	}
 }
