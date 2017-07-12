@@ -109,18 +109,10 @@ public class Babbage extends RobotDefinitionBase {
 
 		//Shooter
 		IMotor shooterWheelMotor = new TalonSRX(getInt("SHOOTWHEEL"), true, true);
-		ServoMotor turretMotor = new ServoMotor(getInt("TURRETMOTOR"));
-		ServoMotor heightMotor = new ServoMotor(getInt("HEIGHTMOTOR"));
-		IMotor chamberMotor = new SparkMotor(getInt("CHAMBERMOTOR"), true);
 		IMotor agitatorMotor = new SparkMotor(getInt("AGITATORMOTOR"), false);
 		//TODO the 5th motor will be the shooter angle motor
-		Shooter shooter = new Shooter(shooterWheelMotor, chamberMotor, agitatorMotor, turretMotor, heightMotor);
+		Shooter shooter = new Shooter(shooterWheelMotor, agitatorMotor);
 		temp.put("SHOOTER", shooter);
-		HighGoalTurning turning=new HighGoalTurning(turretMotor, heightMotor);
-		
-		// Gear Holder
-		IMotor gearMotor = new SparkMotor(getInt("GEARMOTOR"), false);
-		// GearHolder GH = new GearHolder(G);
 		
 		IMotor climbMotor = new SparkMotor(getInt("LIFTERMOTOR"), true);
 		Climber climb = new Climber(climbMotor);

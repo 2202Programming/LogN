@@ -22,7 +22,7 @@ public class Shooter extends IControl {
 	private boolean autoMode;
 	private boolean shouldShoot;
 
-	public Shooter(IMotor motors, IMotor newChamber, IMotor agitator) {
+	public Shooter(IMotor motors, IMotor agitator) {
 		shooterMotors = motors;
 		controller = (BabbageControl)Global.controllers;
 		agitatorMotor = agitator;
@@ -78,8 +78,6 @@ public class Shooter extends IControl {
 		agitatorMotor.set(0);
 		state = ShooterState.IDLE;
 
-		direction = true;
-		agCounter = 0;
 	}
 
 	public void teleopPeriodic() {
