@@ -2,6 +2,7 @@ package team2202.robot.definitions;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Properties;
 
 import comms.XboxController;
 import drive.ArcadeDrive;
@@ -24,6 +25,11 @@ import team2202.robot.components.hoenheim.Shooter;
 import team2202.robot.definitions.controls.HoenhiemControl;
 
 public class HoenheimDefinition extends RobotDefinitionBase {
+
+	public HoenheimDefinition(Properties nproperties) {
+		super(nproperties);
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	protected boolean useXML() {

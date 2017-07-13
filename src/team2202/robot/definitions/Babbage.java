@@ -2,6 +2,7 @@ package team2202.robot.definitions;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import com.kauailabs.navx.frc.AHRS;
 
@@ -37,6 +38,11 @@ import team2202.robot.definitions.controls.BabbageControl;
  */
 public class Babbage extends RobotDefinitionBase {
 
+	public Babbage(Properties nproperties) {
+		super(nproperties);
+		// TODO Auto-generated constructor stub
+	}
+
 	protected boolean useXML() {
 		return false;
 	}
@@ -46,22 +52,22 @@ public class Babbage extends RobotDefinitionBase {
 	}
 
 	protected void loadManualDefinitions() {
-		_properties = new HashMap<String, String>();
+		robotProperties = new Properties();
 
 		// Intake system
-		_properties.put("LIFTERMOTOR", "2");
-		_properties.put("INTAKEMOTOR", "4");
+		robotProperties.setProperty("LIFTERMOTOR", "2");
+		robotProperties.setProperty("INTAKEMOTOR", "4");
 		// Default Motor Pins
-		_properties.put("LEFTMOTORPIN", "0");
-		_properties.put("RIGHTMOTORPIN", "1");
+		robotProperties.setProperty("LEFTMOTORPIN", "0");
+		robotProperties.setProperty("RIGHTMOTORPIN", "1");
 		// Shooter pins
-		_properties.put("SHOOTWHEEL", "11");// MainShooterWheel
-		_properties.put("CHAMBERMOTOR", "5");// Motor to load balls
-		_properties.put("TURRETMOTOR", "9");// Motor to rotate shooter left and right
-		_properties.put("HEIGHTMOTOR", "8");// Motor to rotate shooter up and down
-		_properties.put("AGITATORMOTOR", "6");// Agitates balls
+		robotProperties.setProperty("SHOOTWHEEL", "11");// MainShooterWheel
+		robotProperties.setProperty("CHAMBERMOTOR", "5");// Motor to load balls
+		robotProperties.setProperty("TURRETMOTOR", "9");// Motor to rotate shooter left and right
+		robotProperties.setProperty("HEIGHTMOTOR", "8");// Motor to rotate shooter up and down
+		robotProperties.setProperty("AGITATORMOTOR", "6");// Agitates balls
 		// Gear holder
-		_properties.put("GEARMOTOR", "7");
+		robotProperties.setProperty("GEARMOTOR", "7");
 	}
 
 	/***

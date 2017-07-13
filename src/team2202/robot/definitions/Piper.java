@@ -2,6 +2,7 @@ package team2202.robot.definitions;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import com.kauailabs.navx.frc.AHRS;
 
@@ -31,6 +32,11 @@ import team2202.robot.definitions.controls.PiperControl;
  */
 public class Piper extends RobotDefinitionBase {
 
+	public Piper(Properties nproperties) {
+		super(nproperties);
+		// TODO Auto-generated constructor stub
+	}
+
 	protected boolean useXML() {
 		return false;
 	}
@@ -40,18 +46,18 @@ public class Piper extends RobotDefinitionBase {
 	}
 
 	protected void loadManualDefinitions() {
-		_properties=new HashMap<String, String>();
+		robotProperties=new Properties();
 
 		// Default Motor Pins
-		_properties.put("FLMOTORPIN", "3");// PWM3
-		_properties.put("BLMOTORPIN", "4");// PWM4
-		_properties.put("FRMOTORPIN", "1");// PWM1
-		_properties.put("BRMOTORPIN", "2");// PWM2
-		_properties.put("SFLMOTORPIN", "6");// Shooter front left
-		_properties.put("SBLMOTORPIN", "6");// Shooter back left
-		_properties.put("SFRMOTORPIN", "7");// Shooter front right
-		_properties.put("SBRMOTERPIN", "7");// Shooter back left
-		_properties.put("INTAKEMOTOR", "5");
+		robotProperties.setProperty("FLMOTORPIN", "3");// PWM3
+		robotProperties.setProperty("BLMOTORPIN", "4");// PWM4
+		robotProperties.setProperty("FRMOTORPIN", "1");// PWM1
+		robotProperties.setProperty("BRMOTORPIN", "2");// PWM2
+		robotProperties.setProperty("SFLMOTORPIN", "6");// Shooter front left
+		robotProperties.setProperty("SBLMOTORPIN", "6");// Shooter back left
+		robotProperties.setProperty("SFRMOTORPIN", "7");// Shooter front right
+		robotProperties.setProperty("SBRMOTERPIN", "7");// Shooter back left
+		robotProperties.setProperty("INTAKEMOTOR", "5");
 	}
 
 	/***

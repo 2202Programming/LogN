@@ -1,5 +1,9 @@
 package robot;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+
 import comms.DebugMode;
 import comms.SmartWriter;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -25,34 +29,41 @@ public class Robot extends IterativeRobot {
 		SmartWriter.putS("Robot State", "Initsing", DebugMode.DEBUG);
 		// String to say which robot we are using could later be made into a XML
 		// property getter
-		name=RobotName.HOENHIEM; // TODO Can we get this from the robot so
-										// it automatically knows what robot it
-										// is?
+		name = RobotName.HOENHIEM; // TODO Can we get this from the robot so
+		Properties robotProperties = new Properties();
+		try {
+			robotProperties.load(new FileInputStream("/RobotConfig/robot.properties"));
+			name = RobotName.valueOf(robotProperties.getProperty("NAME"));
+		} catch (IOException e) {
+			robotProperties = null;
+		}
+									// it automatically knows what robot it
+									// is?
 		SmartWriter.putS("RobotName", name.toString(), DebugMode.COMPETITION);
 		// Switch to decide which robot definition to use
 		switch (name) {
 		case TIM:
-			robotDefinition=new Tim();//probably broken
+			robotDefinition = new Tim(robotProperties);// probably broken
 			break;
 		case PIPER:
-			robotDefinition=new Piper();
+			robotDefinition = new Piper(robotProperties);
 			break;
 		case MECHANUMDRIVE:
-			robotDefinition=new MechanumRobot();
+			robotDefinition = new MechanumRobot(robotProperties);
 			break;
 		case BABBAGE:
-			robotDefinition=new Babbage();
+			robotDefinition = new Babbage(robotProperties);
 			break;
 		case HOENHIEM:
-			robotDefinition=new HoenheimDefinition();
+			robotDefinition = new HoenheimDefinition(robotProperties);
 			break;
 		default:
 			break;
 		}
 
 		// Load all the properties in the currently selected definition
-		Global.controlObjects=robotDefinition.loadControlObjects();
-		 
+		Global.controlObjects = robotDefinition.loadControlObjects();
+
 	}
 
 	public void autonomousInit() {
@@ -93,7 +104,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void disabledInit() {
-		
+
 		SmartWriter.putS("Robot State", "Disabled Init", DebugMode.COMPETITION);
 		try {
 			IControl.callDisabledInit();
@@ -103,7 +114,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void disabledPeriodic() {
-		
+
 		SmartWriter.putS("Robot State", "Disabled Periodic", DebugMode.COMPETITION);
 		try {
 			IControl.callDisabledPeriodic();

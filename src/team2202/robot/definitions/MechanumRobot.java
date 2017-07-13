@@ -2,6 +2,7 @@ package team2202.robot.definitions;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import comms.XboxController;
 import drive.ArcadeDrive;
@@ -23,6 +24,12 @@ import robotDefinitions.RobotDefinitionBase;
 public class MechanumRobot extends RobotDefinitionBase {
 
 	
+	public MechanumRobot(Properties nproperties) {
+		super(nproperties);
+		// TODO Auto-generated constructor stub
+	}
+
+
 	protected boolean useXML() {
 		return false;
 	}
@@ -34,14 +41,14 @@ public class MechanumRobot extends RobotDefinitionBase {
 
 	
 	protected void loadManualDefinitions() {
-		_properties=new HashMap<String, String>();
+		robotProperties=new Properties();
 		
 		// Default Motor Pins
 		//port 7 does not work
-		_properties.put("FRMOTORPIN", "1");//r
-		_properties.put("BRMOTORPIN", "2");//r
-		_properties.put("FLMOTORPIN", "3");
-		_properties.put("BLMOTORPIN", "4");
+		robotProperties.setProperty("FRMOTORPIN", "1");//r
+		robotProperties.setProperty("BRMOTORPIN", "2");//r
+		robotProperties.setProperty("FLMOTORPIN", "3");
+		robotProperties.setProperty("BLMOTORPIN", "4");
 	}
 
 	/***

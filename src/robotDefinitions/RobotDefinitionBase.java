@@ -1,7 +1,10 @@
 package robotDefinitions;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import robot.IControl;
 
@@ -11,18 +14,22 @@ import robot.IControl;
  */
 public abstract class RobotDefinitionBase implements IRobotDefinition {
 
-	protected Map<String, String> _properties;
+	protected Properties robotProperties;
 	private boolean _useXMLBag;
-	private String _name;
 	public static final String DRIVENAME = "DRIVE";
 
 	/**
 	 * Default Constructor, uses abstract methods in order to define properties
 	 */
-	public RobotDefinitionBase() {
-		_name=loadDefinitionName();
+	public RobotDefinitionBase(Properties nproperties) {
 		_useXMLBag=useXML();
-		loadPropertyBag();
+		if (_useXMLBag && nproperties != null) {
+			// TODO Implement IProfile property system
+			robotProperties = nproperties;
+		}
+		else {
+			loadManualDefinitions();
+		}
 	}
 
 	/**
@@ -69,7 +76,7 @@ public abstract class RobotDefinitionBase implements IRobotDefinition {
 	 * @return The corresponding value
 	 */
 	protected String getValue(String key) {
-		return _properties.get(key);
+		return robotProperties.getProperty(key);
 	}
 
 	/**
@@ -115,20 +122,5 @@ public abstract class RobotDefinitionBase implements IRobotDefinition {
 		else if (value.equals("on"))
 			return true;
 		return false;
-	}
-
-	private void loadPropertyBag() {
-		if (_useXMLBag) {
-			// TODO Implement IProfile property system
-			switch (_name) {
-				case "TIM":
-					break;
-				default:
-					break;
-			}
-		}
-		else {
-			loadManualDefinitions();
-		}
 	}
 }
