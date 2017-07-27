@@ -12,7 +12,7 @@ public class Shooter extends IControl {
 	private IMotor shooterMotors;
 	private IMotor agitatorMotor;
 	private BabbageControl controller;
-	private double speed = 1100;
+	private double speed = 950;
 	private ShooterState state;
 	private Chamber shoosterChamber;
 	private Turret shoosterTurret;
@@ -21,7 +21,7 @@ public class Shooter extends IControl {
 	private boolean _abort;
 	private boolean _fire;
 	private boolean _windDown;
-	
+
 	private boolean autoMode;
 	private boolean shouldShoot;
 
@@ -30,7 +30,7 @@ public class Shooter extends IControl {
 
 	public Shooter(IMotor motors, IMotor newChamber, IMotor agitator, ServoMotor turret, ServoMotor bturret) {
 		shooterMotors = motors;
-		controller = (BabbageControl)Global.controllers;
+		controller = (BabbageControl) Global.controllers;
 		shoosterChamber = new Chamber(newChamber);
 		shoosterTurret = new Turret(turret, bturret);
 		agitatorMotor = agitator;
@@ -44,9 +44,10 @@ public class Shooter extends IControl {
 		// if the user wants to start shooting
 		_startShoosting = controller.startShooting();
 		// If we are primed, shoot the ball
-		_fire = state == ShooterState.PRIMED?controller.startShooting():false;
+		_fire = state == ShooterState.PRIMED ? controller.startShooting() : false;
 		// If we are primed, reverse the shooter motors to unclog balls
-		_windDown = (state == ShooterState.PRIMED || state == ShooterState.REVERSE)?controller.reverseShooter():false;
+		_windDown = (state == ShooterState.PRIMED || state == ShooterState.REVERSE) ? controller.reverseShooter()
+				: false;
 	}
 
 	/**
@@ -58,12 +59,15 @@ public class Shooter extends IControl {
 		SmartWriter.putB("_fire", _fire);
 		SmartWriter.putB("_reverse", _windDown);
 	}
+
 	/**
 	 * Sets whether the shooter should shoot autonomously<br>
 	 * This only is active during autonomous periodic at this time
-	 * @param shouldShoot if the shooter should shoot or not
+	 * 
+	 * @param shouldShoot
+	 *            if the shooter should shoot or not
 	 */
-	public void setAutoShoot(boolean shouldShoot){
+	public void setAutoShoot(boolean shouldShoot) {
 		this.shouldShoot = shouldShoot;
 	}
 
@@ -94,8 +98,8 @@ public class Shooter extends IControl {
 	public void teleopPeriodic() {
 		update();
 	}
-	
-	public void autonomousPeriodic(){
+
+	public void autonomousPeriodic() {
 		update();
 	}
 
@@ -104,8 +108,12 @@ public class Shooter extends IControl {
 		updateUserInput();
 		// display user input
 		displayUserInput();
-		if(autoMode){
+		if (autoMode) {
 			_fire = _startShoosting = shouldShoot;
+		}
+		
+		if(controller.intakeEngaged()){
+			agitate();
 		}
 
 		SmartWriter.putD("ShooterSetSpeed", speed, DebugMode.COMPETITION);
@@ -135,29 +143,31 @@ public class Shooter extends IControl {
 			// TODO check if balls are in the shooter and make some decision
 			// about that
 			shoot();
-		}
-		else {
+		} else {
 			shoosterChamber.init();
 		}
 		// Reverse the shooter motor if Primed
 		if (_windDown) {
 			windDown();
 			state = ShooterState.REVERSE;
-		}
-		else {
+		} else {
 			if (state == ShooterState.REVERSE) {
 				teleopInit();
 			}
 		}
 		// Turret code starts
-		//If the start button is pressed, the turret starts using joystick controls.
-		//the servo takes a value 0-1
+		// If the start button is pressed, the turret starts using joystick
+		// controls.
+		// the servo takes a value 0-1
 		if (controller.pauseHighGoalVision()) {
-			shoosterTurret.setAngle(shoosterTurret.getAngle()+controller.getLeftJoystickX(1)/100);
-			shoosterTurret.setHeight(shoosterTurret.getHeight()+controller.getRightJoystickY(1)/100);
-			//shoosterTurret.setAngle((controller.getLeftJoystickX(1) + 1) / 2f);
-			//shoosterTurret.setHeight((controller.getRightJoystickY(1) + 1) / 2f);
-			//shoosterTurret.setHeight(0.05);
+			// shoosterTurret.setAngle(shoosterTurret.getAngle()+controller.getLeftJoystickX(1)/100);
+			// shoosterTurret.setHeight(shoosterTurret.getHeight()+controller.getRightJoystickY(1)/100);
+			// shoosterTurret.setAngle((controller.getLeftJoystickX(1) + 1) /
+			// 2f);
+			// shoosterTurret.setHeight((controller.getRightJoystickY(1) + 1) /
+			// 2f);
+			shoosterTurret.setAngle(.3);
+			shoosterTurret.setHeight(0.13);
 		}
 	}
 
@@ -175,12 +185,11 @@ public class Shooter extends IControl {
 	private void agitate() {
 		if (direction) {
 			agitatorMotor.set(0.6);
-		}
-		else {
-			agitatorMotor.set( -0.6);
+		} else {
+			agitatorMotor.set(-0.6);
 		}
 
-		if ( ++agCounter > 50) {
+		if ((++agCounter > 75 && direction) || (++agCounter > 125 && !direction)) {
 			direction = !direction;
 			agCounter = 0;
 		}
@@ -238,7 +247,7 @@ class Chamber {
 	 * @return true if there are balls in the shooter currently
 	 */
 	public boolean shoot() {
-		chamber.set( -0.7);
+		chamber.set(-0.7);
 		// TODO check if there are balls in the shooter
 		return true;
 	}
@@ -254,9 +263,9 @@ class Turret {
 	private IMotor turretMotor;
 	private IMotor angleMotor;
 
-	private double angle=0;
-	private double height=0;
-	
+	private double angle = 0;
+	private double height = 0;
+
 	/**
 	 * Create a new turret
 	 * 
@@ -278,19 +287,19 @@ class Turret {
 	 */
 	public void setAngle(double angle) {
 		// for a servo this actually sets the angle not the speed
-		this.angle=angle;
+		this.angle = angle;
 		turretMotor.set(angle);
 	}
 
 	public void setHeight(double height) {
-		this.height=height;
+		this.height = height;
 		angleMotor.set(height);
 	}
-	
+
 	public double getAngle() {
 		return angle;
 	}
-	
+
 	public double getHeight() {
 		return height;
 	}
