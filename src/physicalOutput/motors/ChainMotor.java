@@ -3,7 +3,7 @@ package physicalOutput.motors;
 import java.util.List;
 
 public class ChainMotor extends IMotor{
-	IMotor[] motors;
+	private IMotor[] motors;
 	
 	public ChainMotor(List<IMotor> motorsIn){
 		motors=new IMotor[motorsIn.size()];
