@@ -87,7 +87,7 @@ public class TestBot extends RobotDefinitionBase {
 		
 		DoubleSolenoid heightSolenoid = new DoubleSolenoid(0, 1);
 		DoubleSolenoid trigger = new DoubleSolenoid(2, 3);
-				
+		Shooter shooter = new Shooter(shootMotors, heightSolenoid,trigger);	
 		
 
 		//Encoder stuff
