@@ -81,6 +81,12 @@ public class TestBot extends RobotDefinitionBase {
 		
 		ArcadeDrive drive = new ArcadeDrive(FL,FR,BL,BR);
 		iControlMap.put("DRIVE", drive);
+		
+		IMotor[] shooterMotors = {new SparkMotor(getInt("SFLMOTORPIN"),true),new SparkMotor(getInt("SFRMOTORPIN"),true)};
+		ChainMotor shootMotors = new ChainMotor(shooterMotors);
+		
+		DoubleSolenoid heightSolenoid = new DoubleSolenoid(0, 1);
+		DoubleSolenoid trigger = new DoubleSolenoid(2, 3);
 				
 		
 
