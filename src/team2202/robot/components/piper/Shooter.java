@@ -14,7 +14,8 @@ public class Shooter extends IControl{
 	private DoubleSolenoid shooterTrigger;
 	private PiperControl controller;
 	
-	private double shooterSpeed=0.4;
+	//was .4
+	private double shooterSpeed=.6;
 	
 	private boolean _shooterUp;
 	private boolean _shooterOn;
