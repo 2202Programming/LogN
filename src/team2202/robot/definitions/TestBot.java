@@ -79,8 +79,9 @@ public class TestBot extends RobotDefinitionBase {
 		IMotor BL=new SparkMotor(getInt("BLMOTORPIN"), false);
 		IMotor BR=new SparkMotor(getInt("BRMOTORPIN"), true);
 		
-		
-		
+		ArcadeDrive drive = new ArcadeDrive(FL,FR,BL,BR);
+		iControlMap.put("DRIVE", drive);
+				
 		
 
 		//Encoder stuff
