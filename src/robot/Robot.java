@@ -3,10 +3,8 @@ package robot;
 import comms.DebugMode;
 import comms.SmartWriter;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import robotDefinitions.ControlBase;
 import robotDefinitions.IRobotDefinition;
 import robotDefinitions.RobotName;
-import team2202.robot.definitions.Babbage;
 import team2202.robot.definitions.HoenheimDefinition;
 import team2202.robot.definitions.MechanumRobot;
 import team2202.robot.definitions.Piper;
@@ -39,9 +37,6 @@ public class Robot extends IterativeRobot {
 			break;
 		case MECHANUMDRIVE:
 			robotDefinition=new MechanumRobot();
-			break;
-		case BABBAGE:
-			robotDefinition=new Babbage();
 			break;
 		case HOENHIEM:
 			robotDefinition=new HoenheimDefinition();
