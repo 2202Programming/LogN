@@ -3,7 +3,6 @@ package robot;
 import comms.DebugMode;
 import comms.SmartWriter;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import robotDefinitions.ControlBase;
 import robotDefinitions.IRobotDefinition;
 import robotDefinitions.RobotName;
 import team2202.robot.definitions.HoenheimDefinition;
