@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import robotDefinitions.ControlBase;
 import robotDefinitions.IRobotDefinition;
 import robotDefinitions.RobotName;
-import team2202.robot.definitions.Babbage;
 import team2202.robot.definitions.HoenheimDefinition;
 import team2202.robot.definitions.MechanumRobot;
 import team2202.robot.definitions.Piper;
@@ -25,7 +24,7 @@ public class Robot extends IterativeRobot {
 		SmartWriter.putS("Robot State", "Initsing", DebugMode.DEBUG);
 		// String to say which robot we are using could later be made into a XML
 		// property getter
-		name=RobotName.PIPER; // TODO Can we get this from the robot so
+		name=RobotName.HOENHIEM; // TODO Can we get this from the robot so
 										// it automatically knows what robot it
 										// is?
 		SmartWriter.putS("RobotName", name.toString(), DebugMode.COMPETITION);
@@ -39,9 +38,6 @@ public class Robot extends IterativeRobot {
 			break;
 		case MECHANUMDRIVE:
 			robotDefinition=new MechanumRobot();
-			break;
-		case BABBAGE:
-			robotDefinition=new Babbage();
 			break;
 		case HOENHIEM:
 			robotDefinition=new HoenheimDefinition();
