@@ -57,7 +57,7 @@ public class Shooter extends IControl {
 	private ShooterState state;
 
 	public enum ShooterState {
-		STANDBY, RESET, READY_SHOT, SHOT_READY, STAGE_ONE_SHOT, STAGE_TWO_SHOT, FIRE, RETRACTING, INIT
+		STANDBY, RESET, ARMING, SHOT_READY, STAGE_ONE_SHOT, STAGE_TWO_SHOT_FIRE, FIRE, PASSING, RETRACTING, INIT
 	}
 
 	public Shooter(IMotorPIDOutput nshootMotorChain, Encoder nshootEncoder, Intake nintake,
@@ -125,6 +125,10 @@ public class Shooter extends IControl {
 					pidController.setSetpoint(HOME);
 					state = ShooterState.STANDBY;
 				}
+			} else {
+				if(intake.isExtended()) {
+					shootMotorChain.pidWrite(ARMINGSPEED);
+				}
 			}
 
 		case RESET:
@@ -138,24 +142,46 @@ public class Shooter extends IControl {
 			break;
 
 		case STANDBY:
-			if (readyShot)
-				state = ShooterState.READY_SHOT;
-			break;
-		case READY_SHOT:
-			if (!readyShot) {
-				state = ShooterState.RESET;
-			}
-			if (intake.setShooting(true))
+			if (xboxController.getRightBumperPressed()) {
 				state = ShooterState.SHOT_READY;
+			}
+			if (xboxController.getLeftTriggerHeld()) {
+				state = ShooterState.ARMING;
+			}
+			if (xboxController.getRightTriggerHeld()) {
+				state = ShooterState.PASSING;
+			}
+
+			break;
+		case ARMING:
+			if (isLowerLimit) {
+				shootMotorChain.pidWrite(STOPPEDSPEED);
+				shootEncoder.reset();
+				pidController.enable();
+				pidController.setSetpoint(ARMING);
+			} else {
+				shootMotorChain.pidWrite(ARMINGSPEED);
+			}
+			if (!xboxController.getLeftTriggerHeld()) {
+				shootMotorChain.pidWrite(STOPPEDSPEED);
+				pidController.enable();
+				pidController.setSetpoint(HOME);
+				state = ShooterState.STANDBY;
+			}
 			break;
 
 		case SHOT_READY:
+			if (!xboxController.getRightBumperHeld()) {
+				pidController.setSetpoint(shootEncoder.get());
+				state = ShooterState.RETRACTING;
+			}
+			
 			if (lobShot) {
 				twoStageSetupPosition = 5;
 				twoStagePidSetup = -0.08;
 				twoStageEndPosition = 250;
 				twoStagePidFire = 0.95;
-				state = ShooterState.STAGE_TWO_SHOT;
+				state = ShooterState.STAGE_TWO_SHOT_FIRE;
 				maxEncoderValue = 0;
 
 				// pIDControlOutput->PIDOverideEnable(twoStagePidFire);
@@ -164,7 +190,7 @@ public class Shooter extends IControl {
 				twoStagePidSetup = -0.08;
 				twoStageEndPosition = 250;
 				twoStagePidFire = 0.95;
-				state = ShooterState.STAGE_TWO_SHOT;
+				state = ShooterState.STAGE_TWO_SHOT_FIRE;
 				maxEncoderValue = 0;
 
 				// pIDControlOutput->PIDOverideEnable(twoStagePidFire);
@@ -175,6 +201,10 @@ public class Shooter extends IControl {
 			} else if (!readyShot) {
 				state = ShooterState.RESET;
 			}
+			break;
+			
+		case STAGE_TWO_SHOT_FIRE: 
+			
 			break;
 
 		case FIRE:
