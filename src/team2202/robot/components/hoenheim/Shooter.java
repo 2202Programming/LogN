@@ -81,7 +81,7 @@ public class Shooter extends IControl {
 		heavyShot = xboxController.getXPressed();
 		normalShot = xboxController.getAPressed();
 	}
-	
+
 	private void display() {
 		SmartWriter.putD("Shooter Position", shootEncoder.getDistance());
 		SmartWriter.putD("Shooter Speed", shootEncoder.getRate());
@@ -126,7 +126,7 @@ public class Shooter extends IControl {
 					state = ShooterState.STANDBY;
 				}
 			} else {
-				if(intake.isExtended()) {
+				if (intake.isExtended()) {
 					shootMotorChain.pidWrite(ARMINGSPEED);
 				}
 			}
@@ -138,7 +138,7 @@ public class Shooter extends IControl {
 			}
 			shootMotorChain.pidWrite(STOPPEDSPEED);
 			intake.setShooting(false);
-			
+
 			break;
 
 		case STANDBY:
@@ -174,41 +174,42 @@ public class Shooter extends IControl {
 			if (!xboxController.getRightBumperHeld()) {
 				pidController.setSetpoint(shootEncoder.get());
 				state = ShooterState.RETRACTING;
-			}
-			
-			if (lobShot) {
-				twoStageSetupPosition = 5;
-				twoStagePidSetup = -0.08;
-				twoStageEndPosition = 250;
-				twoStagePidFire = 0.95;
-				state = ShooterState.STAGE_TWO_SHOT_FIRE;
-				maxEncoderValue = 0;
+			} else if (shootEncoder.get() > READYTOFIRE - 6 && shootEncoder.get() < READYTOFIRE + 6) {
+				if (readyShot && intake.isExtended()) {
+					if (lobShot) {
+						twoStageSetupPosition = 5;
+						twoStagePidSetup = -0.08;
+						twoStageEndPosition = 250;
+						twoStagePidFire = 0.95;
+						state = ShooterState.STAGE_TWO_SHOT_FIRE;
+						maxEncoderValue = 0;
 
-				// pIDControlOutput->PIDOverideEnable(twoStagePidFire);
-			} else if (heavyShot) {
-				twoStageSetupPosition = 5;
-				twoStagePidSetup = -0.08;
-				twoStageEndPosition = 250;
-				twoStagePidFire = 0.95;
-				state = ShooterState.STAGE_TWO_SHOT_FIRE;
-				maxEncoderValue = 0;
-
-				// pIDControlOutput->PIDOverideEnable(twoStagePidFire);
-			} else if (normalShot) {
-				state = ShooterState.FIRE;
-				maxEncoderValue = 0;
-				pidController.enable();
-			} else if (!readyShot) {
-				state = ShooterState.RESET;
+						// pIDControlOutput->PIDOverideEnable(twoStagePidFire);
+					} else if (heavyShot) {
+						twoStageSetupPosition = 5;
+						twoStagePidSetup = -0.08;
+						twoStageEndPosition = 250;
+						twoStagePidFire = 0.95;
+						state = ShooterState.STAGE_TWO_SHOT_FIRE;
+						maxEncoderValue = 0;
+						pidController.setSetpoint(twoStagePidFire); // setSetpoint is the wrong method, search for correct port method
+					} else if (normalShot) {
+						state = ShooterState.FIRE;
+						maxEncoderValue = 0;
+						pidController.enable();
+					} else if (!readyShot) {
+						state = ShooterState.RESET;
+					}
+				}
 			}
 			break;
-			
-		case STAGE_TWO_SHOT_FIRE: 
-			
+
+		case STAGE_TWO_SHOT_FIRE:
+
 			break;
 
 		case FIRE:
-			if (!upperLimit.get()){ // || (shootEncoder.get() >= FIRE)) {
+			if (!upperLimit.get()) { // || (shootEncoder.get() >= FIRE)) {
 				pidController.setSetpoint(FIRE);
 				pidController.disable();
 				state = ShooterState.RETRACTING;

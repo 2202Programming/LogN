@@ -17,57 +17,59 @@ public class Intake extends IControl {
 	 * Get will return true when it is open
 	 */
 	private DigitalInput limitSwitch;
-	
+
 	public Intake(IMotor motor, DigitalInput limitSwitch) {
 		this.motor = motor;
-		controller=XboxController.getXboxController();
-		solenoidController=SolenoidController.getInstance();
-		this.limitSwitch=limitSwitch;
+		controller = XboxController.getXboxController();
+		solenoidController = SolenoidController.getInstance();
+		this.limitSwitch = limitSwitch;
 	}
-	
+
 	/**
-	 * Call this and pass in true when you start shooting, and then when openingInProgress returns false, you can shoot.
-	 * Make sure to call it and pass in false when done shooting.
+	 * Call this and pass in true when you start shooting, and then when
+	 * openingInProgress returns false, you can shoot. Make sure to call it and pass
+	 * in false when done shooting.
+	 * 
 	 * @param shooting Are we shooting?
 	 * @return true if we are at the place we are told to be
 	 */
 	public boolean setShooting(boolean shooting) {
-		this.shooting=shooting;
-		shouldBeOpen=shooting;
-		isOn=0;
-		return limitSwitch.get()==shouldBeOpen;
+		this.shooting = shooting;
+		shouldBeOpen = shooting;
+		isOn = 0;
+		return limitSwitch.get() == shouldBeOpen;
 	}
-	
-	public boolean isExtended(){
+
+	public boolean isExtended() {
 		return !shouldBeOpen;
 	}
 
 	public void teleopInit() {
 		isOn = 0;
-		shooting=false;
-		shouldBeOpen=false;
+		shooting = false;
+		shouldBeOpen = false;
 	}
 
 	public void teleopPeriodic() {
 		motor.set(isOn);
-		SmartDashboard.putString("In intake", "Shooting: "+shooting+" shouldBeOpen: "+shouldBeOpen);
+		SmartDashboard.putString("In intake", "Shooting: " + shooting + " shouldBeOpen: " + shouldBeOpen);
 		if (!shooting) {
-			shouldBeOpen^=controller.getBPressed();//toggle on b pressed
+			shouldBeOpen ^= controller.getBHeld();	// toggle on b pressed (used to be pressed but don't think someone can
+													// consistently press for only 20 milliseconds...
+			
 			if (controller.getAHeld()) {
 				if (shouldBeOpen) {
-					isOn=1;
+					isOn = 1;
+				} else {
+					isOn = -1;
 				}
-				else {
-					isOn=-1;
-				}
+			} else {
+				isOn = 0;
 			}
-			else {
-				isOn=0;
-			}
+		} else {
+			isOn = 0;
 		}
-		else {
-			isOn=0;
-		}
+
 		try {
 			solenoidController.getSolenoid("intakeSolenoid").set(!shouldBeOpen);
 			solenoidController.getSolenoid("intakeSolenoid2").set(shouldBeOpen);
@@ -75,6 +77,5 @@ public class Intake extends IControl {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 }
