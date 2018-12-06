@@ -114,7 +114,7 @@ public class Shooter extends IControl {
 				DebugMode.COMPETITION);
 
 		switch (state) {
-		case INIT:
+		case INIT: //Start the robot
 			if (isLowerLimit) {
 				shootMotorChain.pidWrite(STOPPEDSPEED);
 
@@ -131,7 +131,7 @@ public class Shooter extends IControl {
 				}
 			}
 
-		case RESET:
+		case RESET: //
 
 			if (!isLowerLimit && (shootEncoder.getRate() < STOPPEDSPEED + 0.1)) {
 				state = ShooterState.STANDBY;
@@ -141,7 +141,7 @@ public class Shooter extends IControl {
 
 			break;
 
-		case STANDBY:
+		case STANDBY: //Default state for the shooter: Equivalent to HOME on c++ code
 			if (xboxController.getRightBumperPressed()) {
 				state = ShooterState.SHOT_READY;
 			}
@@ -154,7 +154,7 @@ public class Shooter extends IControl {
 
 			break;
 		case ARMING:
-			if (isLowerLimit) {
+			if (isLowerLimit) { //If left trigger is held
 				shootMotorChain.pidWrite(STOPPEDSPEED);
 				shootEncoder.reset();
 				pidController.enable();
@@ -170,7 +170,7 @@ public class Shooter extends IControl {
 			}
 			break;
 
-		case SHOT_READY:
+		case SHOT_READY: //Equivalent to READY_TO_FIRE on c++ code
 			if (!xboxController.getRightBumperHeld()) {
 				pidController.setSetpoint(shootEncoder.get());
 				state = ShooterState.RETRACTING;
