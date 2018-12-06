@@ -184,7 +184,7 @@ public class Shooter extends IControl {
 						state = ShooterState.STAGE_TWO_SHOT_FIRE;
 						maxEncoderValue = 0;
 
-						// pIDControlOutput->PIDOverideEnable(twoStagePidFire);
+						// pIDControlOutput->PIDOverideEnable(twoStagePidFire); //Need to implement PID subsystem
 					} else if (heavyShot) {
 						twoStageSetupPosition = 5;
 						twoStagePidSetup = -0.08;
