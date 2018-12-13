@@ -6,14 +6,17 @@ public class IMotorPIDOutput implements PIDOutput {
 
 	public IMotor motor;
 	private boolean overide;
+	private double overrideValue;
 	
 	public IMotorPIDOutput(IMotor nmotor) {
 		motor = nmotor;
 		overide = true;
+		overrideValue = 0;
 	}
 	
-	public void overideEnable(){
+	public void overideEnable(double overrideOutput){
 		overide = true;
+		overrideValue = overrideOutput;
 	}
 	
 	public void overideDisable(){
@@ -23,7 +26,7 @@ public class IMotorPIDOutput implements PIDOutput {
 	@Override
 	public void pidWrite(double output) {
 		if(overide)
-			motor.set(0);
+			motor.set(overrideValue);
 		else
 			motor.set(output);
 	}
