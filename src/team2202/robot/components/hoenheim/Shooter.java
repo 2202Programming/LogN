@@ -79,7 +79,7 @@ public class Shooter extends IControl {
 		readyShot = xboxController.getRightTriggerHeld();
 		lobShot = xboxController.getYPressed();
 		heavyShot = xboxController.getXPressed();
-		normalShot = xboxController.getAPressed();
+		normalShot = xboxController.getBPressed();
 	}
 
 	private void display() {
@@ -176,7 +176,7 @@ public class Shooter extends IControl {
 				state = ShooterState.RETRACTING;
 			} else if (shootEncoder.get() > READYTOFIRE - 6 && shootEncoder.get() < READYTOFIRE + 6) {
 				if (readyShot && intake.isExtended()) {
-					if (lobShot) {
+					if (heavyShot) {
 						twoStageSetupPosition = 5;
 						twoStagePidSetup = -0.08;
 						twoStageEndPosition = 250;
@@ -184,21 +184,24 @@ public class Shooter extends IControl {
 						state = ShooterState.STAGE_TWO_SHOT_FIRE;
 						maxEncoderValue = 0;
 
-						// pIDControlOutput->PIDOverideEnable(twoStagePidFire); //Need to implement PID subsystem
-					} else if (heavyShot) {
+						// pIDControlOutput->PIDOverideEnable(twoStagePidFire); //Bottom is equivalent
+						shootMotorChain.overideEnable(twoStagePidFire);
+					} else if (lobShot) {
 						twoStageSetupPosition = 5;
 						twoStagePidSetup = -0.08;
 						twoStageEndPosition = 250;
-						twoStagePidFire = 0.95;
+						twoStagePidFire = 0.90;
 						state = ShooterState.STAGE_TWO_SHOT_FIRE;
+						shootMotorChain.overideEnable(twoStagePidFire);
 						maxEncoderValue = 0;
-						pidController.setSetpoint(twoStagePidFire); // setSetpoint is the wrong method, search for correct port method
 					} else if (normalShot) {
+						twoStageSetupPosition = 15;
+						twoStagePidSetup = -0.3;
+						twoStageEndPosition = 110;
+						twoStagePidFire = 1.00;
 						state = ShooterState.FIRE;
 						maxEncoderValue = 0;
-						pidController.enable();
-					} else if (!readyShot) {
-						state = ShooterState.RESET;
+						shootMotorChain.overideEnable(twoStagePidFire);
 					}
 				}
 			}
