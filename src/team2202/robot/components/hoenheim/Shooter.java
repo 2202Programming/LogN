@@ -57,7 +57,7 @@ public class Shooter extends IControl {
 	private ShooterState state;
 
 	public enum ShooterState {
-		STANDBY, RESET, ARMING, SHOT_READY, STAGE_ONE_SHOT, STAGE_TWO_SHOT_FIRE, FIRE, PASSING, RETRACTING, INIT
+		STANDBY, RESET, ARMING, SHOT_READY, STAGE_ONE_SHOT, STAGE_TWO_SHOT_FIRE, STAGE_ONE_SHOT_FIRE, FIRING, PASSING, RETRACTING, INIT
 	}
 
 	public Shooter(IMotorPIDOutput nshootMotorChain, Encoder nshootEncoder, Intake nintake,
@@ -176,7 +176,7 @@ public class Shooter extends IControl {
 				state = ShooterState.RETRACTING;
 			} else if (shootEncoder.get() > READYTOFIRE - 6 && shootEncoder.get() < READYTOFIRE + 6) {
 				if (readyShot && intake.isExtended()) {
-					if (heavyShot) {
+					if (heavyShot) { 	//twoStageFire Shoot. Originally used to be RT Held and X 
 						twoStageSetupPosition = 5;
 						twoStagePidSetup = -0.08;
 						twoStageEndPosition = 250;
@@ -186,7 +186,7 @@ public class Shooter extends IControl {
 
 						// pIDControlOutput->PIDOverideEnable(twoStagePidFire); //Bottom is equivalent
 						shootMotorChain.overideEnable(twoStagePidFire);
-					} else if (lobShot) {
+					} else if (lobShot) { //twoStageFire Shoot. Originally used to be RT Held and X
 						twoStageSetupPosition = 5;
 						twoStagePidSetup = -0.08;
 						twoStageEndPosition = 250;
@@ -194,15 +194,45 @@ public class Shooter extends IControl {
 						state = ShooterState.STAGE_TWO_SHOT_FIRE;
 						shootMotorChain.overideEnable(twoStagePidFire);
 						maxEncoderValue = 0;
-					} else if (normalShot) {
+					} else if (normalShot) { //twoStageFire Shoot. Jim's Favorite shoot. Shoots the ball insanely high
 						twoStageSetupPosition = 15;
 						twoStagePidSetup = -0.3;
 						twoStageEndPosition = 110;
 						twoStagePidFire = 1.00;
-						state = ShooterState.FIRE;
+						state = ShooterState.STAGE_ONE_SHOT_FIRE;
 						maxEncoderValue = 0;
 						shootMotorChain.overideEnable(twoStagePidFire);
 					}
+				} else if(intake.isExtended()){
+					if (lobShot) {//Regular Shoot
+						state = ShooterState.FIRING;
+						shootMotorChain.overideEnable(MANUALPIDFIRE);
+						maxEncoderValue = 0;
+					} else if (heavyShot) {//twoStageFire Shoot. Originally used to be RT Held and X 
+						twoStageSetupPosition = 5;
+						twoStagePidSetup = -0.08;
+						twoStageEndPosition = 250;
+						twoStagePidFire = 1.00;
+						state = ShooterState.STAGE_TWO_SHOT_FIRE;
+						shootMotorChain.overideEnable(twoStagePidFire);
+						maxEncoderValue = 0;
+					} else if (normalShot) {
+						twoStagePidFire = 1.00;
+						twoStageEndPosition = 85;
+						twoStageSetupPosition = 20;
+						state = ShooterState.STAGE_ONE_SHOT_FIRE;
+						shootMotorChain.overideEnable(-0.1);
+						maxEncoderValue = 0;
+					}
+				}
+			} else {
+				if (intake.isExtended()) {
+					double positionChange = timeChange * LOADCPS;
+					double newSetpoint = pidController.getSetpoint() + positionChange;
+					if (newSetpoint >= READYTOFIRE) {
+						newSetpoint = READYTOFIRE;
+					}
+					pidController.setSetpoint(newSetpoint);
 				}
 			}
 			break;
@@ -211,7 +241,7 @@ public class Shooter extends IControl {
 
 			break;
 
-		case FIRE:
+		case STAGE_ONE_SHOT_FIRE:
 			if (!upperLimit.get()) { // || (shootEncoder.get() >= FIRE)) {
 				pidController.setSetpoint(FIRE);
 				pidController.disable();
